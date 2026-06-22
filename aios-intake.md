@@ -11,7 +11,19 @@ This is the source-of-truth file for your AIOS. Fill it in by typing, voice-past
 Identity, offer, ICP. One paragraph each is fine.
 
 ```
-[Your answer here]
+Identidade: Enzo Barbato. Tenho um canal no YouTube sobre automação, onde ensino como usar
+Claude Code e Antigravity para criar automações, sites, aplicativos e sistemas para empresas.
+Também tenho uma agência de automação chamada Sparo Automações.
+
+Oferta: Curso completo de Antigravity e Claude Code que ensina qualquer pessoa — mesmo sem
+saber programar, sem escrever uma linha de código — a criar automações, sites, aplicativos e
+sistemas para empresa. Vendido a R$ 400,00. Ofereço o curso em todos os vídeos do YouTube.
+
+ICP: Pessoas que querem aprender a criar automações e automatizar um processo específico.
+Vai de donos de pequenas e médias empresas (querem mais produtividade, menos erro humano,
+substituir funções por IA) a quem quer montar a própria agência de automação ou automatizar
+um processo da empresa onde trabalha. Público leigo em programação — nunca criaram nada com
+código. Empresas grandes não são o foco (preferem contratar em vez de aprender).
 ```
 
 ---
@@ -21,11 +33,49 @@ Identity, offer, ICP. One paragraph each is fine.
 An email, a LinkedIn post, a DM, a doc — anything that sounds like you when you're not trying. **Paste verbatim.** Do not type these mid-conversation with Claude — chat-shaped samples are worse than no samples (voice contamination).
 
 ```
-[Sample 1 — paste raw]
+Sample 1 — Aniversário rápido pro primo (WhatsApp):
+
+Markinnnn
+FELIZ ANIVERSÁRIOOO!! Que seja um ano abençoado, de muita felicidade, amor e saúde na sua
+vida e que papai do céu continue nos abençoando!! Amo você e desculpa não ter mandado ontem
+kkkkkk eu lembrei antes de ontem e hoje, mas ontem nem vi a data
+Te amo meu brabo!!!
+E po, final de semana que vem bora pra itaipava??
 ```
 
 ```
-[Sample 2 — paste raw]
+Sample 2 — Email de parceria (Mauricio / Hostinger):
+
+Fala Mauricio, tudo certo?
+
+Eu tentei na última semana, e hoje também, sacar o valor da comissão pelo painel da Hostinger
+e o botão não está funcionando. Vou anexar um print pra você entender qual botão estou
+tentando usar pra fazer o saque.
+
+Será que você consegue me ajudar por gentileza?
+
+Forte abraço,
+Enzo Barbatto
+
+---
+
+Boa tarde Mauricio, como você tá?
+
+Tenho interesse em fazer esse conteúdo sim, o que acha de fazermos um conteúdo nesse mês (para
+ser postado até o dia 28) e o próximo 30 dias depois (28 de Abril)?
+
+Acredito que dessa forma vai parecer mais uma recomendação pessoal e não uma propaganda em si,
+e por conta disso acredito que vamos conseguir converter mais.
+
+Estou para gravar um vídeo onde vou desenvolver um projeto do zero até a hospedagem, e posso
+oferecer a VPS da Hostinger como opção profissional de deploy. Faria sentido para vocês?
+
+Além disso, recebi o pagamento do segundo vídeo pro youtube que fizemos parceria mas, pra ser
+bem sincero, ainda não entrei em contato com a equipe de pagamento das comissões, mas vou
+fazer isso agora mesmo e dou um feedback pra você.
+
+Agradeço o interesse na parceria Mauricio,
+Forte Abraço!
 ```
 
 ---
@@ -35,9 +85,11 @@ An email, a LinkedIn post, a DM, a doc — anything that sounds like you when yo
 Quarterly priorities. Not yearly aspirations. Things that, if not done by July, would make you say "I wasted Q2."
 
 ```
-1. [Priority 1]
-2. [Priority 2]
-3. [Priority 3]
+1. Vender mais de R$ 70.000/mês com o curso (até fim de setembro/2026)
+2. Ser constante no YouTube: 8 vídeos por mês
+3. Começar o Instagram (do zero)
+4. Ativar a Sparo Automações (hoje parada por foco no infoproduto) e ter 5 clientes recorrentes
+5. Começar a vender com tráfego pago
 ```
 
 ---
@@ -47,7 +99,8 @@ Quarterly priorities. Not yearly aspirations. Things that, if not done by July, 
 Multiple answers OK. Stripe? Skool? GoHighLevel? QuickBooks? A spreadsheet?
 
 ```
-[Your answer here]
+Receita: Kiwify (vendas do curso) + YouTube Studio (receita do canal).
+Acompanhamento: Dashboard da Kiwify.
 ```
 
 ---
@@ -57,7 +110,7 @@ Multiple answers OK. Stripe? Skool? GoHighLevel? QuickBooks? A spreadsheet?
 Email (which one — Gmail / Outlook)? Slack? Teams? DMs (Skool / Discord / iMessage)? Phone?
 
 ```
-[Your answer here]
+Gmail, WhatsApp, comunidade no Skool e comentários dos vídeos do YouTube.
 ```
 
 ---
@@ -67,7 +120,9 @@ Email (which one — Gmail / Outlook)? Slack? Teams? DMs (Skool / Discord / iMes
 Granola? Otter? Fireflies? Google Drive? Notion? Dropbox? A folder on your desktop you keep meaning to organize?
 
 ```
-[Your answer here]
+Notion: roteiros, conteúdo do curso, ideias de apps para criar, ideias de conteúdo.
+Fireflies: gravações/transcrições de reunião (vazio por enquanto).
+Google Drive: envio de arquivos para o editor de vídeo.
 ```
 
 ---
@@ -77,7 +132,11 @@ Granola? Otter? Fireflies? Google Drive? Notion? Dropbox? A folder on your deskt
 The single biggest time-suck or recurring drudgery. Plus where tasks/projects live (ClickUp / Asana / Linear / Notion / a notebook).
 
 ```
-[Your answer here]
+Maior sugador de tempo: escolher os melhores vídeos para gravar e criar os roteiros — com base
+nos vídeos antigos (para criar conexões entre os vídeos) e nas referências que admiro (YouTubers
+gringos que me inspiram).
+
+Gestão: vídeos a gravar no Notion; agenda no Google Calendar.
 ```
 
 ---
