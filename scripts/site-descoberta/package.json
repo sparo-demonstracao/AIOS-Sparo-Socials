@@ -1,0 +1,12 @@
+{
+  "name": "sparo-descoberta",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site de descoberta da Sparo (perguntas para corretoras) - hospedado no Railway",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

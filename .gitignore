@@ -1,5 +1,12 @@
 .env
 .env.local
+.env.*
+# Segredos — NUNCA versionar
+rclone.conf
+**/rclone.conf
+*.credentials.json
+client_secret*.json
+token.json
 .DS_Store
 *.log
 __pycache__/

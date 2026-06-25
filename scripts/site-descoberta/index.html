@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#08060f"/>
+<title>Sparo · Sua corretora no piloto automático</title>
+<meta name="description" content="Umas perguntas rápidas pra desenhar a automação certa pra sua corretora. 10 minutos — pode digitar ou falar."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Sparo Automações"/>
+<meta property="og:url" content="https://acbarbatto.sparo.com.br/"/>
+<meta property="og:title" content="Sparo · Sua corretora no piloto automático"/>
+<meta property="og:description" content="Umas perguntas rápidas pra desenhar a automação certa pra sua corretora. 10 minutos — pode digitar ou falar."/>
+<meta property="og:image" content="https://acbarbatto.sparo.com.br/og.jpg"/>
+<meta property="og:image:secure_url" content="https://acbarbatto.sparo.com.br/og.jpg"/>
+<meta property="og:image:type" content="image/jpeg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Sparo — sua corretora no piloto automático"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Sparo · Sua corretora no piloto automático"/>
+<meta name="twitter:description" content="Umas perguntas rápidas pra desenhar a automação certa pra sua corretora."/>
+<meta name="twitter:image" content="https://acbarbatto.sparo.com.br/og.jpg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060f; --bg2:#0e0a1c; --ink:#f3efff; --muted:#a59cc4;
+  --line:rgba(255,255,255,.09); --glass:rgba(255,255,255,.045); --glass2:rgba(255,255,255,.07);
+  --violet:#a78bfa; --magenta:#f472d0; --cyan:#67e8d4; --gold:#ffd9a8;
+  --ok:#5be8a6; --warn:#ffcf6b;
+  --grad:linear-gradient(110deg,#a78bfa 0%,#f472d0 48%,#67e8d4 100%);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hanken Grotesk",system-ui,sans-serif;
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:rgba(244,114,208,.32);color:#fff}
+a{color:inherit}
+/* ---------- atmosphere ---------- */
+.aura{position:fixed;inset:-10%;z-index:-3;filter:saturate(1.15);
+  background:
+    radial-gradient(40vw 40vw at 18% 12%,rgba(167,139,250,.40),transparent 60%),
+    radial-gradient(46vw 46vw at 84% 22%,rgba(244,114,208,.30),transparent 62%),
+    radial-gradient(50vw 50vw at 70% 86%,rgba(103,232,212,.22),transparent 60%),
+    radial-gradient(40vw 40vw at 12% 80%,rgba(124,93,250,.28),transparent 60%),
+    #08060f;
+  animation:drift 26s ease-in-out infinite alternate}
+@keyframes drift{0%{transform:translate3d(-2%,-1%,0) scale(1.05)}100%{transform:translate3d(2%,2%,0) scale(1.12)}}
+#bg{position:fixed;inset:0;z-index:-2;display:block;width:100%;height:100%}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.5;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
+.vignette{position:fixed;inset:0;z-index:55;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 30%,transparent 55%,rgba(0,0,0,.55) 100%)}
+.glow-cursor{position:fixed;top:0;left:0;width:380px;height:380px;border-radius:50%;z-index:1;pointer-events:none;
+  background:radial-gradient(circle,rgba(167,139,250,.16),transparent 65%);transform:translate(-50%,-50%);transition:opacity .4s;opacity:0}
+/* ---------- loader ---------- */
+.loader{position:fixed;inset:0;z-index:200;background:#08060f;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity .7s,visibility .7s}
+.loader.gone{opacity:0;visibility:hidden}
+.loader .mark{font-family:"Bricolage Grotesque";font-weight:800;letter-spacing:.18em;font-size:14px;color:var(--muted)}
+.loader .bar{width:140px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.loader .bar i{display:block;height:100%;width:40%;background:var(--grad);animation:load 1.1s ease-in-out infinite}
+@keyframes load{0%{transform:translateX(-120%)}100%{transform:translateX(360%)}}
+/* ---------- topbar ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:16px clamp(16px,4vw,40px);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:linear-gradient(180deg,rgba(8,6,15,.6),transparent)}
+.logo{font-family:"Bricolage Grotesque";font-weight:800;font-size:18px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.logo .blip{width:9px;height:9px;border-radius:50%;background:var(--grad);box-shadow:0 0 16px rgba(244,114,208,.8)}
+.prog{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.prog .track{width:84px;height:5px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.prog .track i{display:block;height:100%;width:0%;background:var(--grad);border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+/* ---------- layout ---------- */
+.wrap{max-width:760px;margin:0 auto;padding:0 clamp(18px,5vw,32px) 160px;position:relative;z-index:2}
+.hero{min-height:92svh;display:flex;flex-direction:column;justify-content:center;padding-top:64px}
+.eyebrow{font-family:"Bricolage Grotesque";font-weight:700;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--violet);margin-bottom:22px;opacity:.9}
+.hello{font-family:"Instrument Serif";font-style:italic;font-size:clamp(22px,5vw,30px);color:var(--gold);margin:0 0 6px}
+h1{font-family:"Bricolage Grotesque";font-weight:700;letter-spacing:-.03em;line-height:.98;
+  font-size:clamp(40px,9vw,82px);margin:0 0 26px}
+h1 .em{font-family:"Instrument Serif";font-style:italic;font-weight:400;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lede{font-size:clamp(16px,2.4vw,20px);color:var(--muted);max-width:54ch;margin:0 0 34px}
+.lede b{color:var(--ink);font-weight:600}
+.assure{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);
+  border:1px solid var(--line);background:var(--glass);padding:8px 13px;border-radius:99px;backdrop-filter:blur(8px)}
+.chip svg{width:14px;height:14px}
+.cue{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:13px;letter-spacing:.04em}
+.cue .arrow{width:24px;height:24px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+/* ---------- cards ---------- */
+.card{position:relative;border:1px solid var(--line);background:var(--glass);border-radius:24px;
+  padding:clamp(20px,4vw,30px);margin:20px 0;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:0 24px 60px -30px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden}
+.card::before{content:"";position:absolute;inset:0;border-radius:24px;padding:1px;pointer-events:none;
+  background:linear-gradient(140deg,rgba(167,139,250,.5),transparent 40%,transparent 60%,rgba(103,232,212,.4));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.6}
+.qnum{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(34px,7vw,52px);line-height:1;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  opacity:.85;margin-bottom:6px;display:block}
+.qtext{font-family:"Bricolage Grotesque";font-weight:600;font-size:clamp(18px,3vw,22px);letter-spacing:-.01em;margin:0 0 16px;line-height:1.25}
+textarea{width:100%;min-height:104px;border:1px solid var(--line);border-radius:16px;padding:15px 16px;
+  font:inherit;font-size:16px;color:var(--ink);background:rgba(10,8,20,.5);resize:vertical;transition:border-color .25s,box-shadow .25s}
+textarea::placeholder{color:#6f679140}
+textarea:focus{outline:none;border-color:rgba(167,139,250,.7);box-shadow:0 0 0 4px rgba(167,139,250,.14)}
+.tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+.mic{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(167,139,250,.5);color:var(--ink);
+  background:rgba(167,139,250,.1);border-radius:99px;padding:10px 17px;font-size:14px;font-weight:600;cursor:pointer;
+  transition:transform .2s,background .2s,border-color .2s}
+.mic:hover{transform:translateY(-1px);background:rgba(167,139,250,.18)}
+.mic .ic{width:16px;height:16px;display:grid;place-items:center}
+.mic.rec{background:rgba(244,114,208,.16);border-color:var(--magenta);box-shadow:0 0 0 0 rgba(244,114,208,.5);animation:ring 1.4s ease-out infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(244,114,208,.45)}100%{box-shadow:0 0 0 16px rgba(244,114,208,0)}}
+.fstat{font-size:13px;color:var(--muted);transition:color .3s}
+.fstat.ok{color:var(--ok)}
+.hint{font-size:13px;color:var(--muted)}
+/* ---------- save bar ---------- */
+.savebar{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:10px;
+  padding:11px 20px;border-radius:99px;border:1px solid var(--line);background:rgba(14,10,28,.72);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);font-size:13.5px;color:var(--muted);
+  box-shadow:0 16px 50px -20px rgba(0,0,0,.8)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 12px var(--ok);flex:0 0 auto;transition:.3s}
+.dot.saving{background:var(--violet);box-shadow:0 0 12px var(--violet);animation:pp 1s infinite}
+.dot.warn{background:var(--warn);box-shadow:0 0 12px var(--warn)}
+@keyframes pp{50%{opacity:.4}}
+/* ---------- done ---------- */
+.done{display:none;text-align:center;border:1px solid var(--line);border-radius:28px;padding:clamp(28px,6vw,44px);margin:26px 0 8px;
+  background:linear-gradient(150deg,rgba(167,139,250,.16),rgba(244,114,208,.1) 50%,rgba(103,232,212,.12));
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);position:relative;overflow:hidden}
+.done h2{font-family:"Bricolage Grotesque";font-weight:700;font-size:clamp(26px,5vw,38px);margin:6px 0 10px;letter-spacing:-.02em}
+.done h2 .em{font-family:"Instrument Serif";font-style:italic;font-weight:400;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.done p{color:var(--muted);margin:0;font-size:15.5px}
+.reveal{opacity:0;transform:translateY(28px)}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.aura,.cue .arrow,.mic.rec,.loader .bar i{animation:none}}
+</style>
+</head>
+<body>
+<div class="aura"></div>
+<canvas id="bg"></canvas>
+<div class="glow-cursor" id="cursor"></div>
+<div class="vignette"></div>
+<div class="grain"></div>
+
+<div class="loader" id="loader"><div class="mark">SPARO · AUTOMAÇÃO COM IA</div><div class="bar"><i></i></div></div>
+
+<header class="topbar">
+  <div class="logo"><span class="blip"></span>Sparo</div>
+  <div class="prog"><span id="pcount">0/6</span><span class="track"><i id="pbar"></i></span></div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow reveal">Pesquisa de descoberta</div>
+    <p class="hello reveal" id="hello" style="display:none">Oi, tia 💜</p>
+    <h1 class="reveal">Sua corretora no <span class="em">piloto&nbsp;automático</span>.</h1>
+    <p class="lede reveal">Umas perguntas rápidas pra eu entender a sua operação e desenhar a automação certa. Leva uns <b>10 minutos</b> — pode <b>digitar</b> ou tocar no microfone e <b>falar</b> (vira texto na hora).</p>
+    <div class="assure reveal">
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Salva sozinho</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 3v6h6"/></svg> Volta de onde parou</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" stroke-width="2"><path d="M12 1v22"/><path d="M19 8a4 4 0 0 1 0 8"/><path d="M5 8a4 4 0 0 0 0 8"/></svg> Pode responder por voz</span>
+    </div>
+    <div class="cue reveal"><span class="arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>começar</div>
+  </section>
+
+  <section id="form"></section>
+
+  <div class="done" id="done">
+    <h2>Prontinho! <span class="em">Recebido.</span></h2>
+    <p>Suas respostas estão salvas. Muito obrigado — isso já me dá o mapa pra montar a automação. 💜</p>
+  </div>
+</main>
+
+<div class="savebar"><span class="dot" id="sdot"></span><span id="stext">Tudo salvo</span></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ============================ DADOS (lógica intacta) ============================ */
+const SB_URL="https://boiicgrrpqsgobewlfqs.supabase.co";
+const SB_KEY="sb_publishable_ZH1FLt5UaPhlBVdAVYS6fA_--BSNkLy";
+const TABLE="descoberta_respostas";
+const QS=[
+"No dia a dia da corretora, qual a tarefa repetitiva que mais consome tempo de vocês — aquela que você queria nunca mais ter que fazer na mão?",
+"Como você controla hoje os vencimentos das apólices pra renovar (planilha, sistema, caderno)? Já aconteceu de passar da data?",
+"Que sistema você usa (multicálculo / gestão)? Dá pra exportar a lista de clientes e apólices numa planilha (Excel/CSV)?",
+"Quando chega um pedido de cotação no WhatsApp, como é até você responder? O que mais trava?",
+"Pensando nas outras corretoras que você conhece pelo sindicato: qual a reclamação que você MAIS escuta? O que todo mundo queria que fosse automático?",
+"Você ou os colegas já tentaram algum bot/CRM/ferramenta de WhatsApp antes? Funcionou ou largaram?"
+];
+const params=new URLSearchParams(location.search);
+let RESP=(params.get("r")||localStorage.getItem("sparo_resp")||"").trim();
+if(!RESP){RESP=(prompt("Seu nome (pra eu guardar suas respostas):")||"convidado").trim()||"convidado";}
+localStorage.setItem("sparo_resp",RESP);
+if(RESP.toLowerCase()==="tia"){const h=document.getElementById("hello");if(h)h.style.display="block";}
+const LSK="sparo_ans_"+RESP, QK="sparo_q_"+RESP;
+let answers=JSON.parse(localStorage.getItem(LSK)||"{}");
+let queue=JSON.parse(localStorage.getItem(QK)||"[]");
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let activeRec=null,activeQid=null,baseText="",finalText="";const timers={};
+
+function persistLocal(){localStorage.setItem(LSK,JSON.stringify(answers));}
+function persistQueue(){localStorage.setItem(QK,JSON.stringify(queue));}
+function setGlobal(s){const d=document.getElementById("sdot"),t=document.getElementById("stext");
+  d.className="dot"+(s==="warn"?" warn":s==="saving"?" saving":"");
+  t.textContent=s==="warn"?"Sem internet — salvo no aparelho, eu envio sozinho":s==="saving"?"Salvando…":"Tudo salvo ✓";}
+function setFieldStat(qid,s){const el=document.getElementById("fs-"+qid);if(!el)return;
+  el.className="fstat"+(s==="ok"?" ok":"");el.textContent=s==="ok"?"salvo ✓":s==="saving"?"salvando…":"";}
+function answeredCount(){return QS.reduce((n,_,i)=>n+((answers[i+1]||"").trim()?1:0),0);}
+function updateProgress(){const n=answeredCount();const pct=Math.round(n/QS.length*100);
+  const bar=document.getElementById("pbar"),c=document.getElementById("pcount");
+  if(bar)bar.style.width=pct+"%";if(c)c.textContent=n+"/"+QS.length;
+  const all=n===QS.length;const done=document.getElementById("done");
+  if(all&&done.style.display!=="block"){done.style.display="block";celebrate();}
+  if(!all&&done.style.display==="block"){done.style.display="none";}}
+
+function buildRow(qid){return{respondente:RESP,pergunta_id:qid,pergunta:QS[qid-1],resposta:answers[qid]||"",atualizado_em:new Date().toISOString()};}
+async function send(row){const r=await fetch(SB_URL+"/rest/v1/"+TABLE+"?on_conflict=respondente,pergunta_id",{method:"POST",
+  headers:{apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates,return=minimal"},
+  body:JSON.stringify(row)});if(!r.ok)throw new Error("http "+r.status);}
+function enqueue(row){queue=queue.filter(q=>q.pergunta_id!==row.pergunta_id);queue.push(row);persistQueue();}
+async function flushQueue(){if(!queue.length)return;for(const row of queue.slice()){try{await send(row);queue=queue.filter(q=>q.pergunta_id!==row.pergunta_id);persistQueue();}catch(e){setGlobal("warn");return;}}if(!queue.length)setGlobal("ok");}
+async function saveNow(qid){setGlobal("saving");setFieldStat(qid,"saving");const row=buildRow(qid);
+  try{await send(row);setFieldStat(qid,"ok");setGlobal("ok");flushQueue();}
+  catch(e){enqueue(row);setGlobal("warn");setFieldStat(qid,"");}updateProgress();}
+function scheduleSave(qid){clearTimeout(timers[qid]);timers[qid]=setTimeout(()=>saveNow(qid),700);}
+function onInput(qid,ta){answers[qid]=ta.value;persistLocal();setFieldStat(qid,"saving");scheduleSave(qid);updateProgress();}
+
+function stopMic(btn){if(activeRec){try{activeRec.stop()}catch(e){}}activeRec=null;activeQid=null;
+  if(btn){btn.classList.remove("rec");btn.querySelector(".mt").textContent="Falar";}}
+function micClick(qid,btn,ta){if(!SR)return;
+  if(activeRec){const same=activeQid===qid;stopMic(document.getElementById("mic-"+activeQid));if(same)return;}
+  const rec=new SR();rec.lang="pt-BR";rec.interimResults=true;rec.continuous=true;
+  baseText=ta.value?ta.value.replace(/\s+$/,"")+" ":"";finalText="";activeRec=rec;activeQid=qid;
+  btn.classList.add("rec");btn.querySelector(".mt").textContent="Ouvindo… toque pra parar";
+  rec.onresult=ev=>{let interim="";
+    for(let i=ev.resultIndex;i<ev.results.length;i++){const r=ev.results[i];
+      if(r.isFinal){let f=r[0].transcript.trim();if(f){finalText=(finalText?finalText.replace(/\s+$/,"")+" ":"")+f;}}
+      else interim+=r[0].transcript;}
+    ta.value=baseText+finalText+(interim?(finalText?" ":"")+interim.trim():"");onInput(qid,ta);};
+  rec.onerror=()=>stopMic(btn);rec.onend=()=>{if(activeQid===qid){stopMic(btn);saveNow(qid);}};
+  try{rec.start()}catch(e){stopMic(btn);}}
+
+function render(){const f=document.getElementById("form");
+  QS.forEach((q,i)=>{const qid=i+1;
+    const card=document.createElement("div");card.className="card reveal";
+    const num=document.createElement("span");num.className="qnum";num.textContent=String(qid).padStart(2,"0");
+    const qt=document.createElement("p");qt.className="qtext";qt.textContent=q;
+    const ta=document.createElement("textarea");ta.id="ta-"+qid;ta.value=answers[qid]||"";ta.placeholder="Responda do seu jeito…";
+    ta.addEventListener("input",()=>onInput(qid,ta));ta.addEventListener("blur",()=>saveNow(qid));
+    const tools=document.createElement("div");tools.className="tools";
+    const stat=document.createElement("span");stat.className="fstat";stat.id="fs-"+qid;
+    if(SR){const b=document.createElement("button");b.className="mic";b.id="mic-"+qid;b.type="button";
+      b.innerHTML='<span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><span class="mt">Falar</span>';
+      b.addEventListener("click",()=>micClick(qid,b,ta));tools.appendChild(b);}
+    else{const s=document.createElement("span");s.className="hint";s.textContent="(pode digitar 🙂)";tools.appendChild(s);}
+    tools.appendChild(stat);
+    card.appendChild(num);card.appendChild(qt);card.appendChild(ta);card.appendChild(tools);f.appendChild(card);
+    if(answers[qid])setFieldStat(qid,"ok");
+  });
+  if(!SR){const p=document.createElement("p");p.className="hint";p.style.textAlign="center";
+    p.textContent="Pra responder por voz, abra este link no Google Chrome.";f.appendChild(p);}}
+
+async function resumeFromServer(){try{
+  const r=await fetch(SB_URL+"/rest/v1/"+TABLE+"?respondente=eq."+encodeURIComponent(RESP)+"&select=pergunta_id,resposta",
+    {headers:{apikey:SB_KEY,Authorization:"Bearer "+SB_KEY}});
+  if(!r.ok)return;const rows=await r.json();
+  rows.forEach(row=>{if(row.resposta!=null&&(!answers[row.pergunta_id]||!answers[row.pergunta_id].trim())){
+    answers[row.pergunta_id]=row.resposta;const ta=document.getElementById("ta-"+row.pergunta_id);
+    if(ta){ta.value=row.resposta;setFieldStat(row.pergunta_id,"ok");}}});
+  persistLocal();updateProgress();}catch(e){}}
+
+/* ============================ 3D + MOVIMENTO ============================ */
+const reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+const isMobile=matchMedia("(max-width:640px)").matches;
+let blobMat=null,celebrated=false;
+
+function initThree(){
+  if(reduce||typeof THREE==="undefined")return;
+  let renderer;
+  try{renderer=new THREE.WebGLRenderer({canvas:document.getElementById("bg"),alpha:true,antialias:!isMobile});}catch(e){return;}
+  renderer.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.5:2));
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,.1,100);cam.position.z=4.2;
+  const resize=()=>{renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();};
+  resize();addEventListener("resize",resize);
+
+  const noise=`vec3 mod289(vec3 x){return x-floor(x*(1./289.))*289.;}vec4 mod289(vec4 x){return x-floor(x*(1./289.))*289.;}
+  vec4 permute(vec4 x){return mod289(((x*34.)+1.)*x);}vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-.85373472095314*r;}
+  float snoise(vec3 v){const vec2 C=vec2(1./6.,1./3.);const vec4 D=vec4(0.,.5,1.,2.);
+  vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.-g;vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);
+  vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;i=mod289(i);
+  vec4 p=permute(permute(permute(i.z+vec4(0.,i1.z,i2.z,1.))+i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));
+  float n_=.142857142857;vec3 ns=n_*D.wyz-D.xzx;vec4 j=p-49.*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.*x_);
+  vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.-abs(x)-abs(y);vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);
+  vec4 s0=floor(b0)*2.+1.;vec4 s1=floor(b1)*2.+1.;vec4 sh=-step(h,vec4(0.));vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+  vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);
+  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;
+  vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);m=m*m;
+  return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));}`;
+
+  blobMat=new THREE.ShaderMaterial({transparent:true,
+    uniforms:{t:{value:0},amp:{value:.26},boost:{value:0},
+      cA:{value:new THREE.Color("#a78bfa")},cB:{value:new THREE.Color("#f472d0")},cC:{value:new THREE.Color("#67e8d4")}},
+    vertexShader:noise+`uniform float t;uniform float amp;varying float vn;varying vec3 vN;varying vec3 vV;
+      void main(){float n=snoise(normal*1.6+t*.35)*.6+snoise(position*2.2-t*.2)*.4;vn=n;
+        vec3 p=position+normal*n*amp;vN=normalize(normalMatrix*normal);vec4 mv=modelViewMatrix*vec4(p,1.);vV=normalize(-mv.xyz);
+        gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`uniform vec3 cA;uniform vec3 cB;uniform vec3 cC;uniform float boost;varying float vn;varying vec3 vN;varying vec3 vV;
+      void main(){float f=pow(1.-max(dot(vN,vV),0.),2.2);
+        vec3 col=mix(cA,cB,smoothstep(-.5,.7,vn));col=mix(col,cC,f*.8);
+        float a=clamp(.16+f*.85+boost*.5,0.,1.);gl_FragColor=vec4(col*(1.+boost),a);}`});
+  const blob=new THREE.Mesh(new THREE.IcosahedronGeometry(1.25,isMobile?3:5),blobMat);
+  blob.position.set(isMobile?.0:1.15,isMobile?1.1:.5,0);scene.add(blob);
+
+  // partículas
+  const N=isMobile?500:1100;const pos=new Float32Array(N*3);
+  for(let i=0;i<N;i++){const r=2.4+Math.random()*3.2,th=Math.random()*6.28,ph=Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.sin(ph)*Math.sin(th);pos[i*3+2]=r*Math.cos(ph);}
+  const pg=new THREE.BufferGeometry();pg.setAttribute("position",new THREE.BufferAttribute(pos,3));
+  const pts=new THREE.Points(pg,new THREE.PointsMaterial({size:.018,color:0xc9b8ff,transparent:true,opacity:.55,blending:THREE.AdditiveBlending,depthWrite:false}));
+  scene.add(pts);
+
+  let mx=0,my=0;addEventListener("pointermove",e=>{mx=(e.clientX/innerWidth-.5);my=(e.clientY/innerHeight-.5);},{passive:true});
+  const clock=new THREE.Clock();let raf;
+  function loop(){raf=requestAnimationFrame(loop);const dt=clock.getDelta();const e=clock.elapsedTime;
+    blobMat.uniforms.t.value=e;blobMat.uniforms.boost.value*=.94;
+    blob.rotation.y+=dt*.25;blob.rotation.x=Math.sin(e*.3)*.15;
+    blob.position.y+=(((isMobile?1.1:.5)-my*.4)-blob.position.y)*.04;
+    pts.rotation.y+=dt*.04;pts.rotation.x+= -my*.0005+dt*.01;
+    cam.position.x+=(mx*.5-cam.position.x)*.05;cam.lookAt(0,blob.position.y*.4,0);
+    renderer.render(scene,cam);}
+  loop();
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)cancelAnimationFrame(raf);else loop();});
+}
+function celebrate(){if(celebrated)return;celebrated=true;
+  if(blobMat&&window.gsap){gsap.to(blobMat.uniforms.boost,{value:1,duration:.5,yoyo:true,repeat:1,ease:"power2.out"});
+    gsap.fromTo(blobMat.uniforms.amp,{value:.26},{value:.5,duration:.6,yoyo:true,repeat:1,ease:"power2.out"});}
+  if(window.gsap)gsap.fromTo("#done",{scale:.96,opacity:0},{scale:1,opacity:1,duration:.7,ease:"power3.out"});}
+
+function initMotion(){
+  if(!window.gsap||reduce){document.querySelectorAll(".reveal").forEach(e=>{e.style.opacity=1;e.style.transform="none";});return;}
+  gsap.registerPlugin(ScrollTrigger);
+  const hero=gsap.timeline({defaults:{ease:"power3.out"}});
+  hero.to(".hero .reveal",{opacity:1,y:0,duration:.9,stagger:.12,delay:.15});
+  document.querySelectorAll(".card.reveal").forEach(c=>{
+    gsap.to(c,{opacity:1,y:0,duration:.8,ease:"power3.out",scrollTrigger:{trigger:c,start:"top 86%"}});});
+}
+
+/* cursor glow (desktop) */
+if(matchMedia("(pointer:fine)").matches){const c=document.getElementById("cursor");
+  addEventListener("pointermove",e=>{c.style.opacity=1;c.style.left=e.clientX+"px";c.style.top=e.clientY+"px";},{passive:true});}
+
+/* ============================ BOOT ============================ */
+render();
+resumeFromServer();
+updateProgress();
+setGlobal(queue.length?"warn":"ok");
+addEventListener("online",flushQueue);
+setInterval(flushQueue,20000);
+flushQueue();
+initThree();
+window.addEventListener("load",()=>{
+  initMotion();
+  setTimeout(()=>document.getElementById("loader").classList.add("gone"),420);
+});
+setTimeout(()=>document.getElementById("loader").classList.add("gone"),3500); // failsafe
+</script>
+</body>
+</html>
