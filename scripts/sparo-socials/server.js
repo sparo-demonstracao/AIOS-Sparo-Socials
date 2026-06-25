@@ -38,4 +38,4 @@ http.createServer((req, res) => {
     res.writeHead(200, headers);
     res.end(data);
   });
-}).listen(PORT, () => console.log('Sparo Social Links on :' + PORT));
+}).listen(PORT, '0.0.0.0', () => console.log('Sparo Social Links on 0.0.0.0:' + PORT));
