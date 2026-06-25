@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sparo Links — Teste de fundos 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --orange:#FF6633;--orange-deep:#E8551F;--ink:#2a1206;--ink-soft:#7a4427;
+    --card:rgba(255,255,255,.86);--grad:linear-gradient(135deg,#FF8A4D 0%,#FF6633 55%,#E8551F 100%);
+    --shadow:0 6px 20px rgba(120,45,10,.18);--shadow-hi:0 14px 34px rgba(120,45,10,.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',-apple-system,sans-serif;color:var(--ink);min-height:100vh;
+    display:flex;justify-content:center;padding:18px 20px 96px;-webkit-font-smoothing:antialiased;
+    background:radial-gradient(70% 50% at 50% 0%,#FFA76B 0%,transparent 55%),linear-gradient(180deg,#FF6633 0%,#E8551F 55%,#B83C0E 100%);
+    background-attachment:fixed;overflow-x:hidden;}
+  #scene{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  .glow{position:fixed;z-index:0;top:8%;left:50%;width:520px;height:520px;transform:translateX(-50%);
+    background:radial-gradient(circle,rgba(255,210,170,.4),transparent 62%);filter:blur(20px);pointer-events:none}
+  .wrap{position:relative;z-index:1;width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center}
+  .ava{position:relative;width:104px;height:104px;border-radius:50%;margin:6px 0 15px;padding:4px;
+    background:linear-gradient(145deg,#fff,#FFD3B0);box-shadow:0 10px 30px rgba(150,55,15,.4)}
+  .ava img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+  h1{font-size:24px;font-weight:800;color:#fff;text-shadow:0 2px 14px rgba(120,40,5,.35)}
+  .bio{margin-top:6px;color:#fff;opacity:.95;font-size:14px;font-weight:600;text-shadow:0 1px 8px rgba(120,40,5,.25)}
+  .links{width:100%;margin-top:22px;display:flex;flex-direction:column;gap:15px}
+  .btn{position:relative;display:flex;align-items:center;justify-content:center;min-height:64px;padding:12px 56px;
+    border-radius:16px;background:var(--card);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.6);box-shadow:var(--shadow);text-decoration:none;color:var(--ink);
+    transition:transform .22s cubic-bezier(.2,.7,.2,1),box-shadow .22s ease,background .22s ease}
+  .btn:hover{transform:translateY(-3px) scale(1.012);box-shadow:var(--shadow-hi);background:rgba(255,255,255,.95)}
+  .btn.hero{background:linear-gradient(135deg,#fff 0%,#FFE9DC 100%);border-color:rgba(255,140,90,.6)}
+  .label{font-weight:700;font-size:15.5px}
+  .thumb{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:11px;
+    display:grid;place-items:center;background:var(--grad);color:#fff;box-shadow:0 4px 12px rgba(200,67,15,.35)}
+  .thumb svg{width:24px;height:24px}
+
+  /* barra de controle (seletor de fundo) */
+  .fxbar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:30;display:flex;gap:7px;
+    padding:8px;border-radius:16px;background:rgba(20,8,3,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 40px rgba(0,0,0,.4);flex-wrap:wrap;justify-content:center;max-width:94vw}
+  .fxbar button{font-family:inherit;font-size:12.5px;font-weight:700;color:#ffd9c4;background:transparent;border:1px solid transparent;
+    border-radius:10px;padding:8px 13px;cursor:pointer;transition:all .18s;white-space:nowrap}
+  .fxbar button:hover{color:#fff;background:rgba(255,255,255,.08)}
+  .fxbar button.active{color:#fff;background:linear-gradient(135deg,#FF8A4D,#E8551F);box-shadow:0 4px 14px rgba(232,85,31,.5)}
+  .fxhint{position:fixed;left:50%;bottom:64px;transform:translateX(-50%);z-index:30;color:#fff;opacity:.85;
+    font-size:11.5px;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.4);pointer-events:none;text-align:center}
+  .reveal{opacity:0}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1!important}}
+</style>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <div class="glow"></div>
+
+  <main class="wrap">
+    <div class="ava reveal"><img src="foto.jpg" alt="Enzo Barbatto" /></div>
+    <h1 class="reveal">Enzo Barbatto</h1>
+    <p class="bio reveal">Automação com IA, sem escrever código ⚡</p>
+    <nav class="links">
+      <a class="btn hero reveal" href="#"><span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 13L5 12.18v3.64L12 20l7-4.18v-3.64L12 16Z"/></svg></span><span class="label">Curso completo</span></a>
+      <a class="btn reveal" href="#"><span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.3-.42-4.88a2.55 2.55 0 0 0-1.8-1.8C19.2 4.9 12 4.9 12 4.9s-7.2 0-8.78.42a2.55 2.55 0 0 0-1.8 1.8C1 8.7 1 12 1 12s0 3.3.42 4.88a2.55 2.55 0 0 0 1.8 1.8C4.8 19.1 12 19.1 12 19.1s7.2 0 8.78-.42a2.55 2.55 0 0 0 1.8-1.8C23 15.3 23 12 23 12ZM9.75 15.02V8.98L15.5 12l-5.75 3.02Z"/></svg></span><span class="label">YouTube</span></a>
+      <a class="btn reveal" href="#"><span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></span><span class="label">Comunidade grátis</span></a>
+      <a class="btn reveal" href="#"><span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></span><span class="label">Sparo Automações</span></a>
+    </nav>
+  </main>
+
+  <div class="fxhint" id="fxhint">Mexa o mouse — o fundo reage</div>
+  <div class="fxbar" id="fxbar">
+    <button data-fx="codigo" class="active">⌘ Código</button>
+    <button data-fx="agentes">⬡ Agentes</button>
+    <button data-fx="terminal">▌ Terminal</button>
+    <button data-fx="glass">💎 Vidro</button>
+    <button data-fx="off">○ Off</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script type="importmap">
+  { "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }}
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+    import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+    import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+
+    const canvas = document.getElementById('scene');
+    const PAL = [0xFF6633,0xFF8A4D,0xE8551F,0xFFFFFF,0xFFC9A3];
+    let renderer, scene, camera, envTex, raf=0, current=null, mode='glass';
+    const pointer={x:0,y:0,tx:0,ty:0};
+    const isMobile = innerWidth<640;
+
+    renderer = new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
+    renderer.setClearColor(0x000000,0);
+    renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+    renderer.setSize(innerWidth,innerHeight);
+    renderer.toneMapping=THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure=1.15;
+    scene=new THREE.Scene();
+    camera=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,0.1,200);
+    camera.position.set(0,0,13);
+    const pmrem=new THREE.PMREMGenerator(renderer);
+    envTex=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+    scene.environment=envTex;
+    scene.add(new THREE.DirectionalLight(0xffffff,2).translateOnAxis(new THREE.Vector3(0.5,0.8,0.6).normalize(),12));
+    const warm=new THREE.DirectionalLight(0xffb380,1.3);warm.position.set(-6,-2,4);scene.add(warm);
+
+    addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);},{passive:true});
+    addEventListener('pointermove',e=>{pointer.tx=e.clientX/innerWidth-0.5;pointer.ty=e.clientY/innerHeight-0.5;},{passive:true});
+    addEventListener('deviceorientation',e=>{if(e.gamma==null)return;pointer.tx=Math.max(-.5,Math.min(.5,e.gamma/45));pointer.ty=Math.max(-.5,Math.min(.5,(e.beta-45)/45));},{passive:true});
+    document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
+
+    function clearGroup(g){g.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());}});scene.remove(g);}
+    function phys(color,glass){return new THREE.MeshPhysicalMaterial({color,metalness:glass?0:0.92,roughness:glass?0.05:0.18,clearcoat:1,clearcoatRoughness:0.12,transmission:glass?1:0,thickness:glass?1.4:0,ior:1.45,envMapIntensity:1.25});}
+
+    // ---------- MODOS ----------
+    const MODES = {
+      glass(){
+        const g=new THREE.Group();scene.add(g);
+        const geoms=[new THREE.IcosahedronGeometry(1,0),new THREE.TorusGeometry(.8,.32,24,64),new THREE.OctahedronGeometry(1,0),new THREE.DodecahedronGeometry(1,0),new THREE.TorusKnotGeometry(.62,.24,120,18)];
+        const meshes=[];const N=isMobile?10:17;
+        for(let i=0;i<N;i++){const glass=Math.random()<.32;const m=new THREE.Mesh(geoms[i%geoms.length],phys(PAL[i%PAL.length],glass));
+          const r=4.2+Math.random()*4.5,a=Math.random()*6.28;m.position.set(Math.cos(a)*r,(Math.random()-.5)*9,-1-Math.random()*7+Math.sin(a)*r*.3);
+          m.scale.setScalar(.5+Math.random()*.95);m.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);
+          m.userData.s=[(Math.random()-.5)*.01,(Math.random()-.5)*.01,(Math.random()-.5)*.01];g.add(m);meshes.push(m);
+          gsap.to(m.position,{y:m.position.y+(Math.random()*1.4+.6),duration:3.5+Math.random()*3,ease:'sine.inOut',yoyo:true,repeat:-1,delay:Math.random()*2});}
+        g.scale.setScalar(.6);gsap.to(g.scale,{x:1,y:1,z:1,duration:1.4,ease:'power3.out'});
+        return {group:g,update(){for(const m of meshes){m.rotation.x+=m.userData.s[0];m.rotation.y+=m.userData.s[1];m.rotation.z+=m.userData.s[2];}
+          g.rotation.y+=(pointer.x*.6-g.rotation.y)*.04;g.rotation.x+=(-pointer.y*.4-g.rotation.x)*.04;}};
+      },
+      codigo(){
+        // glifos de código em vidro/metal flutuando (vibe coding)
+        const g=new THREE.Group();scene.add(g);
+        const meshes=[];
+        const GLY=['{','}','</>','=>','( )','[ ]','&&','$_','//','::','fn','01','<>','||','##','/*'];
+        const N=isMobile?9:15;
+        if(FONT){
+          for(let i=0;i<N;i++){
+            const txt=GLY[Math.floor(Math.random()*GLY.length)];
+            const geo=new TextGeometry(txt,{font:FONT,size:0.62,height:0.22,curveSegments:4,bevelEnabled:true,bevelThickness:0.035,bevelSize:0.03,bevelSegments:2});
+            geo.computeBoundingBox();const bb=geo.boundingBox;geo.translate(-(bb.max.x-bb.min.x)/2-bb.min.x,-(bb.max.y-bb.min.y)/2-bb.min.y,0);
+            const glass=Math.random()<.4;
+            const m=new THREE.Mesh(geo,phys(PAL[i%PAL.length],glass));
+            const r=3.8+Math.random()*4.6,a=Math.random()*6.28;
+            m.position.set(Math.cos(a)*r,(Math.random()-.5)*9,-1-Math.random()*7+Math.sin(a)*r*.3);
+            m.scale.setScalar(.7+Math.random()*.9);
+            m.rotation.set((Math.random()-.5)*.6,(Math.random()-.5)*.8,(Math.random()-.5)*.4);
+            m.userData.s=[(Math.random()-.5)*.006,(Math.random()-.5)*.008,(Math.random()-.5)*.004];
+            g.add(m);meshes.push(m);
+            gsap.to(m.position,{y:m.position.y+(Math.random()*1.3+.5),duration:3.4+Math.random()*3,ease:'sine.inOut',yoyo:true,repeat:-1,delay:Math.random()*2});
+          }
+        }
+        g.scale.setScalar(.6);gsap.to(g.scale,{x:1,y:1,z:1,duration:1.3,ease:'power3.out'});
+        return {group:g,update(){for(const m of meshes){m.rotation.x+=m.userData.s[0];m.rotation.y+=m.userData.s[1];m.rotation.z+=m.userData.s[2];}
+          g.rotation.y+=(pointer.x*.5-g.rotation.y)*.04;g.rotation.x+=(-pointer.y*.35-g.rotation.x)*.04;}};
+      },
+      agentes(){
+        // grafo de agentes: nós conectados com pacotes de dados correndo nas conexões
+        const g=new THREE.Group();scene.add(g);
+        const N=isMobile?9:14;const nodes=[];
+        for(let i=0;i<N;i++){const v=new THREE.Vector3((Math.random()-.5)*16,(Math.random()-.5)*10,(Math.random()-.5)*7);
+          const glass=Math.random()<.5;const m=new THREE.Mesh(new THREE.IcosahedronGeometry(0.34+Math.random()*0.18,1),phys(PAL[i%PAL.length],glass));
+          m.position.copy(v);g.add(m);nodes.push({m,v,pulse:Math.random()*6});}
+        // arestas
+        const edges=[];for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){if(nodes[i].v.distanceTo(nodes[j].v)<7.2&&edges.length<(isMobile?14:24))edges.push([i,j]);}
+        const lpos=new Float32Array(edges.length*6);
+        edges.forEach((e,k)=>{const a=nodes[e[0]].v,b=nodes[e[1]].v;lpos.set([a.x,a.y,a.z,b.x,b.y,b.z],k*6);});
+        const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.BufferAttribute(lpos,3));
+        g.add(new THREE.LineSegments(lg,new THREE.LineBasicMaterial({color:0xFF8A4D,transparent:true,opacity:.28,blending:THREE.AdditiveBlending,depthWrite:false})));
+        // pacotes
+        const packGeo=new THREE.SphereGeometry(0.09,8,8);const packMat=new THREE.MeshBasicMaterial({color:0xFFF3E8});
+        const packs=edges.map((e,k)=>{const p=new THREE.Mesh(packGeo,packMat.clone());g.add(p);return {p,e,t:Math.random(),sp:0.004+Math.random()*0.006};});
+        gsap.from(g.scale,{x:.4,y:.4,z:.4,duration:1.2,ease:'power3.out'});
+        return {group:g,update(t){
+          for(const nd of nodes){const s=1+0.12*Math.sin(t*3+nd.pulse);nd.m.scale.setScalar(s);}
+          for(const pk of packs){pk.t+=pk.sp;if(pk.t>1)pk.t-=1;const a=nodes[pk.e[0]].v,b=nodes[pk.e[1]].v;pk.p.position.lerpVectors(a,b,pk.t);}
+          g.rotation.y+=(pointer.x*.6-g.rotation.y)*.04;g.rotation.x+=(-pointer.y*.4-g.rotation.x)*.04;}};
+      },
+      terminal(){
+        // chuva de código (matrix) laranja em 3D com profundidade
+        const g=new THREE.Group();scene.add(g);
+        const CH='01<>{}/=;$#&|+*'.split('');
+        function glyphTex(ch){const c=document.createElement('canvas');c.width=c.height=64;const x=c.getContext('2d');
+          x.clearRect(0,0,64,64);x.font='bold 48px "JetBrains Mono",monospace';x.textAlign='center';x.textBaseline='middle';
+          x.shadowColor='#FF6633';x.shadowBlur=14;x.fillStyle='#FFE9DC';x.fillText(ch,32,34);return new THREE.CanvasTexture(c);}
+        const texes=CH.map(glyphTex);
+        const N=isMobile?90:150;const drops=[];
+        for(let i=0;i<N;i++){const t=texes[Math.floor(Math.random()*texes.length)];
+          const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:.5+Math.random()*.5}));
+          const z=-8+Math.random()*12;sp.position.set((Math.random()-.5)*26,(Math.random()-.5)*18,z);
+          const sc=0.5+(z+8)/20*0.8;sp.scale.setScalar(sc);
+          sp.userData={vy:0.03+Math.random()*0.06+ (z+8)/20*0.04};g.add(sp);drops.push(sp);}
+        return {group:g,update(){for(const s of drops){s.position.y-=s.userData.vy;if(s.position.y<-9){s.position.y=9;s.position.x=(Math.random()-.5)*26;}}
+          g.position.x+=(pointer.x*3-g.position.x)*.04;g.rotation.y+=(pointer.x*.12-g.rotation.y)*.04;}};
+      },
+    };
+
+    function setMode(name){
+      if(current){ if(current.dispose)current.dispose(); clearGroup(current.group); current=null; }
+      scene.fog=null; camera.position.set(0,0,name==='liquid'?9:13);
+      mode=name;
+      if(name!=='off') current=MODES[name]();
+    }
+
+    let t=0;
+    function render(){
+      t+=0.006;
+      pointer.x+=(pointer.tx-pointer.x)*.05;pointer.y+=(pointer.ty-pointer.y)*.05;
+      if(current){
+        current.update(t);
+        if(mode!=='grid'){camera.position.x+=(pointer.x*2-camera.position.x)*.04;camera.position.y+=(-pointer.y*1.2-camera.position.y)*.04;camera.lookAt(0,0,0);}
+        else camera.lookAt(0,0,0);
+      }
+      renderer.render(scene,camera);raf=requestAnimationFrame(render);
+    }
+    function start(){if(!raf)raf=requestAnimationFrame(render);}
+    function stop(){if(raf){cancelAnimationFrame(raf);raf=0;}}
+
+    // carrega a fonte mono p/ os glifos de código, depois inicia
+    let FONT=null;
+    new FontLoader().load('https://unpkg.com/three@0.160.0/examples/fonts/droid/droid_sans_mono_regular.typeface.json',
+      f=>{FONT=f; if(mode==='codigo'&&current){clearGroup(current.group);current=MODES.codigo();}},
+      undefined,
+      ()=>{ // se a fonte falhar, cai pro Vidro
+        if(mode==='codigo'){const b=document.querySelector('[data-fx="codigo"]');if(b)b.textContent='⌘ Código';setMode('glass');document.querySelectorAll('.fxbar button').forEach(x=>x.classList.remove('active'));document.querySelector('[data-fx="glass"]').classList.add('active');}
+      });
+    setMode('codigo');start();
+
+    // UI
+    const bar=document.getElementById('fxbar');
+    bar.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+      bar.querySelectorAll('button').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+      setMode(b.dataset.fx);});
+
+    // entrada conteúdo
+    if(window.gsap){gsap.set('.reveal',{opacity:0,y:16});gsap.to('.reveal',{opacity:1,y:0,duration:.6,ease:'power3.out',stagger:.07,delay:.1});}
+    setTimeout(()=>{const h=document.getElementById('fxhint');if(h)gsap.to(h,{opacity:0,duration:1,delay:3.5});},10);
+  </script>
+</body>
+</html>
