@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Enzo Barbatto — Automação com IA</title>
+<meta name="description" content="Te ensino a colocar seu negócio no piloto automático com IA. Sem escrever código." />
+<meta name="theme-color" content="#FF6633" />
+<meta property="og:title" content="Enzo Barbatto — Automação com IA" />
+<meta property="og:description" content="Automação com IA, sem escrever código. Comece de graça." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --orange:#FF6633;
+    --orange-deep:#E8551F;
+    --orange-dark:#C8430F;
+    --ink:#2a1206;
+    --ink-soft:#7a4427;
+    --card:rgba(255,255,255,.86);
+    --grad:linear-gradient(135deg,#FF8A4D 0%,#FF6633 55%,#E8551F 100%);
+    --shadow:0 6px 20px rgba(120,45,10,.18);
+    --shadow-hi:0 14px 34px rgba(120,45,10,.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+
+  body{
+    font-family:'Plus Jakarta Sans',-apple-system,sans-serif;
+    color:var(--ink);min-height:100vh;
+    display:flex;justify-content:center;
+    padding:18px 20px 30px;
+    -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(70% 50% at 50% 0%, #FFA76B 0%, transparent 55%),
+      linear-gradient(180deg,#FF6633 0%,#E8551F 55%,#B83C0E 100%);
+    background-attachment:fixed;
+    overflow-x:hidden;
+  }
+
+  /* canvas 3D ao fundo */
+  #scene{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  .wrap{position:relative;z-index:1;width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;min-height:calc(100vh - 48px)}
+
+  /* glow suave atrás do cartão */
+  .glow{position:fixed;z-index:0;top:8%;left:50%;width:520px;height:520px;transform:translateX(-50%);
+    background:radial-gradient(circle,rgba(255,210,170,.45),transparent 62%);filter:blur(20px);pointer-events:none}
+
+  .reveal{opacity:0;will-change:transform,opacity}
+
+  /* topo: logo + compartilhar */
+  .topbar{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+  .chip{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.92);border:none;cursor:pointer;
+    display:grid;place-items:center;box-shadow:var(--shadow);color:var(--orange-deep);
+    transition:transform .2s ease,box-shadow .2s ease}
+  .chip:hover{transform:translateY(-2px);box-shadow:var(--shadow-hi)}
+  .chip svg{width:19px;height:19px}
+  .chip.mark{background:var(--grad);color:#fff;box-shadow:0 8px 22px rgba(200,67,15,.5)}
+
+  /* avatar */
+  .ava{position:relative;width:104px;height:104px;border-radius:50%;margin-bottom:15px;
+    padding:4px;background:linear-gradient(145deg,#fff,#FFD3B0);box-shadow:0 10px 30px rgba(150,55,15,.4)}
+  .ava-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;display:grid;place-items:center;
+    background:var(--grad)}
+  .ava-img{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);object-fit:cover;border-radius:50%}
+  .ava-img.hide{display:none}
+  .ava-mono{font-weight:800;font-size:34px;color:#fff;letter-spacing:.5px}
+
+  h1{font-size:24px;font-weight:800;letter-spacing:-.01em;color:#fff;text-shadow:0 2px 14px rgba(120,40,5,.35)}
+  .bio{margin-top:6px;color:#fff;opacity:.95;font-size:14px;font-weight:600;text-align:center;max-width:340px;line-height:1.45;text-shadow:0 1px 8px rgba(120,40,5,.25)}
+
+  /* sociais */
+  .social{display:flex;gap:24px;margin-top:16px;margin-bottom:4px}
+  .social a{color:#fff;transition:transform .2s ease,opacity .2s ease;opacity:.95}
+  .social a:hover{transform:translateY(-2px);opacity:1}
+  .social svg{width:23px;height:23px;filter:drop-shadow(0 2px 6px rgba(120,40,5,.3))}
+
+  /* botões uniformes (glass) */
+  .links{width:100%;margin-top:22px;display:flex;flex-direction:column;gap:15px}
+  .btn{position:relative;display:flex;align-items:center;justify-content:center;
+    min-height:64px;padding:12px 56px;border-radius:16px;background:var(--card);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.6);
+    box-shadow:var(--shadow);text-decoration:none;color:var(--ink);
+    transition:transform .22s cubic-bezier(.2,.7,.2,1),box-shadow .22s ease,background .22s ease}
+  .btn:hover{transform:translateY(-3px) scale(1.012);box-shadow:var(--shadow-hi);background:rgba(255,255,255,.95)}
+  .btn:active{transform:scale(.99)}
+  .btn.hero{background:linear-gradient(135deg,#fff 0%,#FFE9DC 100%);border-color:rgba(255,140,90,.6)}
+  .label{font-weight:700;font-size:15.5px;text-align:center;letter-spacing:-.01em}
+  .thumb{position:absolute;left:10px;top:50%;transform:translateY(-50%);
+    width:46px;height:46px;border-radius:11px;display:grid;place-items:center;
+    background:var(--grad);color:#fff;box-shadow:0 4px 12px rgba(200,67,15,.35)}
+  .thumb svg{width:24px;height:24px}
+  .dots{position:absolute;right:12px;top:50%;transform:translateY(-50%);
+    width:30px;height:30px;border-radius:8px;border:none;background:transparent;
+    color:#c79a82;cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s}
+  .dots:hover{background:rgba(255,102,51,.12);color:var(--orange-deep)}
+  .dots svg{width:18px;height:18px}
+
+  /* pílula inferior */
+  .join{margin-top:auto;padding-top:34px}
+  .join a{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--orange-deep);
+    text-decoration:none;font-weight:800;font-size:13.5px;padding:13px 24px;border-radius:999px;
+    box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease}
+  .join a:hover{transform:translateY(-2px);box-shadow:var(--shadow-hi)}
+
+  /* rodapé */
+  footer{margin-top:18px;font-size:11px;color:#fff;opacity:.8;font-weight:600;text-align:center}
+  footer span{margin:0 6px;opacity:.55}
+
+  /* toast */
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:12px;
+    opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 10px 30px rgba(0,0,0,.25);z-index:99}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (max-width:380px){.btn{padding:12px 52px}.label{font-size:15px}}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <div class="glow"></div>
+
+  <main class="wrap">
+
+    <div class="topbar reveal">
+      <span class="chip mark" title="Sparo">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+      </span>
+      <button class="chip" id="share" title="Compartilhar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M12 3v13"/><path d="m8 7 4-4 4 4"/></svg>
+      </button>
+    </div>
+
+    <div class="ava reveal">
+      <div class="ava-inner"><span class="ava-mono">EB</span></div>
+      <img class="ava-img" src="foto.jpg" alt="Enzo Barbatto" onerror="this.classList.add('hide')" />
+    </div>
+
+    <h1 class="reveal">Enzo Barbatto</h1>
+    <p class="bio reveal">Automação com IA, sem escrever código ⚡</p>
+
+    <div class="social reveal">
+      <a href="https://instagram.com/enzosparo" target="_blank" rel="noopener" title="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@EnzoSparo" target="_blank" rel="noopener" title="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.3-.42-4.88a2.55 2.55 0 0 0-1.8-1.8C19.2 4.9 12 4.9 12 4.9s-7.2 0-8.78.42a2.55 2.55 0 0 0-1.8 1.8C1 8.7 1 12 1 12s0 3.3.42 4.88a2.55 2.55 0 0 0 1.8 1.8C4.8 19.1 12 19.1 12 19.1s7.2 0 8.78-.42a2.55 2.55 0 0 0 1.8-1.8C23 15.3 23 12 23 12ZM9.75 15.02V8.98L15.5 12l-5.75 3.02Z"/></svg>
+      </a>
+    </div>
+
+    <nav class="links">
+
+      <a class="btn hero reveal" href="https://masterclass.sparo.com.br/" target="_blank" rel="noopener">
+        <span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 13L5 12.18v3.64L12 20l7-4.18v-3.64L12 16Z"/></svg></span>
+        <span class="label">Curso completo</span>
+        <button class="dots" aria-label="Copiar link"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
+      </a>
+
+      <a class="btn reveal" href="https://www.youtube.com/@EnzoSparo" target="_blank" rel="noopener">
+        <span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.3-.42-4.88a2.55 2.55 0 0 0-1.8-1.8C19.2 4.9 12 4.9 12 4.9s-7.2 0-8.78.42a2.55 2.55 0 0 0-1.8 1.8C1 8.7 1 12 1 12s0 3.3.42 4.88a2.55 2.55 0 0 0 1.8 1.8C4.8 19.1 12 19.1 12 19.1s7.2 0 8.78-.42a2.55 2.55 0 0 0 1.8-1.8C23 15.3 23 12 23 12ZM9.75 15.02V8.98L15.5 12l-5.75 3.02Z"/></svg></span>
+        <span class="label">YouTube</span>
+        <button class="dots" aria-label="Copiar link"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
+      </a>
+
+      <a class="btn reveal" href="https://www.skool.com/comunidade-de-automacao-com-ia-8164" target="_blank" rel="noopener">
+        <span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></span>
+        <span class="label">Comunidade grátis</span>
+        <button class="dots" aria-label="Copiar link"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
+      </a>
+
+      <a class="btn reveal" href="https://sparo.com.br" target="_blank" rel="noopener">
+        <span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></span>
+        <span class="label">Sparo Automações</span>
+        <button class="dots" aria-label="Copiar link"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
+      </a>
+
+    </nav>
+
+    <div class="join reveal">
+      <a href="https://www.skool.com/comunidade-de-automacao-com-ia-8164" target="_blank" rel="noopener">⚡ Comece de graça</a>
+    </div>
+
+    <footer class="reveal">
+      Sparo Automações <span>·</span> feita sem código <span>·</span> @enzosparo
+    </footer>
+
+  </main>
+
+  <div class="toast" id="toast">Link copiado ✓</div>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Three.js (3D interativo) -->
+  <script type="importmap">
+  { "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }}
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+    const canvas = document.getElementById('scene');
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let renderer, scene, camera, group, shapes = [], raf = 0;
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+
+    function init(){
+      renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
+      renderer.setClearColor(0x000000, 0);
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      renderer.setSize(innerWidth, innerHeight);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.15;
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, 0.1, 100);
+      camera.position.set(0, 0, 12);
+
+      // ambiente p/ reflexos premium nos metais
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+      const key = new THREE.DirectionalLight(0xffffff, 2.2);
+      key.position.set(5, 8, 6); scene.add(key);
+      const warm = new THREE.DirectionalLight(0xffb380, 1.4);
+      warm.position.set(-6, -2, 4); scene.add(warm);
+
+      group = new THREE.Group(); scene.add(group);
+
+      const geoms = [
+        new THREE.IcosahedronGeometry(1, 0),
+        new THREE.TorusGeometry(0.8, 0.32, 24, 64),
+        new THREE.OctahedronGeometry(1, 0),
+        new THREE.DodecahedronGeometry(1, 0),
+        new THREE.TorusKnotGeometry(0.62, 0.24, 120, 18),
+      ];
+      const palette = [0xFF6633, 0xFF8A4D, 0xE8551F, 0xFFFFFF, 0xFFC9A3];
+
+      const N = innerWidth < 640 ? 11 : 18;
+      for (let i=0;i<N;i++){
+        const glass = Math.random() < 0.32;
+        const mat = new THREE.MeshPhysicalMaterial({
+          color: palette[i % palette.length],
+          metalness: glass ? 0 : 0.92,
+          roughness: glass ? 0.05 : 0.18,
+          clearcoat: 1, clearcoatRoughness: 0.12,
+          transmission: glass ? 1 : 0,
+          thickness: glass ? 1.4 : 0,
+          ior: 1.45,
+          envMapIntensity: 1.25,
+        });
+        const mesh = new THREE.Mesh(geoms[i % geoms.length], mat);
+        const r = 4.2 + Math.random()*4.5;
+        const a = Math.random()*Math.PI*2;
+        mesh.position.set(Math.cos(a)*r, (Math.random()-0.5)*9, -1 - Math.random()*7 + Math.sin(a)*r*0.3);
+        const s = 0.5 + Math.random()*0.95;
+        mesh.scale.setScalar(s);
+        mesh.rotation.set(Math.random()*6, Math.random()*6, Math.random()*6);
+        mesh.userData.spin = new THREE.Vector3((Math.random()-0.5)*0.3,(Math.random()-0.5)*0.3,(Math.random()-0.5)*0.3);
+        mesh.userData.baseY = mesh.position.y;
+        group.add(mesh); shapes.push(mesh);
+
+        if (!reduceMotion){
+          gsap.to(mesh.position, { y: mesh.position.y + (Math.random()*1.4+0.6),
+            duration: 3.5 + Math.random()*3, ease:'sine.inOut', yoyo:true, repeat:-1, delay:Math.random()*2 });
+        }
+      }
+
+      addEventListener('resize', onResize, { passive:true });
+      addEventListener('pointermove', onMove, { passive:true });
+      addEventListener('deviceorientation', onTilt, { passive:true });
+      document.addEventListener('visibilitychange', ()=> document.hidden ? stop() : start());
+
+      // intro 3D
+      group.scale.setScalar(0.6);
+      gsap.to(group.scale, { x:1, y:1, z:1, duration:1.6, ease:'power3.out' });
+      gsap.from(camera.position, { z:20, duration:1.8, ease:'power3.out' });
+
+      start();
+    }
+
+    function onResize(){
+      camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+    }
+    function onMove(e){
+      pointer.tx = (e.clientX/innerWidth - 0.5);
+      pointer.ty = (e.clientY/innerHeight - 0.5);
+    }
+    function onTilt(e){
+      if (e.gamma==null) return;
+      pointer.tx = Math.max(-0.5, Math.min(0.5, e.gamma/45));
+      pointer.ty = Math.max(-0.5, Math.min(0.5, (e.beta-45)/45));
+    }
+
+    let t = 0;
+    function render(){
+      t += 0.005;
+      pointer.x += (pointer.tx - pointer.x) * 0.05;
+      pointer.y += (pointer.ty - pointer.y) * 0.05;
+
+      // parallax: o conjunto inclina suavemente em direção ao cursor
+      group.rotation.y += ( pointer.x * 0.6 - group.rotation.y) * 0.04;
+      group.rotation.x += (-pointer.y * 0.4 - group.rotation.x) * 0.04;
+      camera.position.x += ( pointer.x * 2 - camera.position.x) * 0.04;
+      camera.position.y += (-pointer.y * 1.4 - camera.position.y) * 0.04;
+      camera.lookAt(0,0,0);
+
+      for (const m of shapes){
+        m.rotation.x += m.userData.spin.x * 0.01;
+        m.rotation.y += m.userData.spin.y * 0.01;
+        m.rotation.z += m.userData.spin.z * 0.01;
+      }
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(render);
+    }
+    function start(){ if(!raf) raf = requestAnimationFrame(render); }
+    function stop(){ if(raf){ cancelAnimationFrame(raf); raf = 0; } }
+
+    try { init(); } catch(err){ console.warn('3D indisponível:', err); canvas.style.display='none'; }
+
+    // ---- GSAP: entrada do conteúdo ----
+    if (!reduceMotion && window.gsap){
+      gsap.set('.reveal', { opacity:0, y:16 });
+      gsap.to('.reveal', { opacity:1, y:0, duration:.7, ease:'power3.out', stagger:.08, delay:.15 });
+    } else {
+      document.querySelectorAll('.reveal').forEach(el=> el.style.opacity=1);
+    }
+  </script>
+
+  <script>
+    const toast=document.getElementById('toast');let tt;
+    function showToast(m){toast.textContent=m;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('show'),1800);}
+    document.querySelectorAll('.dots').forEach(d=>d.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      navigator.clipboard?.writeText(d.closest('a').href).then(()=>showToast('Link copiado ✓'));
+    }));
+    document.getElementById('share').addEventListener('click',async()=>{
+      const data={title:'Enzo Barbatto — Automação com IA',url:location.href};
+      if(navigator.share){try{await navigator.share(data);}catch(_){}}
+      else navigator.clipboard?.writeText(location.href).then(()=>showToast('Link copiado ✓'));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "sparo-social-links",
+  "version": "1.0.0",
+  "description": "Página de links (estilo Linktree) da Sparo — links.sparo.com.br",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
