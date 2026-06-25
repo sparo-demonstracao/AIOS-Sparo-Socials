@@ -150,7 +150,7 @@
         function makeAntigravity(){
           if(!ANTIGRAV_SHAPES)return null;
           const geo=new THREE.ExtrudeGeometry(ANTIGRAV_SHAPES,{depth:3,bevelEnabled:true,bevelThickness:0.5,bevelSize:0.4,bevelSegments:2,curveSegments:14});
-          geo.scale(0.135,-0.135,0.135);geo.center();
+          geo.rotateX(Math.PI);geo.scale(0.135,0.135,0.135);geo.center();
           // gradiente nas cores da marca (azul/verde embaixo -> amarelo/vermelho no topo)
           const pos=geo.attributes.position, col=[], bb=new THREE.Box3().setFromBufferAttribute(pos);
           const stops=[new THREE.Color(0x3186FF),new THREE.Color(0x00B95C),new THREE.Color(0xFFE432),new THREE.Color(0xFC413D)];
@@ -163,7 +163,7 @@
         function makeClaude(){
           if(!CLAUDE_SHAPES)return null;
           const geo=new THREE.ExtrudeGeometry(CLAUDE_SHAPES,{depth:5,bevelEnabled:true,bevelThickness:0.8,bevelSize:0.6,bevelSegments:2,curveSegments:6});
-          geo.scale(0.085,-0.085,0.085);geo.center();
+          geo.rotateX(Math.PI);geo.scale(0.085,0.085,0.085);geo.center();
           return new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({color:0xD97757,metalness:0.12,roughness:0.3,clearcoat:1,clearcoatRoughness:0.1,envMapIntensity:0.9,side:THREE.DoubleSide}));
         }
         for(let i=0;i<N;i++){
