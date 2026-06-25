@@ -151,12 +151,21 @@
           if(!ANTIGRAV_SHAPES)return null;
           const geo=new THREE.ExtrudeGeometry(ANTIGRAV_SHAPES,{depth:3,bevelEnabled:true,bevelThickness:0.35,bevelSize:0.28,bevelSegments:3,curveSegments:64});
           geo.rotateX(Math.PI);geo.scale(0.135,0.135,0.135);geo.center();
-          // gradiente diagonal e suave (azul nos pés -> quente no topo, puxando p/ direita)
+          // cor fiel à marca: azul domina (pés/metade de baixo); quente só no topo,
+          // verde/amarelo à esquerda do pico e laranja/vermelho à direita.
           const pos=geo.attributes.position, col=[], bb=new THREE.Box3().setFromBufferAttribute(pos);
           const W=(bb.max.x-bb.min.x)||1, H=(bb.max.y-bb.min.y)||1;
-          const stops=[[0.0,0x2F7DFF],[0.34,0x12A6B0],[0.62,0xFFC21E],[1.0,0xFC413D]].map(s=>[s[0],new THREE.Color(s[1])]);
-          function grad(t){t=Math.min(1,Math.max(0,t));for(let j=0;j<stops.length-1;j++){if(t<=stops[j+1][0]){const a=stops[j],b=stops[j+1],f=(t-a[0])/((b[0]-a[0])||1);return a[1].clone().lerp(b[1],f);}}return stops[stops.length-1][1];}
-          for(let i=0;i<pos.count;i++){const tx=(pos.getX(i)-bb.min.x)/W, ty=(pos.getY(i)-bb.min.y)/H, c=grad(ty*0.82+tx*0.18);col.push(c.r,c.g,c.b);}
+          const blue=new THREE.Color(0x3B8CFF);
+          const warm=[0x35B85A,0xFFD21E,0xFF8A1E,0xFC413D].map(h=>new THREE.Color(h));
+          const ss=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x);};
+          const ramp=(cs,t)=>{t=Math.min(0.999,Math.max(0,t))*(cs.length-1);const k=Math.floor(t);return cs[k].clone().lerp(cs[k+1],t-k);};
+          for(let i=0;i<pos.count;i++){
+            const tx=(pos.getX(i)-bb.min.x)/W, ty=(pos.getY(i)-bb.min.y)/H;
+            const w=ss(0.52,0.96,ty);                          // quanto de "quente" (0 embaixo)
+            const h=Math.min(1,Math.max(0,tx*0.85+(ty-0.5)*0.3)); // matiz: esquerda verde -> direita vermelho
+            const c=blue.clone().lerp(ramp(warm,h),w);
+            col.push(c.r,c.g,c.b);
+          }
           geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));
           return new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({vertexColors:true,metalness:0.1,roughness:0.28,clearcoat:1,clearcoatRoughness:0.08,envMapIntensity:0.9,side:THREE.DoubleSide}));
         }
