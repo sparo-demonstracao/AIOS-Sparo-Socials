@@ -208,11 +208,31 @@
   <script type="module">
     import * as THREE from 'three';
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+    import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
 
     const canvas = document.getElementById('scene');
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let renderer, scene, camera, group, shapes = [], raf = 0;
+    let CLAUDE_SHAPES = null, ANTIGRAV_SHAPES = null, AG_TEX = null;
     const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+
+    // ---- logos extrudadas em 3D (Claude SVG + Antigravity texturizada) ----
+    function makeAntigravity(){
+      if (!ANTIGRAV_SHAPES || !AG_TEX) return null;
+      const geo = new THREE.ExtrudeGeometry(ANTIGRAV_SHAPES, { depth:3, bevelEnabled:true, bevelThickness:0.35, bevelSize:0.28, bevelSegments:3, curveSegments:64 });
+      // UV idêntico à logo: mapeia cada vértice pela posição na viewBox (0..16 / 0..15)
+      const p = geo.attributes.position, uv = new Float32Array(p.count*2);
+      for (let i=0;i<p.count;i++){ uv[i*2]=p.getX(i)/16; uv[i*2+1]=1-p.getY(i)/15; }
+      geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv,2));
+      geo.rotateX(Math.PI); geo.scale(0.135,0.135,0.135); geo.center();
+      return new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({ map:AG_TEX, metalness:0.1, roughness:0.34, clearcoat:1, clearcoatRoughness:0.1, envMapIntensity:0.9, side:THREE.DoubleSide }));
+    }
+    function makeClaude(){
+      if (!CLAUDE_SHAPES) return null;
+      const geo = new THREE.ExtrudeGeometry(CLAUDE_SHAPES, { depth:5, bevelEnabled:true, bevelThickness:0.8, bevelSize:0.6, bevelSegments:2, curveSegments:6 });
+      geo.rotateX(Math.PI); geo.scale(0.085,0.085,0.085); geo.center();
+      return new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({ color:0xD97757, metalness:0.12, roughness:0.3, clearcoat:1, clearcoatRoughness:0.1, envMapIntensity:0.9, side:THREE.DoubleSide }));
+    }
 
     function init(){
       renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
@@ -226,7 +246,7 @@
       camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, 0.1, 100);
       camera.position.set(0, 0, 12);
 
-      // ambiente p/ reflexos premium nos metais
+      // ambiente p/ reflexos premium nos materiais
       const pmrem = new THREE.PMREMGenerator(renderer);
       scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
@@ -236,57 +256,78 @@
       warm.position.set(-6, -2, 4); scene.add(warm);
 
       group = new THREE.Group(); scene.add(group);
-
-      const geoms = [
-        new THREE.IcosahedronGeometry(1, 0),
-        new THREE.TorusGeometry(0.8, 0.32, 24, 64),
-        new THREE.OctahedronGeometry(1, 0),
-        new THREE.DodecahedronGeometry(1, 0),
-        new THREE.TorusKnotGeometry(0.62, 0.24, 120, 18),
-      ];
-      const palette = [0xFF6633, 0xFF8A4D, 0xE8551F, 0xFFFFFF, 0xFFC9A3];
-
-      const N = innerWidth < 640 ? 11 : 18;
-      for (let i=0;i<N;i++){
-        const glass = Math.random() < 0.32;
-        const mat = new THREE.MeshPhysicalMaterial({
-          color: palette[i % palette.length],
-          metalness: glass ? 0 : 0.92,
-          roughness: glass ? 0.05 : 0.18,
-          clearcoat: 1, clearcoatRoughness: 0.12,
-          transmission: glass ? 1 : 0,
-          thickness: glass ? 1.4 : 0,
-          ior: 1.45,
-          envMapIntensity: 1.25,
-        });
-        const mesh = new THREE.Mesh(geoms[i % geoms.length], mat);
-        const r = 4.2 + Math.random()*4.5;
-        const a = Math.random()*Math.PI*2;
-        mesh.position.set(Math.cos(a)*r, (Math.random()-0.5)*9, -1 - Math.random()*7 + Math.sin(a)*r*0.3);
-        const s = 0.5 + Math.random()*0.95;
-        mesh.scale.setScalar(s);
-        mesh.rotation.set(Math.random()*6, Math.random()*6, Math.random()*6);
-        mesh.userData.spin = new THREE.Vector3((Math.random()-0.5)*0.3,(Math.random()-0.5)*0.3,(Math.random()-0.5)*0.3);
-        mesh.userData.baseY = mesh.position.y;
-        group.add(mesh); shapes.push(mesh);
-
-        if (!reduceMotion){
-          gsap.to(mesh.position, { y: mesh.position.y + (Math.random()*1.4+0.6),
-            duration: 3.5 + Math.random()*3, ease:'sine.inOut', yoyo:true, repeat:-1, delay:Math.random()*2 });
-        }
-      }
+      // luz de contorno fria p/ destacar as bordas biseladas das logos
+      const rim = new THREE.DirectionalLight(0xbcd4ff, 1.6); rim.position.set(-6, 4, -7); group.add(rim);
+      const fill = new THREE.DirectionalLight(0xffffff, 0.7); fill.position.set(4, -3, 6); group.add(fill);
 
       addEventListener('resize', onResize, { passive:true });
       addEventListener('pointermove', onMove, { passive:true });
       addEventListener('deviceorientation', onTilt, { passive:true });
       document.addEventListener('visibilitychange', ()=> document.hidden ? stop() : start());
 
+      start();
+
+      // carrega os SVGs + a textura colorida do Antigravity e então popula a cena
+      const loader = new SVGLoader();
+      const load = url => new Promise(res => loader.load(url, d => res(d.paths.flatMap(p => SVGLoader.createShapes(p))), undefined, () => res(null)));
+      // textura com as cores REAIS da logo do Antigravity (SVG colorido -> canvas)
+      const loadAgTex = () => new Promise(res => {
+        const img = new Image();
+        img.onload = () => {
+          const W=512, H=480, c=document.createElement('canvas'); c.width=W; c.height=H;
+          const x=c.getContext('2d'); x.fillStyle='#3B8CFF'; x.fillRect(0,0,W,H); x.drawImage(img,0,0,W,H);
+          const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace; tex.anisotropy=8; res(tex);
+        };
+        img.onerror = () => res(null);
+        img.src='logo-antigravity-full.svg';
+      });
+      Promise.all([ load('logo-claude.svg'), load('logo-antigravity.svg'), loadAgTex() ]).then(([cs, as, tex]) => {
+        CLAUDE_SHAPES = cs; ANTIGRAV_SHAPES = as; AG_TEX = tex;
+        if (!CLAUDE_SHAPES && !ANTIGRAV_SHAPES) return;
+        buildLogos();
+      });
+    }
+
+    function buildLogos(){
+      const isMob = innerWidth < 640;
+      // distribuição em grade com jitter: cobre a tela toda sem ficar alinhado/simétrico
+      const aspect = innerWidth / innerHeight;
+      const cols = isMob ? 3 : (aspect > 1.7 ? 6 : 5);
+      const rows = isMob ? 5 : 4;
+      const W = isMob ? 12 : (aspect > 1.7 ? 22 : 19), H = isMob ? 16 : 12;
+      const cellW = W / cols, cellH = H / rows;
+      // monta as células e embaralha (assim o par Claude/Antigravity não vira xadrez perfeito)
+      const cells = [];
+      for (let r=0;r<rows;r++) for (let c=0;c<cols;c++) cells.push([c,r]);
+      for (let k=cells.length-1;k>0;k--){ const j=Math.floor(Math.random()*(k+1)); const t=cells[k];cells[k]=cells[j];cells[j]=t; }
+
+      let i = 0;
+      for (const [c,r] of cells){
+        // pula ~12% das células e, de vez em quando, deixa uma vazia perto do centro (onde fica o cartão)
+        if (Math.random() < 0.12) continue;
+        const wantClaude = (i % 2 === 0);
+        const mesh = (wantClaude ? (CLAUDE_SHAPES && makeClaude()) : (ANTIGRAV_SHAPES && makeAntigravity()))
+                  || (CLAUDE_SHAPES ? makeClaude() : makeAntigravity());
+        if (!mesh) continue;
+        // centro da célula + jitter parcial (não 100% homogêneo)
+        const cx = -W/2 + (c + 0.5) * cellW + (Math.random()-0.5) * cellW * 0.7;
+        const cy =  H/2 - (r + 0.5) * cellH + (Math.random()-0.5) * cellH * 0.7;
+        mesh.position.set(cx, cy, -1 - Math.random()*6);
+        mesh.scale.multiplyScalar(0.55 + Math.random()*0.7);
+        mesh.rotation.set((Math.random()-0.5)*0.5, Math.random()*Math.PI*2, (Math.random()-0.5)*0.35);
+        mesh.userData.sy = 0.003 + Math.random()*0.006;
+        group.add(mesh); shapes.push(mesh);
+        i++;
+
+        if (!reduceMotion){
+          gsap.to(mesh.position, { y: mesh.position.y + (Math.random()*1.0+0.4),
+            duration: 3.4 + Math.random()*3, ease:'sine.inOut', yoyo:true, repeat:-1, delay:Math.random()*2 });
+        }
+      }
       // intro 3D
       group.scale.setScalar(0.6);
-      gsap.to(group.scale, { x:1, y:1, z:1, duration:1.6, ease:'power3.out' });
-      gsap.from(camera.position, { z:20, duration:1.8, ease:'power3.out' });
-
-      start();
+      gsap.to(group.scale, { x:1, y:1, z:1, duration:1.4, ease:'power3.out' });
+      gsap.from(camera.position, { z:20, duration:1.6, ease:'power3.out' });
     }
 
     function onResize(){
@@ -317,9 +358,7 @@
       camera.lookAt(0,0,0);
 
       for (const m of shapes){
-        m.rotation.x += m.userData.spin.x * 0.01;
-        m.rotation.y += m.userData.spin.y * 0.01;
-        m.rotation.z += m.userData.spin.z * 0.01;
+        m.rotation.y += m.userData.sy;
       }
       renderer.render(scene, camera);
       raf = requestAnimationFrame(render);
