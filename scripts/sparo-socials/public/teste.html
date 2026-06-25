@@ -71,7 +71,8 @@
 
   <div class="fxhint" id="fxhint">Mexa o mouse — o fundo reage</div>
   <div class="fxbar" id="fxbar">
-    <button data-fx="codigo" class="active">⌘ Código</button>
+    <button data-fx="logos" class="active">✺ Logos</button>
+    <button data-fx="codigo">⌘ Código</button>
     <button data-fx="agentes">⬡ Agentes</button>
     <button data-fx="terminal">▌ Terminal</button>
     <button data-fx="helice">🧬 Hélice</button>
@@ -94,6 +95,7 @@
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     import { FontLoader } from 'three/addons/loaders/FontLoader.js';
     import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+    import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
     const canvas = document.getElementById('scene');
     const PAL = [0xFF6633,0xFF8A4D,0xE8551F,0xFFFFFF,0xFFC9A3];
@@ -138,6 +140,34 @@
         g.scale.setScalar(.6);gsap.to(g.scale,{x:1,y:1,z:1,duration:1.4,ease:'power3.out'});
         return {group:g,update(){for(const m of meshes){m.rotation.x+=m.userData.s[0];m.rotation.y+=m.userData.s[1];m.rotation.z+=m.userData.s[2];}
           g.rotation.y+=(pointer.x*.6-g.rotation.y)*.04;g.rotation.x+=(-pointer.y*.4-g.rotation.x)*.04;}};
+      },
+      logos(){
+        // logos do Claude Code + Antigravity como medalhões 3D de vidro flutuando
+        const g=new THREE.Group();scene.add(g);
+        const tl=new THREE.TextureLoader();
+        const texC=tl.load('logo-claude.png'), texA=tl.load('logo-antigravity.png');
+        [texC,texA].forEach(t=>{t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=4;});
+        const tileGeo=new RoundedBoxGeometry(1.7,1.7,0.24,5,0.2);
+        const tileMat=new THREE.MeshPhysicalMaterial({color:0xffffff,metalness:0,roughness:0.07,clearcoat:1,clearcoatRoughness:0.05,envMapIntensity:1.35});
+        const planeGeo=new THREE.PlaneGeometry(1.24,1.24);
+        const badges=[];const N=isMobile?7:11;
+        for(let i=0;i<N;i++){
+          const b=new THREE.Group();
+          b.add(new THREE.Mesh(tileGeo,tileMat));
+          const mat=new THREE.MeshBasicMaterial({map:(i%2===0)?texC:texA,transparent:true});
+          const f=new THREE.Mesh(planeGeo,mat);f.position.z=0.13;b.add(f);
+          const bk=new THREE.Mesh(planeGeo,mat);bk.position.z=-0.13;bk.rotation.y=Math.PI;b.add(bk);
+          const r=4+Math.random()*4.4,a=Math.random()*6.28;
+          b.position.set(Math.cos(a)*r,(Math.random()-.5)*9,-1-Math.random()*6+Math.sin(a)*r*.3);
+          b.scale.setScalar(.6+Math.random()*.7);
+          b.rotation.set((Math.random()-.5)*.5,Math.random()*6.28,(Math.random()-.5)*.35);
+          b.userData.sy=0.003+Math.random()*0.005;
+          g.add(b);badges.push(b);
+          gsap.to(b.position,{y:b.position.y+(Math.random()*1.2+.5),duration:3.4+Math.random()*3,ease:'sine.inOut',yoyo:true,repeat:-1,delay:Math.random()*2});
+        }
+        g.scale.setScalar(.6);gsap.to(g.scale,{x:1,y:1,z:1,duration:1.3,ease:'power3.out'});
+        return {group:g,update(){for(const b of badges)b.rotation.y+=b.userData.sy;
+          g.rotation.y+=(pointer.x*.4-g.rotation.y)*.04;g.rotation.x+=(-pointer.y*.3-g.rotation.x)*.04;}};
       },
       codigo(){
         // glifos de código em vidro/metal flutuando (vibe coding)
@@ -280,7 +310,7 @@
       ()=>{ // se a fonte falhar, cai pro Vidro
         if(mode==='codigo'){const b=document.querySelector('[data-fx="codigo"]');if(b)b.textContent='⌘ Código';setMode('glass');document.querySelectorAll('.fxbar button').forEach(x=>x.classList.remove('active'));document.querySelector('[data-fx="glass"]').classList.add('active');}
       });
-    setMode('codigo');start();
+    setMode('logos');start();
 
     // UI
     const bar=document.getElementById('fxbar');
