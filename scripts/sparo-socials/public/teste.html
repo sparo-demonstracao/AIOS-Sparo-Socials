@@ -148,26 +148,14 @@
         const g=new THREE.Group();scene.add(g);
         const items=[];const N=isMobile?8:13;
         function makeAntigravity(){
-          if(!ANTIGRAV_SHAPES)return null;
+          if(!ANTIGRAV_SHAPES||!AG_TEX)return null;
           const geo=new THREE.ExtrudeGeometry(ANTIGRAV_SHAPES,{depth:3,bevelEnabled:true,bevelThickness:0.35,bevelSize:0.28,bevelSegments:3,curveSegments:64});
+          // UV idêntico à logo: mapeia cada vértice pela posição na viewBox (0..16 / 0..15)
+          const p=geo.attributes.position, uv=new Float32Array(p.count*2);
+          for(let i=0;i<p.count;i++){uv[i*2]=p.getX(i)/16;uv[i*2+1]=1-p.getY(i)/15;}
+          geo.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));
           geo.rotateX(Math.PI);geo.scale(0.135,0.135,0.135);geo.center();
-          // cor fiel à marca: azul domina (pés/metade de baixo); quente só no topo,
-          // verde/amarelo à esquerda do pico e laranja/vermelho à direita.
-          const pos=geo.attributes.position, col=[], bb=new THREE.Box3().setFromBufferAttribute(pos);
-          const W=(bb.max.x-bb.min.x)||1, H=(bb.max.y-bb.min.y)||1;
-          const blue=new THREE.Color(0x3B8CFF);
-          const warm=[0x35B85A,0xFFD21E,0xFF8A1E,0xFC413D].map(h=>new THREE.Color(h));
-          const ss=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x);};
-          const ramp=(cs,t)=>{t=Math.min(0.999,Math.max(0,t))*(cs.length-1);const k=Math.floor(t);return cs[k].clone().lerp(cs[k+1],t-k);};
-          for(let i=0;i<pos.count;i++){
-            const tx=(pos.getX(i)-bb.min.x)/W, ty=(pos.getY(i)-bb.min.y)/H;
-            const w=ss(0.52,0.96,ty);                          // quanto de "quente" (0 embaixo)
-            const h=Math.min(1,Math.max(0,tx*0.85+(ty-0.5)*0.3)); // matiz: esquerda verde -> direita vermelho
-            const c=blue.clone().lerp(ramp(warm,h),w);
-            col.push(c.r,c.g,c.b);
-          }
-          geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));
-          return new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({vertexColors:true,metalness:0.1,roughness:0.28,clearcoat:1,clearcoatRoughness:0.08,envMapIntensity:0.9,side:THREE.DoubleSide}));
+          return new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({map:AG_TEX,metalness:0.1,roughness:0.34,clearcoat:1,clearcoatRoughness:0.1,envMapIntensity:0.9,side:THREE.DoubleSide}));
         }
         function makeClaude(){
           if(!CLAUDE_SHAPES)return null;
@@ -360,6 +348,13 @@
       data=>{CLAUDE_SHAPES=data.paths.flatMap(p=>SVGLoader.createShapes(p)); rebuildIf('logos3d');});
     new SVGLoader().load('logo-antigravity.svg',
       data=>{ANTIGRAV_SHAPES=data.paths.flatMap(p=>SVGLoader.createShapes(p)); rebuildIf('logos3d');});
+    // textura com as cores REAIS da logo do Antigravity (SVG colorido -> canvas)
+    let AG_TEX=null;
+    (function(){const img=new Image();
+      img.onload=()=>{const W=512,H=480;const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+        x.fillStyle='#3B8CFF';x.fillRect(0,0,W,H);x.drawImage(img,0,0,W,H);
+        AG_TEX=new THREE.CanvasTexture(c);AG_TEX.colorSpace=THREE.SRGBColorSpace;AG_TEX.anisotropy=8;rebuildIf('logos3d');};
+      img.src='logo-antigravity-full.svg';})();
     setMode('logos3d');start();
 
     // UI
