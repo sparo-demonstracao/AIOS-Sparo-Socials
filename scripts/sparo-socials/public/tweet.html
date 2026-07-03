@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Post estilo Twitter</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;overflow:hidden}
+  body{
+    font-family:'Inter',-apple-system,'Segoe UI',sans-serif;
+    background:
+      radial-gradient(40% 60% at 14% 16%, #e8eeff 0%, transparent 60%),
+      radial-gradient(38% 55% at 86% 82%, #f2e6ff 0%, transparent 58%),
+      radial-gradient(34% 50% at 60% 24%, #e6f7ff 0%, transparent 55%),
+      linear-gradient(170deg, #fdfdff 0%, #f4f6fb 60%, #edeff7 100%);
+    display:grid;place-items:center;
+  }
+  #scene{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0}
+
+  .tweet{
+    position:relative;z-index:2;width:880px;max-width:90vw;
+    background:rgba(255,255,255,.82);
+    backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);
+    border:1px solid rgba(255,255,255,.9);
+    border-radius:34px;padding:46px 48px 40px;
+    box-shadow:0 30px 80px rgba(60,70,120,.18), 0 4px 14px rgba(60,70,120,.10);
+  }
+  .head{display:flex;align-items:center;gap:16px}
+  .ava{width:78px;height:78px;border-radius:50%;object-fit:cover;background:#dfe6f5;flex:none;
+    box-shadow:0 4px 14px rgba(60,70,120,.18)}
+  .who{display:flex;flex-direction:column;line-height:1.25}
+  .name{display:flex;align-items:center;gap:7px;font-weight:800;font-size:30px;color:#0f1419}
+  .name svg{width:25px;height:25px}
+  .handle{font-size:24px;color:#5b6b7b;font-weight:500}
+  .x{margin-left:auto;width:38px;height:38px;color:#0f1419}
+  .x svg{width:100%;height:100%}
+
+  .text{margin-top:30px;font-size:42px;line-height:1.32;color:#0f1419;font-weight:600;letter-spacing:-.01em}
+  .text b{font-weight:800}
+
+  .time{margin-top:30px;font-size:21px;color:#5b6b7b;font-weight:500}
+  .time b{color:#0f1419;font-weight:700}
+
+  .sep{height:1px;background:rgba(15,20,25,.10);margin:26px 0 22px}
+  .stats{display:flex;gap:42px;color:#5b6b7b;font-size:24px;font-weight:500}
+  .stats .it{display:flex;align-items:center;gap:11px}
+  .stats svg{width:27px;height:27px;stroke:#5b6b7b;fill:none;stroke-width:2}
+  .stats b{color:#0f1419;font-weight:700}
+  .heart svg{fill:#f91880;stroke:#f91880}
+  .heart b{color:#f91880}
+</style>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <article class="tweet">
+    <div class="head">
+      <img class="ava" src="foto.jpg" alt="" />
+      <div class="who">
+        <span class="name">Enzo Barbatto
+          <svg viewBox="0 0 24 24" fill="#1d9bf0"><path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"/></svg>
+        </span>
+        <span class="handle">@enzosparo</span>
+      </div>
+      <div class="x"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg></div>
+    </div>
+
+    <div class="text">Existem <b>5 níveis</b> de quem usa IA.<br>Em qual você está? 👇</div>
+
+    <div class="time"><b>9:14</b> · 25 de jun de 2026 · <b>184,2 mil</b> visualizações</div>
+
+    <div class="sep"></div>
+    <div class="stats">
+      <span class="it"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> 312</span>
+      <span class="it"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg> <b>1,2 mil</b></span>
+      <span class="it heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> <b>8.947</b></span>
+    </div>
+  </article>
+
+  <script type="importmap">
+  { "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }}
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+    import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
+
+    let _s = (0x9e3779b9 ^ (parseInt(new URLSearchParams(location.search).get('v')||'3',10) * 0x85ebca6b)) >>> 0;
+    function rnd(){ _s|=0; _s=_s+0x6D2B79F5|0; let t=Math.imul(_s^_s>>>15,1|_s); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }
+
+    const canvas = document.getElementById('scene');
+    let renderer, scene, camera, group, CLAUDE_SHAPES=null, ANTIGRAV_SHAPES=null, AG_TEX=null;
+
+    function makeAntigravity(){
+      if(!ANTIGRAV_SHAPES||!AG_TEX) return null;
+      const geo=new THREE.ExtrudeGeometry(ANTIGRAV_SHAPES,{depth:3,bevelEnabled:true,bevelThickness:0.35,bevelSize:0.28,bevelSegments:3,curveSegments:64});
+      const p=geo.attributes.position,uv=new Float32Array(p.count*2);
+      for(let i=0;i<p.count;i++){uv[i*2]=p.getX(i)/16;uv[i*2+1]=1-p.getY(i)/15;}
+      geo.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));
+      geo.rotateX(Math.PI);geo.scale(0.135,0.135,0.135);geo.center();
+      return new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({map:AG_TEX,metalness:0.1,roughness:0.34,clearcoat:1,clearcoatRoughness:0.1,envMapIntensity:0.9,side:THREE.DoubleSide}));
+    }
+    function makeClaude(){
+      if(!CLAUDE_SHAPES) return null;
+      const geo=new THREE.ExtrudeGeometry(CLAUDE_SHAPES,{depth:5,bevelEnabled:true,bevelThickness:0.8,bevelSize:0.6,bevelSegments:2,curveSegments:6});
+      geo.rotateX(Math.PI);geo.scale(0.085,0.085,0.085);geo.center();
+      return new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({color:0xD97757,metalness:0.12,roughness:0.3,clearcoat:1,clearcoatRoughness:0.1,envMapIntensity:0.9,side:THREE.DoubleSide}));
+    }
+    function init(){
+      renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+      renderer.setClearColor(0x000000,0);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+      renderer.setSize(innerWidth,innerHeight);renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
+      scene=new THREE.Scene();
+      camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,0.1,100);camera.position.set(0,0,12);
+      const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+      const key=new THREE.DirectionalLight(0xffffff,2.2);key.position.set(5,8,6);scene.add(key);
+      const warm=new THREE.DirectionalLight(0xffb380,1.2);warm.position.set(-6,-2,4);scene.add(warm);
+      group=new THREE.Group();scene.add(group);
+      const rim=new THREE.DirectionalLight(0xbcd4ff,1.6);rim.position.set(-6,4,-7);group.add(rim);
+      const fill=new THREE.DirectionalLight(0xffffff,0.7);fill.position.set(4,-3,6);group.add(fill);
+      const loader=new SVGLoader();
+      const load=url=>new Promise(res=>loader.load(url,d=>res(d.paths.flatMap(p=>SVGLoader.createShapes(p))),undefined,()=>res(null)));
+      const loadAgTex=()=>new Promise(res=>{const img=new Image();img.onload=()=>{const W=512,H=480,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.fillStyle='#3B8CFF';x.fillRect(0,0,W,H);x.drawImage(img,0,0,W,H);const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=8;res(tex);};img.onerror=()=>res(null);img.src='logo-antigravity-full.svg';});
+      Promise.all([load('logo-claude.svg'),load('logo-antigravity.svg'),loadAgTex()]).then(([cs,as,tex])=>{
+        CLAUDE_SHAPES=cs;ANTIGRAV_SHAPES=as;AG_TEX=tex;build();
+        renderer.render(scene,camera);
+        requestAnimationFrame(()=>{renderer.render(scene,camera);requestAnimationFrame(()=>{renderer.render(scene,camera);window.__ready=true;});});
+      });
+    }
+    function build(){
+      // anel de elementos nas bordas — centro livre p/ o card do tweet
+      const vFOV=42*Math.PI/180,visH=2*Math.tan(vFOV/2)*12,visW=visH*camera.aspect;
+      const W=visW*1.18,H=visH*1.35,cell=3.25;
+      const cols=Math.max(2,Math.round(W/cell)),rows=Math.max(2,Math.round(H/cell));
+      const cellW=W/cols,cellH=H/rows;
+      const cells=[];for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)cells.push([c,r]);
+      for(let k=cells.length-1;k>0;k--){const j=Math.floor(rnd()*(k+1));const t=cells[k];cells[k]=cells[j];cells[j]=t;}
+      let i=0;
+      for(const [c,r] of cells){
+        const nx=((c+0.5)/cols-0.5)*2,ny=((r+0.5)/rows-0.5)*2;
+        const distC=Math.hypot(nx,ny*0.78);
+        const skip=distC<0.62?0.96:(distC<0.82?0.4:0.08);
+        if(rnd()<skip) continue;
+        const mesh=(i%2===0?makeClaude():makeAntigravity())||makeClaude()||makeAntigravity();
+        if(!mesh) continue;
+        const cx=-W/2+(c+0.5)*cellW+(rnd()-0.5)*cellW*0.7;
+        const cy=H/2-(r+0.5)*cellH+(rnd()-0.5)*cellH*0.7;
+        mesh.position.set(cx,cy,-1-rnd()*6);
+        mesh.scale.multiplyScalar(0.6+rnd()*0.8);
+        mesh.rotation.set((rnd()-0.5)*0.5,(rnd()-0.5)*1.5,(rnd()-0.5)*0.5);
+        group.add(mesh);i++;
+      }
+    }
+    try{init();}catch(e){console.warn(e);window.__ready=true;}
+  </script>
+</body>
+</html>

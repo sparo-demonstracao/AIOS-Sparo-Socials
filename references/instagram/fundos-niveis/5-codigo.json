@@ -1,0 +1,21 @@
+[
+  {
+    "id": "39bc43c0-9816-4969-9be2-15bae8eb4c7a",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3B4oRnkYczFwSpQrfkRufOPJA8N/hf_20260625_223239_39bc43c0-9816-4969-9be2-15bae8eb4c7a.png",
+    "created_at": 1782426759.103979,
+    "params": {
+      "width": 880,
+      "height": 1168,
+      "prompt": "Very dark background, faint blurred lines of code in the far background heavily out of focus, soft blue glow, a clean empty space in the foreground, depth of field, modern minimal tech aesthetic, premium and uncluttered, no readable text, no letters, no words",
+      "medias": [],
+      "aspect_ratio": "3:4",
+      "quality": "low",
+      "resolution": "1k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

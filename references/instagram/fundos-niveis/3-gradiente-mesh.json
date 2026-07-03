@@ -1,0 +1,21 @@
+[
+  {
+    "id": "1228d8c4-eddd-48d4-b108-af0b83aeb180",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3B4oRnkYczFwSpQrfkRufOPJA8N/hf_20260625_223147_1228d8c4-eddd-48d4-b108-af0b83aeb180.png",
+    "created_at": 1782426707.449933,
+    "params": {
+      "width": 880,
+      "height": 1168,
+      "prompt": "Abstract gradient mesh background, deep blue to violet to soft cyan, smooth flowing colors, subtle grain texture, no objects, lots of empty space, modern minimal Apple-style wallpaper, soft and premium, elegant tech vibe, no text, no letters, no words",
+      "medias": [],
+      "aspect_ratio": "3:4",
+      "quality": "low",
+      "resolution": "1k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Slide carrossel (card tweet)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1350px;overflow:hidden}
+  body{font-family:'Inter',-apple-system,'Segoe UI',sans-serif}
+  .slide{position:relative;width:1080px;height:1350px;overflow:hidden;display:grid;place-items:center}
+  .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+  .tweet{
+    position:relative;z-index:2;width:912px;
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(26px) saturate(140%);-webkit-backdrop-filter:blur(26px) saturate(140%);
+    border:1px solid rgba(255,255,255,.92);
+    border-radius:38px;padding:50px 52px 44px;
+    box-shadow:0 36px 90px rgba(60,70,120,.20), 0 4px 16px rgba(60,70,120,.10);
+  }
+  .head{display:flex;align-items:center;gap:18px}
+  .ava{width:84px;height:84px;border-radius:50%;object-fit:cover;background:#dfe6f5;flex:none;
+    box-shadow:0 4px 14px rgba(60,70,120,.18)}
+  .who{display:flex;flex-direction:column;line-height:1.22}
+  .name{display:flex;align-items:center;gap:8px;font-weight:800;font-size:33px;color:#0f1419}
+  .name svg{width:27px;height:27px}
+  .handle{font-size:26px;color:#5b6b7b;font-weight:500}
+  .x{margin-left:auto;width:40px;height:40px;color:#0f1419}
+  .x svg{width:100%;height:100%}
+
+  .text{margin-top:32px;font-size:43px;line-height:1.34;color:#0f1419;font-weight:500;letter-spacing:-.01em}
+  .text .lead{font-weight:800}
+  .text b{font-weight:800}
+  .text .o{color:#E8551F}
+
+  .time{margin-top:32px;font-size:22px;color:#5b6b7b;font-weight:500}
+  .time b{color:#0f1419;font-weight:700}
+
+  .sep{height:1px;background:rgba(15,20,25,.10);margin:28px 0 22px}
+  .stats{display:flex;gap:46px;color:#5b6b7b;font-size:25px;font-weight:500}
+  .stats .it{display:flex;align-items:center;gap:12px}
+  .stats svg{width:28px;height:28px;stroke:#5b6b7b;fill:none;stroke-width:2}
+  .stats b{color:#0f1419;font-weight:700}
+  .heart svg{fill:#f91880;stroke:#f91880}
+  .heart b{color:#f91880}
+
+  .pg{position:absolute;left:0;right:0;bottom:50px;text-align:center;color:#7a8aa0;font-weight:700;font-size:26px;letter-spacing:.05em;z-index:2}
+</style>
+</head>
+<body>
+  <div class="slide">
+    <img class="bg" id="bg" alt="" />
+
+    <article class="tweet">
+      <div class="head">
+        <img class="ava" src="foto.jpg" alt="" />
+        <div class="who">
+          <span class="name">Enzo Barbatto
+            <svg viewBox="0 0 24 24" fill="#1d9bf0"><path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"/></svg>
+          </span>
+          <span class="handle">@enzosparo</span>
+        </div>
+        <div class="x"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg></div>
+      </div>
+
+      <div class="text" id="text"></div>
+
+      <div class="time"><b>9:14</b> · 26 de jun de 2026 · <b id="views">184,2 mil</b> visualizações</div>
+
+      <div class="sep"></div>
+      <div class="stats">
+        <span class="it"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> 312</span>
+        <span class="it"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg> <b>1,2 mil</b></span>
+        <span class="it heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> <b>8.947</b></span>
+      </div>
+    </article>
+
+    <div class="pg" id="pg"></div>
+  </div>
+
+  <script>
+    const N = Math.max(1, Math.min(7, parseInt(new URLSearchParams(location.search).get('n')||'1',10)));
+    document.getElementById('bg').src = `pano-s${N}.png`;
+
+    const SLIDES = {
+      1: 'Existem <span class="o lead">5 níveis</span> de domínio de IA.<br><br>Em qual você está? 👇',
+      2: '<span class="lead">Nível 1 — O Curioso</span><br><br>Você usa a IA como um <b>Google mais esperto</b>. Tira dúvidas, pede resumos.',
+      3: '<span class="lead">Nível 2 — O Organizado</span><br><br>A IA <b>lê seus arquivos</b> e te ajuda a tocar seus projetos. Ela tem acesso a outras ferramentas.',
+      4: '<span class="lead">Nível 3 — O Faz-tudo</span><br><br>A IA sai do chat e começa a <b>mexer no seu computador</b>. Abre pastas, organiza arquivos, resolve tarefas de forma autônoma.',
+      5: '<span class="lead">Nível 4 — O Especialista</span><br><br>Você vira o <b>gerente</b>. A IA toma decisões por conta própria, decidindo quando agir — como uma equipe de robôs.',
+      6: '<span class="lead">Nível 5 — O Arquiteto</span><br><br>A IA <b>trabalha sozinha</b>. Sistemas inteiros rodando na nuvem, 24h por dia — mesmo com seu computador desligado.',
+      7: 'A maioria trava no <span class="o lead">nível 2</span>.<br><br>Me segue que eu levo você e sua empresa até o 5. <b>Tá tudo na bio.</b> 🔗',
+    };
+    document.getElementById('text').innerHTML = SLIDES[N];
+    document.getElementById('pg').textContent = `${N} / 7`;
+
+    const bg = document.getElementById('bg');
+    if (bg.complete) window.__ready = true;
+    else { bg.onload = () => window.__ready = true; bg.onerror = () => window.__ready = true; }
+  </script>
+</body>
+</html>

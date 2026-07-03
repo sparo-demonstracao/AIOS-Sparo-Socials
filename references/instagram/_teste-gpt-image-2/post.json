@@ -1,0 +1,18 @@
+{
+  "id": "20260626-gpt-image-2",
+  "titulo": "A IA aprendeu a escrever (GPT Image 2)",
+  "tema": "gpt-image-2",
+  "criadoEm": "2026-06-26T22:40:00-03:00",
+  "status": "rascunho",
+  "nota": 9.0,
+  "gancho_capa": 8.5,
+  "tom": "entreter + informar (LEI Nº 2) — sem venda; fecho natural",
+  "slides": ["slide-01.png", "slide-02.png", "slide-03.png", "slide-04.png", "slide-05.png", "slide-06.png"],
+  "legenda": "Lembra quando a IA escrevia 'PIZZGA' no lugar de 'pizzaria'? 😂\n\nIsso acabou. A OpenAI lançou o GPT Image 2 — e ele acerta o texto na imagem em ~99% das vezes, em vários idiomas.\n\nNa prática, muda o jogo pra quem cria conteúdo: pôster, capa, anúncio, post com texto… tudo direto na IA, sem abrir um editor depois só pra arrumar a letra.\n\nE não para no texto:\n• 4K de resolução\n• 2x mais rápido\n• \"Pensa\" antes de gerar e se autocorrige\n• Edita conversando — você fala 'muda o fundo pro pôr do sol' e ele mexe só naquilo\n\nParece conversa com um designer, não uma ferramenta.\n\nSe você curte acompanhar essas novidades, cola comigo por aqui. 🔗\n\n#gptimage2 #openai #ia #inteligenciaartificial #design #conteudo #automação #marketingdigital #tecnologia #nocode",
+  "comentario": "Qual a pior tentativa de texto que uma IA já fez pra você? 😂",
+  "fontes": [
+    "https://openai.com/index/introducing-chatgpt-images-2-0/",
+    "https://developers.openai.com/api/docs/models/gpt-image-2",
+    "https://www.befreed.ai/blog/gpt-image-2-guide-2026"
+  ]
+}

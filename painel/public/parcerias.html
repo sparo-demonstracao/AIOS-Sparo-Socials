@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AIOS · Propostas de Parceria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/style.css" />
+<style>
+  .wrap{ max-width:1180px; margin:0 auto; padding:26px 26px 80px; }
+  .pp-top{ display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .back{ display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:var(--txt-dim);
+    border:1px solid var(--line); background:var(--card); border-radius:10px; padding:8px 12px; box-shadow:var(--shadow); transition:.15s; }
+  .back:hover{ color:var(--blue); border-color:var(--blue); }
+  .back svg{ width:15px; height:15px; stroke:currentColor; }
+  h1.pp{ font-size:26px; font-weight:800; letter-spacing:-.6px; margin:14px 0 3px; }
+  .pp-sub{ color:var(--txt-dim); font-size:14px; margin-bottom:20px; }
+  .pp-sub b{ color:var(--txt-2); font-weight:700; }
+
+  .kpis{ display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:18px; }
+  .kpi{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius-sm); padding:14px 16px; box-shadow:var(--shadow); }
+  .kpi .n{ font-size:26px; font-weight:800; letter-spacing:-1px; font-variant-numeric:tabular-nums; line-height:1; }
+  .kpi .l{ font-size:11.5px; color:var(--txt-dim); font-weight:600; margin-top:6px; text-transform:uppercase; letter-spacing:.4px; }
+  .kpi.g .n{ color:var(--green); } .kpi.m .n{ color:var(--amber); } .kpi.d .n{ color:var(--txt-dim); } .kpi.p .n{ color:var(--red); }
+
+  .bar{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:16px; }
+  .seg{ display:inline-flex; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:3px; box-shadow:var(--shadow); }
+  .seg button{ font-size:13px; font-weight:600; color:var(--txt-dim); padding:7px 13px; border-radius:8px; display:flex; align-items:center; gap:6px; }
+  .seg button.on{ background:var(--blue-soft); color:var(--blue-deep); font-weight:700; }
+  .seg svg{ width:15px; height:15px; stroke:currentColor; }
+  .chips{ display:flex; flex-wrap:wrap; gap:7px; }
+  .chip{ font-size:12.5px; font-weight:600; color:var(--txt-2); background:var(--card); border:1px solid var(--line); border-radius:20px; padding:6px 12px; box-shadow:var(--shadow); display:flex; align-items:center; gap:6px; }
+  .chip .c{ font-size:11px; font-weight:700; background:var(--line); color:var(--txt-dim); border-radius:20px; padding:0 6px; }
+  .chip.on{ border-color:var(--blue); color:var(--blue-deep); background:var(--blue-soft); }
+  .chip.on .c{ background:#fff; color:var(--blue-deep); }
+  .ssearch{ margin-left:auto; display:flex; align-items:center; gap:9px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:8px 12px; box-shadow:var(--shadow); min-width:210px; }
+  .ssearch:focus-within{ border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+  .ssearch svg{ width:15px;height:15px;stroke:var(--txt-faint); }
+  .ssearch input{ border:none; outline:none; background:transparent; font-family:inherit; font-size:13px; width:100%; color:var(--txt); }
+
+  /* ── cards por EMPRESA ── */
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(360px,1fr)); gap:14px; }
+  .gcard{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:box-shadow .15s, border-color .15s; }
+  .gcard:hover{ box-shadow:var(--shadow-lg); }
+  .gcard.v-grande{ border-left:4px solid var(--green); } .gcard.v-media{ border-left:4px solid var(--amber); }
+  .gcard.v-desconhecida{ border-left:4px solid var(--txt-faint); } .gcard.v-pequena{ border-left:4px solid var(--red); }
+  .gc-head{ display:flex; align-items:flex-start; gap:10px; padding:15px 16px 11px; cursor:pointer; }
+  .gc-id{ flex:1; min-width:0; }
+  .gc-brand{ font-size:16px; font-weight:800; letter-spacing:-.3px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .gc-count{ font-size:12px; font-weight:700; color:#fff; background:var(--blue); border-radius:20px; padding:1px 8px; }
+  .gc-count.one{ background:var(--line); color:var(--txt-dim); }
+  .gc-when{ font-size:12px; color:var(--txt-dim); margin-top:5px; }
+  .gc-evi{ font-size:11.5px; color:var(--txt-faint); margin-top:7px; line-height:1.45; }
+  .gc-evi a{ color:var(--blue); font-weight:600; }
+  .badge{ display:inline-flex; align-items:center; font-size:11px; font-weight:700; border-radius:20px; padding:3px 9px; white-space:nowrap; }
+  .b-grande{ background:var(--green-soft); color:#0c7a37; } .b-media{ background:var(--amber-soft); color:var(--amber); }
+  .b-desconhecida{ background:var(--line-soft); color:var(--txt-dim); } .b-pequena{ background:var(--red-soft); color:var(--red); }
+  .rec{ display:inline-flex; align-items:center; font-size:11px; font-weight:700; border-radius:8px; padding:3px 9px; white-space:nowrap; flex:0 0 auto; }
+  .r-interesse{ background:var(--green-soft); color:#0c7a37; } .r-briefing{ background:var(--blue-soft); color:var(--blue-deep); } .r-recusa{ background:var(--red-soft); color:var(--red); }
+  .chev{ flex:0 0 auto; width:18px; height:18px; stroke:var(--txt-faint); transition:transform .18s; margin-top:2px; }
+  .gcard.open .chev{ transform:rotate(180deg); }
+  .gc-msgs{ display:none; border-top:1px solid var(--line-soft); background:#fbfcfe; }
+  .gcard.open .gc-msgs{ display:block; }
+  .gmsg{ display:flex; align-items:baseline; gap:10px; padding:9px 16px; border-bottom:1px solid var(--line-soft); cursor:pointer; transition:background .12s; }
+  .gmsg:last-child{ border-bottom:none; }
+  .gmsg:hover{ background:#f3f7ff; }
+  .gm-date{ font-family:var(--mono); font-size:11px; color:var(--txt-dim); white-space:nowrap; flex:0 0 56px; }
+  .gm-txt{ min-width:0; }
+  .gm-from{ font-size:12px; font-weight:600; color:var(--txt-2); word-break:break-all; }
+  .gm-subj{ font-size:11.5px; color:var(--txt-faint); margin-top:1px; }
+  .empty{ padding:50px; text-align:center; color:var(--txt-dim); }
+  .foot{ margin-top:16px; font-size:12px; color:var(--txt-faint); }
+  @media(max-width:760px){ .kpis{ grid-template-columns:repeat(2,1fr); } .grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="pp-top">
+    <a class="back" href="/"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Painel</a>
+    <div class="status-chip" style="margin-left:auto"><span class="dot"></span>L2 · só rascunho</div>
+  </div>
+
+  <h1 class="pp">🤝 Empresas que pediram parceria</h1>
+  <p class="pp-sub">Uma empresa = um card (todas as mensagens dela juntas). Veja <b>quem te procurou</b> e a <b>relevância</b> pesquisada na web. Ordene por relevância (focar nas grandes) ou por data do último contato. <span id="gen"></span></p>
+
+  <section class="kpis" id="kpis"></section>
+
+  <div class="bar">
+    <div class="seg" id="seg-sort">
+      <button data-sort="rel" class="on"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>Relevância</button>
+      <button data-sort="data"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Último contato</button>
+      <button data-sort="freq"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Mais insistentes</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <label class="ssearch">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="q" placeholder="Buscar empresa, remetente…" />
+    </label>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>Sem propostas. Rode <code>--recheck-parcerias</code> pra gerar os dados.</div>
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+const VLAB = { grande:"Grande", media:"Média", desconhecida:"Desconhecida", pequena:"Pequena" };
+const VRANK = { grande:0, media:1, desconhecida:2, pequena:3 };
+const RLAB = { interesse:"Interesse", briefing:"Pedir briefing", recusa:"Recusar" };
+let GRUPOS = [], sortBy = "rel", filtro = "todas", busca = "";
+
+function esc(s){ return (s||"").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function urlDe(f){ const m=(f||"").match(/https?:\/\/[^\s)\]]+/); return m?m[0]:""; }
+function normBrand(b){ return (b||"").toLowerCase().replace(/\(.*?\)/g," ").replace(/[^a-z0-9 ]/g," ").replace(/\b(ai|inc|llc|labs|technologies|technology|group|io|com|app|the|co|agent|assistant|studio|deck|team|official|plus|pro)\b/g," ").replace(/\s+/g," ").trim(); }
+function fmtData(ms){ if(!ms) return "—"; const d=new Date(ms); return d.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"}); }
+function diasAtras(ms){ if(!ms) return ""; const n=Math.floor((Date.now()-ms)/86400000); return n<=0?"hoje":n===1?"ontem":`há ${n} dias`; }
+
+function agrupar(proposals){
+  const map = new Map();
+  for(const p of proposals){
+    const k = normBrand(p.brand) || (p.from||"").toLowerCase();
+    if(!map.has(k)) map.set(k, { key:k, msgs:[] });
+    map.get(k).msgs.push(p);
+  }
+  const grupos = [];
+  for(const g of map.values()){
+    g.msgs.sort((a,b)=> (b.dateMs||0)-(a.dateMs||0));
+    // melhor veredito do grupo (não rebaixar uma empresa por um resultado ruim)
+    const melhor = [...g.msgs].sort((a,b)=> (VRANK[a.verdict]??9)-(VRANK[b.verdict]??9))[0];
+    g.brand = g.msgs.map(m=>m.brand).sort((a,b)=>(b||"").length-(a||"").length)[0] || "—";
+    g.verdict = melhor.verdict; g.recommendation = melhor.recommendation;
+    g.evidencia = melhor.evidencia; g.fonte = melhor.fonte;
+    g.count = g.msgs.length; g.ultimo = g.msgs[0].dateMs||0; g.primeiro = g.msgs[g.msgs.length-1].dateMs||0;
+    grupos.push(g);
+  }
+  return grupos;
+}
+
+function render(){
+  const grid = document.getElementById("grid");
+  let lista = GRUPOS.filter(g => filtro==="todas" || g.verdict===filtro);
+  if(busca){ const b=busca.toLowerCase(); lista = lista.filter(g => (g.brand+" "+g.msgs.map(m=>m.from+" "+m.subject).join(" ")).toLowerCase().includes(b)); }
+  lista.sort((a,b) =>
+    sortBy==="data" ? b.ultimo-a.ultimo :
+    sortBy==="freq" ? b.count-a.count || b.ultimo-a.ultimo :
+    (VRANK[a.verdict]??9)-(VRANK[b.verdict]??9) || b.ultimo-a.ultimo);
+
+  document.getElementById("empty").hidden = lista.length>0;
+  grid.innerHTML = lista.map((g,gi) => {
+    const u = urlDe(g.fonte);
+    const quando = g.count>1
+      ? `${g.count} contatos · último ${fmtData(g.ultimo)} (${diasAtras(g.ultimo)}) · 1º ${fmtData(g.primeiro)}`
+      : `1 contato · ${fmtData(g.ultimo)} (${diasAtras(g.ultimo)})`;
+    const msgs = g.msgs.map(m => {
+      const gmail = `https://mail.google.com/mail/u/0/#all/${m.threadId}`;
+      return `<div class="gmsg" onclick="window.open('${gmail}','_blank')"><span class="gm-date">${fmtData(m.dateMs)}</span><span class="gm-txt"><div class="gm-from">${esc(m.from)}</div><div class="gm-subj">${esc(m.subject)}</div></span></div>`;
+    }).join("");
+    return `<div class="gcard v-${g.verdict}" data-i="${gi}">
+      <div class="gc-head" onclick="this.parentNode.classList.toggle('open')">
+        <div class="gc-id">
+          <div class="gc-brand">${esc(g.brand)} <span class="gc-count${g.count===1?' one':''}">${g.count}×</span></div>
+          <div class="gc-when">${quando}</div>
+          ${g.evidencia?`<div class="gc-evi">${esc(g.evidencia).slice(0,130)}${u?` · <a href="${u}" target="_blank" onclick="event.stopPropagation()">fonte ↗</a>`:""}</div>`:""}
+        </div>
+        <span class="badge b-${g.verdict}">${VLAB[g.verdict]||g.verdict}</span>
+        <span class="rec r-${g.recommendation}">${RLAB[g.recommendation]||g.recommendation}</span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+      <div class="gc-msgs">${msgs}</div>
+    </div>`;
+  }).join("");
+  const totMsg = lista.reduce((n,g)=>n+g.count,0);
+  document.getElementById("foot").textContent = `${lista.length} empresas · ${totMsg} mensagens · clique num card pra ver as mensagens, e numa mensagem pra abrir no Gmail · nada foi enviado (L2).`;
+}
+
+function montaChips(){
+  const cnt = v => GRUPOS.filter(g=>g.verdict===v).length;
+  const defs = [["todas","Todas",GRUPOS.length],["grande","Grandes",cnt("grande")],["media","Médias",cnt("media")],["desconhecida","Desconhecidas",cnt("desconhecida")],["pequena","Pequenas",cnt("pequena")]];
+  document.getElementById("chips").innerHTML = defs.map(([k,l,n]) => `<button class="chip${k===filtro?" on":""}" data-f="${k}">${l}<span class="c">${n}</span></button>`).join("");
+  document.querySelectorAll(".chip").forEach(c => c.onclick = () => { filtro=c.dataset.f; document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x.dataset.f===filtro)); render(); });
+}
+function montaKpis(){
+  const cnt = v => GRUPOS.filter(g=>g.verdict===v).length;
+  const k = [["",GRUPOS.length,"Empresas"],["g",cnt("grande"),"Grandes"],["m",cnt("media"),"Médias"],["d",cnt("desconhecida"),"Desconhecidas"],["p",cnt("pequena"),"Pequenas"]];
+  document.getElementById("kpis").innerHTML = k.map(([c,n,l]) => `<div class="kpi ${c}"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+}
+
+document.querySelectorAll("#seg-sort button").forEach(b => b.onclick = () => { sortBy=b.dataset.sort; document.querySelectorAll("#seg-sort button").forEach(x=>x.classList.toggle("on",x.dataset.sort===sortBy)); render(); });
+document.getElementById("q").oninput = e => { busca=e.target.value; render(); };
+
+fetch("/api/parcerias").then(r=>r.json()).then(d => {
+  GRUPOS = agrupar(d.proposals || []);
+  if(d.generatedAt){ const dt=new Date(d.generatedAt).toLocaleString("pt-BR",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}); document.getElementById("gen").innerHTML = `<span style="color:var(--txt-faint)">· atualizado ${dt}</span>`; }
+  montaKpis(); montaChips(); render();
+}).catch(()=>{ document.getElementById("empty").hidden=false; });
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Carrossel BG — logos 3D</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;overflow:hidden}
+  body{
+    /* fundo claro estilo imagem 6: off-white com reflexos azul/lilás */
+    background:
+      radial-gradient(40% 60% at 14% 16%, #e8eeff 0%, transparent 60%),
+      radial-gradient(38% 55% at 86% 82%, #f2e6ff 0%, transparent 58%),
+      radial-gradient(34% 50% at 60% 24%, #e6f7ff 0%, transparent 55%),
+      radial-gradient(30% 50% at 92% 30%, #eaf0ff 0%, transparent 55%),
+      linear-gradient(170deg, #fdfdff 0%, #f4f6fb 60%, #edeff7 100%);
+  }
+  #scene{position:fixed;inset:0;width:100%;height:100%;display:block}
+</style>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <script type="importmap">
+  { "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }}
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+    import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
+
+    const Q = new URLSearchParams(location.search);
+    const VAR  = parseInt(Q.get('v') || '1', 10);
+    const PANO = Q.get('pano') === '1';           // modo foto longa horizontal
+    // semente reproduzível por variação (mulberry32)
+    let _s = (0x9e3779b9 ^ (VAR * 0x85ebca6b)) >>> 0;
+    function rnd(){ _s|=0; _s=_s+0x6D2B79F5|0; let t=Math.imul(_s^_s>>>15,1|_s); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }
+
+    const canvas = document.getElementById('scene');
+    let renderer, scene, camera, group, shapes = [];
+    let CLAUDE_SHAPES = null, ANTIGRAV_SHAPES = null, AG_TEX = null;
+
+    function makeAntigravity(){
+      if (!ANTIGRAV_SHAPES || !AG_TEX) return null;
+      const geo = new THREE.ExtrudeGeometry(ANTIGRAV_SHAPES, { depth:3, bevelEnabled:true, bevelThickness:0.35, bevelSize:0.28, bevelSegments:3, curveSegments:64 });
+      const p = geo.attributes.position, uv = new Float32Array(p.count*2);
+      for (let i=0;i<p.count;i++){ uv[i*2]=p.getX(i)/16; uv[i*2+1]=1-p.getY(i)/15; }
+      geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv,2));
+      geo.rotateX(Math.PI); geo.scale(0.135,0.135,0.135); geo.center();
+      return new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({ map:AG_TEX, metalness:0.1, roughness:0.34, clearcoat:1, clearcoatRoughness:0.1, envMapIntensity:0.9, side:THREE.DoubleSide }));
+    }
+    function makeClaude(){
+      if (!CLAUDE_SHAPES) return null;
+      const geo = new THREE.ExtrudeGeometry(CLAUDE_SHAPES, { depth:5, bevelEnabled:true, bevelThickness:0.8, bevelSize:0.6, bevelSegments:2, curveSegments:6 });
+      geo.rotateX(Math.PI); geo.scale(0.085,0.085,0.085); geo.center();
+      return new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({ color:0xD97757, metalness:0.12, roughness:0.3, clearcoat:1, clearcoatRoughness:0.1, envMapIntensity:0.9, side:THREE.DoubleSide }));
+    }
+
+    function init(){
+      renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
+      renderer.setClearColor(0x000000, 0);
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      renderer.setSize(innerWidth, innerHeight);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.1;
+
+      scene = new THREE.Scene();
+      const aspect = innerWidth/innerHeight;
+      if (PANO){
+        // ORTOGRÁFICA: sem distorção de perspectiva nas bordas da faixa larga
+        const viewH = 11;                 // altura da cena em unidades de mundo
+        const viewW = viewH * aspect;
+        camera = new THREE.OrthographicCamera(-viewW/2, viewW/2, viewH/2, -viewH/2, 0.1, 200);
+      } else {
+        camera = new THREE.PerspectiveCamera(42, aspect, 0.1, 200);
+      }
+      camera.position.set(0, 0, 12);
+      camera.lookAt(0, 0, 0);
+
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+      const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(5, 8, 6); scene.add(key);
+      const warm = new THREE.DirectionalLight(0xffb380, 1.2); warm.position.set(-6, -2, 4); scene.add(warm);
+
+      group = new THREE.Group(); scene.add(group);
+      const rim = new THREE.DirectionalLight(0xbcd4ff, 1.6); rim.position.set(-6, 4, -7); group.add(rim);
+      const fill = new THREE.DirectionalLight(0xffffff, 0.7); fill.position.set(4, -3, 6); group.add(fill);
+
+      const loader = new SVGLoader();
+      const load = url => new Promise(res => loader.load(url, d => res(d.paths.flatMap(p => SVGLoader.createShapes(p))), undefined, () => res(null)));
+      const loadAgTex = () => new Promise(res => {
+        const img = new Image();
+        img.onload = () => {
+          const W=512, H=480, c=document.createElement('canvas'); c.width=W; c.height=H;
+          const x=c.getContext('2d'); x.fillStyle='#3B8CFF'; x.fillRect(0,0,W,H); x.drawImage(img,0,0,W,H);
+          const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace; tex.anisotropy=8; res(tex);
+        };
+        img.onerror = () => res(null);
+        img.src='logo-antigravity-full.svg';
+      });
+      Promise.all([ load('logo-claude.svg'), load('logo-antigravity.svg'), loadAgTex() ]).then(([cs, as, tex]) => {
+        CLAUDE_SHAPES = cs; ANTIGRAV_SHAPES = as; AG_TEX = tex;
+        buildLogos();
+        renderer.render(scene, camera);
+        requestAnimationFrame(()=>{ renderer.render(scene, camera); requestAnimationFrame(()=>{ renderer.render(scene, camera); window.__ready = true; }); });
+      });
+    }
+
+    function buildLogos(){
+      // extensão visível em unidades de mundo
+      let visW, visH;
+      if (camera.isOrthographicCamera){
+        visW = camera.right - camera.left;
+        visH = camera.top - camera.bottom;
+      } else {
+        const vFOV = 42 * Math.PI/180;
+        visH = 2*Math.tan(vFOV/2)*camera.position.z;
+        visW = visH * camera.aspect;
+      }
+      // espalha um pouco além da borda p/ os elementos "saírem" do quadro (clip natural)
+      const W = visW * (PANO ? 1.06 : 1.18), H = visH * (PANO ? 1.12 : 1.35);
+      const cell = 3.25;                 // densidade constante (unidades por célula)
+      const cols = Math.max(2, Math.round(W/cell));
+      const rows = Math.max(2, Math.round(H/cell));
+      const cellW = W/cols, cellH = H/rows;
+
+      const cells = [];
+      for (let r=0;r<rows;r++) for (let c=0;c<cols;c++) cells.push([c,r]);
+      for (let k=cells.length-1;k>0;k--){ const j=Math.floor(rnd()*(k+1)); const t=cells[k];cells[k]=cells[j];cells[j]=t; }
+
+      let i = 0;
+      for (const [c,r] of cells){
+        const nx = ((c+0.5)/cols - 0.5)*2;   // -1..1 horizontal
+        const ny = ((r+0.5)/rows - 0.5)*2;    // -1..1 vertical
+        let skip;
+        if (PANO){
+          // foto longa: densidade homogênea com respiro; sem buraco central
+          skip = 0.30;
+        } else {
+          // slide único: centro mais limpo p/ texto
+          const distC = Math.hypot(nx, ny*0.8);
+          skip = distC < 0.45 ? 0.85 : (distC < 0.7 ? 0.35 : 0.10);
+        }
+        if (rnd() < skip) continue;
+
+        const wantClaude = (i % 2 === 0);
+        const mesh = (wantClaude ? makeClaude() : makeAntigravity()) || makeClaude() || makeAntigravity();
+        if (!mesh) continue;
+
+        const cx = -W/2 + (c + 0.5)*cellW + (rnd()-0.5)*cellW*0.7;
+        const cy =  H/2 - (r + 0.5)*cellH + (rnd()-0.5)*cellH*0.7;
+        mesh.position.set(cx, cy, -1 - rnd()*6);
+        mesh.scale.multiplyScalar(PANO ? (0.5 + rnd()*0.6) : (0.6 + rnd()*0.8));
+        // rotação suave: mantém a FACE virada p/ câmera (evita o formato "de lado/barril")
+        mesh.rotation.set((rnd()-0.5)*0.35, (rnd()-0.5)*0.9, (rnd()-0.5)*0.35);
+        group.add(mesh); shapes.push(mesh);
+        i++;
+      }
+    }
+
+    try { init(); } catch(err){ console.warn('3D indisponível:', err); window.__ready = true; }
+  </script>
+</body>
+</html>

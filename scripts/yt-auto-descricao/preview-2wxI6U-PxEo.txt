@@ -1,0 +1,26 @@
+🎓MasterClass de Antigravity + Claude Code (Curso Completo do Básico ao Avançado): https://masterclass.sparo.com.br/
+
+🌍Nossa comunidade Grátis: https://www.skool.com/comunidade-de-automacao-com-ia-8164
+🌟Hospede suas automações e aplicativos na VPS da Hostinger (10% OFF usando o cupom SPARO10): https://hostinger.com/SPARO10
+
+📞Minha Agência de Automação(Sparo Automações): https://sparo.com.br
+🤝Trabalhe comigo: Entre em contato pelo chat da nossa comunidade grátis!
+
+Antigravity Download: https://antigravity.google/download
+
+Nesse vídeo você aprende a colocar qualquer app ou automação criada no Antigravity pra rodar 24 horas por dia, mesmo com o seu computador desligado. A solução é alugar uma VPS na Hostinger por R$ 35/mês, conectar ela ao GitHub e à Qlify, e vincular tudo ao Antigravity via MCP. Você configura isso uma única vez, e depois é só digitar um comando pro Antigravity publicar qualquer projeto automaticamente. O vídeo mostra o passo a passo completo: da compra da VPS até o app ao vivo com domínio personalizado, em tempo real. No final, publicar um novo app leva menos de três minutos.
+
+Neste tutorial, você aprenderá:
+00:00 - O Que Você Vai Aprender Nesse Vídeo
+00:31 - O Problema: Seu App Morre Quando Você Fecha o PC
+01:07 - A Solução: VPS + GitHub + Qlify
+02:27 - Contratando a VPS na Hostinger (Cupom SPARO10)
+05:36 - Conectando o GitHub à Qlify
+06:42 - Adicionando o MCP da Qlify no Antigravity
+10:43 - Criando o Workflow "Publicar App"
+12:20 - Demo ao Vivo: Publicando o FloraCare do Zero
+15:49 - Configurando Domínio Personalizado com HTTPS
+
+#Antigravity #ClaudeCode #Automação #IA #SparoAutomacoes #VPS #Hostinger #Deploy
+
+Gostou do vídeo? Deixe seu like, inscreva-se no canal e ative o sininho para não perder nenhuma novidade sobre automação e inteligência artificial. Se tiver alguma dúvida, deixe nos comentários abaixo!

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "41af8022-0046-4e74-b7f2-31757eb77d9f",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3B4oRnkYczFwSpQrfkRufOPJA8N/hf_20260625_223125_41af8022-0046-4e74-b7f2-31757eb77d9f.png",
+    "created_at": 1782426685.61471,
+    "params": {
+      "width": 880,
+      "height": 1168,
+      "prompt": "Dark UI background, sleek AI chat interface mockup, empty input box at the bottom with a glowing send button, soft teal accent light, subtle grid pattern, depth of field, futuristic minimal, plenty of empty space in the upper area, premium tech look, no text, no letters, no words",
+      "medias": [],
+      "aspect_ratio": "3:4",
+      "quality": "low",
+      "resolution": "1k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

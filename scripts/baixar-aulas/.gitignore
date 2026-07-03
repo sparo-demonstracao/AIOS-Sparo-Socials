@@ -1,0 +1,17 @@
+# === Segredos — NUNCA commitar ===
+# rclone.conf = token de acesso ao Google Drive (refresh token)
+# profile/    = sessão logada da Kiwify (cookies/localStorage)
+# artifacts/  = inclui localstorage.json com token da Kiwify
+rclone.conf
+profile/
+artifacts/
+
+# === Binários e dependências (reinstaláveis) ===
+node_modules/
+tools/
+package-lock.json
+
+# === Temporários ===
+rclone.zip
+rclone_extract/
+*.log

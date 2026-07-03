@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIOS — sistema operacional do Enzo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafafa;
+    --surface:#ffffff;
+    --ink:#0a0a0a;
+    --ink-2:#3d3d3d;
+    --ink-3:#6e6e6e;
+    --ink-4:#9a9a9a;
+    --line:#e6e6e6;
+    --line-2:#efefef;
+    --accent:#F2682C;
+    --accent-ink:#c44f18;
+    --accent-soft:#fcebe2;
+    --blue:#2f5fd6;
+    --alert:#b03a16;
+    --alert-soft:#fbe7df;
+    --on:#1a8a3a;
+    --on-soft:#e9f6ec;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{
+    font-family:'Archivo',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.5;
+    padding:48px 24px 64px;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+  .mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum'}
+
+  /* page-load stagger */
+  .stagger{opacity:0;transform:translateY(8px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .d1{animation-delay:.02s}.d2{animation-delay:.09s}.d3{animation-delay:.16s}
+  .d4{animation-delay:.23s}.d5{animation-delay:.30s}.d6{animation-delay:.37s}
+  @media (prefers-reduced-motion:reduce){.stagger{animation:none;opacity:1;transform:none}}
+
+  /* ---------- header ---------- */
+  header{
+    display:flex;align-items:flex-start;justify-content:space-between;
+    gap:24px;flex-wrap:wrap;
+    padding-bottom:22px;border-bottom:1px solid var(--ink);
+  }
+  .brand{display:flex;align-items:center;gap:14px}
+  .glyph{flex:none;color:var(--accent)}
+  .brand-text h1{
+    font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1;
+  }
+  .brand-text p{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:.04em;color:var(--ink-3);
+    margin-top:6px;text-transform:uppercase;
+  }
+  .head-right{display:flex;align-items:center;gap:16px;margin-top:4px}
+  .clock{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--ink-2);letter-spacing:.02em;
+    text-align:right;
+  }
+  .clock .dim{color:var(--ink-4)}
+  .btn{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:.04em;text-transform:uppercase;
+    border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+    padding:9px 14px;border-radius:4px;cursor:pointer;
+    transition:border-color .15s ease,color .15s ease,background .15s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--ink);color:var(--ink);background:#fff}
+  .btn:active{transform:translateY(1px)}
+  .btn .ar{display:inline-block;margin-left:6px;transition:transform .2s ease}
+  .btn:hover .ar{transform:rotate(120deg)}
+
+  /* ---------- stats ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--line);border-radius:6px;background:var(--surface);
+    margin:34px 0 56px;overflow:hidden;
+  }
+  .stat{padding:20px 22px;border-left:1px solid var(--line-2)}
+  .stat:first-child{border-left:none}
+  .stat .n{
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+    font-size:26px;letter-spacing:-.01em;line-height:1;color:var(--ink);
+  }
+  .stat .n .u{font-size:13px;font-weight:500;color:var(--ink-3);margin-left:4px}
+  .stat .l{
+    font-size:12px;color:var(--ink-3);margin-top:9px;
+  }
+  .stat.accent .n{color:var(--accent)}
+
+  /* ---------- section heads ---------- */
+  .sec{margin-bottom:56px}
+  .sec-head{
+    display:flex;align-items:baseline;gap:14px;
+    margin-bottom:4px;
+  }
+  .sec-head h2{
+    font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink);
+  }
+  .sec-head .meta{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-4);
+  }
+  .sec-rule{height:2px;background:var(--ink);margin:0 0 0;width:34px}
+  .sec-top{border-top:1px solid var(--ink);padding-top:14px;margin-bottom:8px}
+
+  /* ---------- automation rows ---------- */
+  .auto-list{border-top:1px solid var(--line)}
+  .auto{
+    border-bottom:1px solid var(--line);
+    padding:26px 4px;
+    display:grid;grid-template-columns:44px 1fr;gap:18px;
+    transition:background .18s ease;
+  }
+  .auto:hover{background:#fff}
+  .auto-ico{
+    font-size:24px;line-height:1;width:44px;height:44px;
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line);border-radius:6px;background:var(--surface);
+  }
+  .auto-body{min-width:0}
+  .auto-top{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    margin-bottom:3px;
+  }
+  .auto-title{font-size:19px;font-weight:600;letter-spacing:-.01em}
+  .status{
+    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;
+    padding:3px 8px;border-radius:3px;display:inline-flex;align-items:center;gap:6px;
+  }
+  .status::before{content:"";width:6px;height:6px;border-radius:50%}
+  .status.on{color:var(--on);background:var(--on-soft)}
+  .status.on::before{background:var(--on)}
+  .status.demand{color:var(--ink-2);background:var(--line-2)}
+  .status.demand::before{background:var(--ink-4)}
+
+  .badge{
+    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+    letter-spacing:.04em;color:var(--ink-3);
+    border:1px solid var(--line);padding:3px 8px;border-radius:3px;
+    margin-left:auto;
+  }
+  .badge.l4{
+    color:var(--alert);background:var(--alert-soft);border-color:#f1c9b8;font-weight:700;
+  }
+  .badge.l4::before{content:"▲ ";font-size:8px}
+
+  .auto-sched{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3);
+    margin-bottom:11px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+  }
+  .auto-sched .sep{color:var(--line)}
+  .auto-sched .ok{color:var(--on)}
+  .auto-sched b{color:var(--ink-2);font-weight:500}
+
+  .auto-desc{
+    font-size:14.5px;color:var(--ink-2);max-width:60ch;margin-bottom:14px;
+  }
+  .sources{
+    display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;align-items:center;
+  }
+  .sources .lbl{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--ink-4);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;
+  }
+  .chip{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2);
+    border:1px solid var(--line);padding:2px 8px;border-radius:3px;background:#fff;
+  }
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .a-btn{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.02em;
+    border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+    padding:8px 13px;border-radius:4px;cursor:pointer;
+    transition:border-color .15s,color .15s,background .15s;
+  }
+  .a-btn:hover{border-color:var(--ink);color:var(--ink)}
+  .a-btn:active{transform:translateY(1px)}
+  .a-btn.primary{
+    background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500;
+  }
+  .a-btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+
+  /* ---------- capabilities ---------- */
+  .caps{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface);
+  }
+  .cap{
+    display:flex;align-items:center;gap:12px;
+    padding:15px 16px;
+    border-top:1px solid var(--line-2);border-left:1px solid var(--line-2);
+    cursor:pointer;transition:background .15s;
+  }
+  .cap:nth-child(-n+3){border-top:none}
+  .cap:nth-child(3n+1){border-left:none}
+  .cap:hover{background:#fff}
+  .cap:hover .cap-cmd{color:var(--accent)}
+  .cap .e{font-size:18px;line-height:1;width:22px;text-align:center}
+  .cap-txt{min-width:0}
+  .cap-name{font-size:14px;font-weight:500;letter-spacing:-.005em}
+  .cap-cmd{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-4);transition:color .15s}
+
+  /* ---------- connections ---------- */
+  .conns{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px}
+  .conn{
+    display:flex;align-items:baseline;gap:0;
+    padding:14px 0;border-bottom:1px solid var(--line);
+  }
+  .conn .dom{
+    font-size:13px;font-weight:600;width:140px;flex:none;letter-spacing:-.005em;
+  }
+  .conn .tools{display:flex;gap:6px;flex-wrap:wrap}
+  .ctool{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2);
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .ctool::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--on)}
+  .ctool.todo{color:var(--ink-4)}
+  .ctool.todo::before{background:var(--ink-4);box-shadow:none;border:none}
+  .ctool + .ctool{margin-left:14px;padding-left:14px;border-left:1px solid var(--line)}
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:8px;padding-top:24px;border-top:1px solid var(--ink);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-4);
+    letter-spacing:.03em;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:820px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(3){border-left:none}
+    .caps{grid-template-columns:repeat(2,1fr)}
+    .cap:nth-child(3){border-top:1px solid var(--line-2)}
+    .cap:nth-child(3n+1){border-left:1px solid var(--line-2)}
+    .cap:nth-child(2n+1){border-left:none}
+    .conns{grid-template-columns:1fr;gap:0}
+  }
+  @media (max-width:560px){
+    body{padding:28px 16px 48px}
+    .stats{grid-template-columns:1fr}
+    .stat{border-left:none;border-top:1px solid var(--line-2)}
+    .stat:first-child{border-top:none}
+    .caps{grid-template-columns:1fr}
+    .cap{border-left:none!important;border-top:1px solid var(--line-2)!important}
+    .cap:first-child{border-top:none!important}
+    .conn{flex-direction:column;gap:8px}
+    .conn .dom{width:auto}
+    .brand-text h1{font-size:28px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ HEADER ============ -->
+  <header class="stagger d1">
+    <div class="brand">
+      <svg class="glyph" width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <circle cx="15" cy="15" r="5" stroke="currentColor" stroke-width="1.6"/>
+        <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <line x1="15" y1="1.5" x2="15" y2="5.5"/>
+          <line x1="15" y1="24.5" x2="15" y2="28.5"/>
+          <line x1="1.5" y1="15" x2="5.5" y2="15"/>
+          <line x1="24.5" y1="15" x2="28.5" y2="15"/>
+          <line x1="5.4" y1="5.4" x2="8.2" y2="8.2"/>
+          <line x1="21.8" y1="21.8" x2="24.6" y2="24.6"/>
+          <line x1="24.6" y1="5.4" x2="21.8" y2="8.2"/>
+          <line x1="8.2" y1="21.8" x2="5.4" y2="24.6"/>
+        </g>
+      </svg>
+      <div class="brand-text">
+        <h1>AIOS</h1>
+        <p>sistema operacional do Enzo</p>
+      </div>
+    </div>
+    <div class="head-right">
+      <div class="clock mono">qua 25/06 <span class="dim">·</span> 07:14</div>
+      <button class="btn">Atualizar<span class="ar">↻</span></button>
+    </div>
+  </header>
+
+  <!-- ============ STATS ============ -->
+  <div class="stats stagger d2">
+    <div class="stat accent">
+      <div class="n mono">2<span class="u">/3</span></div>
+      <div class="l">automações ligadas</div>
+    </div>
+    <div class="stat">
+      <div class="n mono">3</div>
+      <div class="l">capacidades</div>
+    </div>
+    <div class="stat">
+      <div class="n mono">07:01</div>
+      <div class="l">resumo feito</div>
+    </div>
+    <div class="stat">
+      <div class="n mono">7</div>
+      <div class="l">conexões</div>
+    </div>
+  </div>
+
+  <!-- ============ AUTOMAÇÕES ============ -->
+  <section class="sec stagger d3">
+    <div class="sec-top">
+      <div class="sec-head">
+        <h2>Automações</h2>
+        <span class="meta mono">3 fluxos</span>
+      </div>
+    </div>
+
+    <div class="auto-list">
+
+      <!-- Resumo Matinal -->
+      <div class="auto">
+        <div class="auto-ico">🌅</div>
+        <div class="auto-body">
+          <div class="auto-top">
+            <span class="auto-title">Resumo Matinal</span>
+            <span class="status on">Ligada</span>
+            <span class="badge">L2 · só leitura</span>
+          </div>
+          <div class="auto-sched mono">
+            <span>Todo dia 7:55 + ao ligar o PC</span>
+            <span class="sep">·</span>
+            <span>última vez: <b>hoje 07:01</b></span>
+            <span class="ok">Sucesso</span>
+          </div>
+          <p class="auto-desc">Junta o que importa das últimas 24h e mostra num pop-up priorizado, na sua voz.</p>
+          <div class="sources">
+            <span class="lbl">fontes</span>
+            <span class="chip">WhatsApp</span>
+            <span class="chip">Gmail</span>
+            <span class="chip">YouTube</span>
+          </div>
+          <div class="actions">
+            <button class="a-btn primary">Rodar agora</button>
+            <button class="a-btn">Ver resumo</button>
+            <button class="a-btn">Ver log</button>
+            <button class="a-btn">Ligar/desligar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- YouTube Auto-Descrição -->
+      <div class="auto">
+        <div class="auto-ico">🎬</div>
+        <div class="auto-body">
+          <div class="auto-top">
+            <span class="auto-title">YouTube · Auto-Descrição</span>
+            <span class="status on">Ligada</span>
+            <span class="badge l4">L4 · publica direto</span>
+          </div>
+          <div class="auto-sched mono">
+            <span>Contínuo · a cada 3 min</span>
+            <span class="sep">·</span>
+            <span><b>15 vídeos</b> processados</span>
+            <span class="sep">·</span>
+            <span>último ciclo há 4 min</span>
+          </div>
+          <p class="auto-desc">A cada vídeo novo, escreve descrição + capítulos + hashtags e publica direto.</p>
+          <div class="sources">
+            <span class="lbl">fontes</span>
+            <span class="chip">YouTube</span>
+          </div>
+          <div class="actions">
+            <button class="a-btn">Ver ciclos</button>
+            <button class="a-btn">Vídeos processados</button>
+            <button class="a-btn">Ligar/desligar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skool Respostas -->
+      <div class="auto">
+        <div class="auto-ico">💬</div>
+        <div class="auto-body">
+          <div class="auto-top">
+            <span class="auto-title">Skool · Respostas</span>
+            <span class="status demand">Sob demanda</span>
+            <span class="badge">L2 · só leitura</span>
+          </div>
+          <div class="auto-sched mono">
+            <span><b>19 rascunhos</b> prontos</span>
+            <span class="sep">·</span>
+            <span>gerado ontem 17:16</span>
+          </div>
+          <p class="auto-desc">Lê a comunidade e rascunha as respostas na sua voz. Você revisa e posta.</p>
+          <div class="sources">
+            <span class="lbl">fontes</span>
+            <span class="chip">Skool</span>
+          </div>
+          <div class="actions">
+            <button class="a-btn primary">Rascunhar respostas</button>
+            <button class="a-btn">Ver rascunhos</button>
+            <button class="a-btn">Ver log</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ CAPACIDADES ============ -->
+  <section class="sec stagger d4">
+    <div class="sec-top">
+      <div class="sec-head">
+        <h2>Capacidades</h2>
+        <span class="meta mono">o que você pode pedir</span>
+      </div>
+    </div>
+    <div class="caps">
+      <div class="cap"><span class="e">📝</span><div class="cap-txt"><div class="cap-name">Roteiro de Aula</div><div class="cap-cmd mono">/roteiro-aula</div></div></div>
+      <div class="cap"><span class="e">⚡</span><div class="cap-txt"><div class="cap-name">Level-Up</div><div class="cap-cmd mono">/level-up</div></div></div>
+      <div class="cap"><span class="e">🔎</span><div class="cap-txt"><div class="cap-name">Auditoria</div><div class="cap-cmd mono">/audit</div></div></div>
+      <div class="cap"><span class="e">🧠</span><div class="cap-txt"><div class="cap-name">Obsidian</div><div class="cap-cmd mono">/obsidian</div></div></div>
+      <div class="cap"><span class="e">🌅</span><div class="cap-txt"><div class="cap-name">Resumo</div><div class="cap-cmd mono">/daily-brief</div></div></div>
+      <div class="cap"><span class="e">💬</span><div class="cap-txt"><div class="cap-name">Skool</div><div class="cap-cmd mono">/skool</div></div></div>
+      <div class="cap"><span class="e">🧩</span><div class="cap-txt"><div class="cap-name">Onboard</div><div class="cap-cmd mono">/onboard</div></div></div>
+    </div>
+  </section>
+
+  <!-- ============ CONEXÕES ============ -->
+  <section class="sec stagger d5">
+    <div class="sec-top">
+      <div class="sec-head">
+        <h2>Conexões</h2>
+        <span class="meta mono">7 domínios</span>
+      </div>
+    </div>
+    <div class="conns">
+      <div class="conn">
+        <span class="dom">Receita</span>
+        <div class="tools"><span class="ctool mono">Kiwify</span><span class="ctool mono">YouTube Studio</span></div>
+      </div>
+      <div class="conn">
+        <span class="dom">Clientes</span>
+        <div class="tools"><span class="ctool mono">YouTube</span><span class="ctool mono">WhatsApp</span><span class="ctool mono">Skool</span></div>
+      </div>
+      <div class="conn">
+        <span class="dom">Agenda</span>
+        <div class="tools"><span class="ctool mono">Google Calendar</span></div>
+      </div>
+      <div class="conn">
+        <span class="dom">Comunicação</span>
+        <div class="tools"><span class="ctool mono">Gmail</span></div>
+      </div>
+      <div class="conn">
+        <span class="dom">Tarefas</span>
+        <div class="tools"><span class="ctool mono">Notion</span></div>
+      </div>
+      <div class="conn">
+        <span class="dom">Conhecimento</span>
+        <div class="tools"><span class="ctool mono">Drive</span><span class="ctool mono">Docs</span><span class="ctool mono">Obsidian</span></div>
+      </div>
+      <div class="conn">
+        <span class="dom">Reuniões</span>
+        <div class="tools"><span class="ctool mono todo">Fireflies — a conectar</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="stagger d6">
+    <span>AIOS · painel local · só você vê isto</span>
+    <span>v1 · mono light</span>
+  </footer>
+
+</div>
+</body>
+</html>

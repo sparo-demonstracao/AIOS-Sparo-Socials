@@ -1,0 +1,21 @@
+[
+  {
+    "id": "7fb486cc-4d1c-458b-897a-6eb2250c3d89",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3B4oRnkYczFwSpQrfkRufOPJA8N/hf_20260625_223213_7fb486cc-4d1c-458b-897a-6eb2250c3d89.png",
+    "created_at": 1782426733.649582,
+    "params": {
+      "width": 880,
+      "height": 1168,
+      "prompt": "Dark background, abstract glowing particle network connecting nodes, faint blue and purple light trails suggesting artificial intelligence, soft bokeh, empty clean center space, cinematic, modern, high detail, no text, no letters, no words",
+      "medias": [],
+      "aspect_ratio": "3:4",
+      "quality": "low",
+      "resolution": "1k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

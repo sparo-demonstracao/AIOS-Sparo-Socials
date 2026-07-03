@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIOS · Escolha o visual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0c0d10; --barra: #131419; --linha: rgba(255,255,255,.08);
+      --txt: #ededf0; --txt2: #9a9aa3; --azul: #4d7cff; --laranja: #F2682C;
+      --sans: "Plus Jakarta Sans", system-ui, sans-serif; --mono: "JetBrains Mono", monospace;
+    }
+    body { font-family: var(--sans); background: var(--bg); color: var(--txt); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+    header { padding: 16px 24px 10px; }
+    header h1 { font-size: 18px; font-weight: 800; letter-spacing: -.01em; }
+    header h1 span { background: linear-gradient(90deg, var(--azul), var(--laranja)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    header p { font-size: 13px; color: var(--txt2); margin-top: 3px; }
+    .tabs { display: flex; gap: 8px; padding: 8px 24px 0; flex-wrap: wrap; }
+    .tabs button {
+      font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--txt2);
+      background: var(--barra); border: 1px solid var(--linha); border-radius: 10px;
+      padding: 9px 14px; cursor: pointer; transition: all .18s; white-space: nowrap;
+    }
+    .tabs button:hover { color: var(--txt); border-color: rgba(255,255,255,.2); }
+    .tabs button.active { color: #fff; border-color: transparent; background: linear-gradient(180deg, var(--azul), #3a63e0); }
+    .tabs button.ref.active { background: linear-gradient(180deg, var(--laranja), #d8551f); }
+    .tagline { padding: 9px 24px; font-size: 12.5px; color: var(--txt2); font-family: var(--mono); border-bottom: 1px solid var(--linha); }
+    .tagline b { color: var(--txt); }
+    .palco-wrap { flex: 1; position: relative; background: #fff; }
+    iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .loading { position: absolute; inset: 0; display: grid; place-items: center; color: #888; font-family: var(--mono); font-size: 13px; background: var(--bg); pointer-events: none; opacity: 0; transition: opacity .2s; }
+    .loading.show { opacity: 1; }
+
+    /* referências */
+    #refs { flex: 1; overflow-y: auto; padding: 26px 24px 60px; display: none; }
+    #refs.show { display: block; }
+    .refs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; max-width: 1100px; }
+    .ref-nota { max-width: 760px; font-size: 14px; color: var(--txt2); line-height: 1.6; margin-bottom: 24px; }
+    .ref-nota b { color: var(--txt); }
+    .ref-card { background: var(--barra); border: 1px solid var(--linha); border-radius: 14px; padding: 18px; transition: all .2s; }
+    .ref-card:hover { border-color: rgba(255,255,255,.22); transform: translateY(-2px); }
+    .ref-card .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--laranja); }
+    .ref-card h3 { font-size: 15px; font-weight: 700; margin: 7px 0 6px; }
+    .ref-card p { font-size: 13px; color: var(--txt2); line-height: 1.5; margin-bottom: 12px; }
+    .ref-card a { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--azul); text-decoration: none; }
+    .ref-card a:hover { text-decoration: underline; }
+    .ref-sec-tit { font-size: 13px; font-weight: 700; color: var(--txt); margin: 28px 0 14px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Escolha o visual do seu <span>AIOS</span></h1>
+    <p>5 propostas, todas com os seus dados reais. Clique pra ver cada uma. Depois me diga o número que curtiu — pode misturar ideias de uma com outra.</p>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button data-src="tema-5.html" data-tag="<b>Command Center</b> — claro, rico, estilo SaaS premium (sidebar + métricas + recomendações + chat). Espelha a referência que você mandou." class="active">5 · Command Center ★</button>
+    <button data-src="tema-2.html" data-tag="<b>Midnight</b> — escuro moderno tipo Linear/Vercel. Azul-elétrico + laranja Sparo, dots de status, denso e organizado.">2 · Midnight</button>
+    <button data-src="tema-3.html" data-tag="<b>Bento</b> — claro e amigável, grid de cards arredondados, cada automação na sua cor (laranja/azul/roxo).">3 · Bento</button>
+    <button data-src="tema-1.html" data-tag="<b>Mono Light</b> — minimalismo suíço/editorial, off-white, tipografia grande, acento laranja pontual.">1 · Mono Light</button>
+    <button data-src="tema-4.html" data-tag="<b>Terminal</b> — TUI escura, 100% monoespaçada, [ ON ]/[ OFF ], techy e ultra-minimalista.">4 · Terminal</button>
+    <button data-ref class="ref">📌 Referências</button>
+  </nav>
+
+  <div class="tagline" id="tagline"></div>
+
+  <div class="palco-wrap" id="palco-wrap">
+    <iframe id="palco" src="tema-5.html" title="prévia do tema"></iframe>
+    <div class="loading" id="loading">carregando…</div>
+  </div>
+
+  <section id="refs">
+    <p class="ref-nota">
+      Você pediu pra eu me inspirar no <b>"AI Marketing Command Center"</b> que você mandou — ele virou o
+      <b>Tema 5 (Command Center)</b>: mesmo esqueleto (sidebar de navegação, hero com métricas grandes,
+      painel de "Recomendações da IA", faixa de KPIs com mini-gráficos, central de automações em tabela e
+      chat copiloto no canto), mas com os <b>seus dados reais</b> e a marca Sparo (azul + laranja) no lugar do roxo.<br><br>
+      Procurei outras referências do mesmo estilo no Dribbble. O Dribbble não deixa eu embutir as imagens
+      aqui (proteção contra hotlink), então deixei os <b>links</b> — abra e compare com o Tema 5:
+    </p>
+
+    <div class="refs-grid">
+      <div class="ref-card">
+        <div class="tag">command center</div>
+        <h3>AI Company Management — AI Command Center</h3>
+        <p>Dujima Studio. Layout de comando com sidebar, métricas e recomendações — bem próximo da sua referência.</p>
+        <a href="https://dribbble.com/shots/25747113-AI-Company-Management-AI-Command-Center-UI-Design" target="_blank">abrir no Dribbble ↗</a>
+      </div>
+      <div class="ref-card">
+        <div class="tag">automation</div>
+        <h3>Nexus — AI Automation Dashboard UI</h3>
+        <p>Dashboard de automação de IA, cards de status e fluxo. Boa referência de "central de automações".</p>
+        <a href="https://dribbble.com/shots/27222298-Nexus-AI-Automation-Dashboard-UI" target="_blank">abrir no Dribbble ↗</a>
+      </div>
+      <div class="ref-card">
+        <div class="tag">monitoring</div>
+        <h3>AI — SaaS Monitoring Dashboard</h3>
+        <p>Monitoramento de IA em tempo real: KPIs, gráficos e estados. Útil pra ideias de "o que está rodando agora".</p>
+        <a href="https://dribbble.com/shots/27388698-AI-SAAS-Monitoring-Dashboard" target="_blank">abrir no Dribbble ↗</a>
+      </div>
+      <div class="ref-card">
+        <div class="tag">dark saas</div>
+        <h3>SaaS &amp; Analytics Dark Dashboard</h3>
+        <p>Illiyin Studio. Versão escura e elegante — referência pro Tema 2 (Midnight), caso você prefira dark.</p>
+        <a href="https://dribbble.com/shots/23673869-SaaS-Analytics-Dark-Dashboard" target="_blank">abrir no Dribbble ↗</a>
+      </div>
+    </div>
+
+    <div class="ref-sec-tit">Galerias pra explorar mais</div>
+    <div class="refs-grid">
+      <div class="ref-card"><div class="tag">coleção</div><h3>AI Automation (tag)</h3><p>Tudo marcado como automação de IA no Dribbble.</p><a href="https://dribbble.com/tags/ai-automation" target="_blank">abrir ↗</a></div>
+      <div class="ref-card"><div class="tag">coleção</div><h3>Command Center (tag)</h3><p>Layouts de "central de comando".</p><a href="https://dribbble.com/tags/command-center" target="_blank">abrir ↗</a></div>
+      <div class="ref-card"><div class="tag">coleção</div><h3>AI Dashboard (busca)</h3><p>Milhares de dashboards de IA.</p><a href="https://dribbble.com/search/ai-dashboard" target="_blank">abrir ↗</a></div>
+    </div>
+  </section>
+
+  <script>
+    const tabs = document.getElementById("tabs");
+    const palco = document.getElementById("palco");
+    const palcoWrap = document.getElementById("palco-wrap");
+    const refs = document.getElementById("refs");
+    const tagline = document.getElementById("tagline");
+    const loading = document.getElementById("loading");
+
+    function setTagline(html) { tagline.innerHTML = html || ""; }
+    setTagline(tabs.querySelector(".active").dataset.tag);
+
+    tabs.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      [...tabs.children].forEach((x) => x.classList.remove("active"));
+      b.classList.add("active");
+
+      if (b.dataset.ref !== undefined) {
+        palcoWrap.style.display = "none";
+        tagline.style.display = "none";
+        refs.classList.add("show");
+        return;
+      }
+      refs.classList.remove("show");
+      palcoWrap.style.display = "block";
+      tagline.style.display = "block";
+      loading.classList.add("show");
+      palco.src = b.dataset.src;
+      setTagline(b.dataset.tag);
+    });
+    palco.addEventListener("load", () => loading.classList.remove("show"));
+  </script>
+</body>
+</html>

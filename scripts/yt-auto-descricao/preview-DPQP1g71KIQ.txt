@@ -1,0 +1,24 @@
+🎓MasterClass de Antigravity + Claude Code (Curso Completo do Básico ao Avançado): https://masterclass.sparo.com.br/
+
+🌍Nossa comunidade Grátis: https://www.skool.com/comunidade-de-automacao-com-ia-8164
+🌟Hospede suas automações e aplicativos na VPS da Hostinger (10% OFF usando o cupom SPARO10): https://hostinger.com/SPARO10
+
+📞Minha Agência de Automação(Sparo Automações): https://sparo.com.br
+🤝Trabalhe comigo: Entre em contato pelo chat da nossa comunidade grátis!
+
+Antigravity Download: https://antigravity.google/download
+
+O Antigravity 2.0 chegou com uma virada de jogo: os subagentes de IA. Nesse vídeo você vai ver na prática como usar 5 subagentes rodando em paralelo para testar abordagens diferentes de uma mesma tarefa — e escolher a melhor. A demonstração usa um app de finanças real classificando 140 transações com código, Claude, Gemini, ChatGPT e busca em tempo real no Google ao mesmo tempo. Mas o grande pulo do gato não é a velocidade: é que o chat principal mantém o contexto completo do que cada subagente fez, sem poluir a janela de memória. No final, você vai entender exatamente quando usar subagentes, quando não usar, e como implementar o resultado vencedor no seu app com um único comando.
+
+Neste tutorial, você aprenderá:
+00:00 - Antigravity 2.0: O Que Mudou
+00:44 - O App de Finanças que Vai Ser o Cobaia
+01:41 - 5 Formas de Classificar — Qual é a Melhor?
+03:06 - Invocando 5 Subagentes ao Mesmo Tempo
+05:58 - O Grande Segredo: Protegendo a Janela de Contexto
+11:15 - Resultado do Benchmark Chegou
+14:00 - Comparativo Final e a Abordagem Vencedora
+
+#Antigravity #ClaudeCode #Automação #IA #SparoAutomacoes #SubAgentes #AgentesDeIA #Gemini
+
+Gostou do vídeo? Deixe seu like, inscreva-se no canal e ative o sininho para não perder nenhuma novidade sobre automação e inteligência artificial. Se tiver alguma dúvida, deixe nos comentários abaixo!

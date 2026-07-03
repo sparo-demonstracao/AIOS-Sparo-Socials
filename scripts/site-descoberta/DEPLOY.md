@@ -1,7 +1,9 @@
 # Deploy do site de descoberta no Railway + domínio acbarbatto.sparo.com.br
 
 Pasta com tudo pronto: `index.html` (o site) + `server.js` (servidor estático) + `package.json`.
-O banco continua no Supabase (projeto Lead-se, tabela `descoberta_respostas`) — não muda nada lá.
+Banco: Supabase, **projeto próprio `sparo-descoberta`** (ref `vwyggvetffpjkilgjrco`, região
+sa-east-1/São Paulo), tabela `descoberta_respostas`. NÃO é mais o projeto Lead-se.
+Dashboard: https://supabase.com/dashboard/project/vwyggvetffpjkilgjrco
 
 ## 1. Subir no Railway (caminho CLI — o mais rápido)
 

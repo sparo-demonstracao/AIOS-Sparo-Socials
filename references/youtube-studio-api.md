@@ -11,8 +11,10 @@ inscritos. Conectado por **script**, via API oficial do Google (gratuita). Proje
 - `YOUTUBE_REFRESH_TOKEN` — token de atualização da conta `agenciasparo@gmail.com` (dona do canal).
   Capturado uma vez pelo script `c:\tmp\yt_oauth.py`. Não expira no uso normal.
 - Canal: @EnzoSparo, ID `UCifUfSNdly4yFOfzSDS2xog`.
-- Escopos autorizados: `yt-analytics.readonly`, `yt-analytics-monetary.readonly`,
-  `youtube.readonly`.
+- Escopos autorizados: `youtube.force-ssl` (leitura **e escrita** na Data API — permite
+  `videos.update`, responder comentários etc.), `yt-analytics.readonly`,
+  `yt-analytics-monetary.readonly`. (Recapturado via `c:\tmp\yt_oauth.py`; versão antiga deste guia
+  listava só leitura — `youtube.readonly` foi superado pelo `force-ssl`.)
 
 ## Como autenticar a cada chamada
 

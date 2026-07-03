@@ -21,6 +21,11 @@ Leia `references/3ms-framework.md` uma vez. É como o Enzo pensa sobre trabalho 
 - `/audit` — relatório de lacunas dos Four Cs. Rode no Dia 7, depois semanalmente. Veja a nota subir.
 - `/level-up` — entrevista semanal dos 3Ms. Acha uma automação, escopa, entrega. Uma por semana.
 
+**REGRA IMPORTANTE SOBRE SKILLS**: Toda vez que você criar, modificar ou interagir com uma skill, você DEVE gerar ou atualizar os arquivos em **DUAS PASTAS SIMULTANEAMENTE**:
+1. `.claude/skills/` (para o Claude Code)
+2. `.agents/skills/` (para o Antigravity)
+Sempre mantenha essas duas pastas sincronizadas com conteúdo idêntico.
+
 ## Onde as coisas vivem
 
 - `context/` — sobre o Enzo, o negócio, as prioridades (about-me, about-business, priorities)

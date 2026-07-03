@@ -1,0 +1,10 @@
+[2026-06-24 01:27:44] >> Whisper na GPU (large-v3, float16)
+[2026-06-24 01:27:44] === DPQP1g71KIQ | O Antigravity 2.0 ficou ABSURDO | Sub-Agentes de IA ===
+[2026-06-24 01:29:41] [DRY-RUN] DPQP1g71KIQ: gerado (2096 chars, 11 capítulos) -> preview-DPQP1g71KIQ.txt
+[2026-06-24 01:42:55] >> Whisper na GPU (large-v3, float16)
+[2026-06-24 01:42:55] === DPQP1g71KIQ | O Antigravity 2.0 ficou ABSURDO | Sub-Agentes de IA ===
+[2026-06-24 01:44:52] [DRY-RUN] DPQP1g71KIQ: gerado (1869 chars, 7 capítulos) -> preview-DPQP1g71KIQ.txt
+[2026-06-24 01:55:30] inicializado: 15 vídeos do catálogo marcados, nada processado. Só vídeos postados a partir de agora serão processados.
+[2026-06-24 16:55:18] >> Whisper na GPU (large-v3, float16)
+[2026-06-24 16:55:18] === 2wxI6U-PxEo | Como Publicar seus Apps e Automações (Antigravity + Hostinger VPS) ===
+[2026-06-24 16:57:16] [DRY-RUN] 2wxI6U-PxEo: gerado (1855 chars, 9 capítulos) -> preview-2wxI6U-PxEo.txt

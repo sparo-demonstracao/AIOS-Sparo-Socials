@@ -1,0 +1,21 @@
+[
+  {
+    "id": "c46c7153-2cf4-4a2e-a940-6f9c5861f8dc",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3B4oRnkYczFwSpQrfkRufOPJA8N/hf_20260625_223103_c46c7153-2cf4-4a2e-a940-6f9c5861f8dc.png",
+    "created_at": 1782426663.724873,
+    "params": {
+      "width": 880,
+      "height": 1168,
+      "prompt": "Vertical social media background, dark navy gradient, a single frosted glass card floating in the center with soft rounded corners and subtle border glow, empty inside like a blank message field, faint blinking text cursor, soft blue and purple ambient light, minimal, lots of negative space, modern tech aesthetic, clean, high detail, no text, no letters, no words",
+      "medias": [],
+      "aspect_ratio": "3:4",
+      "quality": "low",
+      "resolution": "1k",
+      "model": "videotape-alpha",
+      "reference_elements": []
+    }
+  }
+]

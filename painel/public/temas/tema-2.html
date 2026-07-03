@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIOS · sistema operacional do Enzo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08090c;
+    --bg-2:#0b0d11;
+    --surface:#101319;
+    --surface-2:#13171f;
+    --border:rgba(255,255,255,.07);
+    --border-strong:rgba(255,255,255,.11);
+    --text:#e8e9ec;
+    --text-2:#8b8f98;
+    --text-3:#5d626c;
+    --accent:#4d7cff;
+    --accent-soft:rgba(77,124,255,.14);
+    --accent-line:rgba(77,124,255,.30);
+    --orange:#F2682C;
+    --orange-soft:rgba(242,104,44,.13);
+    --orange-line:rgba(242,104,44,.30);
+    --green:#33d68f;
+    --green-soft:rgba(51,214,143,.13);
+    --neutral:#6b7280;
+    --radius:13px;
+    --radius-sm:10px;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+    --sans:"Hanken Grotesk",system-ui,sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+
+  html{scroll-behavior:smooth}
+
+  body{
+    font-family:var(--sans);
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    min-height:100vh;
+    background-image:
+      radial-gradient(900px 500px at 78% -8%, rgba(77,124,255,.09), transparent 60%),
+      radial-gradient(700px 420px at 8% 4%, rgba(242,104,44,.05), transparent 55%);
+    background-attachment:fixed;
+  }
+
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:42px 28px 64px;
+  }
+
+  /* page-load stagger */
+  .stagger{
+    opacity:0;
+    transform:translateY(10px);
+    animation:rise .6s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+
+  /* ===== HEADER ===== */
+  .header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:34px;
+  }
+  .brand{display:flex;align-items:center;gap:13px}
+  .brand .sun{
+    width:38px;height:38px;flex-shrink:0;
+    display:grid;place-items:center;
+    border-radius:11px;
+    background:linear-gradient(150deg, var(--accent-soft), rgba(242,104,44,.08));
+    border:1px solid var(--accent-line);
+    box-shadow:0 0 24px -8px rgba(77,124,255,.55);
+  }
+  .brand .sun svg{display:block}
+  .brand-text h1{
+    font-size:23px;font-weight:700;letter-spacing:-.02em;line-height:1.1;
+  }
+  .brand-text p{
+    font-size:13px;color:var(--text-2);margin-top:1px;letter-spacing:.01em;
+  }
+
+  .header-right{
+    display:flex;align-items:center;gap:12px;flex-shrink:0;
+  }
+  .clock{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--text-2);
+    background:var(--surface);
+    border:1px solid var(--border);
+    padding:8px 13px;
+    border-radius:var(--radius-sm);
+    white-space:nowrap;
+  }
+  .clock b{color:var(--text);font-weight:600}
+
+  .btn{
+    font-family:var(--sans);
+    font-size:13px;font-weight:600;
+    color:var(--text);
+    background:var(--surface-2);
+    border:1px solid var(--border-strong);
+    padding:8px 15px;
+    border-radius:var(--radius-sm);
+    cursor:pointer;
+    display:inline-flex;align-items:center;gap:7px;
+    transition:border-color .18s ease, background .18s ease, transform .12s ease, box-shadow .18s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{
+    border-color:var(--border-strong);
+    background:#181c24;
+    transform:translateY(-1px);
+  }
+  .btn:active{transform:translateY(0)}
+  .btn .ico{width:14px;height:14px;display:block}
+
+  /* primary / accent button */
+  .btn-accent{
+    color:#fff;
+    background:linear-gradient(180deg,#5a85ff,#3f6df0);
+    border-color:transparent;
+    box-shadow:0 1px 0 rgba(255,255,255,.14) inset, 0 0 0 0 var(--accent);
+  }
+  .btn-accent:hover{
+    background:linear-gradient(180deg,#6a91ff,#4a78ff);
+    box-shadow:0 1px 0 rgba(255,255,255,.18) inset, 0 6px 22px -8px rgba(77,124,255,.8);
+    transform:translateY(-1px);
+  }
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--border);
+    color:var(--text-2);
+    font-weight:500;
+  }
+  .btn-ghost:hover{color:var(--text);background:var(--surface);border-color:var(--border-strong)}
+
+  /* ===== STATS ===== */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:38px;
+  }
+  .stat{
+    background:linear-gradient(180deg, var(--surface), var(--bg-2));
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:16px 17px;
+    transition:border-color .18s ease, transform .14s ease;
+  }
+  .stat:hover{border-color:var(--border-strong);transform:translateY(-2px)}
+  .stat .lbl{
+    font-size:11.5px;color:var(--text-3);
+    text-transform:uppercase;letter-spacing:.07em;font-weight:600;
+    margin-bottom:9px;
+    display:flex;align-items:center;gap:7px;
+  }
+  .stat .val{
+    font-size:21px;font-weight:700;letter-spacing:-.02em;
+    display:flex;align-items:baseline;gap:7px;
+  }
+  .stat .val .mono{font-family:var(--mono);font-weight:600}
+  .stat .sub{font-size:12px;color:var(--text-2);margin-top:3px;font-family:var(--mono)}
+
+  /* status dots */
+  .dot{
+    width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block;
+  }
+  .dot.green{background:var(--green);box-shadow:0 0 0 3px var(--green-soft), 0 0 9px -1px var(--green)}
+  .dot.neutral{background:var(--neutral);box-shadow:0 0 0 3px rgba(107,114,128,.12)}
+  .dot.off{background:var(--text-3)}
+
+  /* ===== SECTION HEADERS ===== */
+  .sec-head{
+    display:flex;align-items:baseline;gap:11px;
+    margin:40px 0 16px;
+  }
+  .sec-head h2{
+    font-size:13px;font-weight:600;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--text-2);
+  }
+  .sec-head .rule{
+    flex:1;height:1px;
+    background:linear-gradient(90deg, var(--border-strong), transparent);
+  }
+
+  /* ===== AUTOMATIONS ===== */
+  .autos{display:flex;flex-direction:column;gap:14px}
+  .auto{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px 21px;
+    transition:border-color .2s ease, box-shadow .2s ease, transform .14s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .auto::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--border-strong);
+    transition:background .2s ease;
+  }
+  .auto.on::before{background:linear-gradient(var(--green),rgba(51,214,143,.3))}
+  .auto.alert::before{background:linear-gradient(var(--orange),var(--orange-line))}
+  .auto.demand::before{background:var(--neutral)}
+  .auto:hover{
+    border-color:var(--border-strong);
+    transform:translateY(-2px);
+    box-shadow:0 14px 40px -22px rgba(0,0,0,.9);
+  }
+
+  .auto-top{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:18px;
+    margin-bottom:13px;
+  }
+  .auto-id{display:flex;gap:13px;align-items:flex-start}
+  .auto-emoji{
+    font-size:21px;line-height:1;width:42px;height:42px;flex-shrink:0;
+    display:grid;place-items:center;
+    background:var(--bg-2);
+    border:1px solid var(--border);
+    border-radius:11px;
+  }
+  .auto-title{display:flex;flex-direction:column;gap:5px}
+  .auto-title .name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .auto-title h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
+  .status-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+    font-family:var(--mono);
+    padding:3px 9px;border-radius:999px;
+    border:1px solid var(--border);
+    color:var(--text-2);
+  }
+  .status-pill.on{color:var(--green);border-color:rgba(51,214,143,.25);background:var(--green-soft)}
+  .status-pill.demand{color:var(--text-2);background:rgba(107,114,128,.1)}
+  .auto-sched{
+    font-family:var(--mono);font-size:12px;color:var(--text-2);
+  }
+
+  .badge{
+    font-family:var(--mono);
+    font-size:11px;font-weight:600;
+    padding:5px 11px;border-radius:999px;
+    border:1px solid var(--accent-line);
+    background:var(--accent-soft);
+    color:#9fb6ff;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .badge.alert{
+    border-color:var(--orange-line);
+    background:var(--orange-soft);
+    color:#ffae84;
+  }
+
+  .auto-meta{
+    display:flex;flex-wrap:wrap;gap:8px 18px;
+    margin:13px 0;
+    align-items:center;
+  }
+  .meta-item{
+    font-family:var(--mono);font-size:12px;color:var(--text-2);
+    display:flex;align-items:center;gap:7px;
+  }
+  .meta-item .k{color:var(--text-3)}
+  .meta-item .ok{color:var(--green)}
+
+  .sources{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .src-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .src{
+    font-size:11.5px;font-weight:500;
+    padding:3px 9px;border-radius:7px;
+    background:var(--bg-2);border:1px solid var(--border);
+    color:var(--text-2);
+  }
+
+  .auto-desc{
+    font-size:13.5px;color:var(--text-2);line-height:1.55;
+    margin:13px 0 17px;
+    max-width:74ch;
+  }
+
+  .auto-actions{
+    display:flex;flex-wrap:wrap;gap:9px;
+    padding-top:15px;
+    border-top:1px solid var(--border);
+  }
+
+  .toggle{
+    margin-left:auto;
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:12px;color:var(--text-2);font-weight:500;
+    cursor:pointer;
+    background:transparent;border:none;
+    transition:color .15s ease;
+  }
+  .toggle:hover{color:var(--text)}
+  .switch{
+    width:38px;height:21px;border-radius:999px;
+    background:var(--surface-2);border:1px solid var(--border-strong);
+    position:relative;transition:background .2s ease,border-color .2s ease;
+    flex-shrink:0;
+  }
+  .switch::after{
+    content:"";position:absolute;top:2px;left:2px;
+    width:15px;height:15px;border-radius:50%;
+    background:var(--text-3);transition:transform .2s ease,background .2s ease;
+  }
+  .switch.on{background:var(--green-soft);border-color:rgba(51,214,143,.4)}
+  .switch.on::after{transform:translateX(17px);background:var(--green)}
+
+  /* ===== CAPABILITIES ===== */
+  .caps{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:12px;
+  }
+  .cap{
+    display:flex;align-items:center;gap:12px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:13px 15px;
+    cursor:pointer;
+    transition:border-color .18s ease, background .18s ease, transform .14s ease;
+  }
+  .cap:hover{
+    border-color:var(--accent-line);
+    background:var(--surface-2);
+    transform:translateY(-2px);
+  }
+  .cap .c-emoji{font-size:18px;line-height:1;width:24px;text-align:center;flex-shrink:0}
+  .cap .c-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .cap .c-name{font-size:13.5px;font-weight:600;letter-spacing:-.01em}
+  .cap .c-cmd{
+    font-family:var(--mono);font-size:11.5px;color:var(--accent);
+    transition:color .18s ease;
+  }
+  .cap:hover .c-cmd{color:#7fa0ff}
+
+  /* ===== CONNECTIONS ===== */
+  .conns{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:12px;
+  }
+  .conn{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:15px 16px;
+    transition:border-color .18s ease, transform .14s ease;
+  }
+  .conn:hover{border-color:var(--border-strong);transform:translateY(-2px)}
+  .conn .domain{
+    font-size:12px;font-weight:600;color:var(--text);
+    text-transform:uppercase;letter-spacing:.05em;
+    margin-bottom:11px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .conn .domain .dot{width:7px;height:7px}
+  .conn-tools{display:flex;flex-wrap:wrap;gap:7px}
+  .tool{
+    font-size:12px;font-weight:500;
+    padding:4px 10px;border-radius:7px;
+    background:var(--bg-2);border:1px solid var(--border);
+    color:var(--text-2);
+    display:inline-flex;align-items:center;gap:6px;
+    transition:border-color .15s ease,color .15s ease;
+  }
+  .conn:hover .tool{color:var(--text)}
+  .tool.pending{
+    color:var(--text-3);
+    border-style:dashed;
+    border-color:rgba(255,255,255,.14);
+  }
+  .tool .tdot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 7px -1px var(--green)}
+  .tool.pending .tdot{background:var(--text-3);box-shadow:none}
+
+  /* ===== FOOTER ===== */
+  .footer{
+    margin-top:50px;padding-top:22px;
+    border-top:1px solid var(--border);
+    text-align:center;
+    font-family:var(--mono);
+    font-size:11.5px;color:var(--text-3);
+    letter-spacing:.02em;
+  }
+  .footer .sep{color:rgba(255,255,255,.12);margin:0 8px}
+
+  /* ===== RESPONSIVE ===== */
+  @media(max-width:860px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:620px){
+    .wrap{padding:28px 18px 48px}
+    .header{flex-direction:column;align-items:stretch}
+    .header-right{justify-content:space-between}
+    .stats{grid-template-columns:1fr 1fr;gap:10px}
+    .auto-top{flex-direction:column;gap:12px}
+    .badge{align-self:flex-start}
+    .toggle{margin-left:0;width:100%;justify-content:space-between;margin-top:4px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .stagger{animation:none;opacity:1;transform:none}
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="header stagger" style="animation-delay:.02s">
+    <div class="brand">
+      <span class="sun" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7fa0ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8l1.8-1.8M18 6l1.8-1.8"/>
+        </svg>
+      </span>
+      <div class="brand-text">
+        <h1>AIOS</h1>
+        <p>sistema operacional do Enzo</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="clock">qua <b>25/06</b> · <b>07:14</b></span>
+      <button class="btn">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+        atualizar
+      </button>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat stagger" style="animation-delay:.06s">
+      <div class="lbl">automações</div>
+      <div class="val"><span class="dot green"></span><span class="mono">2/3</span></div>
+      <div class="sub">ligadas</div>
+    </div>
+    <div class="stat stagger" style="animation-delay:.10s">
+      <div class="lbl">capacidades</div>
+      <div class="val"><span class="mono">3</span></div>
+      <div class="sub">rodando</div>
+    </div>
+    <div class="stat stagger" style="animation-delay:.14s">
+      <div class="lbl">resumo do dia</div>
+      <div class="val" style="font-size:18px">feito</div>
+      <div class="sub">07:01</div>
+    </div>
+    <div class="stat stagger" style="animation-delay:.18s">
+      <div class="lbl">conexões</div>
+      <div class="val"><span class="mono">7</span></div>
+      <div class="sub">domínios</div>
+    </div>
+  </section>
+
+  <!-- AUTOMAÇÕES -->
+  <div class="sec-head stagger" style="animation-delay:.22s">
+    <h2>Automações</h2><span class="rule"></span>
+  </div>
+  <section class="autos">
+
+    <!-- Resumo Matinal -->
+    <article class="auto on stagger" style="animation-delay:.26s">
+      <div class="auto-top">
+        <div class="auto-id">
+          <span class="auto-emoji">🌅</span>
+          <div class="auto-title">
+            <div class="name-row">
+              <h3>Resumo Matinal</h3>
+              <span class="status-pill on"><span class="dot green"></span>Ligada</span>
+            </div>
+            <span class="auto-sched">Todo dia 7:55 + ao ligar o PC</span>
+          </div>
+        </div>
+        <span class="badge">L2 · só leitura</span>
+      </div>
+
+      <div class="auto-meta">
+        <span class="meta-item"><span class="k">última:</span> hoje 07:01 · <span class="ok">Sucesso</span></span>
+        <span class="sources">
+          <span class="src-label">fontes</span>
+          <span class="src">WhatsApp</span>
+          <span class="src">Gmail</span>
+          <span class="src">YouTube</span>
+        </span>
+      </div>
+
+      <p class="auto-desc">Junta o que importa das últimas 24h e mostra num pop-up priorizado, na sua voz.</p>
+
+      <div class="auto-actions">
+        <button class="btn btn-accent">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Rodar agora
+        </button>
+        <button class="btn">Ver resumo</button>
+        <button class="btn btn-ghost">Ver log</button>
+        <button class="toggle">Ligada <span class="switch on"></span></button>
+      </div>
+    </article>
+
+    <!-- YouTube Auto-Descrição -->
+    <article class="auto alert stagger" style="animation-delay:.30s">
+      <div class="auto-top">
+        <div class="auto-id">
+          <span class="auto-emoji">🎬</span>
+          <div class="auto-title">
+            <div class="name-row">
+              <h3>YouTube · Auto-Descrição</h3>
+              <span class="status-pill on"><span class="dot green"></span>Ligada</span>
+            </div>
+            <span class="auto-sched">Contínuo · a cada 3 min</span>
+          </div>
+        </div>
+        <span class="badge alert">L4 · publica direto</span>
+      </div>
+
+      <div class="auto-meta">
+        <span class="meta-item"><span class="mono">15</span> vídeos processados</span>
+        <span class="meta-item"><span class="k">último ciclo:</span> há 4 min</span>
+        <span class="sources">
+          <span class="src-label">fontes</span>
+          <span class="src">YouTube</span>
+        </span>
+      </div>
+
+      <p class="auto-desc">A cada vídeo novo, escreve descrição + capítulos + hashtags e publica direto.</p>
+
+      <div class="auto-actions">
+        <button class="btn">Ver ciclos</button>
+        <button class="btn">Vídeos processados</button>
+        <button class="toggle">Ligada <span class="switch on"></span></button>
+      </div>
+    </article>
+
+    <!-- Skool Respostas -->
+    <article class="auto demand stagger" style="animation-delay:.34s">
+      <div class="auto-top">
+        <div class="auto-id">
+          <span class="auto-emoji">💬</span>
+          <div class="auto-title">
+            <div class="name-row">
+              <h3>Skool · Respostas</h3>
+              <span class="status-pill demand"><span class="dot neutral"></span>Sob demanda</span>
+            </div>
+            <span class="auto-sched">19 rascunhos prontos · gerado ontem 17:16</span>
+          </div>
+        </div>
+        <span class="badge">L2 · só leitura</span>
+      </div>
+
+      <div class="auto-meta">
+        <span class="sources">
+          <span class="src-label">fontes</span>
+          <span class="src">Skool</span>
+        </span>
+      </div>
+
+      <p class="auto-desc">Lê a comunidade e rascunha as respostas na sua voz. Você revisa e posta.</p>
+
+      <div class="auto-actions">
+        <button class="btn btn-accent">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          Rascunhar respostas
+        </button>
+        <button class="btn">Ver rascunhos</button>
+        <button class="btn btn-ghost">Ver log</button>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- CAPACIDADES -->
+  <div class="sec-head stagger" style="animation-delay:.38s">
+    <h2>Capacidades — o que você pode pedir</h2><span class="rule"></span>
+  </div>
+  <section class="caps">
+    <div class="cap stagger" style="animation-delay:.40s"><span class="c-emoji">📝</span><div class="c-body"><span class="c-name">Roteiro de Aula</span><span class="c-cmd">/roteiro-aula</span></div></div>
+    <div class="cap stagger" style="animation-delay:.42s"><span class="c-emoji">⚡</span><div class="c-body"><span class="c-name">Level-Up</span><span class="c-cmd">/level-up</span></div></div>
+    <div class="cap stagger" style="animation-delay:.44s"><span class="c-emoji">🔎</span><div class="c-body"><span class="c-name">Auditoria</span><span class="c-cmd">/audit</span></div></div>
+    <div class="cap stagger" style="animation-delay:.46s"><span class="c-emoji">🧠</span><div class="c-body"><span class="c-name">Obsidian</span><span class="c-cmd">/obsidian</span></div></div>
+    <div class="cap stagger" style="animation-delay:.48s"><span class="c-emoji">🌅</span><div class="c-body"><span class="c-name">Resumo</span><span class="c-cmd">/daily-brief</span></div></div>
+    <div class="cap stagger" style="animation-delay:.50s"><span class="c-emoji">💬</span><div class="c-body"><span class="c-name">Skool</span><span class="c-cmd">/skool</span></div></div>
+    <div class="cap stagger" style="animation-delay:.52s"><span class="c-emoji">🧩</span><div class="c-body"><span class="c-name">Onboard</span><span class="c-cmd">/onboard</span></div></div>
+  </section>
+
+  <!-- CONEXÕES -->
+  <div class="sec-head stagger" style="animation-delay:.56s">
+    <h2>Conexões</h2><span class="rule"></span>
+  </div>
+  <section class="conns">
+    <div class="conn stagger" style="animation-delay:.58s">
+      <div class="domain"><span class="dot green"></span>Receita</div>
+      <div class="conn-tools">
+        <span class="tool"><span class="tdot"></span>Kiwify</span>
+        <span class="tool"><span class="tdot"></span>YouTube Studio</span>
+      </div>
+    </div>
+    <div class="conn stagger" style="animation-delay:.60s">
+      <div class="domain"><span class="dot green"></span>Clientes</div>
+      <div class="conn-tools">
+        <span class="tool"><span class="tdot"></span>YouTube</span>
+        <span class="tool"><span class="tdot"></span>WhatsApp</span>
+        <span class="tool"><span class="tdot"></span>Skool</span>
+      </div>
+    </div>
+    <div class="conn stagger" style="animation-delay:.62s">
+      <div class="domain"><span class="dot green"></span>Agenda</div>
+      <div class="conn-tools">
+        <span class="tool"><span class="tdot"></span>Google Calendar</span>
+      </div>
+    </div>
+    <div class="conn stagger" style="animation-delay:.64s">
+      <div class="domain"><span class="dot green"></span>Comunicação</div>
+      <div class="conn-tools">
+        <span class="tool"><span class="tdot"></span>Gmail</span>
+      </div>
+    </div>
+    <div class="conn stagger" style="animation-delay:.66s">
+      <div class="domain"><span class="dot green"></span>Tarefas</div>
+      <div class="conn-tools">
+        <span class="tool"><span class="tdot"></span>Notion</span>
+      </div>
+    </div>
+    <div class="conn stagger" style="animation-delay:.68s">
+      <div class="domain"><span class="dot green"></span>Conhecimento</div>
+      <div class="conn-tools">
+        <span class="tool"><span class="tdot"></span>Drive</span>
+        <span class="tool"><span class="tdot"></span>Docs</span>
+        <span class="tool"><span class="tdot"></span>Obsidian</span>
+      </div>
+    </div>
+    <div class="conn stagger" style="animation-delay:.70s">
+      <div class="domain"><span class="dot neutral"></span>Reuniões</div>
+      <div class="conn-tools">
+        <span class="tool pending"><span class="tdot"></span>Fireflies — a conectar</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer stagger" style="animation-delay:.74s">
+    AIOS<span class="sep">·</span>painel local<span class="sep">·</span>só você vê isto
+  </footer>
+
+</div>
+</body>
+</html>

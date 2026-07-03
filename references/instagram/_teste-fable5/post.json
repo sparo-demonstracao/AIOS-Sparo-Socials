@@ -1,0 +1,18 @@
+{
+  "id": "20260626-fable5-banida",
+  "titulo": "Fable 5 banida em 72h",
+  "tema": "Fable 5 foi parado pelo governo dos EUA",
+  "criadoEm": "2026-06-26T22:00:00-03:00",
+  "status": "rascunho",
+  "nota": 8.8,
+  "gancho_capa": 9.0,
+  "slides": ["slide-01.png", "slide-02.png", "slide-03.png", "slide-04.png", "slide-05.png", "slide-06.png"],
+  "legenda": "A IA mais poderosa do mundo durou 72 horas. 😳\n\nA Anthropic lançou o Fable 5 — a IA mais avançada já feita. Três dias depois, o governo dos EUA mandou desligar. No mundo todo. Inclusive pra quem já tinha colocado o negócio pra rodar nela.\n\nO motivo foi segurança: pesquisadores conseguiram forçar a IA a revelar como explorar falhas.\n\nE fica a lição pra quem automatiza: se todo o seu trabalho depende de UMA única IA, um aviso do governo pode te desligar junto — do dia pra noite.\n\nA boa notícia? No Claude Code e no Antigravity dá pra montar um sistema que troca de modelo e continua rodando, mesmo se uma IA cair.\n\nÉ exatamente isso que eu te ensino. Tá tudo na bio. 🔗\n\n#automação #ia #claudecode #antigravity #nocode #produtividade #inteligenciaartificial #fable5 #anthropic #automacaocomia",
+  "comentario": "Sincero: você confiaria TODO o seu trabalho numa única IA? 👇",
+  "drive": null,
+  "claudeDesign": null,
+  "fontes": [
+    "https://www.ibtimes.co.uk/us-government-halts-anthropics-ai-model-1802917",
+    "https://www.businesstoday.in/technology/artificial-intelligence/story/anthropic-claude-fable-5-ban-explained-why-us-government-restricted-access-for-new-ai-models-536843-2026-06-15"
+  ]
+}

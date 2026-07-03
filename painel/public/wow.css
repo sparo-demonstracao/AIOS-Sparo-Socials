@@ -1,0 +1,13 @@
+/* ─────────────────────────────────────────────
+   AIOS — camada "WOW": ganchos de motion (GSAP)
+   O visual base agora já é dark/glass (style.css).
+   Aqui só: quando o GSAP carrega, ele assume a entrada
+   e a cascata CSS é desligada pra não duplicar.
+   Sem GSAP (CDN offline) → cascata CSS continua valendo.
+   ───────────────────────────────────────────── */
+
+.wow .content.stagger > *{ animation:none !important; opacity:1; transform:none; }
+
+@media (prefers-reduced-motion:reduce){
+  .wow .content.stagger > *{ opacity:1; transform:none; }
+}
