@@ -2,8 +2,8 @@
 
 > **Curso:** MasterClass de Automação e Apps No Code (Claude Code + Antigravity)
 > **Projeto usado:** Lead-se — app gerador de leads (raspa Google Maps via Apify, enriquece e-mail e dispara e-mails)
-> **Status:** 7 aulas gravadas · falta só a aula final (auditoria de segurança)
-> **Duração total gravada:** ~1h29min
+> **Status:** ✅ **MÓDULO COMPLETO** — 8 aulas gravadas; a final ("O Teste do Estranho") foi postada na Kiwify como Aula 9 (arquivo `[M8 A9]`, gravada ~03/07, postada até 06/07/2026)
+> **Duração total gravada:** ~2h05min
 
 Este módulo ensina a **monetizar** um app no-code: escolher o modelo de cobrança, montar o gateway de pagamento (Stripe), hospedar em servidor e amarrar tudo ao banco de dados (Supabase), além de polir o produto (raspagem + front) antes de lançar.
 
@@ -123,16 +123,32 @@ Este módulo ensina a **monetizar** um app no-code: escolher o modelo de cobran�
 - **4 passos executados:** (1) chaves live no Railway · (2) planos recriados + novos price IDs · (3) **webhook de produção** com 3 eventos — compra concluída, assinatura cancelada/expirada, falha de pagamento — apontando pra `leadse.com.br/api/webhook`, com o segredo de assinatura no Railway · (4) variáveis de ambiente (URL do site + price IDs novos) → **deploy**.
 - **Fecha anunciando a próxima aula:** *"só precisa fazer uma varredura de segurança, que é o que a gente vai fazer na próxima aula."*
 
+### Aula final — O Teste do Estranho · 36:24 *(postada como Aula 9, arquivo `[M8 A9]`)*
+📄 Transcrição no Obsidian (fonte do Módulo 8) · gravada ~03/07 · **substitui a live de 26/06 que não aconteceu** — cobre tudo que a live abordaria
+
+**O que foi abordado:** a varredura final que transforma o protótipo em produto — a jornada do estranho em 5 etapas.
+- **Frame da aula:** pronto ≠ no ar. Pronto é quando **um estranho** percorre a jornada sozinho: **entrar → virar cliente → confiar → não abusar → dar lucro**. Frase-âncora: *"protótipo é o que funciona pra mim; produto é o que funciona pra um estranho que me paga e que eu não conheço."*
+- **1. ENTRAR (e-mail de sistema via Resend):** o e-mail de confirmação saía pelo Supabase (`no-reply@mail.app.supabase.io`, ~2 e-mails por período — mata o funil e parece golpe). Solução: conta no **Resend** → adicionar domínio `leadse.com.br` (região Brasil) → registros DNS na Hostinger (DKIM + SPF obrigatórios, DMARC opcional, MX) → verificado em ~5 min → **SMTP customizado no Supabase** (Authentication → Emails): remetente `nao-responda@leadse.com.br`, host `smtp.resend.com`, porta 465, usuário `resend`, senha = API key do Resend. **Rate limit do Supabase subido de 30 → 120 e-mails/h.** URL Configuration: Site URL = `leadse.com.br` + redirect `/auth/confirm` (mantendo a URL local pra testes).
+- **Templates de e-mail personalizados:** Claude Code gerou HTML de confirmação de conta + reset de senha com a logo (hospedada no bucket público `assets` do Supabase — a URL pública entra no HTML). Gotcha ensinado: e-mail "não responda" **sem foto de perfil é o padrão do mercado** (foto exigiria certificado VMC, +US$ 1.000/ano — ignorar).
+- **Extra de fluxo:** título da tela de cadastro trocado ("Crie a sua conta" / "conecte-se e escale sua operação"); rodar o app **localmente** pra testar e só depois mandar lote de mudanças pro Railway (economiza tempo e tokens); `/clear` entre tarefas não relacionadas; modelo simples (Sonnet) pra mudança simples, melhor modelo pra auditoria.
+- **2. VIRAR CLIENTE (o limite vira conversão):** estourou o grátis = "momento de ouro" — o usuário provou que quer mais. Prompt mudou **só a reação da interface** (checagem do servidor intacta): a IA optou por **aviso com botão** (em vez de redirect automático) → leva pra `/planos` com o plano recomendado destacado. Testado ao vivo estourando as 3 raspagens do grátis.
+- **3. CONFIAR (branding do checkout):** Stripe → Configurações → Empresa → Marca: ícone + logo (extraídos pelo Claude Code, texto em verde), fundo branco, cor de destaque verde. Lição: **branding de MVP não é prioridade** — polir depois de validar com clientes.
+- **4. NÃO ABUSAR (auditoria de segurança):** documento-guia (PDF na descrição da aula) enviado ao Claude Code no Antigravity; usar **o melhor modelo disponível** (usou Opus 4.8). A IA corrigiu 7 de 9 itens sozinha: segredos fora do repositório, autenticação no checkout, middleware, redirecionamento, **erros que não vazam detalhes**, dependências vulneráveis (3→0), **cota anti-abuso de IA** (impede bot de torrar créditos Apify/IA via injeção de prompt). 2 itens manuais: **migração SQL** no SQL Editor + **rotação de chaves** (Supabase secreta/publicável + token de acesso + Brasil Aberto — atualizar `.env` local E Railway) e **purge do histórico do Git** (a própria IA rodou; histórico reescrito no GitHub). Regra: chave que já foi commitada está vazada — rotacionar sempre. Fim: críticos e altos zerados, só restaram baixos/opcionais.
+- **5. DAR LUCRO (conceitual, ponte pro módulo de empreendedorismo):** infra é sua — mais cliente pode ser mais prejuízo; precificar pela **média de uso** (precisão real só com 10/50/100 clientes); margem **3–4×** (colchão pra marketing e alta de custos); alternativa a subir preço: **apertar limites**; liberar grátis pros primeiros testers acharem os erros; MVP escala até ~1k clientes — 10k/100k exige equipe e diferencial próprio (ex.: raspagem própria no lugar da Apify); virar "head de marketing" do produto ou ter **sócio de marketing**.
+- **Anúncio:** quando o curso finalizar, o Lead-se será liberado pra todos os alunos testarem.
+
 ---
 
 ## Pontas soltas — o que falta pra fechar o Módulo 8
 
-- [x] ~~**Stripe em produção**~~ — **feito na Aula 7** (empresa verificada, chaves live, webhook de produção, deploy).
-- [ ] **Aula final: auditoria de segurança** — anunciada no fim da Aula 7. Roteiro e script prontos em [aulas-finais-roteiro.md](aulas-finais-roteiro.md) / [aulas-finais-script.md](aulas-finais-script.md) (Aula B).
-- [ ] **E-mail de sistema do Supabase (SMTP)** — a Aula 7 criou a caixa profissional (Zoho), mas **não** configurou o SMTP do Supabase; confirmação de conta/reset de senha ainda saem pelo e-mail limitado do Supabase (~2/h, cai em spam). Decidir: entra na aula final ou fica pra depois.
-- [ ] **Branding do checkout** — logo da Lead-se (na Aula 7 só criou o perfil "Lead-se" no Stripe).
-- [ ] **Abrir `/planos` automaticamente** ao estourar o limite grátis.
-- [ ] *(Opcional/futuro)* **Mercado Pago** pra parcelamento.
+**TODAS FECHADAS na aula final (O Teste do Estranho):**
+
+- [x] ~~**Stripe em produção**~~ — feito na Aula 7 (empresa verificada, chaves live, webhook de produção, deploy).
+- [x] ~~**Aula final: auditoria de segurança**~~ — gravada e postada (rotação de chaves, purge do Git, cota anti-abuso, RLS/migração SQL).
+- [x] ~~**E-mail de sistema do Supabase (SMTP)**~~ — Resend configurado + templates HTML personalizados (confirmação + reset de senha).
+- [x] ~~**Branding do checkout**~~ — logo, ícone e cor da Lead-se no Stripe.
+- [x] ~~**Abrir `/planos` ao estourar o limite**~~ — aviso com botão + plano recomendado destacado.
+- [ ] *(Opcional/futuro, fora do MVP)* **Mercado Pago** pra parcelamento — citado como evolução, não entra.
 
 ---
 

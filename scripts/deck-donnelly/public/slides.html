@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Slides — Donnelly × Sparo</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#16130F;color:#F1E9DC;font-family:system-ui,sans-serif;padding:40px 24px}
+  h1{font-size:22px;margin-bottom:6px}
+  p{color:#9a8f7e;font-size:15px;margin-bottom:28px}
+  a.deck{color:#FFB79A}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;max-width:1400px;margin:0 auto}
+  figure a{display:block;border-radius:10px;overflow:hidden;border:1px solid rgba(241,233,220,.15)}
+  img{width:100%;display:block}
+  figcaption{font-size:13px;color:#9a8f7e;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>Slides — Donnelly × Sparo</h1>
+<p>Clique num slide pra abrir o PNG em alta (3840×2160). Pra apresentar, use <a class="deck" href="/">a apresentação</a> (tecla P + F11).</p>
+<div class="grid">
+<script>
+for (let i = 1; i <= 15; i++) {
+  const n = String(i).padStart(2, '0');
+  document.write(`<figure><a href="/slides/slide-${n}.png" target="_blank"><img src="/slides/slide-${n}.png" loading="lazy" alt="Slide ${n}"/></a><figcaption>slide-${n}.png</figcaption></figure>`);
+}
+</script>
+</div>
+</body>
+</html>

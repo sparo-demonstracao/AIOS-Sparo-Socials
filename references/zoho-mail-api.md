@@ -82,6 +82,26 @@ Sem `ZOHO_CLIENT_ID` **e** `ZOHO_REFRESH_TOKEN`, o bloco Zoho no `Run-DailyBrief
    exata num dia, cai no fallback da própria Inbox. (Zoho não permite pré-preencher a resposta como o
    WhatsApp; o link só abre pra você responder lá.)
 
+### Detecção "já respondi?" por CONVERSA (threadId) — desde jul/2026
+
+O Resumo Matinal **não** usa mais a pasta Enviados pra saber o que já foi respondido (dependia de
+`/folders`, que dá **401** sem `ZohoMail.folders.READ` — resultado: o mapa de respondidos ficava
+vazio e ele mostrava respondido e não-respondido MISTURADOS). Agora ele trabalha por **conversa**:
+
+- `messages/view` **traz `threadId`** em cada item. A Inbox 7d é **agrupada por `threadId`** (1 card por conversa).
+- Pra cada thread, uma chamada pega a **conversa inteira, cross-folder** (Inbox + Enviados juntos):
+  ```
+  GET /api/accounts/{accountId}/messages/view?threadId={threadId}&limit=50&status=all
+  ```
+  Retorna todas as mensagens da troca com `fromAddress` e `folderId`, e dá pra ordenar por `receivedTime`.
+- **Regra:** ignora as mensagens que estão na pasta **Rascunhos** (`folderId` == Drafts — um rascunho NÃO
+  é resposta enviada), pega a **última** mensagem restante; se ela saiu de um endereço **`@sparo.com.br`**,
+  a conversa **já foi respondida** → oculta. Senão → pendente (o card é a mensagem recebida mais nova).
+- ⚠️ `messages/view` **sem** `folderId` **não** varre a pasta Enviados — por isso o `?threadId=` é
+  essencial (é o único jeito de ver a resposta enviada sem `folders.READ`). O mesmo endpoint é usado pela
+  triagem pra dar à IA **o histórico completo** da conversa (não só o último e-mail) ao rascunhar, e pra
+  **não** rascunhar conversas que já foram respondidas.
+
 ## Diagnóstico rápido (se o Zoho sumir do resumo)
 
 ```powershell
@@ -106,9 +126,12 @@ Erros comuns:
   incluem `ZohoMail.folders.READ`, então a listagem de pastas falha. Não faz falta — o `messages/view`
   **sem** folderId já cai na Inbox. Mesmo assim, o folderId da Inbox está fixado no `.env`
   (`ZOHO_FOLDER_ID`), então a chamada a `/folders` nem acontece no runtime. **Setup atual (jul/2026):**
-  conta `atendimento@sparo.com.br`, accountId `8159880000000008002`, Inbox folderId
-  `8159880000000008014`. Se um dia precisar da API de pastas, adicionar `ZohoMail.folders.READ` ao
-  gerar um novo code.
+  conta `atendimento@sparo.com.br`, accountId `8159880000000008002`. **folderIds** (descobertos por
+  probe, já que `/folders` dá 401): Inbox `8159880000000008014` · Rascunhos `8159880000000008016` ·
+  **Enviados `8159880000000008022`**. A detecção de resposta usa `?threadId=` (que junta Inbox+Enviados
+  sem precisar do id da pasta Enviados); o id de Rascunhos é usado só pra **excluir rascunhos** da
+  checagem "já respondi" (dá pra sobrescrever com `ZOHO_DRAFTS_FOLDER_ID` no `.env`). Se um dia precisar
+  da API de pastas, adicionar `ZohoMail.folders.READ` ao gerar um novo code.
 
 ## Escrita — Triagem de Atendimento (aplicar tag + rascunhar)
 
@@ -135,11 +158,20 @@ Endpoints usados pela triagem (todos com `Authorization: Zoho-oauthtoken <access
    Body: `{"mode":"applyLabel","messageId":[<long>],"labelId":[<long>]}`.
    > ⚠️ `messageId` do Zoho é um **long** que estoura o `Number` do JS (perde precisão). O script emite
    > o id como **literal numérico** no JSON (string→literal), sem passar por `Number()`.
-4. **Criar rascunho de resposta:**
+4. **Message-ID RFC do original** (p/ vincular o rascunho à thread):
+   `GET /api/accounts/{accountId}/folders/{folderId}/messages/{messageId}/header?raw=false` — scope `messages.READ`.
+   Com `raw=false`, `data.headerContent` vem como objeto `{ "Message-Id": ["<...>"], "References": ["..."], ... }`
+   (nomes de header variam de caixa — casar case-insensitive).
+5. **Criar rascunho de resposta (VINCULADO à thread):**
    `POST /api/accounts/{accountId}/messages` — scope `ZohoMail.messages.CREATE`.
-   Body: `{"mode":"draft","fromAddress":"atendimento@sparo.com.br","toAddress":"<remetente>","subject":"Re: ...","content":"<html>","mailFormat":"html"}`.
-   Opcionais de thread (não usados na v1, pois o `messages/view` não traz o Message-ID RFC): `inReplyTo`, `refHeader`.
+   Body: `{"mode":"draft","fromAddress":"atendimento@sparo.com.br","toAddress":"<remetente>","subject":"Re: ...","content":"<html>","mailFormat":"html","inReplyTo":"<Message-ID do original>","refHeader":"<References do original + Message-ID, separados por espaço>"}`.
+   Com `inReplyTo`/`refHeader`, o rascunho ganha o **mesmo `threadId`** do original e aparece **na conversa
+   da Inbox** (verificado em 13/jul/2026 — draft criado via API caiu na thread certa). Sem esses campos,
+   ele fica **solto** na pasta Rascunhos (era o bug da v1).
    > L2 — `mode:draft` **nunca envia**. O Enzo revisa e manda.
+   > Obs.: `messages/view` e `.../details` expõem `threadId`; a busca `GET .../messages/search?searchKey=entire:<texto>`
+   > acha mensagens em qualquer pasta (útil já que `/folders` dá 401 sem `folders.READ`). Drafts folderId: `8159880000000008016`.
+   > Não temos `ZohoMail.messages.DELETE` — rascunho criado só se apaga manualmente.
 
 Fontes: Apply labels — https://www.zoho.com/mail/help/api/add-tag-to-email.html ·
 Get all labels — https://www.zoho.com/mail/help/api/get-all-label-details.html ·

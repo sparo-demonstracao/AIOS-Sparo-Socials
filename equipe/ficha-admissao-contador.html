@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Ficha de Admissão — Pedro (para a contabilidade)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  :root { --coral:#DD5731; --ink:#17130E; --ink-soft:#4a4239; --ink-faint:#8a8177; --line:#e2ddd3; --bg:#fff; --zebra:#faf7f1; }
+  @page { size:A4; margin:16mm 16mm 15mm; }
+  body { font-family:'Archivo','Segoe UI',sans-serif; font-size:10pt; line-height:1.5; color:var(--ink); background:var(--bg); }
+  @media screen { body { max-width:210mm; margin:0 auto; padding:16mm; box-shadow:0 2px 24px rgba(20,15,10,.14); } }
+
+  .top { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2.4pt solid var(--ink); padding-bottom:4mm; margin-bottom:5mm; }
+  .top .brand { font-family:'Space Grotesk',monospace; font-size:8.4pt; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--coral); }
+  h1 { font-size:18pt; font-weight:800; letter-spacing:-.02em; line-height:1.05; margin-top:1.5mm; }
+  .top .meta { text-align:right; font-family:'Space Grotesk',monospace; font-size:8pt; color:var(--ink-faint); line-height:1.6; }
+
+  .lead { font-size:10.4pt; color:var(--ink-soft); margin-bottom:5mm; line-height:1.55; }
+  .lead b { color:var(--ink); }
+
+  h2 { font-family:'Space Grotesk',monospace; font-size:9pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--coral); margin:6mm 0 2.4mm; display:flex; align-items:center; gap:2.5mm; }
+  h2::before { content:''; width:4mm; height:4mm; background:var(--coral); border-radius:1mm; flex:none; }
+
+  table { width:100%; border-collapse:collapse; }
+  .kv td { padding:1.9mm 2.4mm; vertical-align:top; border-bottom:.4pt solid var(--line); font-size:9.6pt; }
+  .kv tr:nth-child(even) td { background:var(--zebra); }
+  .kv td.k { font-family:'Space Grotesk',monospace; font-size:8pt; font-weight:600; letter-spacing:.03em; text-transform:uppercase;
+    color:var(--ink-faint); width:42mm; white-space:nowrap; }
+  .kv td.v b { font-weight:700; }
+  .fill { color:#8A3A20; background:#FBEFE9 !important; border-bottom:.5pt solid var(--coral); padding:0 1.4mm; border-radius:1px; }
+
+  table.grid { border:.5pt solid var(--line); border-radius:2mm; overflow:hidden; margin-top:1mm; }
+  .grid th { font-family:'Space Grotesk',monospace; font-size:8pt; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    text-align:left; background:var(--ink); color:#fff; padding:2.2mm 3mm; }
+  .grid th:last-child, .grid td:last-child { text-align:right; }
+  .grid td { padding:2mm 3mm; font-size:9.4pt; border-top:.4pt solid var(--line); }
+  .grid tr:nth-child(even) td { background:var(--zebra); }
+  .grid .plus { font-family:'Space Grotesk',monospace; font-weight:700; color:var(--coral); white-space:nowrap; }
+
+  .flags { list-style:none; margin:1mm 0 0; }
+  .flags li { position:relative; padding:2.4mm 0 2.4mm 8mm; border-bottom:.4pt dashed var(--line); font-size:9.7pt; line-height:1.5; color:var(--ink-soft); }
+  .flags li:last-child { border-bottom:none; }
+  .flags li::before { content:'!'; position:absolute; left:0; top:2.2mm; width:5mm; height:5mm; background:var(--coral); color:#fff;
+    font-family:'Space Grotesk',monospace; font-weight:700; font-size:8.5pt; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .flags b { color:var(--ink); }
+
+  .note { font-family:'Space Grotesk',monospace; font-size:7.8pt; color:var(--ink-faint); margin-top:2mm; font-style:normal; }
+  .foot { margin-top:8mm; border-top:.5pt solid var(--line); padding-top:2.6mm; display:flex; justify-content:space-between;
+    font-family:'Space Grotesk',monospace; font-size:7.4pt; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); }
+  .sig { margin-top:2mm; font-size:9.6pt; color:var(--ink-soft); }
+  .sig b { color:var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div>
+    <div class="brand">Sparo Automações · Ficha de admissão</div>
+    <h1>Admissão CLT — Pedro</h1>
+  </div>
+  <div class="meta">Para: contabilidade<br>Data: 20/07/2026<br>Início pretendido: <b style="color:var(--coral)">30/07/2026</b></div>
+</div>
+
+<p class="lead">
+  Segue o resumo para a <b>admissão de um funcionário (CLT)</b> na empresa, com todos os parâmetros do contrato.
+  A <b>minuta completa do contrato de trabalho</b> vai em anexo (Contrato-Trabalho-Pedro.pdf).
+  Preciso da admissão registrada no <b>eSocial até 29/07</b>, para o início em <b>30/07/2026</b>.
+  Os campos em destaque são os dados que ainda vou confirmar/enviar.
+</p>
+
+<h2>Empregador</h2>
+<table class="kv">
+  <tr><td class="k">Razão social</td><td class="v"><span class="fill">[razão social da ME / SLU]</span></td></tr>
+  <tr><td class="k">CNPJ</td><td class="v"><span class="fill">[CNPJ — migração MEI→ME recém-concluída]</span></td></tr>
+  <tr><td class="k">Regime tributário</td><td class="v"><b>Simples Nacional</b> (confirmar anexo — ver ponto sobre Fator R abaixo)</td></tr>
+  <tr><td class="k">Endereço / CNAE</td><td class="v"><span class="fill">[endereço e CNAE principal]</span></td></tr>
+</table>
+
+<h2>Empregado</h2>
+<table class="kv">
+  <tr><td class="k">Nome completo</td><td class="v"><span class="fill">[nome completo do Pedro]</span></td></tr>
+  <tr><td class="k">CPF / RG</td><td class="v"><span class="fill">[CPF]</span> · <span class="fill">[RG]</span></td></tr>
+  <tr><td class="k">PIS / NIS / NIT</td><td class="v"><span class="fill">[PIS]</span></td></tr>
+  <tr><td class="k">Nascimento / nome da mãe</td><td class="v"><span class="fill">[data]</span> · <span class="fill">[nome da mãe]</span></td></tr>
+  <tr><td class="k">Estado civil / escolaridade</td><td class="v"><span class="fill">[estado civil]</span> · <span class="fill">[escolaridade]</span></td></tr>
+  <tr><td class="k">Endereço</td><td class="v"><span class="fill">[endereço completo]</span> — <b>Santa Catarina</b></td></tr>
+  <tr><td class="k">Dados bancários</td><td class="v"><span class="fill">[banco, agência, conta]</span></td></tr>
+</table>
+<p class="note">Observações: (1) o Pedro faz estágio curricular obrigatório em outra organização até o fim de setembro — estágio + emprego CLT simultâneos, jornadas compatíveis; (2) <b>ele reside em Santa Catarina e trabalhará 100% em regime de teletrabalho</b> (art. 75-A e seguintes da CLT) — a empresa fica em outro estado.</p>
+
+<h2>Contrato</h2>
+<table class="kv">
+  <tr><td class="k">Cargo</td><td class="v"><b>Gerente de Conteúdo e Automação</b> — CBO a definir por vocês</td></tr>
+  <tr><td class="k">Data de admissão</td><td class="v"><b>30/07/2026</b></td></tr>
+  <tr><td class="k">Tipo</td><td class="v">Contrato de <b>experiência: 45 + 45 dias</b> (datas exatas conforme a minuta; conferir)</td></tr>
+  <tr><td class="k">Jornada (fase 1)</td><td class="v"><b>Tempo parcial (art. 58-A)</b> — 25h/semana: 4h seg–sex + 5h aos sábados</td></tr>
+  <tr><td class="k">Jornada (fase 2)</td><td class="v">A partir de <b>30/09/2026</b> (fim do estágio): <b>40h/semana</b>, 8h/dia seg–sex, por <b>termo aditivo</b></td></tr>
+  <tr><td class="k">Local de trabalho</td><td class="v"><b>Teletrabalho integral</b> (art. 75-A CLT) — empregado em Santa Catarina, empresa em outro estado</td></tr>
+</table>
+
+<h2>Remuneração</h2>
+<table class="kv">
+  <tr><td class="k">Salário — fase parcial</td><td class="v"><b>R$ 2.200,00/mês</b> (até 29/09/2026)</td></tr>
+  <tr><td class="k">Salário — fase integral</td><td class="v"><b>R$ 3.520,00/mês</b> (a partir de 30/09/2026 — proporcional exato, preserva o salário-hora)</td></tr>
+</table>
+
+<div style="margin-top:3mm"><b style="font-size:9.6pt">Prêmio de produção</b> — por vídeo longo do YouTube entregue no padrão (pago na folha):</div>
+<table class="grid">
+  <tr><th>Duração do vídeo</th><th>Prêmio</th></tr>
+  <tr><td>Até 10 min</td><td class="plus">R$ 70 – 100</td></tr>
+  <tr><td>10 a 20 min</td><td class="plus">R$ 100 – 130</td></tr>
+  <tr><td>20 a 30 min</td><td class="plus">R$ 130 – 150</td></tr>
+  <tr><td>30 a 40 min</td><td class="plus">R$ 150 – 170</td></tr>
+</table>
+<p class="note">8 a 12 vídeos/mês. Reels e criativos de anúncio: dentro da jornada, sem prêmio por unidade.</p>
+
+<div style="margin-top:3mm"><b style="font-size:9.6pt">Prêmio por resultado</b> — sobre a receita líquida mensal do curso (maior patamar, não cumulativo):</div>
+<table class="grid">
+  <tr><th>Receita líquida do mês</th><th>Prêmio</th></tr>
+  <tr><td>Acima de R$ 45.000</td><td class="plus">R$ 1.000</td></tr>
+  <tr><td>Acima de R$ 65.000</td><td class="plus">R$ 2.000</td></tr>
+  <tr><td>Acima de R$ 85.000</td><td class="plus">R$ 3.500</td></tr>
+</table>
+
+<h2>Pontos que preciso da atenção de vocês</h2>
+<ul class="flags">
+  <li><b>Prêmios como "prêmio por desempenho" (art. 457, §4º da CLT)</b> — liberalidade condicionada a desempenho superior, <b>sem integração à remuneração</b> (fora de FGTS/INSS/13º/férias). Não estruturar como comissão.</li>
+  <li><b>Termo aditivo de jornada</b> já previsto para 30/09/2026 (parcial → integral, com o reajuste salarial). Podem deixar encaminhado.</li>
+  <li><b>Fator R:</b> por favor verifiquem se, com esta folha, a empresa se enquadra no <b>Anexo III</b> do Simples (folha ≥ 28% da receita) — pode reduzir bastante a alíquota do DAS.</li>
+  <li><b>Exame admissional (ASO) à distância:</b> o empregado está em <b>Santa Catarina</b>. Preciso que indiquem uma <b>clínica de medicina ocupacional na cidade dele</b> (ou rede nacional conveniada) e emitam a <b>guia/ficha de encaminhamento do ASO</b> com os dados da empresa e do cargo, para ele fazer aí mesmo antes de 30/07.</li>
+  <li><b>Teletrabalho e sindicato:</b> contrato em regime de teletrabalho (art. 75-A). Confirmem qual <b>sindicato/CCT</b> se aplica (base territorial da empresa × do empregado) e se há piso da categoria, adicionais ou benefícios obrigatórios a observar — e o <b>PCMSO/PGR</b> necessário para emitir o ASO.</li>
+  <li><b>O que preciso de volta:</b> a lista completa de documentos/dados do empregado que faltam, a guia do ASO, e a confirmação de que a admissão no eSocial fica pronta até 29/07.</li>
+</ul>
+
+<div class="foot"><span>Sparo Automações · Admissão Pedro</span><span>Enzo Barbatto</span></div>
+<p class="sig">Qualquer dúvida, estou à disposição. <b>Enzo Barbatto</b></p>
+
+</body>
+</html>

@@ -335,7 +335,24 @@ function Show-BriefPopup([string]$json) {
         $psb=_TB "De dias anteriores e ainda sem resposta — não deixe passar." 11.5 "Normal" "#E7C9A8"; $psb.Margin=New-Object System.Windows.Thickness(0,3,0,0)
         [void]$psp.Children.Add($ptt); [void]$psp.Children.Add($psb); $pd.Child=$psp
         [void]$body.Children.Add($pd)
-        foreach($it in @($s.itens)){ [void]$body.Children.Add((_ItemRow $it.texto $it.url $it.rascunho $it.copiar $false)) }
+        if($s.grupos -and @($s.grupos).Count -gt 0){
+          # AGRUPADO por origem: subcabeçalho âmbar por fonte + itens (mais atrasado no topo)
+          foreach($grp in @($s.grupos)){
+            $f=[string]$grp.fonte
+            $gi = if($f -match 'WHATS'){ _Emoji 0x1F4AC } elseif($f -match 'MAIL'){ _Emoji 0x1F4E7 } elseif($f -match 'YOU'){ [char]0x25B6 } else { [char]0x2022 }
+            $gh=New-Object System.Windows.Controls.Border
+            $gh.CornerRadius=New-Object System.Windows.CornerRadius(10)
+            $gh.Background=(New-Object System.Windows.Media.SolidColorBrush ([System.Windows.Media.Color]::FromArgb(0x1C,0xFF,0xB2,0x3E)))
+            $gh.Padding=New-Object System.Windows.Thickness(12,7,12,7); $gh.Margin=New-Object System.Windows.Thickness(0,14,0,2)
+            $gh.HorizontalAlignment="Left"
+            $gh.Child=(_TB ("$gi  " + $f) 12.5 "Bold" "#FFD9A8")
+            [void]$body.Children.Add($gh)
+            foreach($it in @($grp.itens)){ [void]$body.Children.Add((_ItemRow $it.texto $it.url $it.rascunho $it.copiar $false)) }
+          }
+        } else {
+          # compatibilidade: JSON antigo (cache de hoje) ainda vem como lista única
+          foreach($it in @($s.itens)){ [void]$body.Children.Add((_ItemRow $it.texto $it.url $it.rascunho $it.copiar $false)) }
+        }
         continue
       }
       # antes da 1ª seção de HOJE, se existe backlog, marca o bloco "HOJE"

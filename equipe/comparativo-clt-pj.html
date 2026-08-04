@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>CLT ou PJ — comparativo para decisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  :root {
+    --coral:#DD5731; --paper:#F4EFE6; --ink:#17130E; --dark:#0F0E0C;
+    --ink-soft:rgba(23,19,14,.72); --ink-faint:rgba(23,19,14,.5);
+    --line:rgba(20,15,10,.14);
+  }
+  html,body { background:#e9e4da; }
+  @page { size:A4; margin:0; }
+  .page {
+    width:210mm; height:296.6mm; position:relative; overflow:hidden;
+    background:var(--paper); color:var(--ink);
+    font-family:'Archivo','Segoe UI',sans-serif;
+    padding:20mm 17mm 16mm;
+    page-break-after:always;
+  }
+  .page:last-child { page-break-after:auto; }
+  @media screen { body { padding:28px 0; } .page { margin:0 auto 28px; box-shadow:0 3px 28px rgba(20,15,10,.2); } }
+
+  .ribbon { position:absolute; top:0; left:17mm; width:11mm; height:16mm; background:var(--coral); }
+  .ribbon::after { content:''; position:absolute; bottom:-4.4mm; left:0;
+    border-left:5.5mm solid var(--coral); border-right:5.5mm solid var(--coral);
+    border-bottom:4.4mm solid transparent; }
+  .pager { position:absolute; top:9mm; right:17mm; display:flex; align-items:center; gap:2.6mm;
+    font-family:'Space Grotesk',monospace; font-size:8.6pt; color:var(--ink-soft); }
+  .pager .pill { background:var(--dark); color:#F4EFE6; border-radius:20mm; padding:1.1mm 3.4mm; font-size:8pt; font-weight:600; }
+  .foot { position:absolute; bottom:9mm; left:17mm; right:17mm; display:flex; justify-content:space-between;
+    border-top:.35mm solid var(--line); padding-top:2.6mm;
+    font-family:'Space Grotesk',monospace; font-size:7.4pt; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-faint); }
+
+  .eyebrow { font-family:'Space Grotesk',monospace; font-size:9.4pt; font-weight:700; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--coral); margin-bottom:4mm; }
+  h1 { font-weight:900; font-size:30pt; line-height:1.04; letter-spacing:-.02em; }
+  .sub { font-family:'Newsreader',serif; font-style:italic; font-size:13pt; color:var(--ink-soft); margin-top:3mm; max-width:150mm; }
+
+  h2 { font-weight:800; font-size:14pt; letter-spacing:-.01em; margin-bottom:3mm; display:flex; align-items:baseline; gap:3mm; }
+  h2 .n { font-family:'Space Grotesk',monospace; font-size:9pt; font-weight:700; color:var(--coral); }
+  .section { margin-top:7mm; }
+
+  table.cmp { width:100%; border-collapse:collapse; background:#FBF8F2; border:.35mm solid var(--line);
+    border-radius:2.6mm; overflow:hidden; font-size:9.8pt; }
+  .cmp thead th { font-family:'Space Grotesk',monospace; font-size:8.6pt; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; padding:3mm 4mm; text-align:left; }
+  .cmp thead th:nth-child(2) { background:var(--dark); color:#F4EFE6; text-align:right; width:38mm; }
+  .cmp thead th:nth-child(3) { background:var(--coral); color:#fff; text-align:right; width:38mm; }
+  .cmp td { padding:2.6mm 4mm; border-top:.3mm solid var(--line); color:var(--ink-soft); }
+  .cmp td:nth-child(2), .cmp td:nth-child(3) { text-align:right; font-variant-numeric:tabular-nums; }
+  .cmp tr.grp td { background:rgba(20,15,10,.045); font-family:'Space Grotesk',monospace; font-size:8pt;
+    font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--ink); }
+  .cmp tr.tot td { font-weight:800; color:var(--ink); background:rgba(221,87,49,.09); }
+  .cmp b { color:var(--ink); }
+
+  .note { font-family:'Newsreader',serif; font-style:italic; font-size:9.4pt; color:var(--ink-faint); margin-top:2.6mm; }
+
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:4mm; }
+  .card { background:#FBF8F2; border:.35mm solid var(--line); border-radius:2.6mm; padding:4.4mm 5mm; }
+  .card.hi { border-left:1.6mm solid var(--coral); }
+  .card h3 { font-size:11pt; font-weight:800; margin-bottom:2.4mm; }
+  .card li { font-size:9.4pt; line-height:1.5; color:var(--ink-soft); list-style:none; position:relative;
+    padding-left:4.4mm; margin-bottom:1.4mm; }
+  .card li::before { content:'—'; position:absolute; left:0; color:var(--coral); font-weight:700; }
+  .card li b { color:var(--ink); }
+
+  .lede { font-size:10.6pt; line-height:1.55; color:var(--ink-soft); }
+  .lede b { color:var(--ink); }
+
+  .callout { margin-top:6mm; background:#FBF8F2; border:.35mm solid var(--line); border-left:1.6mm solid var(--coral);
+    border-radius:1.6mm; padding:4mm 5mm; font-size:10pt; line-height:1.55; color:var(--ink-soft); }
+  .callout b { color:var(--ink); }
+
+  ol.steps { counter-reset:st; margin-top:1mm; }
+  ol.steps li { list-style:none; position:relative; padding-left:8.4mm; font-size:9.8pt; line-height:1.5;
+    color:var(--ink-soft); margin-bottom:2.2mm; }
+  ol.steps li::before { counter-increment:st; content:counter(st); position:absolute; left:0; top:.2mm;
+    width:5.6mm; height:5.6mm; border-radius:50%; background:var(--dark); color:#F4EFE6;
+    font-family:'Space Grotesk',monospace; font-size:8pt; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  ol.steps b { color:var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- PÁGINA 1 -->
+<div class="page">
+  <div class="ribbon"></div>
+  <div class="pager">Sparo Automações <span class="pill">1/2</span></div>
+
+  <div style="margin-top:12mm">
+    <div class="eyebrow">Formato de contratação</div>
+    <h1>CLT ou PJ</h1>
+    <p class="sub">Os números dos dois formatos, lado a lado, para você comparar com calma
+    antes de decidir.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="n">01</span> O que muda no dinheiro</h2>
+    <table class="cmp">
+      <thead>
+        <tr><th></th><th>CLT</th><th>PJ</th></tr>
+      </thead>
+      <tbody>
+        <tr class="grp"><td colspan="3">Primeiros 2 meses (meio período)</td></tr>
+        <tr><td>Valor bruto</td><td>R$ 2.200</td><td>R$ 2.600</td></tr>
+        <tr><td>Descontos (INSS / impostos da PJ)</td><td>− R$ 175</td><td>− R$ 80</td></tr>
+        <tr><td><b>Na sua conta, todo mês</b></td><td><b>~R$ 2.025</b></td><td><b>~R$ 2.520</b></td></tr>
+        <tr><td>FGTS, 13º e férias (valor acumulado)</td><td>+ ~R$ 600</td><td>—</td></tr>
+        <tr class="tot"><td>Valor total do pacote</td><td>~R$ 2.625</td><td>~R$ 2.520</td></tr>
+
+        <tr class="grp"><td colspan="3">A partir do 3º mês (período integral)</td></tr>
+        <tr><td>Valor bruto</td><td>R$ 3.520</td><td>R$ 4.200</td></tr>
+        <tr><td>Descontos (INSS / Simples 6% + contador R$ 120)</td><td>− R$ 315</td><td>− R$ 372</td></tr>
+        <tr><td><b>Na sua conta, todo mês</b></td><td><b>~R$ 3.205</b></td><td><b>~R$ 3.828</b></td></tr>
+        <tr><td>FGTS, 13º e férias (valor acumulado)</td><td>+ ~R$ 965</td><td>—</td></tr>
+        <tr class="tot"><td>Valor total do pacote</td><td>~R$ 4.170</td><td>~R$ 3.828</td></tr>
+      </tbody>
+    </table>
+    <p class="note">As bonificações — prêmio por vídeo entregue e prêmio por meta de receita — são
+    exatamente iguais nos dois formatos e não entram nesta comparação. Valores de PJ estimados
+    considerando MEI nos primeiros meses e ME no Simples depois; o contador confirma os números finais.</p>
+  </div>
+
+  <div class="callout">
+    <b>Como ler esses números:</b> a PJ coloca <b>mais dinheiro no seu bolso todo mês</b> — cerca de
+    R$ 500 nos primeiros meses e R$ 620 a partir do terceiro. O CLT entrega <b>mais valor total</b>,
+    porque uma parte vem em FGTS, 13º e férias: dinheiro que é seu, mas que você recebe mais tarde.
+    A escolha é entre <b>liquidez agora</b> e <b>proteção acumulada</b>.
+  </div>
+
+  <div class="foot"><span>CLT ou PJ · comparativo</span><span>Sparo Automações</span></div>
+</div>
+
+<!-- PÁGINA 2 -->
+<div class="page">
+  <div class="ribbon"></div>
+  <div class="pager">Sparo Automações <span class="pill">2/2</span></div>
+
+  <div style="margin-top:3mm">
+    <h2><span class="n">02</span> Além do dinheiro</h2>
+    <div class="cols">
+      <div class="card">
+        <h3>Como CLT</h3>
+        <ul>
+          <li><b>FGTS:</b> 8% do salário depositado todo mês numa conta sua, mais multa de 40% se a empresa te dispensar</li>
+          <li><b>Seguro-desemprego</b> em caso de dispensa</li>
+          <li><b>13º salário</b> e <b>férias remuneradas + ⅓</b></li>
+          <li><b>INSS pago pela empresa</b> — aposentadoria, auxílio-doença e licenças cobertos</li>
+          <li>Carteira assinada, que conta como tempo de serviço e ajuda em financiamento e crédito</li>
+          <li>Horário definido em contrato</li>
+        </ul>
+      </div>
+      <div class="card hi">
+        <h3>Como PJ</h3>
+        <ul>
+          <li><b>Mais dinheiro líquido</b> por mês, principalmente a partir do 3º mês</li>
+          <li><b>Liberdade de horário</b> — o combinado é entrega e prazo, não expediente</li>
+          <li><b>Pode atender outros clientes</b>, desde que fora do nicho de automação, IA e educação tech</li>
+          <li>Você assume: <b>manter o CNPJ</b>, emitir nota fiscal todo mês e pagar os impostos da sua empresa</li>
+          <li>Contador a partir da ME (~R$ 120/mês, já descontado na tabela)</li>
+          <li><b>Sem</b> FGTS, 13º, férias e seguro-desemprego. O INSS passa a ser por sua conta</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="n">03</span> O que é igual nos dois</h2>
+    <div class="card">
+      <ul>
+        <li>O trabalho: edição dos vídeos, roteiros, Instagram e as automações da operação</li>
+        <li>O plano de crescimento em três etapas, com tráfego pago e automações entrando pelo caminho</li>
+        <li>As bonificações: prêmio por vídeo entregue e prêmio por meta de receita do curso</li>
+        <li>A exclusividade de nicho e a confidencialidade</li>
+        <li>Encerramento com <b>30 dias de aviso</b> de qualquer um dos lados</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="n">04</span> Como decidir</h2>
+    <ol class="steps">
+      <li><b>Leia com calma</b> e converse com quem você quiser — família, contador, quem entender do assunto.</li>
+      <li><b>Pergunte o que não ficou claro.</b> Qualquer dúvida sobre número ou regra, é só chamar.</li>
+      <li><b>Me responda até quinta.</b> Não existe resposta errada: se você preferir CLT, está tudo pronto e a gente segue exatamente como combinado.</li>
+    </ol>
+  </div>
+
+  <div class="callout">
+    <b>Sem pressão:</b> os dois caminhos estão prontos do meu lado. A PJ paga mais por mês, mas
+    transfere para você responsabilidades e proteções que no CLT ficam com a empresa. Não escolha
+    por achar que é o que eu prefiro — <b>escolha o que faz sentido para a sua vida</b>.
+  </div>
+
+  <div class="foot"><span>CLT ou PJ · comparativo</span><span>Sparo Automações</span></div>
+</div>
+
+</body>
+</html>

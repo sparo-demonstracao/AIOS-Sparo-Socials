@@ -1,0 +1,12 @@
+{
+  "name": "deck-xtreme",
+  "version": "1.0.0",
+  "description": "Telas de apoio da call Eric / Xtreme Contractors — Sparo",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

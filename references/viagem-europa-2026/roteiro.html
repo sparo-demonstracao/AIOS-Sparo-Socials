@@ -1,0 +1,1550 @@
+<title>Europa 2026 — Roteiro</title>
+
+<style>
+  :root {
+    color-scheme: light dark;
+
+    --bg: #ECECE8;
+    --surface: #FFFFFF;
+    --raised: #F7F7F4;
+    --ink: #101215;
+    --ink-soft: #52585F;
+    --ink-faint: #8B9199;
+    --line: #DCDCD6;
+    --line-soft: #E9E9E4;
+
+    --lisboa: #0D7FCF;
+    --algarve: #08897A;
+    --ibiza: #D93A16;
+    --mallorca: #C98A05;
+    --barcelona: #C46706;
+    --amsterdam: #7C58BD;
+    --transit: #6B6862;
+
+    --shadow: 0 1px 2px rgba(16, 18, 21, .04), 0 12px 28px -18px rgba(16, 18, 21, .22);
+
+    --display: "Arial Black", "Helvetica Neue", Helvetica, Impact, sans-serif;
+    --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "Consolas", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B0C0F;
+      --surface: #14161A;
+      --raised: #1A1D22;
+      --ink: #F2F3F5;
+      --ink-soft: #A2A8B1;
+      --ink-faint: #6E757E;
+      --line: #262A31;
+      --line-soft: #1E2127;
+      --lisboa: #3FAEFF;
+      --algarve: #1ECCB0;
+      --ibiza: #FF6134;
+      --mallorca: #FFC53D;
+      --barcelona: #FF9A2E;
+      --amsterdam: #B292F5;
+      --transit: #8A857E;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 14px 32px -20px rgba(0, 0, 0, .9);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0B0C0F;
+    --surface: #14161A;
+    --raised: #1A1D22;
+    --ink: #F2F3F5;
+    --ink-soft: #A2A8B1;
+    --ink-faint: #6E757E;
+    --line: #262A31;
+    --line-soft: #1E2127;
+    --lisboa: #3FAEFF;
+    --algarve: #1ECCB0;
+    --ibiza: #FF6134;
+    --mallorca: #FFC53D;
+    --barcelona: #FF9A2E;
+    --amsterdam: #B292F5;
+    --transit: #8A857E;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 14px 32px -20px rgba(0, 0, 0, .9);
+  }
+
+  :root[data-theme="light"] {
+    --bg: #ECECE8;
+    --surface: #FFFFFF;
+    --raised: #F7F7F4;
+    --ink: #101215;
+    --ink-soft: #52585F;
+    --ink-faint: #8B9199;
+    --line: #DCDCD6;
+    --line-soft: #E9E9E4;
+    --lisboa: #0D7FCF;
+    --algarve: #08897A;
+    --ibiza: #D93A16;
+    --mallorca: #C98A05;
+    --barcelona: #C46706;
+    --amsterdam: #7C58BD;
+    --transit: #6B6862;
+    --shadow: 0 1px 2px rgba(16, 18, 21, .04), 0 12px 28px -18px rgba(16, 18, 21, .22);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 1680px;
+    margin: 0 auto;
+    padding: 0 clamp(16px, 3.5vw, 64px) 110px;
+  }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+
+  /* ============ HERO ============ */
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr);
+    gap: clamp(32px, 5vw, 90px);
+    align-items: end;
+    padding: clamp(40px, 6vw, 84px) 0 clamp(28px, 4vw, 48px);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(58px, 11vw, 168px);
+    font-weight: 900;
+    letter-spacing: -.055em;
+    line-height: .82;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .hero h1 em {
+    display: block;
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--ink-faint);
+  }
+
+  .hero-lede {
+    margin: 26px 0 0;
+    font-size: clamp(15px, 1.3vw, 19px);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+
+  /* boarding manifest */
+
+  .manifest {
+    border-top: 2px solid var(--ink);
+    padding-top: 2px;
+  }
+
+  .leg {
+    display: grid;
+    grid-template-columns: 4px 1fr auto auto;
+    gap: 0 14px;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .leg i {
+    display: block;
+    width: 4px;
+    height: 22px;
+    background: var(--c);
+  }
+
+  .leg b {
+    font-family: var(--display);
+    font-size: clamp(15px, 1.5vw, 20px);
+    font-weight: 900;
+    letter-spacing: -.02em;
+    text-transform: uppercase;
+  }
+
+  .leg .when,
+  .leg .nights {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .leg .nights {
+    color: var(--c);
+    font-weight: 700;
+    min-width: 42px;
+    text-align: right;
+  }
+
+  /* ============ STATS ============ */
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stat {
+    padding: 18px 0 20px;
+    border-left: 1px solid var(--line);
+    padding-left: 16px;
+  }
+
+  .stat:first-child { border-left: 0; padding-left: 0; }
+
+  .stat b {
+    display: block;
+    font-family: var(--display);
+    font-size: clamp(30px, 3.4vw, 46px);
+    font-weight: 900;
+    letter-spacing: -.04em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat span {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ============ NAV ============ */
+
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    margin: 0 clamp(-16px, -3.5vw, -64px) 0;
+    padding: 0 clamp(16px, 3.5vw, 64px);
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-scroll {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    padding: 9px 0;
+    scrollbar-width: none;
+  }
+
+  .nav-scroll::-webkit-scrollbar { display: none; }
+
+  .nav a {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    color: var(--ink-faint);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    white-space: nowrap;
+    border-radius: 2px;
+    transition: color .15s, background .15s;
+  }
+
+  .nav a:hover,
+  .nav a:focus-visible {
+    color: var(--ink);
+    background: var(--raised);
+    outline: none;
+  }
+
+  .nav a:focus-visible { box-shadow: inset 0 0 0 2px var(--c); }
+
+  .nav a i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--c);
+    flex: 0 0 auto;
+  }
+
+  /* ============ SECTION TITLES ============ */
+
+  .band {
+    padding-top: clamp(48px, 6vw, 88px);
+  }
+
+  .band-title {
+    font-family: var(--display);
+    font-size: clamp(28px, 3.6vw, 48px);
+    font-weight: 900;
+    letter-spacing: -.04em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin: 0 0 8px;
+  }
+
+  .band-sub {
+    margin: 0 0 30px;
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 62ch;
+  }
+
+  /* ============ PREP CARDS ============ */
+
+  .todo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+    gap: 14px;
+  }
+
+  .todo {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--ink-faint);
+    border-radius: 3px;
+    padding: 16px 18px 18px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .todo.urgent { border-top-color: var(--ibiza); }
+
+  .todo .when {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 700;
+  }
+
+  .todo.urgent .when { color: var(--ibiza); }
+
+  .todo h3 {
+    margin: 0;
+    font-size: 15.5px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+  }
+
+  .todo p {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+
+  /* ============ CITY ============ */
+
+  .city {
+    display: grid;
+    grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+    gap: clamp(24px, 3.5vw, 56px);
+    padding-top: clamp(52px, 6vw, 96px);
+    scroll-margin-top: 60px;
+  }
+
+  .city-aside {
+    position: sticky;
+    top: 72px;
+    align-self: start;
+    border-top: 3px solid var(--c);
+    padding-top: 16px;
+  }
+
+  .city-aside .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--c);
+    font-weight: 700;
+  }
+
+  .city-aside h2 {
+    font-family: var(--display);
+    font-size: clamp(38px, 4.4vw, 68px);
+    font-weight: 900;
+    letter-spacing: -.055em;
+    line-height: .88;
+    text-transform: uppercase;
+    margin: 8px 0 14px;
+  }
+
+  .city-aside .sub {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+  }
+
+  .city-aside .sub strong { color: var(--ink); font-weight: 600; }
+
+  .base {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--c) 13%, transparent);
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+
+  .base span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--c);
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .morar {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  .morar h3 {
+    margin: 0 0 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--c);
+    font-weight: 700;
+  }
+
+  .morar p {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+
+  .morar p strong { color: var(--ink); font-weight: 600; }
+
+  /* ---- day cards ---- */
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  .day {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .day-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 14px 18px 13px;
+    background: var(--raised);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .day-head .date {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    font-variant-numeric: tabular-nums;
+    color: var(--c);
+  }
+
+  .day-head .name {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -.015em;
+  }
+
+  .day-head .note {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-left: auto;
+  }
+
+  .slot {
+    padding: 13px 18px 14px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .slot:first-of-type { border-top: 0; }
+
+  .slot > .label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .slot > p {
+    margin: 0;
+    font-size: 14.5px;
+  }
+
+  .slot > p + p { margin-top: 9px; }
+
+  .slot > p strong { font-weight: 650; }
+
+  .slot > p.aside {
+    color: var(--ink-soft);
+    font-size: 13.5px;
+    padding-left: 11px;
+    border-left: 2px solid var(--line);
+  }
+
+  .slot.move { background: color-mix(in srgb, var(--transit) 9%, transparent); }
+  .slot.move > .label { color: var(--transit); }
+
+  .star { color: var(--c); font-weight: 900; }
+
+  .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 2px;
+    vertical-align: 2px;
+    margin-left: 3px;
+    background: color-mix(in srgb, var(--ibiza) 16%, transparent);
+    color: var(--ibiza);
+    font-weight: 700;
+  }
+
+  /* ============ CLOSER ============ */
+
+  .notes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 2px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .note {
+    background: var(--bg);
+    padding: 20px 22px 22px;
+  }
+
+  .note h4 {
+    margin: 0 0 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 700;
+  }
+
+  .note p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+  .note p strong { color: var(--ink); font-weight: 650; }
+
+  .colophon {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .05em;
+    line-height: 1.9;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  /* ============ RESPONSIVE ============ */
+
+  @media (max-width: 1080px) {
+    .hero { grid-template-columns: 1fr; align-items: start; }
+    .city { grid-template-columns: 1fr; }
+    .city-aside { position: static; }
+  }
+
+  @media (max-width: 620px) {
+    .hero h1 { letter-spacing: -.04em; }
+    .stat { border-left: 0; padding-left: 0; }
+    .stats { grid-template-columns: repeat(3, 1fr); gap: 0 14px; }
+    .days { grid-template-columns: 1fr; }
+    .day-head .note { margin-left: 0; width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<div class="page">
+
+  <!-- ============ HERO ============ -->
+
+  <header class="hero">
+    <div>
+      <span class="hero-eyebrow">04 set — 26 set · 2026 · três pessoas</span>
+      <h1>Europa<em>21 noites</em></h1>
+      <p class="hero-lede">Lisboa, Algarve, Ibiza, Mallorca, Barcelona e Amsterdam. Sete voos, dois
+        trechos de carro, e uma pergunta de fundo rodando o tempo todo: dá pra morar aqui?</p>
+    </div>
+
+    <div class="manifest">
+      <div class="leg" style="--c: var(--lisboa)"><i></i><b>Lisboa</b><span class="when">05 — 08 set</span><span class="nights">3n</span></div>
+      <div class="leg" style="--c: var(--algarve)"><i></i><b>Algarve</b><span class="when">08 — 11 set</span><span class="nights">3n</span></div>
+      <div class="leg" style="--c: var(--lisboa)"><i></i><b>Lisboa</b><span class="when">11 — 12 set</span><span class="nights">1n</span></div>
+      <div class="leg" style="--c: var(--ibiza)"><i></i><b>Ibiza</b><span class="when">12 — 14 set</span><span class="nights">2n</span></div>
+      <div class="leg" style="--c: var(--mallorca)"><i></i><b>Mallorca</b><span class="when">14 — 16 set</span><span class="nights">2n</span></div>
+      <div class="leg" style="--c: var(--barcelona)"><i></i><b>Barcelona</b><span class="when">16 — 19 set</span><span class="nights">3n</span></div>
+      <div class="leg" style="--c: var(--amsterdam)"><i></i><b>Amsterdam</b><span class="when">19 — 24 set</span><span class="nights">5n</span></div>
+      <div class="leg" style="--c: var(--lisboa)"><i></i><b>Lisboa</b><span class="when">24 — 25 set</span><span class="nights">1n</span></div>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><b>21</b><span>noites</span></div>
+    <div class="stat"><b>6</b><span>destinos</span></div>
+    <div class="stat"><b>7</b><span>voos</span></div>
+    <div class="stat"><b>2</b><span>trechos de carro</span></div>
+    <div class="stat"><b>3</b><span>países</span></div>
+    <div class="stat"><b>1</b><span>feriado (07/09)</span></div>
+  </div>
+
+  <nav class="nav" aria-label="Ir para o destino">
+    <div class="nav-scroll">
+      <a href="#preparar" style="--c: var(--ink-faint)"><i></i>Reservar</a>
+      <a href="#lisboa" style="--c: var(--lisboa)"><i></i>Lisboa</a>
+      <a href="#algarve" style="--c: var(--algarve)"><i></i>Algarve</a>
+      <a href="#ibiza" style="--c: var(--ibiza)"><i></i>Ibiza</a>
+      <a href="#mallorca" style="--c: var(--mallorca)"><i></i>Mallorca</a>
+      <a href="#barcelona" style="--c: var(--barcelona)"><i></i>Barcelona</a>
+      <a href="#amsterdam" style="--c: var(--amsterdam)"><i></i>Amsterdam</a>
+      <a href="#volta" style="--c: var(--lisboa)"><i></i>Volta</a>
+    </div>
+  </nav>
+
+  <!-- ============ PREP ============ -->
+
+  <section class="band" id="preparar" style="scroll-margin-top: 60px">
+    <h2 class="band-title">Reservar antes de embarcar</h2>
+    <p class="band-sub">Faltam cinco semanas. Em ordem de urgência — o que está primeiro esgota
+      primeiro e não tem plano B.</p>
+
+    <div class="todo-grid">
+      <div class="todo urgent">
+        <span class="when">esta semana</span>
+        <h3>Sagrada Família + Park Güell</h3>
+        <p>Ingressos com horário marcado, esgotam com semanas de antecedência. Na Sagrada Família,
+          pegue a opção com acesso às torres.</p>
+      </div>
+      <div class="todo urgent">
+        <span class="when">esta semana</span>
+        <h3>Carro do Algarve</h3>
+        <p>Retirada em Lisboa dia 8, devolução dia 11. Confirme se a diária cobre os três condutores
+          ou só um, e peça o transponder de pedágio (Via Verde).</p>
+      </div>
+      <div class="todo urgent">
+        <span class="when">esta semana</span>
+        <h3>Palácio da Pena + Regaleira</h3>
+        <p>Sintra tem entrada por horário e a Pena esgota. Compre os dois no mesmo dia, com a Pena
+          no primeiro horário da manhã.</p>
+      </div>
+      <div class="todo">
+        <span class="when">até 15 ago</span>
+        <h3>Ingressos de Ibiza</h3>
+        <p>Ushuaïa e Hï no sábado, Pacha no domingo. Online sai bem mais barato que na porta. Os
+          line-ups finais saem em meados de agosto.</p>
+      </div>
+      <div class="todo">
+        <span class="when">até 15 ago</span>
+        <h3>Casa de Anne Frank</h3>
+        <p>Os ingressos abrem exatamente seis semanas antes da data e somem em horas. Marque alarme.
+          Se perder, não existe fila presencial.</p>
+      </div>
+      <div class="todo">
+        <span class="when">até 15 ago</span>
+        <h3>Gruta de Benagil</h3>
+        <p>De barco ou caiaque. Confirme se o passeio <em>entra</em> na gruta — muitos só passam na
+          frente. Saída da manhã tem mar calmo e luz melhor.</p>
+      </div>
+      <div class="todo">
+        <span class="when">até 30 ago</span>
+        <h3>Beach clubs</h3>
+        <p>Espreguiçadeira ou mesa em Ibiza (domingo lota) e em Mallorca. Quase todos cobram consumo
+          mínimo por pessoa.</p>
+      </div>
+      <div class="todo">
+        <span class="when">até 30 ago</span>
+        <h3>Rijksmuseum + Van Gogh</h3>
+        <p>Horário marcado, mas com bem mais folga que os anteriores.</p>
+      </div>
+      <div class="todo">
+        <span class="when">antes de ir</span>
+        <h3>Documentos</h3>
+        <p>Passaporte com 6+ meses de validade e seguro viagem. Confira no site oficial da UE se o
+          ETIAS já exige autorização prévia de brasileiros nessa data.</p>
+      </div>
+      <div class="todo">
+        <span class="when">antes de ir</span>
+        <h3>eSIM europeu</h3>
+        <p>Um chip só cobre Portugal, Espanha e Holanda. Ative antes de sair de casa e você chega em
+          Lisboa já com internet pro Bolt.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LISBOA ============ -->
+
+  <section class="city" id="lisboa" style="--c: var(--lisboa)">
+    <aside class="city-aside">
+      <div class="kicker">05 — 08 set · 3 noites</div>
+      <h2>Lisboa</h2>
+      <p class="sub">Chegada, aclimatação e a primeira leitura séria da cidade. Setembro é o melhor
+        mês de Lisboa: <strong>calor sem o inferno de agosto</strong> e a cidade de volta ao normal
+        depois das férias.</p>
+      <div class="base"><span>base</span>Cais do Sodré ou Príncipe Real — anda a pé pra tudo e dorme
+        em cima da noite.</div>
+      <div class="morar">
+        <h3>Olhar de morador</h3>
+        <p>Guarde a pesquisa séria pro dia 24, quando vocês voltam. Por ora, só registre a sensação:
+          <strong>Cais do Sodré e Bairro Alto são ótimos de visitar e insuportáveis de morar</strong>
+          — barulho até as 4h.</p>
+      </div>
+    </aside>
+
+    <div class="days">
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">SÁB 05</span>
+          <span class="name">Aterrissagem</span>
+          <span class="note">chega 11:00</span>
+        </div>
+        <div class="slot move">
+          <span class="label">chegada</span>
+          <p>Aeroporto Humberto Delgado fica a 20 minutos do centro. Bolt ou Uber sai por volta de 15
+            euros pros três — mais barato que três bilhetes de metrô, e você chega com mala.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p>Dia de voo noturno, não force. Almoço no <strong>Time Out Market</strong> pra atacar
+            várias coisas de uma vez, depois desce a pé pelo <strong>Chiado</strong>.</p>
+          <p class="aside">Pôr do sol no <strong>Miradouro de Santa Catarina</strong> — cerveja na
+            mão, sentado no muro, com o Tejo inteiro na frente. É o primeiro "ok, entendi Lisboa".</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><span class="star">★</span> <strong>Pink Street</strong> (Rua Nova do Carvalho), a rua
+            rosa do Cais do Sodré. Comece no <strong>Pensão Amor</strong>, um antigo bordel virado
+            bar, e siga pro <strong>Musicbox</strong>.</p>
+          <p class="aside">Se sobrar gás: <strong>Lux Frágil</strong>, o clube que fez o nome da
+            cidade, à beira do rio. Abre depois da meia-noite e tem porta seletiva — cheguem antes
+            das 2h e não em bloco.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">DOM 06</span>
+          <span class="name">Belém e Alfama</span>
+          <span class="note">Pietro chega 9:30</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p><span class="star">★</span> <strong>Belém</strong> cedo — Mosteiro dos Jerónimos e Torre
+            de Belém. Chegue antes das 10h ou a fila come uma hora.</p>
+          <p class="aside">Pastéis de Belém: a fila da rua é pra viagem. Entre e sente no salão dos
+            fundos — sai mais rápido e o pastel vem quente do forno.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><strong>Alfama</strong>, o bairro mais antigo, o que sobrou do terremoto de 1755. Suba
+            até o <strong>Castelo de São Jorge</strong> e desça sem mapa — é a graça.</p>
+          <p class="aside">O bonde 28 é lindo e é uma armadilha de fila e batedor de carteira. Pegue
+            na primeira parada (Martim Moniz) ou pule.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><span class="star">★</span> <strong>Park</strong> — bar no último andar de um
+            estacionamento em Bica, com vista pro rio e pra ponte. Não tem placa: você entra no
+            prédio da garagem e sobe de elevador. Chegue no pôr do sol.</p>
+          <p class="aside">Domingo é fraco em Lisboa. Jantar bom e dormir cedo é decisão estratégica
+            — segunda tem Sintra.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">SEG 07</span>
+          <span class="name">Sintra e Cascais</span>
+          <span class="note">bate-volta</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p><span class="star">★</span> <strong>Palácio da Pena</strong> <span class="tag">reservar</span>
+            — o palácio amarelo e vermelho no alto da serra, a foto mais famosa de Portugal. Vá no
+            primeiro horário; depois das 11h a serra enche de ônibus.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><span class="star">★</span> <strong>Quinta da Regaleira</strong> <span class="tag">reservar</span>
+            — jardim maçônico com poço iniciático, túneis e grutas. É o lugar mais estranho e
+            divertido da viagem inteira. Reserve duas horas.</p>
+          <p class="aside">Se der tempo, volte por <strong>Cabo da Roca</strong> (ponto mais
+            ocidental da Europa continental) e termine em <strong>Cascais</strong> no pôr do sol. De
+            carro é fácil; de trem, escolha um dos dois.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><strong>Bairro Alto</strong> — a lógica é beber na rua e trocar de bar a cada copo.
+            Segunda é morno, mas tem movimento todo dia.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ ALGARVE ============ -->
+
+  <section class="city" id="algarve" style="--c: var(--algarve)">
+    <aside class="city-aside">
+      <div class="kicker">08 — 11 set · 3 noites</div>
+      <h2>Algarve</h2>
+      <p class="sub">A parte mais bonita da viagem e a mais subestimada: falésia laranja, água verde
+        e grutas dentro do mar. <strong>Setembro é a melhor janela do ano</strong> — água ainda
+        quente, multidão de agosto já foi, noite ainda rodando.</p>
+      <div class="base"><span>base</span>Lagos — praias melhores e público mais jovem. Albufeira é a
+        capital da balada, mas é massificada: melhor ir uma noite do que dormir lá.</div>
+    </aside>
+
+    <div class="days">
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">TER 08</span>
+          <span class="name">Descida pro sul</span>
+          <span class="note">carro 10:15 → 12:30</span>
+        </div>
+        <div class="slot move">
+          <span class="label">estrada</span>
+          <p>Lisboa → Lagos são 280 km pela A2, umas 2h45 com uma parada. <strong>Encham o tanque
+            antes de pegar a estrada</strong> — gasolina em Lisboa é mais barata que nas bombas da
+            autoestrada.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><span class="star">★</span> <strong>Praia Dona Ana</strong> e <strong>Praia do
+            Camilo</strong>, as duas postais de Lagos, com falésia dourada cercando a areia. São
+            vizinhas, dá pra fazer as duas numa tarde. Camilo tem 200 degraus de descida — pense
+            nisso na volta.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><span class="star">★</span> Pôr do sol na <strong>Ponta da Piedade</strong>, as
+            formações de rocha no fim da cidade. Do alto é de graça; de barco (20 min, sai da marina)
+            você entra por dentro dos arcos.</p>
+          <p class="aside">Depois, <strong>Rua Cândido dos Reis</strong> — a rua de bares de Lagos,
+            público jovem e viajante, sem clima de excursão. Three Monkeys, Bon Vivant (rooftop),
+            Inside Out.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">QUA 09</span>
+          <span class="name">Benagil e Marinha</span>
+          <span class="note">dia de mar</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p><span class="star">★</span> <strong>Gruta de Benagil</strong> <span class="tag">reservar</span>
+            — a caverna com o buraco redondo no teto que você já viu em foto. Só se entra pela água.
+            De caiaque você fica dentro dela; de barco grande, muitas vezes só passa na frente —
+            <strong>confirme antes de pagar</strong>.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><span class="star">★</span> <strong>Praia da Marinha</strong>, eleita várias vezes a
+            praia mais bonita de Portugal. Ao lado começa o <strong>Trilho dos Sete Vales
+            Suspensos</strong>, 6 km de falésia até Benagil — se estiver quente, faça só o começo, a
+            vista boa vem nos primeiros 20 minutos.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><strong>Albufeira — "The Strip"</strong> (Avenida Sá Carneiro): dezenas de bares
+            colados, drink barato, som alto até 6h. É brega e é divertido, exatamente o que promete.</p>
+          <p class="aside">Uma hora de carro de Lagos. <strong>Vão de táxi ou Uber</strong> — a
+            fiscalização de álcool em Portugal é dura e o limite é mais baixo que o brasileiro.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">QUI 10</span>
+          <span class="name">Sagres e beach club</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p><span class="star">★</span> <strong>Cabo de São Vicente</strong>, 40 minutos de Lagos: o
+            ponto mais sudoeste da Europa, falésia de 75 metros caindo no Atlântico. Era literalmente
+            o fim do mundo conhecido. Vá de manhã, à tarde bate vento forte.</p>
+          <p class="aside">Na volta, <strong>Praia do Beliche</strong> ou <strong>Praia do
+            Tonel</strong>, em Sagres — clima surfista, bem menos gente.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><strong>NoSoloÁgua</strong>, em Portimão — o beach club com piscina do Algarve, DJ à
+            tarde e vista pro mar. É o mais perto do que vocês vão achar em Ibiza, numa versão
+            portuguesa e muito mais barata.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p>Jantar de peixe na parte velha de Lagos. Última noite tranquila antes do bloco pesado —
+            o que vem depois do dia 12 não tem folga.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">SEX 11</span>
+          <span class="name">Volta pra Lisboa</span>
+          <span class="note">carro 14:30 → 16:45</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p><strong>Meia Praia</strong> — 4 km de areia reta, a maior do Algarve ocidental. Praia de
+            despedida, sem escada e sem esforço. Almoço e devolução do carro.</p>
+        </div>
+        <div class="slot move">
+          <span class="label">estrada</span>
+          <p>Saída 14:30, chegada em Lisboa por volta das 16:45. Deixe folga pra abastecer antes de
+            devolver — cobrança de combustível de locadora é sempre roubo.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><span class="star">★</span> <strong>Sexta é a melhor noite de Lisboa.</strong> Esquenta
+            no Bairro Alto e, por volta de 1h, vá pro <strong>Lux Frágil</strong> — dois andares,
+            terraço com vista pro Tejo, e sexta é a noite forte da casa.</p>
+          <p class="aside">Alternativas: <strong>Ministerium</strong> (no Terreiro do Paço, techno)
+            ou <strong>Lust in Rio</strong>, na margem do rio.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ IBIZA ============ -->
+
+  <section class="city" id="ibiza" style="--c: var(--ibiza)">
+    <aside class="city-aside">
+      <div class="kicker">12 — 14 set · 2 noites</div>
+      <h2>Ibiza</h2>
+      <p class="sub">Vocês pegaram <strong>a semana certa</strong>: as closing parties só começam em
+        16/09 e vão até meados de outubro. Em 12–14 a ilha está no auge, com todas as residências
+        rodando — sem o caos e os preços do fim de temporada.</p>
+      <div class="base"><span>base</span>Playa d'en Bossa — Ushuaïa e Hï ficam um de frente pro
+        outro, e vocês voltam a pé às 6h da manhã. San Antonio é mais barato e mais jovem; Ibiza Town
+        é mais bonita e gay-friendly.</div>
+    </aside>
+
+    <div class="days">
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">SÁB 12</span>
+          <span class="name">Chegada direto na festa</span>
+          <span class="note">voo 15:15 · chega 17:00</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p>Última manhã em Lisboa: <strong>LX Factory</strong>, em Alcântara — antiga fábrica virada
+            quarteirão de bares, livraria e brunch. Sábado tem feira. Depois, aeroporto.</p>
+        </div>
+        <div class="slot move">
+          <span class="label">voo</span>
+          <p>Lisboa → Ibiza, 15:15 às 17:00 (uma hora a mais no relógio, a Espanha está à frente).
+            <strong>Táxi em Ibiza é caro e some de madrugada</strong> — no aeroporto pegue a fila
+            oficial; à noite, app Taxi Ibiza ou combinado com o hotel.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><span class="star">★</span> Larga a mala e vai direto pro <strong>Ushuaïa</strong>
+            <span class="tag">reservar</span> — é ao ar livre, roda das 17h à meia-noite, e sábado é
+            o <strong>ANTS</strong>. Chegando 17h vocês pegam o miolo da festa ainda com sol.</p>
+          <p><span class="star">★</span> Meia-noite, atravessa a rua pro <strong>Hï Ibiza</strong>
+            <span class="tag">reservar</span> — sábado é a noite do <strong>Black Coffee</strong>.
+            Vai até 6h.</p>
+          <p class="aside">Confirme os line-ups em agosto. Ingresso online é bem mais barato que na
+            porta, e água dentro do clube custa o preço de um drink no Brasil: coma e beba antes.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">DOM 13</span>
+          <span class="name">Beach club, sunset, Pacha</span>
+          <span class="note">o dia clássico</span>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><span class="star">★</span> <strong>Beach club</strong> <span class="tag">reservar</span>
+            — escolha um: <strong>O Beach</strong> (San Antonio, pool party, público jovem, o mais
+            animado), <strong>Beachouse</strong> (Playa d'en Bossa, na porta de casa) ou
+            <strong>Blue Marlin</strong> (Cala Jondal, mais chique e mais caro).</p>
+        </div>
+        <div class="slot">
+          <span class="label">pôr do sol</span>
+          <p><span class="star">★</span> <strong>Sunset strip de San Antonio</strong> — Café del Mar e
+            Café Mambo, um do lado do outro, com DJ tocando enquanto o sol cai no mar. É o ritual mais
+            antigo da ilha e continua valendo. Chegue uma hora antes pra pegar lugar.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><span class="star">★</span> <strong>Solomun +1 no Pacha</strong> <span class="tag">reservar</span>
+            — domingo é a noite dele há mais de uma década: toca um set longo sozinho e depois chama
+            um convidado. Melhor noite de domingo da ilha, no clube mais bonito de Ibiza.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">SEG 14</span>
+          <span class="name">Calas e saída</span>
+          <span class="note">voo 20:00</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p>Dormir até tarde é parte do roteiro. Depois, <strong>Cala Comte</strong> — a praia mais
+            bonita da ilha, água transparente com as ilhotas na frente. Ou <strong>Cala Salada</strong>,
+            menor e mais escondida.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><span class="star">★</span> <strong>Mirante de Es Vedrà</strong> — a rocha de 400 metros
+            saindo do mar, o cartão-postal místico de Ibiza. Vinte minutos de Cala Comte, e de graça.</p>
+          <p class="aside"><strong>Aviso:</strong> segunda é dia de <strong>Circoloco no DC10</strong>,
+            que começa de tarde e é uma das festas mais lendárias do mundo. Com voo às 20h, não dá —
+            vocês teriam que estar no aeroporto às 18:30. Se for inegociável, o ajuste é trocar esse
+            voo pra terça de manhã e cortar meio dia de Mallorca.</p>
+        </div>
+        <div class="slot move">
+          <span class="label">voo</span>
+          <p>Ibiza → Mallorca, 20:00 às 21:30. Voo curto, 40 minutos no ar.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ MALLORCA ============ -->
+
+  <section class="city" id="mallorca" style="--c: var(--mallorca)">
+    <aside class="city-aside">
+      <div class="kicker">14 — 16 set · 2 noites</div>
+      <h2>Mallorca</h2>
+      <p class="sub">O trecho mais apertado: chegam 21:30 na segunda e saem 17h na quarta. Na prática
+        é <strong>um dia útil só</strong>. Por isso a regra aqui é escolher uma coisa e fazer bem —
+        tentar ver a ilha inteira é receita de frustração.</p>
+      <div class="base"><span>base</span>Palma, bairro de Santa Catalina — o mais jovem da cidade,
+        cheio de bares e a 10 minutos a pé do centro histórico.</div>
+    </aside>
+
+    <div class="days">
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">SEG 14</span>
+          <span class="name">Chegada tarde</span>
+          <span class="note">chega 21:30</span>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p>Jantar tarde é normal na Espanha — cozinha aberta até 23h30 tranquilo.
+            <strong>Santa Catalina</strong> é o lugar: rua de tapas e vinho, público local e jovem. O
+            mercado fecha à tarde, mas os bares em volta viram a noite.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">TER 15</span>
+          <span class="name">O único dia cheio</span>
+          <span class="note">escolha uma rota</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p><span class="star">★</span> <strong>Catedral de Palma (La Seu)</strong> — gótica,
+            gigante, de frente pro mar, com uma capela redesenhada pelo Gaudí e outra pelo Barceló. É
+            uma das catedrais mais impressionantes da Europa e ninguém espera isso de Mallorca.
+            Depois, o centro velho e o Passeig del Born.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><strong>Rota A — beach club (recomendada):</strong> <strong>UM Beach House</strong> em
+            Portals Nous (público jovem, clima balear) ou <strong>Nassau Beach Club</strong> em
+            Portixol, com a catedral na vista. <strong>Purobeach Illetas</strong> se quiserem o mais
+            chique.</p>
+          <p><strong>Rota B — praia bonita:</strong> <strong>Es Trenc</strong>, areia branca e água
+            transparente, a mais caribenha da ilha. Ou <strong>Caló des Moro</strong>, minúscula e
+            espetacular — chegue antes das 10h ou não tem onde pisar.</p>
+          <p class="aside">A <strong>Serra de Tramuntana</strong> (Valldemossa, Deià, Sa Calobra, Cap
+            de Formentor) é a coisa mais bonita da ilha e é patrimônio da UNESCO, mas come o dia
+            inteiro de carro em estrada de curva. Com um dia só, fica pra próxima.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><strong>Paseo Marítimo</strong>, a orla de Palma, é onde ficam os clubes —
+            <strong>Tito's</strong> (clássico, elevador de vidro subindo pela fachada) e
+            <strong>Pacha Mallorca</strong>. Terça é fraco: se não render, Santa Catalina resolve
+            melhor.</p>
+          <p class="aside">Magaluf é o polo de balada jovem da ilha, mas é turismo de excursão
+            britânica em veia. Depois de Ibiza, vai parecer piada. Pulem.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">QUA 16</span>
+          <span class="name">Saída pra Barcelona</span>
+          <span class="note">voo 17:00</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p>Praia rápida perto de Palma (<strong>Cala Major</strong> ou <strong>Illetas</strong>) ou
+            o que faltou do centro. Check-out e almoço tranquilo — aeroporto às 15h.</p>
+        </div>
+        <div class="slot move">
+          <span class="label">voo</span>
+          <p>Mallorca → Barcelona, 17:00 às 18:30. Do aeroporto ao centro: Aerobús (35 min, sai a cada
+            5 min) ou táxi por uns 35 euros.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ BARCELONA ============ -->
+
+  <section class="city" id="barcelona" style="--c: var(--barcelona)">
+    <aside class="city-aside">
+      <div class="kicker">16 — 19 set · 3 noites</div>
+      <h2>Barcelona</h2>
+      <p class="sub">A única cidade da viagem que tem tudo ao mesmo tempo: praia urbana, arquitetura
+        que não existe em nenhum outro lugar, comida séria e uma noite que só começa às 2h.
+        <strong>É também a segunda candidata da sua lista de "morar".</strong></p>
+      <div class="base"><span>base</span>El Born ou Gràcia — Born é vida noturna e centro histórico;
+        Gràcia é boêmio, de praças e bares locais, e é o que mais tem a sua cara.</div>
+      <div class="morar">
+        <h3>Olhar de morador</h3>
+        <p>Reserve uma hora da tarde de sexta pra andar por <strong>Gràcia</strong> (praças, prédios
+          baixos, clima de vila dentro da cidade) e <strong>Poblenou</strong> (antiga zona industrial
+          que virou o polo de tecnologia — onde mora quem trabalha com internet). Compare com o
+          <strong>Eixample</strong>: central, caro e mais impessoal. Olhe preço nas vitrines das
+          imobiliárias de bairro, é o dado mais honesto que existe.</p>
+      </div>
+    </aside>
+
+    <div class="days">
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">QUA 16</span>
+          <span class="name">Primeira noite</span>
+          <span class="note">chega 18:30</span>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><strong>Tapas no Born</strong> — <strong>El Xampanyet</strong> (de 1929, em pé, anchova e
+            cava na taça) e <strong>Bar del Pla</strong>. Depois, uma volta pelas ruas estreitas do
+            bairro, que à noite ficam melhores.</p>
+          <p class="aside">Se quiserem começar pesado: <strong>Opium</strong> ou <strong>KU</strong>
+            (o antigo Pacha Barcelona), os dois na areia do Port Olímpic. Quarta é morno, mas rodam
+            todo dia. <strong>Dress code</strong>: nada de bermuda e chinelo.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">QUI 17</span>
+          <span class="name">Gaudí</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p><span class="star">★</span> <strong>Sagrada Família</strong> <span class="tag">reservar</span>
+            — pegue o primeiro horário, quando o sol da manhã atravessa os vitrais azuis e verdes.
+            Pague o acesso às torres. Não existe nada parecido em lugar nenhum.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><strong>Park Güell</strong> <span class="tag">reservar</span> — a zona monumental é paga e
+            tem hora marcada; o resto do parque é livre e a vista de cima é ótima de graça.</p>
+          <p class="aside">Descendo: <strong>Passeig de Gràcia</strong>, com a <strong>Casa
+            Batlló</strong> e <strong>La Pedrera</strong>. Se for entrar em uma só, Casa Batlló.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><span class="star">★</span> <strong>Razzmatazz</strong> — cinco salas num galpão, cada uma
+            com um estilo, e você circula entre elas a noite toda. É a casa mais divertida pra ir em
+            grupo. Quinta tem programação, dress code casual.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">SEX 18</span>
+          <span class="name">Cidade velha, praia e a noite grande</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p><strong>Bairro Gótico</strong> — catedral, praças escondidas, ruas medievais. Passe pelo
+            <strong>Mercat de la Boqueria</strong> pra comer de balcão (evite os primeiros balcões da
+            entrada, são os caros).</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><strong>Praia:</strong> pule a Barceloneta e vá pra <strong>Bogatell</strong> ou
+            <strong>Nova Icària</strong> — mesma água, metade da gente. Beach clubs na orla:
+            <strong>Salt</strong> e <strong>Shôko</strong>.</p>
+          <p class="aside"><span class="star">★</span> Fim de tarde nos <strong>Bunkers del
+            Carmel</strong>, bunkers antiaéreos da Guerra Civil no alto de um morro, com Barcelona
+            inteira em 360°. Suba com cerveja e petisco. Melhor pôr do sol da cidade, e de graça.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><span class="star">★</span> <strong>Sexta é a noite de Barcelona.</strong> Jantar às 22h,
+            bar até 1h30, clube depois disso — quem chega em clube antes de 1h30 entra num salão
+            vazio.</p>
+          <p><strong>Praia:</strong> Opium ou KU (dress code). <strong>Cidade:</strong> Razzmatazz ou
+            <strong>Sala Apolo</strong>, o clube independente mais antigo da cidade, num antigo salão
+            de baile em Poble Sec.</p>
+          <p class="aside"><strong>Cuidado:</strong> o voo pra Amsterdam sai 10:30 de sábado. Vocês
+            precisam sair do hotel às 8h. Ou seguram a noite, ou aceitam dormir no avião — mas decidam
+            antes, não às 4h da manhã.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ AMSTERDAM ============ -->
+
+  <section class="city" id="amsterdam" style="--c: var(--amsterdam)">
+    <aside class="city-aside">
+      <div class="kicker">19 — 24 set · 5 noites</div>
+      <h2>Amsterdam</h2>
+      <p class="sub">O bloco mais longo — <strong>o dobro de qualquer outro destino</strong>. Amsterdam
+        não tem cinco dias de ponto turístico, e isso é bom: é o lugar de desacelerar, andar de
+        bicicleta sem hora e fazer um bate-volta. É também a virada de clima da viagem: leve casaco,
+        setembro lá é 17°C e chove sem avisar.</p>
+      <div class="base"><span>base</span>De Pijp (jovem, bares, mercado Albert Cuyp) ou Jordaan
+        (canais, o bairro mais bonito). Evite dormir no Centrum: caro, barulhento e cercado de
+        despedida de solteiro.</div>
+    </aside>
+
+    <div class="days">
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">SÁB 19</span>
+          <span class="name">Chegada e a melhor noite</span>
+          <span class="note">voo 10:30 · chega 12:00</span>
+        </div>
+        <div class="slot move">
+          <span class="label">voo</span>
+          <p>Barcelona → Amsterdam, 10:30 às 12:00. Do Schiphol, trem direto até Amsterdam Centraal em
+            15 minutos — mais rápido e mais barato que táxi, sai a cada poucos minutos.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p>Chegada leve: <strong>Jordaan</strong> e as <strong>Nove Ruazinhas</strong> (De 9
+            Straatjes), lojinhas e cafés entre os canais. Cerveja num café marrom — os bares antigos
+            de madeira escura, o formato mais holandês que existe.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><span class="star">★</span> <strong>Sábado é a melhor noite de Amsterdam e vocês só têm
+            uma.</strong> Opções: <strong>Shelter</strong> (subsolo, techno, embaixo da torre A'DAM),
+            <strong>Thuishaven</strong> (ao ar livre, terreno industrial, clima de festival) ou
+            <strong>RADION</strong>.</p>
+          <p class="aside">A porta holandesa avalia grupo, e <strong>três homens juntos é o pior perfil
+            de fila do mundo</strong>. Comprem ingresso antecipado, cheguem cedo, e não cheguem em
+            bloco falando alto.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">DOM 20</span>
+          <span class="name">Museus</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p><span class="star">★</span> <strong>Rijksmuseum</strong> <span class="tag">reservar</span>
+            — a Ronda Noturna do Rembrandt e a Leiteira do Vermeer. Mesmo pra quem não curte museu, o
+            prédio sozinho já vale.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><strong>Van Gogh Museum</strong> <span class="tag">reservar</span>, do lado. Depois,
+            <strong>Vondelpark</strong> pra descansar — no domingo a cidade inteira está lá.</p>
+          <p class="aside">A corrida <strong>Dam tot Damloop</strong> acontece neste fim de semana e
+            fecha ruas na região norte. Não atrapalha o centro, mas confira o trajeto se for pegar
+            transporte.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p>Jantar na <strong>De Pijp</strong> e uma volta pelo <strong>De Wallen</strong>, o bairro
+            da luz vermelha. <strong>Regra dura:</strong> nada de foto ou celular apontado pras
+            janelas — dá confusão de verdade, não é lenda.</p>
+          <p class="aside">Sobre coffeeshops: o comestível bate muito depois e muito mais forte. Quem
+            nunca usou começa por metade e espera uma hora. Boa parte das emergências médicas de
+            turista na cidade é exatamente isso.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">SEG 21</span>
+          <span class="name">Bicicleta</span>
+        </div>
+        <div class="slot">
+          <span class="label">dia</span>
+          <p><span class="star">★</span> <strong>Alugue bicicleta o dia inteiro.</strong> É assim que a
+            cidade funciona e é o melhor programa daqui. Ciclovia é levada a sério: ande à direita,
+            sinalize com a mão e nunca pare no meio.</p>
+          <p><strong>Casa de Anne Frank</strong> <span class="tag">reservar</span> — se conseguiram
+            ingresso, encaixe aqui. Reserve uma hora e meia e vá com estômago cheio: a fila interna é
+            lenta e o clima é pesado.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p><strong>Paradiso</strong> (uma igreja virada casa de show) ou <strong>Melkweg</strong> —
+            veja a programação e escolha um show. Vale mais que clube em noite de semana.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">TER 22</span>
+          <span class="name">Noord</span>
+        </div>
+        <div class="slot">
+          <span class="label">manhã</span>
+          <p><strong>Balsa gratuita</strong> atrás da Centraal pra <strong>Amsterdam Noord</strong>, o
+            lado industrial que virou o lado criativo. Sai a cada poucos minutos, leva bicicleta e não
+            se paga nada.</p>
+          <p><span class="star">★</span> <strong>A'DAM Lookout</strong> — o balanço suspenso a 100
+            metros de altura, virado pra fora do prédio. É a coisa mais divertida da cidade.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><strong>NDSM Wharf</strong>, antigo estaleiro tomado por arte de rua e galpões, com almoço
+            no <strong>Pllek</strong>, na areia artificial de frente pro rio IJ.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p>Noite de bairro: jantar em De Pijp ou Jordaan, café marrom depois. Terça em Amsterdam é
+            parada — aproveitem pra recarregar.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">QUA 23</span>
+          <span class="name">Bate-volta e última noite</span>
+        </div>
+        <div class="slot">
+          <span class="label">dia</span>
+          <p>De trem, escolha um: <strong>Zaanse Schans</strong> (moinhos clássicos, 20 min, meia manhã
+            resolve), <strong>Utrecht</strong> (30 min, canais de dois níveis com bares na água, cidade
+            universitária) ou <strong>Rotterdam</strong> (40 min, o oposto arquitetônico de Amsterdam —
+            foi bombardeada e reconstruída moderna).</p>
+          <p class="aside">Recomendação: <strong>Utrecht</strong>. É a que mais parece "morar na
+            Holanda" e a que menos parece cartão-postal.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p>Última noite do bloco. Jantar bom e cedo — o voo de quinta sai 9:45, o que significa sair
+            do hotel por volta das 7h.</p>
+          <p class="aside">Curiosidade cruel: o <strong>Amsterdam Dance Event</strong>, o maior evento
+            de música eletrônica do mundo, acontece em outubro. Vocês passam a quatro semanas dele.
+            Fica anotado pra próxima.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ VOLTA ============ -->
+
+  <section class="city" id="volta" style="--c: var(--lisboa)">
+    <aside class="city-aside">
+      <div class="kicker">24 — 25 set · 1 noite</div>
+      <h2>Lisboa de novo</h2>
+      <p class="sub">Dois dias em Lisboa antes de voar pro Rio. Turisticamente vocês já viram o
+        essencial no começo — então <strong>esta é a passagem que responde a pergunta de morar</strong>.
+        Uma cidade se revela na segunda visita.</p>
+      <div class="base"><span>base</span>Escolha um bairro diferente do primeiro. Dormir noutro lugar
+        é a forma mais rápida de comparar.</div>
+    </aside>
+
+    <div class="days">
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">QUI 24</span>
+          <span class="name">Lisboa de morador</span>
+          <span class="note">voo 9:45 · chega 11:15</span>
+        </div>
+        <div class="slot move">
+          <span class="label">voo</span>
+          <p>Amsterdam → Lisboa, 9:45 às 11:15 (Portugal está uma hora atrás; o voo leva quase 3h).
+            Saída do hotel às 7h.</p>
+        </div>
+        <div class="slot">
+          <span class="label">tarde</span>
+          <p><span class="star">★</span> <strong>Roteiro de bairro, sem ponto turístico nenhum:</strong></p>
+          <p><strong>Príncipe Real</strong> — central, bonito, caro, bares bons, o mais gay-friendly da
+            cidade. <strong>Campo de Ourique</strong> — residencial de verdade, mercado de bairro, onde
+            mora quem tem família e dinheiro. <strong>Graça</strong> — vista, ladeira, aluguel mais em
+            conta, clima jovem. <strong>Alcântara / LX Factory</strong> — reformado, criativo, bom
+            transporte. <strong>Parque das Nações</strong> — moderno, plano, à beira do rio, tudo novo
+            e sem nenhuma alma histórica.</p>
+          <p class="aside">Almoce num restaurante cheio de portugueses, não de estrangeiros. Olhe
+            vitrine de imobiliária e anote preço por metro quadrado. E pergunte a um lisboeta o que ele
+            acha do preço dos aluguéis — é o assunto mais quente da cidade, você vai ouvir muito em
+            cinco minutos.</p>
+        </div>
+        <div class="slot">
+          <span class="label">noite</span>
+          <p>Quinta é boa noite em Lisboa, e a cidade está mais cheia de local que de turista. Cais do
+            Sodré de novo, agora sabendo o que fazer.</p>
+        </div>
+      </article>
+
+      <article class="day">
+        <div class="day-head">
+          <span class="date">SEX 25</span>
+          <span class="name">Último dia</span>
+          <span class="note">voo 22:00</span>
+        </div>
+        <div class="slot">
+          <span class="label">dia</span>
+          <p>Dia livre até umas 19h. Deixem as malas no hotel ou num locker da Estação do Rossio e
+            andem leves.</p>
+          <p>Use pra fechar o que ficou: o mirante que não deu tempo, a livraria Bertrand (a mais
+            antiga do mundo em funcionamento), compras, um último almoço demorado.</p>
+          <p class="aside">Se a viagem deu certo, este é o dia em que vocês vão estar cansados,
+            queimados de sol e decidindo se voltam pra ficar. Aproveitem que ele é sem agenda.</p>
+        </div>
+        <div class="slot move">
+          <span class="label">voo</span>
+          <p>Lisboa → Rio de Janeiro, 22:00. Aeroporto às 19:30 — voo internacional, e a fila de
+            controle de saída em Lisboa costuma ser lenta à noite. Chegada no Rio no sábado 26.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ CLOSER ============ -->
+
+  <section class="band">
+    <h2 class="band-title">O que é bom saber</h2>
+    <p class="band-sub">Seis coisas que mudam a viagem e que ninguém te conta antes de embarcar.</p>
+
+    <div class="notes">
+      <div class="note">
+        <h4>O ritmo real</h4>
+        <p><strong>De 12 a 19/09 não tem folga</strong> — Ibiza, Mallorca e Barcelona em oito dias,
+          com três voos. Amsterdam é a recuperação. Se algum dia tiver que cair, tire de Mallorca ou
+          do museu de Amsterdam, nunca das noites que já estão pagas.</p>
+      </div>
+      <div class="note">
+        <h4>Dinheiro</h4>
+        <p>Euro em todos os destinos. <strong>Sempre pague na moeda local</strong> quando a maquininha
+          perguntar — aceitar a conversão pra real é taxa disfarçada. Ibiza é o destino mais caro da
+          viagem com folga; o Algarve, o mais barato.</p>
+      </div>
+      <div class="note">
+        <h4>Transporte</h4>
+        <p>Bolt e Uber funcionam em Lisboa e Barcelona e são baratos. <strong>Em Ibiza, não</strong> —
+          táxi é caro, escasso de madrugada e é o maior gasto escondido da ilha. Em Amsterdam,
+          bicicleta e trem resolvem tudo.</p>
+      </div>
+      <div class="note">
+        <h4>Horário espanhol</h4>
+        <p>Almoço às 14h30, jantar às 22h, clube às 2h. Espanha e Portugal têm <strong>uma hora de
+          diferença</strong> entre si — a mesma que existe entre Lisboa e Amsterdam. Confiram o
+          relógio a cada voo.</p>
+      </div>
+      <div class="note">
+        <h4>Porta de clube</h4>
+        <p>Três homens juntos é o perfil mais barrado da Europa. <strong>Ingresso antecipado resolve
+          quase tudo.</strong> Onde não tem ingresso: chegar cedo, roupa arrumada, sem falar alto na
+          fila e sem chegar em bloco.</p>
+      </div>
+      <div class="note">
+        <h4>Antes de embarcar</h4>
+        <p>Baixem os mapas offline das seis cidades, tire foto do passaporte e mande no seu e-mail, e
+          combinem <strong>um ponto de encontro fixo por cidade</strong> pra quando alguém perder o
+          celular numa festa. Vai acontecer.</p>
+      </div>
+    </div>
+
+    <p class="colophon">
+      Montado sobre o cronograma de voos já fechado — nenhum horário foi alterado.<br>
+      Line-ups de Ibiza e Amsterdam confirmam-se em agosto; reconferir antes de comprar.<br>
+      Cores conforme o calendário: Lisboa azul · Algarve verde · Ibiza vermelho · Mallorca amarelo ·
+      Barcelona laranja · Amsterdam roxo · deslocamentos em cinza.
+    </p>
+  </section>
+
+</div>

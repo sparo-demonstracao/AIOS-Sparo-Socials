@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!--
+  proposta.html — Proposta comercial Sparo × Xtreme Contractors.
+  MESMO DESIGN da proposta da Donnelly (ink + coral, Letter, 2 páginas), ESTRUTURA DIFERENTE:
+  abre pelo DIAGNÓSTICO (o gancho que o Eric deu na call de 30/07), não pelo escopo.
+  EM PORTUGUÊS — o Eric é brasileiro.
+  Campos [AMARELOS] = decidir antes de enviar (preço, prazo, validade, moeda).
+  Gerar PDF com render-pdf.mjs.
+  Base: references/sparo-eua/analise-call-eric-xtreme.md
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Sparo × Xtreme — Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{ --ink:#16130F; --mut:#6C6155; --acc:#DD5731; --line:#E8E2D8; --panel:#FAF7F1; }
+  @page{ size:Letter; margin:0 }
+  body{font-family:'Archivo',sans-serif;color:var(--ink);font-size:9.8pt;line-height:1.36}
+  .page{width:8.5in;height:11in;padding:.7in .75in;position:relative;page-break-after:always;overflow:hidden}
+  .page:last-child{page-break-after:auto}
+  .page::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--acc)}
+  .eyebrow{font-family:'Space Grotesk';font-weight:700;font-size:8.5pt;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--acc);margin-top:10px}
+  .brand{display:flex;align-items:center;gap:8px}
+  h1{font-weight:900;font-size:18pt;letter-spacing:-.01em;margin-top:10px}
+  .sub{font-family:'Space Grotesk';color:var(--mut);font-size:9pt;margin-top:4px}
+  .rule{height:2px;background:var(--acc);width:44px;border-radius:2px;margin:7px 0 10px}
+  h2{font-weight:800;font-size:12pt;margin:8px 0 4px;display:flex;align-items:center;gap:8px}
+  h2::before{content:'';width:8px;height:8px;background:var(--acc);display:inline-block}
+  .agent{border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:6px;margin-bottom:2px;overflow:hidden}
+  .agent.first{border-left-color:#3E7A44}
+  .agent .hd{display:flex;align-items:center;gap:8px;padding:3px 10px;background:var(--panel);font-weight:700;font-size:9.8pt}
+  .agent .hd .n{font-family:'Space Grotesk';font-weight:700;color:var(--acc);font-size:9pt}
+  .agent .bd{padding:2px 10px 4px;color:var(--mut);font-size:8.3pt;line-height:1.32}
+  .agent .bd b{color:var(--ink)}
+  .first .hd{background:#EFF5EE}
+  .first .hd .n{color:#3E7A44}
+  .tag{font-family:'Space Grotesk';font-size:7.5pt;letter-spacing:.08em;color:#3E7A44;border:1px solid #3E7A44;border-radius:10px;padding:1px 7px;margin-left:auto}
+  table{width:100%;border-collapse:collapse;font-size:9.5pt}
+  td,th{padding:4px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-family:'Space Grotesk';font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600}
+  .fee{border:2px solid var(--acc);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:18px;margin:8px 0}
+  .fee .num{font-family:'Space Grotesk';font-weight:700;font-size:20pt;color:var(--acc);white-space:nowrap}
+  .fee .desc{font-size:9.5pt;color:var(--mut)}
+  .fee .desc b{color:var(--ink)}
+  .fee2{display:flex;align-items:stretch;gap:12px;margin:6px 0}
+  .fbox{flex:1;border:2px solid var(--acc);border-radius:8px;padding:7px 14px;background:rgba(221,87,49,.04)}
+  .fbox.depois{border-color:#CFC8BC;background:#FBFAF8}
+  .fbox .flb{font-family:'Space Grotesk';font-weight:600;font-size:7.5pt;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--mut)}
+  .fbox .fnum{font-family:'Space Grotesk';font-weight:700;font-size:16.5pt;color:var(--acc);line-height:1.15;margin-top:3px}
+  .fbox.depois .fnum{color:var(--ink)}
+  .fbox .fsub{font-size:9pt;color:var(--mut);margin-top:2px}
+  .fbox .fsub b{color:var(--ink)}
+  .farrow{display:flex;align-items:center;font-size:15pt;color:var(--acc);font-weight:800}
+  ul{margin:3px 0 3px 16px}
+  li{margin:2px 0;font-size:9.5pt}
+  .fill{font-weight:700;color:var(--ink)}
+  .foot{position:absolute;bottom:.45in;left:.75in;right:.75in;display:flex;justify-content:space-between;
+    font-family:'Space Grotesk';font-size:7.5pt;color:var(--mut)}
+  .note{font-size:8.5pt;color:var(--mut);font-style:italic;margin-top:6px}
+  .twocol{display:flex;gap:18px}
+  .twocol > div{flex:1}
+  /* diagnóstico — bloco de abertura, exclusivo desta proposta */
+  .diag{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 13px;margin-top:3px}
+  /* block + ::before absoluto: com flex, cada <b> virava uma coluna */
+  .diag .row{display:block;position:relative;padding-left:18px;font-size:9.5pt;color:var(--mut);margin:1px 0}
+  .diag .row b{color:var(--ink)}
+  .diag .row::before{content:'→';position:absolute;left:0;top:0;color:var(--acc);font-weight:800}
+  .punch{border-left:3px solid var(--acc);padding:4px 0 4px 12px;margin-top:6px;font-size:10pt;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- ================= SINGLE PAGE ================= -->
+<div class="page">
+  <div class="brand" style="display:flex;justify-content:space-between;align-items:center">
+    <img src="sparo-logo-ink.png" alt="Sparo" style="height:26px;width:auto"/>
+    <span style="font-family:'Space Grotesk';font-size:8pt;letter-spacing:.1em;color:var(--mut)">AI AUTOMATION · sparo.com.br</span>
+  </div>
+  <div class="eyebrow">Proposal · August 2026</div>
+  <h1 style="margin-top:6px">AI Automation for Xtreme</h1>
+  <div class="sub">Prepared for <b style="color:var(--ink)">Xtreme Contractors</b> &nbsp;·&nbsp; <span class="fill">August 3, 2026</span> &nbsp;·&nbsp; Private &amp; Confidential</div>
+  <div class="rule"></div>
+
+  <p style="font-size:9.2pt;color:var(--mut)">Today Xtreme's information lives in <b style="color:var(--ink)">four places that don't talk to each other</b> — Build Track Pro, Project Cost Control, Excel and QuickBooks — and the same data gets typed in three or four times. This project builds <b style="color:var(--ink)">one single system for Xtreme</b>, with everything that is manual today coming in on its own.</p>
+
+  <h2>Scope — one system, five tracks</h2>
+
+  <div class="agent first"><div class="hd"><span class="n">01</span>Unified records<span class="tag">PHASE 1</span></div>
+    <div class="bd">A single record set for projects, subcontractors and workers · migration of entries <b>from 2024/2025 forward</b></div></div>
+
+  <div class="agent first"><div class="hd"><span class="n">02</span>Hours and labor<span class="tag">PHASE 1</span></div>
+    <div class="bd">Entered by your <b>foremen</b> (six crews today) and approved by you · <b>approved hours post straight to the right job as cost</b></div></div>
+
+  <div class="agent"><div class="hd"><span class="n">03</span>Automated intake</div>
+    <div class="bd">Subcontractor invoices to a <b>single inbox</b> · material receipts <b>photographed in the field</b> · checks and incoming invoices — always landing in your approval queue</div></div>
+
+  <div class="agent"><div class="hd"><span class="n">04</span>Office WhatsApp</div>
+    <div class="bd">Answers on its own what takes a person today: <b>"is my check ready?"</b>, payment status and timing</div></div>
+
+  <div class="agent"><div class="hd"><span class="n">05</span>Results by project</div>
+    <div class="bd"><b>Received, spent and profit in one place</b>, in real time · QuickBooks keeps what it does well: cutting the check</div></div>
+
+  <h2>Delivery and timeline</h2>
+  <p style="font-size:8.8pt;color:var(--mut);margin-bottom:2px">Four phases, each with a defined deliverable: <b style="color:var(--ink)">Discovery</b> → <b style="color:var(--ink)">Build</b> → <b style="color:var(--ink)">Validation &amp; go-live</b> → <b style="color:var(--ink)">Managed operation</b>.</p>
+  <p style="font-size:8.8pt;color:var(--mut)"><b style="color:var(--ink)">Phase 1 live in <span class="fill">30 days</span></b> · full system in <span class="fill">4 months</span>, each track going live as it is finished. Phase 1 runs <b style="color:var(--ink)">a full week inside real operations</b>, with the acceptance criteria agreed before we build — if it doesn't meet them, you are not locked into anything.</p>
+
+  <h2>Investment</h2>
+  <div class="fee2">
+    <div class="fbox">
+      <div class="flb">Implementation · 4 months</div>
+      <div class="fnum">4 × <span class="fill">$1,800</span></div>
+      <div class="fsub">per month · <b><span class="fill">$7,200</span></b> total</div>
+    </div>
+    <div class="farrow">→</div>
+    <div class="fbox depois">
+      <div class="flb">From month 5 on</div>
+      <div class="fnum"><span class="fill">$600</span></div>
+      <div class="fsub">per month · ongoing support and optimization</div>
+    </div>
+  </div>
+  <p style="font-size:8.8pt;color:var(--mut)">Covers everything from discovery to optimization: all five tracks, data migration, QuickBooks integration, collaborative testing and office training. <b style="color:var(--ink)">No per-user fees.</b> Cloud and API usage runs on Xtreme's own accounts, billed at cost.</p>
+
+  <h2>Next steps</h2>
+  <p style="font-size:8.8pt;color:var(--mut)"><b style="color:var(--ink)">1.</b> Approve this proposal — no expiration date and no waiting, we start the same week &nbsp;·&nbsp; <b style="color:var(--ink)">2.</b> Access to both apps and to QuickBooks &nbsp;·&nbsp; <b style="color:var(--ink)">3.</b> Phase 1 live in <span class="fill">30 days</span>, running in real operations.</p>
+  <p class="note" style="margin-top:4px">By signing, Xtreme Contractors authorizes Sparo to begin the Phase 1 discovery under the terms above. The formal services agreement runs in parallel and does not hold up the start of work.</p>
+
+  <div class="twocol" style="margin-top:8px">
+    <div>
+      <div style="border-bottom:1.5px solid var(--ink);height:.26in"></div>
+      <div style="font-family:'Space Grotesk';font-size:8pt;letter-spacing:.08em;color:var(--mut);text-transform:uppercase;margin-top:4px">Xtreme Contractors</div>
+      <div style="font-size:9pt;color:var(--mut);margin-top:2px">Name · Title · Date</div>
+    </div>
+    <div>
+      <div style="border-bottom:1.5px solid var(--ink);height:.26in"></div>
+      <div style="font-family:'Space Grotesk';font-size:8pt;letter-spacing:.08em;color:var(--mut);text-transform:uppercase;margin-top:4px">Sparo</div>
+      <div style="font-size:8.5pt;color:var(--mut);margin-top:2px">Enzo Barbatto, Founder<br/>enzo@sparo.com.br · +55 21 96402-8125</div>
+    </div>
+  </div>
+
+  <div class="foot"><span>SPARO · AI Automation · sparo.com.br</span><span>sparo.com.br</span></div>
+</div>
+
+</body>
+</html>

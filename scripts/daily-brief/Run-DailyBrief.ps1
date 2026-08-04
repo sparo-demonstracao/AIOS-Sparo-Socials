@@ -190,44 +190,55 @@ if($envMap['ZOHO_CLIENT_ID'] -and $envMap['ZOHO_REFRESH_TOKEN']){
     # accountId: usa o do .env se setado, senão descobre na 1ª conta
     $zAccId=$envMap['ZOHO_ACCOUNT_ID']
     if(-not $zAccId){ $accs=Invoke-RestMethod -Uri "$zApiHost/api/accounts" -Headers $zh -TimeoutSec 30; $zAccId=@($accs.data)[0].accountId }
-    # pastas: acha Inbox E Enviados de uma vez (a de Enviados serve pra saber o que JÁ respondi)
-    $zFolder=$envMap['ZOHO_FOLDER_ID']; $zSentFolder=$null
-    try { $fol=Invoke-RestMethod -Uri "$zApiHost/api/accounts/$zAccId/folders" -Headers $zh -TimeoutSec 30
-          if(-not $zFolder){ $inbox=@($fol.data | Where-Object { $_.folderType -eq 'Inbox' -or $_.path -eq '/Inbox' } | Select-Object -First 1); if($inbox){ $zFolder=$inbox[0].folderId } }
-          $sentF=@($fol.data | Where-Object { $_.folderType -eq 'Sent' -or $_.path -eq '/Sent' -or $_.folderName -match 'Sent|Enviad' } | Select-Object -First 1)
-          if($sentF){ $zSentFolder=$sentF[0].folderId } } catch {}
+    $zFolder=$envMap['ZOHO_FOLDER_ID']   # Inbox (do .env). NÃO chamamos /folders: dá 401 sem ZohoMail.folders.READ.
+    # Pasta Rascunhos: um rascunho NÃO é resposta enviada, então é IGNORADO na checagem "já respondi"
+    # (senão um rascunho da triagem marcaria a conversa como respondida por engano). Id fixo da conta
+    # atendimento@ (documentado em references/zoho-mail-api.md); dá pra sobrescrever por .env se trocar de conta.
+    $zDrafts = if($envMap['ZOHO_DRAFTS_FOLDER_ID']){$envMap['ZOHO_DRAFTS_FOLDER_ID']}else{'8159880000000008016'}
     # extrai só o e-mail de um "Nome <email>" (ou o texto cru) em minúsculas
     function ZEmail($s){ $s=[string]$s; if($s -match '<([^>]+)>'){ $matches[1].Trim().ToLower() } else { $s.Trim().ToLower() } }
-    # ENVIADOS (7d): mapa destinatário -> horário (ms) do e-mail que EU mandei mais recente pra ele
-    $zSentTo=@{}
-    if($zSentFolder){
-      try {
-        $zsUrl="$zApiHost/api/accounts/$zAccId/messages/view?limit=50&sortBy=date&sortorder=false&status=all&folderId=$zSentFolder"
-        $zsent=Invoke-RestMethod -Uri $zsUrl -Headers $zh -TimeoutSec 40
-        foreach($sm in @($zsent.data)){
-          $sMs= if($sm.sentDateInGMT){[int64]$sm.sentDateInGMT}elseif($sm.receivedTime){[int64]$sm.receivedTime}else{0}
-          if([math]::Floor($sMs/1000) -lt $sinceUnix){ continue }
-          foreach($to in @($sm.toAddress)){ $addr=ZEmail $to; if($addr){ if(-not $zSentTo.ContainsKey($addr) -or $zSentTo[$addr] -lt $sMs){ $zSentTo[$addr]=$sMs } } }
-        }
-      } catch { Log "Zoho Enviados ERRO: $($_.Exception.Message)" }
-    }
-    # INBOX (7d): fica só com o que NÃO respondi (sem e-mail meu pra aquela pessoa DEPOIS de eu receber)
+    $zMineRx='sparo\.com\.br'   # "fui eu que respondi?" = a última msg saiu de um endereço meu (a caixa é atendimento@sparo.com.br)
+    # INBOX (7d) agrupada por CONVERSA (threadId). Pra cada conversa, leio a thread INTEIRA de uma vez via
+    # ?threadId= (traz Inbox + Enviados juntos, cross-folder) e vejo quem mandou a ÚLTIMA mensagem, IGNORANDO
+    # rascunhos. Se a última fui eu -> já respondi (pula). Isso substitui a detecção antiga por pasta Enviados,
+    # que dependia de /folders (hoje 401) e por isso nunca filtrava nada — o resumo misturava respondido com
+    # não respondido. De quebra, mostra 1 item por conversa (não repete "Re: X" três vezes).
     $zUrl="$zApiHost/api/accounts/$zAccId/messages/view?limit=60&sortBy=date&sortorder=false&status=all"
     if($zFolder){ $zUrl += "&folderId=$zFolder" }
     $zmsgs=Invoke-RestMethod -Uri $zUrl -Headers $zh -TimeoutSec 40
+    $zThreadDone=@{}   # threadId já resolvido (virou item OU marcado como respondido) -> 1 card por conversa
+    $zThreadCalls=0
     foreach($mm in @($zmsgs.data)){
       $recvMs= if($mm.receivedTime){[int64]$mm.receivedTime}elseif($mm.sentDateInGMT){[int64]$mm.sentDateInGMT}else{0}
       if([math]::Floor($recvMs/1000) -lt $sinceUnix){ continue }   # fora dos últimos 7 dias
-      $from=[string]$mm.fromAddress; $fromAddr=ZEmail $from
-      if($fromAddr -and $zSentTo.ContainsKey($fromAddr) -and $zSentTo[$fromAddr] -ge $recvMs){ continue }   # já respondi essa pessoa
+      $from=[string]$mm.fromAddress
+      if((ZEmail $from) -match $zMineRx){ continue }               # mensagem minha na Inbox (raro) -> ignora
+      $tid=[string]$mm.threadId
+      if($tid -and $zThreadDone.ContainsKey($tid)){ continue }     # conversa já resolvida nesta passada
+      # a conversa inteira: a última mensagem (SEM contar rascunho) foi minha? então já respondi.
+      $jaRespondi=$false
+      if($tid -and $zThreadCalls -lt 40){
+        try {
+          $zThreadCalls++
+          $conv=Invoke-RestMethod -Uri "$zApiHost/api/accounts/$zAccId/messages/view?threadId=$tid&limit=50&status=all" -Headers $zh -TimeoutSec 40
+          $convMsgs=@($conv.data | Where-Object { [string]$_.folderId -ne $zDrafts })
+          if($convMsgs.Count -gt 0){
+            $lastMsg=@($convMsgs | Sort-Object { if($_.receivedTime){[int64]$_.receivedTime}else{0} })[-1]
+            if((ZEmail $lastMsg.fromAddress) -match $zMineRx){ $jaRespondi=$true }
+          }
+        } catch { Log "Zoho thread $tid ERRO: $($_.Exception.Message)" }
+      }
+      if($tid){ $zThreadDone[$tid]=$true }
+      if($jaRespondi){ continue }                                  # já respondi essa conversa -> não mostra
+      # $mm é a mensagem RECEBIDA mais nova da conversa (lista vem em ordem decrescente) -> vira o card
       $subj=[string]$mm.subject; $snip=[string]$mm.summary
       $id="Z$($zoItems.Count+1)"
-      $tsMap[$id]=[math]::Floor($recvMs/1000)   # receivedTime já calculado acima (ms)
+      $tsMap[$id]=[math]::Floor($recvMs/1000)
       $linkMap[$id]= if($mm.folderId -and $mm.messageId){ "$zApiHost/zm/#mail/folder/$($mm.folderId)/$($mm.messageId)" } else { "$zApiHost/zm/#mail/view/folder/$zFolder" }
       [void]$zoItems.Add(@{ id=$id; texto="De: $from | Assunto: $subj | Trecho: $(Trunc $snip 140)"; url=$linkMap[$id] })
       if($zoItems.Count -ge 25){break}
     }
-    Step "📧 Zoho: $($zoItems.Count) e-mail(s) sem resposta (últimos 7 dias)"
+    Step "📧 Zoho: $($zoItems.Count) conversa(s) sem resposta (últimos 7 dias)"
   } catch { Step "📧 Zoho indisponível agora (sigo com o resto)"; Log "Zoho ERRO: $($_.Exception.Message)" }
 } else { Log "Zoho não configurado (.env sem ZOHO_CLIENT_ID/ZOHO_REFRESH_TOKEN) — pulando." }
 
@@ -356,16 +367,17 @@ function _AgrupaPorVideo($itens){
 
 # --- Hoje vs. Pendentes da semana (2+ dias) ---------------------------------
 # Cada item resolvido tem _ts. Se é de HOJE, fica na seção da sua fonte (bloco "Hoje"). Se tem 1+ dia,
-# vai pro bloco cruzado "Pendentes da semana" (com etiqueta de fonte + "há N dias"), mantendo link/rascunho.
+# vai pro bloco "Pendentes da semana", AGRUPADO por origem (subcabeçalho por fonte), mantendo link/rascunho.
 $today0=(Get-Date).Date
 function _DaysAgo($ts){ if(-not $ts){ return 0 }; $d=[DateTimeOffset]::FromUnixTimeSeconds([int64]$ts).LocalDateTime.Date; [int][math]::Floor(($today0 - $d).TotalDays) }
 function _AgeLabel($n){ if($n -le 0){ "" } elseif($n -eq 1){ "há 1 dia" } else { "há $n dias" } }
-function _SrcEmoji($fonte){ if($fonte -match 'WHATS'){[char]::ConvertFromUtf32(0x1F4AC)} elseif($fonte -match 'MAIL'){[char]::ConvertFromUtf32(0x1F4E7)} elseif($fonte -match 'YOU'){[char]0x25B6} else {[char]0x2022} }
 $pendAll=New-Object System.Collections.ArrayList
+# o item guarda a FONTE (vira subcabeçalho do grupo no pop-up); o texto só leva o "há N dias" —
+# emoji de fonte no texto não distinguia Gmail de Zoho (os dois eram o mesmo envelope).
 function _MkPend($fonte,$it){
   $lbl=_AgeLabel (_DaysAgo $it._ts)
-  $tx="$(_SrcEmoji $fonte)  $([string]$it.texto)"; if($lbl){ $tx="$tx  ·  $lbl" }
-  [pscustomobject]@{ texto=$tx; url=$it.url; rascunho=$it.rascunho; copiar=$it.copiar; _ts=$it._ts; _vid=$null }
+  $tx=[string]$it.texto; if($lbl){ $tx="$tx  ·  $lbl" }
+  [pscustomobject]@{ fonte=[string]$fonte; texto=$tx; url=$it.url; rascunho=$it.rascunho; copiar=$it.copiar; _ts=$it._ts; _vid=$null }
 }
 
 $secoesOut=New-Object System.Collections.ArrayList
@@ -429,9 +441,15 @@ if($obj -and $obj.secoes){
     }
   }
 }
-# bloco cruzado "Pendentes da semana" (2+ dias) — sempre por último, mais ANTIGO no topo (o mais atrasado)
+# bloco "Pendentes da semana" (2+ dias) — sempre por último, AGRUPADO por origem: o grupo com o item
+# mais atrasado vem primeiro e, dentro de cada grupo, o mais antigo fica no topo (nada se enterra).
 if($pendAll.Count -gt 0){
-  [void]$secoesOut.Add([pscustomobject]@{ fonte="PENDENTES DA SEMANA"; itens=@($pendAll | Sort-Object _ts); secundarios=@() })
+  $pendGrupos=New-Object System.Collections.ArrayList
+  $ordG=@($pendAll) | Group-Object fonte | Sort-Object @{ Expression = { ($_.Group | Measure-Object _ts -Minimum).Minimum } }
+  foreach($g in $ordG){
+    [void]$pendGrupos.Add([pscustomobject]@{ fonte=[string]$g.Name; itens=@($g.Group | Sort-Object _ts) })
+  }
+  [void]$secoesOut.Add([pscustomobject]@{ fonte="PENDENTES DA SEMANA"; grupos=$pendGrupos; itens=@(); secundarios=@() })
 }
 $final=[pscustomobject]@{ data=$hoje; destaque=$destaque; secoes=$secoesOut }
 $json=$final | ConvertTo-Json -Depth 12

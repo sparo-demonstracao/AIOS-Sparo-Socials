@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<!--
+  deck.html — Apresentação da PROPOSTA · Sparo × Xtreme Contractors.
+  Call de retorno: segunda 03/08/2026, 17h (Brasília). Em PORTUGUÊS.
+  Padrão visual Sparo (herdado do deck da Donnelly): creme + ink #16130F + coral #DD5731,
+  Archivo / Space Grotesk / Newsreader, 1920×1080, modo apresentação na tecla P.
+  Conteúdo espelha references/sparo-eua/proposta-xtreme/proposta.html — se mudar lá, mude aqui.
+  Campos em coral tracejado = editáveis ao vivo (preço, prazos, critério de aceite);
+  salvam sozinhos no navegador.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sparo × Xtreme · Proposta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#F4EDDF; --ink:#16130F; --mut:#75695A;
+    --acc:#DD5731; --accT:#DD5731; --go:#3E7A44;
+    --line:rgba(22,19,15,.08); --card:#FFFFFF;
+  }
+  body{background:#3a3a3e;font-family:'Archivo',sans-serif;color:var(--ink)}
+  .slide{
+    position:relative;width:1920px;height:1080px;overflow:hidden;margin:24px auto;
+    background:radial-gradient(130% 105% at 50% 0%, #F9F4E9 0%, #F3ECDE 62%, #EDE4D2 100%);
+  }
+  .pad{position:absolute;inset:0;padding:84px 120px 116px}
+
+  .kicker{display:inline-flex;align-items:center;gap:18px;font-family:'Space Grotesk';font-weight:700;
+    font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--accT)}
+  .kicker::after{content:'';width:64px;height:3px;background:var(--acc);border-radius:2px}
+  .pgnum{position:absolute;right:120px;bottom:48px;font-family:'Space Grotesk';font-weight:500;
+    font-size:22px;color:var(--mut);letter-spacing:.08em}
+  .wm{position:absolute;left:120px;bottom:44px;display:flex;align-items:center;gap:14px}
+
+  .h1{font-family:'Archivo';font-weight:800;font-size:58px;line-height:1.06;letter-spacing:-.02em;color:var(--ink)}
+  .claim{font-family:'Archivo';font-weight:500;font-size:31px;line-height:1.4;color:var(--mut)}
+  .em{color:var(--accT)}
+
+  /* linhas numeradas */
+  .rows{display:flex;flex-direction:column;gap:16px;margin-top:40px}
+  .row{display:flex;align-items:flex-start;gap:30px;background:var(--card);border-radius:18px;
+    border:1px solid rgba(22,19,15,.05);border-left:5px solid var(--acc);padding:24px 34px;
+    box-shadow:0 10px 26px rgba(22,19,15,.06)}
+  .row .n{font-family:'Space Grotesk';font-weight:700;font-size:30px;color:var(--acc);line-height:1.25;min-width:52px}
+  .row .t{font-family:'Archivo';font-weight:800;font-size:38px;line-height:1.22;color:var(--ink)}
+  .row .d{font-family:'Archivo';font-weight:400;font-size:27px;line-height:1.38;color:var(--mut);margin-top:7px}
+
+  /* catálogo de agentes */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px}
+  .acard{background:var(--card);border-radius:18px;border:1px solid rgba(22,19,15,.05);
+    border-left:5px solid var(--acc);padding:26px 32px;box-shadow:0 10px 26px rgba(22,19,15,.06)}
+  .acard.go{border-left-color:var(--go);background:#F4F8F3}
+  .acard .hd{display:flex;align-items:baseline;gap:16px}
+  .acard .n{font-family:'Space Grotesk';font-weight:700;font-size:24px;color:var(--acc)}
+  .acard.go .n{color:var(--go)}
+  .acard .t{font-family:'Archivo';font-weight:800;font-size:35px;line-height:1.2;color:var(--ink)}
+  .acard .d{font-family:'Archivo';font-weight:400;font-size:26px;line-height:1.38;color:var(--mut);margin-top:12px}
+  .acard .d b{color:var(--ink);font-weight:700}
+  .badge{font-family:'Space Grotesk';font-weight:700;font-size:16px;letter-spacing:.1em;color:var(--go);
+    border:2px solid var(--go);border-radius:20px;padding:3px 12px;margin-left:auto}
+  .notecell{display:flex;align-items:center;justify-content:center;text-align:center;padding:18px 26px;
+    border:3px dashed rgba(221,87,49,.45);border-radius:18px}
+  .notecell span{font-family:'Newsreader',serif;font-weight:600;font-style:italic;
+    font-size:36px;line-height:1.3;color:var(--accT)}
+
+  /* diagnóstico */
+  .diag{display:flex;flex-direction:column;gap:18px;margin-top:42px}
+  .drow{position:relative;background:var(--card);border-radius:16px;border:1px solid rgba(22,19,15,.05);
+    padding:24px 34px 24px 82px;font-family:'Archivo';font-weight:400;font-size:29px;line-height:1.35;
+    color:var(--mut);box-shadow:0 8px 22px rgba(22,19,15,.05)}
+  .drow b{color:var(--ink);font-weight:700}
+  .drow::before{content:'→';position:absolute;left:34px;top:23px;color:var(--acc);font-weight:800;font-size:31px}
+  .punch{margin-top:26px;margin-left:190px;font-family:'Newsreader',serif;font-weight:600;font-style:italic;
+    font-size:38px;line-height:1.28;color:var(--accT)}
+
+  /* investimento */
+  .fee{display:flex;align-items:center;gap:44px;border:4px solid var(--acc);border-radius:24px;
+    padding:40px 52px;margin-top:40px;background:rgba(221,87,49,.05)}
+  .fee .num{font-family:'Space Grotesk';font-weight:700;font-size:86px;color:var(--acc);white-space:nowrap;line-height:1}
+  .fee .desc{font-family:'Archivo';font-weight:400;font-size:28px;line-height:1.42;color:var(--mut)}
+  .fee .desc b{color:var(--ink);font-weight:700}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:20px 48px;margin-top:36px}
+  .chk{position:relative;padding-left:48px;font-family:'Archivo';font-weight:400;font-size:26px;
+    line-height:1.36;color:var(--mut)}
+  .chk b{color:var(--ink);font-weight:700}
+  .chk::before{content:'✓';position:absolute;left:0;top:-2px;color:var(--acc);font-weight:800;font-size:28px}
+
+  /* tabela de critério */
+  .crit{width:100%;border-collapse:collapse;margin-top:26px}
+  .crit th{font-family:'Space Grotesk';font-weight:700;font-size:19px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--mut);text-align:left;padding:0 0 12px}
+  .crit td{font-family:'Archivo';font-size:31px;color:var(--ink);padding:22px 0;
+    border-top:1px solid rgba(22,19,15,.10)}
+  .crit td:last-child{text-align:right}
+
+  /* campo editável ao vivo */
+  .fill{border-bottom:3px dashed rgba(221,87,49,.55);padding:0 10px;display:inline-block;
+    outline:none;color:var(--accT);min-width:200px}
+  .fill:focus{background:rgba(221,87,49,.08);border-bottom-style:solid}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+  body.present .slide.active .a1{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) both}
+  body.present .slide.active .a2{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) .12s both}
+  body.present .slide.active .a3{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) .24s both}
+  body.present .slide.active .a4{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) .36s both}
+  @media (prefers-reduced-motion: reduce){
+    body.present .slide.active .a1,body.present .slide.active .a2,
+    body.present .slide.active .a3,body.present .slide.active .a4{animation:none}
+  }
+  body.noanim .a1,body.noanim .a2,body.noanim .a3,body.noanim .a4{animation:none !important}
+</style>
+</head>
+<body>
+
+<!-- ============ 01 · Capa ============ -->
+<div class="slide">
+  <div class="pad" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+    <div class="a1"><img src="sparo-logo-ink.png" alt="Sparo" style="height:84px;width:auto"/></div>
+    <div class="a2" style="font-family:'Archivo';font-weight:900;font-size:96px;line-height:1.03;letter-spacing:-.025em;margin-top:70px;max-width:1560px">
+      Automação com IA<br/>para a Xtreme
+    </div>
+    <div class="claim a3" style="margin-top:38px;max-width:1200px">
+      A proposta que saiu da nossa conversa de 30 de julho.
+    </div>
+    <div class="a4" style="margin-top:52px;font-family:'Space Grotesk';font-weight:500;font-size:24px;letter-spacing:.1em;color:var(--mut)">
+      ENZO BARBATTO &nbsp;·&nbsp; SPARO &nbsp;·&nbsp; <span class="fill" contenteditable="true" id="f-data" data-save="1" style="font-family:'Space Grotesk';min-width:0">3 DE AGOSTO DE 2026</span>
+    </div>
+  </div>
+  <div class="pgnum">01 — 07</div>
+</div>
+
+<!-- ============ 02 · Diagnóstico ============ -->
+<div class="slide">
+  <div class="pad">
+    <div class="kicker a1">O que acontece hoje</div>
+    <div class="h1 a1" style="margin-top:26px">A informação vive em <span class="em">quatro lugares que não se falam</span></div>
+
+    <div class="diag">
+      <div class="drow a2">Build Track Pro (horas), Project Cost Control (custo por projeto), <b>Excel</b> e <b>QuickBooks</b> — nenhum conversa com o outro.</div>
+      <div class="drow a2">O <b>mesmo dado é digitado três ou quatro vezes</b>: você aprova a hora num app e redigita o custo no outro, depois no Excel, depois no QuickBooks.</div>
+      <div class="drow a3">O invoice do subcontratado chega <b>por WhatsApp, por info@, por eric@</b> — alguém tem que garimpar, conferir e lançar na mão.</div>
+      <div class="drow a3">O recibo do campo chega <b>por WhatsApp</b> e depende de <b>você subir cada um na mão</b> — conferir um significa garimpar na conta do cartão.</div>
+    </div>
+
+    <div class="punch a4">"Despesa do trabalho A indo parar no trabalho B."</div>
+  </div>
+  <div class="wm"><img src="sparo-logo-ink.png" alt="Sparo" style="height:24px;width:auto"/></div>
+  <div class="pgnum">02 — 07</div>
+</div>
+
+<!-- ============ 03 · Escopo ============ -->
+<div class="slide">
+  <div class="pad">
+    <div class="kicker a1">Escopo</div>
+    <div class="h1 a1" style="margin-top:26px">Um sistema só, <span class="em">cinco frentes</span></div>
+
+    <div class="grid2">
+      <div class="acard go a2">
+        <div class="hd"><span class="n">01</span><span class="t">Base unificada</span><span class="badge">FASE 1</span></div>
+        <div class="d">Um cadastro só de <b>projetos, subs e trabalhadores</b> — hoje duplicado nos dois apps. Inclui a <b>migração do que já está lançado</b>.</div>
+      </div>
+
+      <div class="acard go a2">
+        <div class="hd"><span class="n">02</span><span class="t">Horas e mão de obra</span><span class="badge">FASE 1</span></div>
+        <div class="d">Lançamento pelo celular, link por trabalhador e sua aprovação — agora feito pra aguentar a operação. E <b>a hora vira despesa na hora</b>.</div>
+      </div>
+
+      <div class="acard a3">
+        <div class="hd"><span class="n">03</span><span class="t">Entradas automáticas</span></div>
+        <div class="d">Invoice de sub por <b>e-mail único</b> · recibo de material <b>por foto</b> · cheque recebido. Lê, identifica o projeto e propõe o lançamento.</div>
+      </div>
+
+      <div class="acard a3">
+        <div class="hd"><span class="n">04</span><span class="t">WhatsApp do escritório</span></div>
+        <div class="d">Responde sozinho o que hoje ocupa uma pessoa: <b>"meu cheque está pronto?"</b>, status e prazo — com a informação real.</div>
+      </div>
+
+      <div class="acard a4">
+        <div class="hd"><span class="n">05</span><span class="t">Resultado por projeto</span></div>
+        <div class="d"><b>Recebido, gasto e lucro num lugar só</b>, em tempo real. O QuickBooks fica só com a emissão do cheque.</div>
+      </div>
+
+      <div class="notecell a4">
+        <span>Seus testes já provaram o que<br/>precisa existir. Agora, pra valer.</span>
+      </div>
+    </div>
+  </div>
+  <div class="wm"><img src="sparo-logo-ink.png" alt="Sparo" style="height:24px;width:auto"/></div>
+  <div class="pgnum">03 — 07</div>
+</div>
+
+<!-- ============ 04 · Começamos por um ============ -->
+<div class="slide">
+  <div class="pad">
+    <div class="kicker a1">Começamos pela Fase 1</div>
+    <div class="h1 a1" style="margin-top:26px">A Fase 1 vai primeiro — e <span class="em">sozinha</span>.</div>
+
+    <div class="claim a2" style="margin-top:30px;max-width:1560px;font-size:29px">
+      Base unificada + horas viram despesa. É o que mata a redigitação diária. Depois de construída, roda <b style="color:var(--ink)">uma semana dentro da operação real</b> — não é demonstração.
+      O critério que define se deu certo fica combinado <b style="color:var(--ink)">antes de construir</b>:
+    </div>
+
+    <table class="crit a3">
+      <tr><th>Critério de aceite — Fase 1</th><th style="text-align:right">Combinado antes do início</th></tr>
+      <tr><td>Horas aprovadas que viram despesa no projeto certo</td>
+          <td><span class="fill" contenteditable="true" id="c-1" data-save="1">definir %</span></td></tr>
+      <tr><td>Redigitação eliminada por semana</td>
+          <td><span class="fill" contenteditable="true" id="c-2" data-save="1">definir horas</span></td></tr>
+      <tr><td>Divergência entre o app de horas e o de custo</td>
+          <td><span class="fill" contenteditable="true" id="c-3" data-save="1">definir tolerância</span></td></tr>
+    </table>
+
+    <div class="claim a4" style="margin-top:30px;margin-left:0;font-size:27px">
+      Bateu o critério, seguimos para as frentes 03 a 05 sob esta mesma proposta.
+      <b style="color:var(--ink)">Não bateu, você não fica preso a nada.</b>
+    </div>
+  </div>
+  <div class="wm"><img src="sparo-logo-ink.png" alt="Sparo" style="height:24px;width:auto"/></div>
+  <div class="pgnum">04 — 07</div>
+</div>
+
+<!-- ============ 05 · Como entregamos + prazo ============ -->
+<div class="slide">
+  <div class="pad">
+    <div class="kicker a1">Como a gente entrega</div>
+    <div class="h1 a1" style="margin-top:26px">Dentro do que a Xtreme <span class="em">já usa</span></div>
+
+    <div class="rows">
+      <div class="row a2">
+        <div class="n">01</div>
+        <div><div class="t">Escopo</div>
+        <div class="d">Mapeamos com você e com o escritório tudo o que os seus testes já validaram, e definimos juntos o que é "pronto"</div></div>
+      </div>
+      <div class="row a2">
+        <div class="n">02</div>
+        <div><div class="t">Construção</div>
+        <div class="d">Construído para produção: estável, com acesso por perfil e feito pra aguentar a operação</div></div>
+      </div>
+      <div class="row a3">
+        <div class="n">03</div>
+        <div><div class="t">Teste e vai ao ar</div>
+        <div class="d">Teste junto com você e com o escritório. Cada frente sobe quando você aprova</div></div>
+      </div>
+      <div class="row a4">
+        <div class="n">04</div>
+        <div><div class="t">Otimização</div>
+        <div class="d">Acompanhamos rodando: corrigimos, melhoramos e mantemos o custo de operação previsível</div></div>
+      </div>
+    </div>
+
+    <div class="claim a4" style="margin-top:28px;font-size:27px">
+      <b style="color:var(--ink)">Fase 1 no ar:</b> <span class="fill" contenteditable="true" id="f-prazo1" data-save="1">30 dias</span>
+      &nbsp;·&nbsp; <b style="color:var(--ink)">sistema completo:</b> <span class="fill" contenteditable="true" id="f-prazo2" data-save="1">~4 meses</span>
+    </div>
+  </div>
+  <div class="wm"><img src="sparo-logo-ink.png" alt="Sparo" style="height:24px;width:auto"/></div>
+  <div class="pgnum">05 — 07</div>
+</div>
+
+<!-- ============ 06 · Investimento ============ -->
+<div class="slide">
+  <div class="pad">
+    <div class="kicker a1">Investimento</div>
+    <div class="h1 a1" style="margin-top:26px">Um valor mensal único. <span class="em">Sem variável, sem surpresa.</span></div>
+
+    <div class="fee a2">
+      <div class="num"><span class="fill" contenteditable="true" id="f-preco" data-save="1" style="font-family:'Space Grotesk';min-width:0">US$ 2.400</span>/mês</div>
+      <div class="desc">Cobre tudo, do escopo à otimização: <b>o sistema unificado com as cinco frentes</b>, a migração dos dados dos seus dois apps e a integração com o QuickBooks, infraestrutura em nome da Xtreme, teste em conjunto e treinamento do escritório.</div>
+    </div>
+
+    <div class="checks">
+      <div class="chk a3"><b>Sem cobrança por usuário.</b> O escritório inteiro e todos os trabalhadores de campo usam, sem custo por pessoa.</div>
+      <div class="chk a3"><b>Eficiência de token por projeto.</b> Contexto, roteamento de modelo e skills pra que o custo de uso fique previsível.</div>
+      <div class="chk a4"><b>Depois da implantação:</b> suporte e otimização seguem a 25% do valor mensal.</div>
+      <div class="chk a4"><b>Nuvem e API</b> nas contas da própria Xtreme, cobradas a custo — sem markup.</div>
+    </div>
+
+    <div class="claim a4" style="margin-top:30px;font-size:27px;max-width:1600px">
+      Não é sobre horas de escritório — é sobre <b style="color:var(--ink)">dinheiro que hoje você não consegue rastrear</b>.
+      Quando a despesa do trabalho A vai pro B, você não erra só o relatório: erra o preço do próximo orçamento.
+    </div>
+  </div>
+  <div class="wm"><img src="sparo-logo-ink.png" alt="Sparo" style="height:24px;width:auto"/></div>
+  <div class="pgnum">06 — 07</div>
+</div>
+
+<!-- ============ 07 · Próximos passos ============ -->
+<div class="slide">
+  <div class="pad">
+    <div class="kicker a1">Próximos passos</div>
+    <div class="h1 a1" style="margin-top:26px">Podemos começar <span class="em">esta semana</span>.</div>
+
+    <div class="rows">
+      <div class="row a2">
+        <div class="n">01</div>
+        <div><div class="t">Seu sim</div>
+        <div class="d">Sem prazo de validade e sem espera: o escopo da Fase 1 começa na mesma semana</div></div>
+      </div>
+      <div class="row a3">
+        <div class="n">02</div>
+        <div><div class="t">Acesso e critério de aceite</div>
+        <div class="d">Acesso aos dois aplicativos e ao QuickBooks — e combinamos o critério de aceite antes de qualquer construção</div></div>
+      </div>
+      <div class="row a4">
+        <div class="n">03</div>
+        <div><div class="t">Fase 1 no ar</div>
+        <div class="d">Em <span class="fill" contenteditable="true" id="f-prazo3" data-save="1" style="font-size:24px">30 dias</span>, rodando na operação real</div></div>
+      </div>
+    </div>
+
+    <div class="claim a4" style="margin-top:36px;margin-left:190px;font-family:'Newsreader',serif;font-style:italic;font-weight:600;font-size:38px;color:var(--accT)">
+      Começamos pela Fase 1. O resto vem do resultado dela.
+    </div>
+  </div>
+  <div class="wm"><img src="sparo-logo-ink.png" alt="Sparo" style="height:24px;width:auto"/></div>
+  <div class="pgnum">07 — 07</div>
+</div>
+
+<style>
+  body.present{overflow:hidden;height:100vh}
+  body.present .slide{display:none;position:fixed;top:50%;left:50%;margin:0;
+    transform:translate(-50%,-50%) scale(var(--pscale,1));transform-origin:center center}
+  body.present .slide.active{display:block}
+  #hint{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:99;
+    background:rgba(22,19,15,.85);color:#F1E9DC;font-family:'Space Grotesk',monospace;
+    font-size:15px;padding:10px 22px;border-radius:30px;display:none;transition:opacity .4s}
+  body.present #hint{display:block}
+</style>
+<div id="hint">← → navegam &nbsp;·&nbsp; P sai do modo apresentação &nbsp;·&nbsp; F11 tela cheia</div>
+<script>
+  document.fonts.ready.then(()=>{ setTimeout(()=>{ window.__ready = true; }, 300); });
+
+  const NOANIM = location.pathname.replace(/\/$/,'').endsWith('/slides') || location.search.includes('noanim');
+  if (NOANIM) document.body.classList.add('noanim');
+
+  /* campos editáveis salvam sozinhos no navegador */
+  const KEY = 'xtreme-proposta-2026-08-03';
+  const fields = () => [...document.querySelectorAll('[data-save]')];
+  function load(){
+    let d = {};
+    try { d = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){}
+    fields().forEach(el => { if (d[el.id] != null) el.innerHTML = d[el.id]; });
+  }
+  function save(){
+    const d = {};
+    fields().forEach(el => d[el.id] = el.innerHTML);
+    try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e){}
+  }
+  addEventListener('input', e => { if (e.target.dataset && e.target.dataset.save) save(); });
+  load();
+
+  const slides = () => [...document.querySelectorAll('.slide')];
+  let cur = 0;
+  function fit(){
+    const s = Math.min(innerWidth/1920, innerHeight/1080);
+    document.documentElement.style.setProperty('--pscale', s.toFixed(4));
+  }
+  function show(i){
+    const ss = slides();
+    cur = Math.max(0, Math.min(ss.length-1, i));
+    ss.forEach((el,k)=>el.classList.toggle('active', k===cur));
+  }
+  function toggle(on){
+    const p = on ?? !document.body.classList.contains('present');
+    document.body.classList.toggle('present', p);
+    if(p){ fit(); show(cur); const h=document.getElementById('hint');
+      h.style.opacity=1; setTimeout(()=>{h.style.opacity=0},3500); }
+    else slides().forEach(el=>el.classList.remove('active'));
+  }
+  addEventListener('resize', fit);
+  addEventListener('keydown', e=>{
+    const typing = e.target && (e.target.isContentEditable || /^(INPUT|TEXTAREA)$/.test(e.target.tagName));
+    if (typing) { if (e.key === 'Escape') e.target.blur(); return; }
+    if(e.key==='p'||e.key==='P'){ toggle(); return; }
+    if(!document.body.classList.contains('present')) return;
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); show(cur+1); }
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); show(cur-1); }
+    if(e.key==='Home') show(0);
+    if(e.key==='End') show(slides().length-1);
+    if(e.key==='Escape') toggle(false);
+  });
+  addEventListener('click', e=>{
+    if(!document.body.classList.contains('present')) return;
+    if (e.target.closest('[contenteditable]')) return;
+    show(cur+1);
+  });
+  if(location.search.includes('present')) addEventListener('load', ()=>toggle(true));
+</script>
+</body>
+</html>

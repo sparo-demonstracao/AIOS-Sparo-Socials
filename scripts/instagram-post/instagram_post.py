@@ -21,7 +21,7 @@ Uso (dois passos — o Claude orquestra):
 
   # 2) Depois que o Claude decidir o texto curto, desenha a capa nos 3 frames:
   python instagram_post.py cover --dir "C:\\caminho\\reel-instagram" --text "TEXTO DA CAPA"
-      [--pos middle|bottom]   (default: middle)
+      [--pos top|middle|bottom]   (default: middle)
 
 Saída em <video>-instagram/:
   transcript.txt     — transcrição corrida (o Claude lê pra escrever o copy)
@@ -72,12 +72,25 @@ MODELO_CLAUDE = "claude-sonnet-4-6"
 
 PROMPT_IG = """Você é o social media do Enzo Barbato, que ensina automação com IA (Claude Code, Antigravity) pra gente LEIGA em programação. Tom: português do Brasil, informal mas profissional, frases curtas, direto, sem jargão técnico solto. Sempre "você", nunca "tu". Não invente nada que não esteja na transcrição.
 
-A partir da TRANSCRIÇÃO de um Reels que o Enzo vai postar, gere o material do post. Responda APENAS com um JSON válido, sem markdown, sem crases, exatamente neste formato:
-{"opcoes_capa":["...","...","..."],"titulo":"...","descricao":"..."}
+A partir da TRANSCRIÇÃO de um Reels que o Enzo vai postar, gere o material do post. Responda EXATAMENTE neste formato, com cada marcador numa linha própria, sem markdown e sem NENHUM texto antes do primeiro marcador ou depois do último:
 
-- "opcoes_capa": EXATAMENTE 3 opções de texto pra CAPA do Reel (o que aparece no grid do perfil), pra ele escolher. Cada uma com 3 a 6 palavras, EM CAIXA ALTA, gancho de curiosidade — promete um resultado ou cria curiosidade. Variadas entre si (ângulos diferentes). Ex.: "COMO AUTOMATIZEI MEU WHATSAPP", "O ERRO QUE TODO INICIANTE COMETE".
-- "titulo": uma linha curta — o gancho do post.
-- "descricao": a legenda do post. Comece com um gancho forte na 1ª linha, entregue o valor em frases curtas e termine com um CTA leve (comenta, salva ou segue). Depois de uma linha em branco, coloque de 5 a 10 hashtags (misture amplas e de nicho: #automação #ia #claudecode #antigravity #nocode #produtividade + específicas do tema).
+<<<CAPA1>>>
+(opção 1 de texto pra capa)
+<<<CAPA2>>>
+(opção 2)
+<<<CAPA3>>>
+(opção 3)
+<<<TITULO>>>
+(o gancho do post, 1 linha)
+<<<DESCRICAO>>>
+(a legenda completa)
+<<<FIM>>>
+
+- CAPA1/2/3: 3 opções de texto pra CAPA do Reel (o que aparece no grid do perfil), pra ele escolher. Cada uma com 3 a 6 palavras, EM CAIXA ALTA, gancho de curiosidade — promete um resultado ou cria curiosidade. Variadas entre si (ângulos diferentes). Ex.: COMO AUTOMATIZEI MEU WHATSAPP / O ERRO QUE TODO INICIANTE COMETE.
+- TITULO: uma linha curta — o gancho do post.
+- DESCRICAO: a legenda do post. Comece com um gancho forte na 1ª linha, entregue o valor em frases curtas e termine com um CTA leve (comenta, salva ou segue). Depois de uma linha em branco, coloque de 5 a 10 hashtags (misture amplas e de nicho: #automação #ia #claudecode #antigravity #nocode #produtividade + específicas do tema).
+
+SEMPRE responda nesse formato, mesmo que a transcrição pareça curta, incompleta ou estranha (nesse caso, gere o melhor material possível com o que tiver).
 
 TRANSCRIÇÃO:
 %%TRANSCRIPT%%"""
@@ -272,7 +285,12 @@ def render_cover(frame_png, text, out_png, pos="middle", font_key=DEFAULT_FONT):
     box_w = min(W - 2 * SIDE_MARGIN, widest + 2 * PAD_X)
     box_h = block_h + 2 * PAD_Y
     cx = W // 2
-    cy = H // 2 if pos == "middle" else round(H * 0.72)
+    if pos == "top":
+        cy = round(H * 0.28)
+    elif pos == "bottom":
+        cy = round(H * 0.72)
+    else:
+        cy = H // 2
 
     x0, y0 = cx - box_w / 2, cy - box_h / 2
     x1, y1 = cx + box_w / 2, cy + box_h / 2
@@ -321,29 +339,46 @@ def cmd_prep(args):
     }, ensure_ascii=False))
 
 
-def gerar_copy(transcript):
-    """Chama o claude -p e devolve {texto_capa, titulo, descricao}. Levanta erro se falhar."""
-    prompt = PROMPT_IG.replace("%%TRANSCRIPT%%", transcript)
-    r = subprocess.run([CLAUDE_EXE, "-p", "--model", MODELO_CLAUDE],
-                       input=prompt, capture_output=True, text=True,
-                       encoding="utf-8", errors="replace")
-    if r.returncode != 0:
-        raise RuntimeError(f"claude -p falhou: {(r.stderr or '')[-400:]}")
-    raw = (r.stdout or "").strip()
-    m = re.search(r"\{.*\}", raw, re.S)
-    if not m:
-        raise RuntimeError(f"claude não devolveu JSON: {raw[:300]}")
-    d = json.loads(m.group(0))
-    opcoes = [str(o).strip().upper() for o in (d.get("opcoes_capa") or []) if str(o).strip()]
-    if not opcoes:  # tolera o formato antigo com texto_capa único
-        t = str(d.get("texto_capa", "")).strip().upper()
-        opcoes = [t] if t else ["MEU NOVO VÍDEO"]
+def _parse_copy(raw):
+    """Extrai os campos do formato <<<MARCADOR>>>. Devolve dict ou None se faltar campo."""
+    partes = re.split(r"<<<(CAPA1|CAPA2|CAPA3|TITULO|DESCRICAO|FIM)>>>", raw)
+    campos = {}
+    for i in range(1, len(partes) - 1, 2):
+        campos[partes[i]] = partes[i + 1].strip()
+    opcoes = [campos.get(k, "").upper() for k in ("CAPA1", "CAPA2", "CAPA3") if campos.get(k)]
+    titulo = campos.get("TITULO", "")
+    descricao = campos.get("DESCRICAO", "")
+    if not (opcoes and titulo and descricao):
+        return None
     return {
         "opcoes_capa": opcoes[:3],
         "texto_capa": opcoes[0],
-        "titulo": str(d.get("titulo", "")).strip(),
-        "descricao": str(d.get("descricao", "")).strip(),
+        "titulo": titulo,
+        "descricao": descricao,
     }
+
+
+def gerar_copy(transcript):
+    """Chama o claude -p e devolve {opcoes_capa, texto_capa, titulo, descricao}.
+    Tenta até 3 vezes (cobre erro transitório de API e resposta fora do formato)."""
+    prompt = PROMPT_IG.replace("%%TRANSCRIPT%%", transcript)
+    ultimo_erro = ""
+    for tentativa in (1, 2, 3):
+        r = subprocess.run([CLAUDE_EXE, "-p", "--model", MODELO_CLAUDE],
+                           input=prompt, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace")
+        if r.returncode != 0:
+            # o CLI imprime erros de API no stdout — mostra os dois
+            ultimo_erro = (f"claude -p falhou (código {r.returncode}) "
+                           f"stderr: {(r.stderr or '').strip()[-300:] or '(vazio)'} | "
+                           f"stdout: {(r.stdout or '').strip()[-300:] or '(vazio)'}")
+        else:
+            d = _parse_copy((r.stdout or "").strip())
+            if d:
+                return d
+            ultimo_erro = f"claude respondeu fora do formato: {(r.stdout or '').strip()[:300]}"
+        log(f">> tentativa {tentativa}/3 falhou — {ultimo_erro}")
+    raise RuntimeError(ultimo_erro)
 
 
 def cmd_auto(args):
@@ -464,7 +499,7 @@ def main():
     pa = sub.add_parser("auto", help="pipeline completo pro app (copy + 3 capas)")
     pa.add_argument("video")
     pa.add_argument("--out-dir", required=True)
-    pa.add_argument("--pos", choices=["middle", "bottom"], default="middle")
+    pa.add_argument("--pos", choices=["top", "middle", "bottom"], default="middle")
     pa.add_argument("--font", choices=list(FONTS.keys()), default=DEFAULT_FONT)
     pa.add_argument("--no-copy", action="store_true", help="pula transcrição/claude (teste)")
     pa.set_defaults(func=cmd_auto)
@@ -479,7 +514,7 @@ def main():
     pc = sub.add_parser("cover", help="desenha a caixa de texto nos frames")
     pc.add_argument("--dir", required=True)
     pc.add_argument("--text", required=True)
-    pc.add_argument("--pos", choices=["middle", "bottom"], default="middle")
+    pc.add_argument("--pos", choices=["top", "middle", "bottom"], default="middle")
     pc.add_argument("--font", choices=list(FONTS.keys()), default=DEFAULT_FONT)
     pc.set_defaults(func=cmd_cover)
 

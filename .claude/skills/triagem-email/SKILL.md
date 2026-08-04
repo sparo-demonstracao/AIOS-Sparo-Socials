@@ -179,6 +179,10 @@ Diferenças do Gmail:
   (acolhedor — o motivo interno, reduzir a taxa de reembolso, **não** vai no e-mail).
 - **Por MENSAGEM, não por thread** (o Zoho lista por mensagem). Idempotência via **seen-file**
   `C:\tmp\aios-triagem-zoho-seen.json`; de-dupa por remetente+assunto na rodada.
+- **Rascunho VINCULADO à thread do original:** o script busca o Message-ID RFC do e-mail
+  (`GET .../messages/{id}/header?raw=false`) e cria o rascunho com `inReplyTo` + `refHeader` — assim
+  ele aparece **dentro da conversa na Inbox** (equivalente ao `replyToMessageId` do Gmail), não só na
+  pasta Rascunhos. Se o header falhar, cai no rascunho solto sem quebrar a triagem.
 - **Escopos Zoho de ESCRITA** (regerados uma vez, superset dos de leitura): `ZohoMail.tags.READ` +
   `ZohoMail.messages.UPDATE` + `ZohoMail.messages.CREATE`. Endpoints e receita em
   `references/zoho-mail-api.md`; reconectar via `scripts/daily-brief/Conectar-Zoho.ps1`.

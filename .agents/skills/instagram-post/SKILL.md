@@ -92,6 +92,9 @@ Gere e **mostre pro Enzo** (rascunho, pra ele aprovar/editar):
 "$PY" "$SCRIPT" cover --dir "<out_dir>" --text "TEXTO DA CAPA" --pos middle --font black
 ```
 
+`--pos` aceita: `top` (em cima, ~28% da altura), `middle` (**padrão**, centro) e `bottom` (embaixo,
+~72% da altura).
+
 `--font` aceita: `montserrat` (Montserrat Black — **padrão**, geométrica), `poppins` (Poppins Black,
 geométrica arredondada), `black` (Arial Black), `segoe` (Segoe UI Black), `impact` (Impact,
 condensada), `franklin` (Franklin Gothic Heavy), `bold` (Arial Bold). As duas primeiras são grátis

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Media Kit — Enzo Barbatto (@enzosparo)</title>
+<meta name="description" content="Media kit do canal Enzo Barbatto: automação com IA, Claude Code e Antigravity. 45,8 mil inscritos, 1 milhão de views nos últimos 6 meses." />
+<meta name="theme-color" content="#FF6633" />
+<meta property="og:title" content="Media Kit — Enzo Barbatto (@enzosparo)" />
+<meta property="og:description" content="Automação com IA, sem escrever código. 45,8 mil inscritos · 7% de likes por view." />
+<meta property="og:type" content="profile" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --orange:#FF6633;
+    --orange-deep:#E8551F;
+    --orange-dark:#C8430F;
+    --ink:#2a1206;
+    --ink-soft:#7a4427;
+    --line:rgba(120,45,10,.13);
+    --shadow:0 6px 20px rgba(120,45,10,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Plus Jakarta Sans',-apple-system,Segoe UI,sans-serif;
+    color:var(--ink);
+    background:#FFF7F2;
+    -webkit-font-smoothing:antialiased;
+    padding:34px 20px 60px;
+  }
+  .page{max-width:860px;margin:0 auto}
+
+  /* ---------- capa ---------- */
+  .hero{
+    position:relative;overflow:hidden;border-radius:22px;color:#fff;
+    background:radial-gradient(80% 120% at 15% 0%, #FF9159 0%, transparent 60%),
+               linear-gradient(135deg,#FF6633 0%,#E8551F 58%,#B83C0E 100%);
+    padding:30px 32px;display:flex;gap:24px;align-items:center;
+    box-shadow:0 14px 34px rgba(150,55,15,.26);
+  }
+  .hero .ava{width:96px;height:96px;border-radius:50%;flex:0 0 auto;overflow:hidden;
+    background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.85);box-shadow:0 8px 22px rgba(120,40,5,.3)}
+  .hero .ava img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero h1{font-size:29px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .hero .handle{margin-top:5px;font-size:15px;font-weight:700;opacity:.95}
+  .hero .tag{margin-top:9px;font-size:14px;font-weight:600;opacity:.95;line-height:1.45;max-width:460px}
+  .hero .kicker{position:absolute;top:22px;right:26px;font-size:11px;font-weight:800;letter-spacing:.14em;
+    text-transform:uppercase;opacity:.75}
+
+  /* ---------- blocos ---------- */
+  section{margin-top:30px}
+  h2{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-deep);
+    margin-bottom:14px;display:flex;align-items:center;gap:12px}
+  h2::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .grid{display:grid;gap:12px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+
+  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 17px;box-shadow:var(--shadow)}
+  .stat .n{font-size:27px;font-weight:800;letter-spacing:-.02em;color:var(--orange-deep);line-height:1}
+  .stat .l{margin-top:6px;font-size:12.5px;font-weight:600;color:var(--ink-soft);line-height:1.35}
+
+  .note{margin-top:11px;font-size:12px;font-weight:600;color:var(--ink-soft);line-height:1.5}
+
+  /* ---------- listas ---------- */
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .card h3{font-size:14.5px;font-weight:800;margin-bottom:9px}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+  .card li{font-size:13.5px;font-weight:500;color:var(--ink-soft);line-height:1.45;padding-left:16px;position:relative}
+  .card li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--orange)}
+  .card li b{color:var(--ink);font-weight:700}
+
+  /* ---------- destaques ---------- */
+  .hit{display:flex;align-items:center;gap:15px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .hit:last-child{border-bottom:none;padding-bottom:0}
+  .hit:first-child{padding-top:0}
+  .hit .v{flex:0 0 84px;font-size:19px;font-weight:800;color:var(--orange-deep);letter-spacing:-.02em}
+  .hit .t{font-size:13.5px;font-weight:600;line-height:1.35}
+  .hit .d{font-size:11.5px;font-weight:600;color:var(--ink-soft);margin-top:2px}
+
+  /* ---------- tabela de formatos ---------- */
+  .fmt{width:100%;border-collapse:collapse}
+  .fmt th{text-align:left;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-soft);padding:0 0 10px;border-bottom:1px solid var(--line)}
+  .fmt th:last-child,.fmt td:last-child{text-align:right;white-space:nowrap}
+  .fmt td{padding:14px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  .fmt tr:last-child td{border-bottom:none;padding-bottom:0}
+  .fmt .nome{font-size:14px;font-weight:800}
+  .fmt .desc{font-size:12.5px;font-weight:500;color:var(--ink-soft);line-height:1.45;margin-top:3px;max-width:430px}
+  .fmt .preco{font-size:17px;font-weight:800;color:var(--orange-deep);letter-spacing:-.02em}
+  .fmt .sob{font-size:13px;font-weight:700;color:var(--ink-soft)}
+
+  /* ---------- rodapé ---------- */
+  footer{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+  footer .who{font-size:14px;font-weight:800}
+  footer .ct{margin-top:5px;font-size:12.5px;font-weight:600;color:var(--ink-soft);line-height:1.6}
+  footer a{color:var(--orange-deep);text-decoration:none;font-weight:700}
+  footer .upd{font-size:11.5px;font-weight:600;color:var(--ink-soft);text-align:right}
+
+  /* ---------- responsivo + impressão ---------- */
+  @media (max-width:680px){
+    body{padding:20px 14px 40px}
+    .hero{flex-direction:column;text-align:center;padding:26px 22px}
+    .hero .kicker{position:static;margin-bottom:4px}
+    .g3,.g4,.two{grid-template-columns:1fr 1fr}
+    .hit{flex-direction:column;align-items:flex-start;gap:3px}
+    .fmt th:last-child,.fmt td:last-child{text-align:left}
+  }
+  @media print{
+    body{background:#fff;padding:0}
+    .stat,.card,.hero{box-shadow:none}
+    section{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="kicker">Media Kit · 2026</div>
+    <div class="ava"><img src="foto.jpg" alt="Enzo Barbatto" /></div>
+    <div>
+      <h1>Enzo Barbatto</h1>
+      <div class="handle">youtube.com/@enzosparo · Sparo Automações</div>
+      <div class="tag">Ensino automação e desenvolvimento com IA — Claude Code, Antigravity e agentes — para quem não sabe programar. Conteúdo prático, do zero ao projeto rodando.</div>
+    </div>
+  </div>
+
+  <section>
+    <h2>O canal hoje</h2>
+    <div class="grid g4">
+      <div class="stat"><div class="n">45,8 mil</div><div class="l">inscritos</div></div>
+      <div class="stat"><div class="n">1,24 mi</div><div class="l">visualizações totais no canal</div></div>
+      <div class="stat"><div class="n">3,2</div><div class="l">vídeos publicados por mês</div></div>
+      <div class="stat"><div class="n">16 min</div><div class="l">duração mediana por vídeo</div></div>
+    </div>
+    <div class="note">Canal em português (Brasil). Números públicos, verificáveis na própria página do canal.</div>
+  </section>
+
+  <section>
+    <h2>Desempenho — últimos 6 meses (19 vídeos)</h2>
+    <div class="grid g3">
+      <div class="stat"><div class="n">1.057.092</div><div class="l">visualizações no período</div></div>
+      <div class="stat"><div class="n">55,6 mil</div><div class="l">média de views por vídeo</div></div>
+      <div class="stat"><div class="n">30,6 mil</div><div class="l">mediana de views por vídeo</div></div>
+      <div class="stat"><div class="n">74.302</div><div class="l">likes</div></div>
+      <div class="stat"><div class="n">7,0%</div><div class="l">likes por visualização</div></div>
+      <div class="stat"><div class="n">2.272</div><div class="l">comentários</div></div>
+    </div>
+    <div class="note">A mediana é o número mais honesto para projetar uma campanha: metade dos vídeos passa de 30 mil views. A taxa de 7% de likes por view está bem acima da média do nicho de tecnologia — é uma audiência que assiste até o fim e interage.</div>
+  </section>
+
+  <section>
+    <h2>Destaques do período</h2>
+    <div class="card">
+      <div class="hit">
+        <div class="v">226 mil</div>
+        <div><div class="t">Antigravity + Nano Banana 2 = Sites de R$ 25.000 (Absurdo)</div><div class="d">mar/2026 · 16 min · 16,1 mil likes</div></div>
+      </div>
+      <div class="hit">
+        <div class="v">203 mil</div>
+        <div><div class="t">Como usar o Antigravity melhor que 99% das pessoas</div><div class="d">fev/2026 · 14 min · 16,1 mil likes</div></div>
+      </div>
+      <div class="hit">
+        <div class="v">166 mil</div>
+        <div><div class="t">O Fim dos Agentes de IA: Conheça os Fluxos Agênticos</div><div class="d">fev/2026 · 25 min · 10,5 mil likes</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Audiência</h2>
+    <div class="two">
+      <div class="card">
+        <h3>Quem assiste</h3>
+        <ul>
+          <li><b>Donos de pequenas e médias empresas</b> buscando produtividade e corte de custo operacional</li>
+          <li><b>Futuros donos de agência</b> de automação e IA</li>
+          <li><b>Profissionais</b> que querem automatizar processos na empresa onde trabalham</li>
+          <li>Perfil comum: <b>não sabe programar</b> e quer entregar mesmo assim</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Sobre o que eu falo</h3>
+        <ul>
+          <li><b>Claude Code</b> e <b>Antigravity</b> — construção de apps e sistemas sem escrever código</li>
+          <li><b>Agentes de IA</b> e fluxos agênticos</li>
+          <li><b>Automação</b> de processos e integrações</li>
+          <li>Comparativos honestos entre modelos e ferramentas — <b>o que entrega e o que é fumaça</b></li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">Além do YouTube: MasterClass própria de Claude Code + Antigravity, comunidade ativa de alunos e o Instagram <b>@enzosparo</b>.</div>
+  </section>
+
+  <section>
+    <h2>Formatos e investimento</h2>
+    <div class="card">
+      <table class="fmt">
+        <tr>
+          <th>Formato</th>
+          <th>Investimento</th>
+        </tr>
+        <tr>
+          <td>
+            <div class="nome">Vídeo dedicado integrado · ~15 min</div>
+            <div class="desc">A ferramenta dentro de um projeto real, ao lado do Claude Code / Antigravity. É o formato que a minha audiência procura — e o que costuma converter melhor.</div>
+          </td>
+          <td><div class="preco">US$ 2.000</div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="nome">Vídeo dedicado exclusivo · ~15 min</div>
+            <div class="desc">Vídeo inteiro sobre a plataforma, sem integração com as ferramentas do canal. Valor maior porque foge do que a audiência vem buscar aqui.</div>
+          </td>
+          <td><div class="preco">US$ 3.000</div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="nome">Menção integrada · 60–90s</div>
+            <div class="desc">Inserção dentro de um vídeo já planejado do canal.</div>
+          </td>
+          <td><div class="preco">US$ 900</div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="nome">Pacote / parceria de longo prazo</div>
+            <div class="desc">Série de vídeos ou presença recorrente ao longo de um trimestre.</div>
+          </td>
+          <td><div class="sob">sob consulta</div></td>
+        </tr>
+      </table>
+    </div>
+    <div class="note">Roteiro, gravação e edição são por minha conta. Prazos, exclusividade e direitos de uso são combinados por proposta.</div>
+  </section>
+
+  <footer>
+    <div>
+      <div class="who">Enzo Barbatto — Sparo Automações</div>
+      <div class="ct">
+        <a href="mailto:agenciasparo@gmail.com">agenciasparo@gmail.com</a><br />
+        <a href="https://www.youtube.com/@enzosparo">youtube.com/@enzosparo</a> · <a href="https://links.sparo.com.br">links.sparo.com.br</a>
+      </div>
+    </div>
+    <div class="upd">Dados apurados em 27 de julho de 2026<br />via API oficial do YouTube</div>
+  </footer>
+
+</div>
+</body>
+</html>

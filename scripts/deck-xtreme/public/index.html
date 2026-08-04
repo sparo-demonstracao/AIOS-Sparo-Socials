@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<!--
+  deck.html — Call Eric / Xtreme Contractors (30/07/2026, 19h BRT · 18h NJ).
+  NÃO é pitch deck: são 5 telas de apoio pra uma conversa em PORTUGUÊS (o Eric é brasileiro).
+  Identidade herdada do deck da Donnelly (creme + ink #16130F + coral #DD5731, Archivo/
+  Space Grotesk/Newsreader). Tela 02 é INSTRUMENTO DE DISCOVERY (não explicar — perguntar).
+  Telas 03 e 04 só entram DEPOIS do discovery. Tela 05 é bloco de anotação ao vivo
+  (editável, salva sozinho no navegador, botão copiar pro follow-up no WhatsApp).
+  Sem nome de cliente e SEM PREÇO em tela — o Eric nunca viu o número da Donnelly.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sparo · Xtreme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#F4EDDF; --ink:#16130F; --mut:#75695A;
+    --acc:#DD5731; --accT:#DD5731;
+    --line:rgba(22,19,15,.08); --card:#FFFFFF;
+  }
+  body{background:#3a3a3e;font-family:'Archivo',sans-serif;color:var(--ink)}
+  .slide{
+    position:relative;width:1920px;height:1080px;overflow:hidden;margin:24px auto;
+    background:radial-gradient(130% 105% at 50% 0%, #F9F4E9 0%, #F3ECDE 62%, #EDE4D2 100%);
+  }
+  /* padding-bottom generoso: o conteúdo NUNCA pode encostar no logo/numeração do rodapé */
+  .pad{position:absolute;inset:0;padding:84px 120px 116px}
+
+  /* chrome */
+  .kicker{display:inline-flex;align-items:center;gap:18px;font-family:'Space Grotesk';font-weight:700;
+    font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--accT)}
+  .kicker::after{content:'';width:64px;height:3px;background:var(--acc);border-radius:2px}
+  .pgnum{position:absolute;right:120px;bottom:48px;font-family:'Space Grotesk';font-weight:500;
+    font-size:22px;color:var(--mut);letter-spacing:.08em}
+  .wm{position:absolute;left:120px;bottom:44px;display:flex;align-items:center;gap:14px}
+
+  /* type */
+  .h1{font-family:'Archivo';font-weight:800;font-size:58px;line-height:1.06;letter-spacing:-.02em;color:var(--ink)}
+  .claim{font-family:'Archivo';font-weight:500;font-size:31px;line-height:1.4;color:var(--mut)}
+  .em{color:var(--accT)}
+
+  .cardw{background:var(--card);border-radius:24px;border:1px solid rgba(22,19,15,.05);
+    box-shadow:0 24px 48px rgba(22,19,15,.10),0 4px 12px rgba(22,19,15,.06)}
+
+  /* lista numerada (telas 02 e 03) */
+  .rows{display:flex;flex-direction:column;gap:12px;margin-top:34px}
+  .row{display:flex;align-items:flex-start;gap:30px;background:var(--card);border-radius:18px;
+    border:1px solid rgba(22,19,15,.05);border-left:5px solid var(--acc);padding:18px 30px;
+    box-shadow:0 10px 26px rgba(22,19,15,.06)}
+  .row .n{font-family:'Space Grotesk';font-weight:700;font-size:30px;color:var(--acc);
+    line-height:1.25;min-width:52px}
+  .row .t{font-family:'Archivo';font-weight:800;font-size:34px;line-height:1.22;color:var(--ink)}
+  .row .d{font-family:'Archivo';font-weight:400;font-size:24px;line-height:1.38;color:var(--mut);margin-top:5px}
+
+  /* pergunta de fechamento da tela — recuada à direita pra não bater no logo do rodapé */
+  .ask{margin-top:26px;margin-left:190px;font-family:'Newsreader',serif;font-weight:600;font-style:italic;
+    font-size:40px;line-height:1.25;color:var(--accT)}
+
+  /* catálogo de agentes (tela 02) — estrutura da proposta da Donnelly, escala menor */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+  .acard{background:var(--card);border-radius:18px;border:1px solid rgba(22,19,15,.05);
+    border-left:5px solid var(--acc);padding:18px 26px;box-shadow:0 10px 26px rgba(22,19,15,.06)}
+  .acard .hd{display:flex;align-items:baseline;gap:16px}
+  .acard .n{font-family:'Space Grotesk';font-weight:700;font-size:24px;color:var(--acc)}
+  .acard .t{font-family:'Archivo';font-weight:800;font-size:31px;line-height:1.2;color:var(--ink)}
+  .acard ul{list-style:none;margin:10px 0 0 40px}
+  .acard li{position:relative;font-family:'Archivo';font-weight:400;font-size:22px;line-height:1.34;
+    color:var(--mut);margin-top:5px;padding-left:16px}
+  .acard li::before{content:'';position:absolute;left:0;top:11px;width:6px;height:6px;
+    border-radius:50%;background:var(--acc)}
+  .acard li b{color:var(--ink);font-weight:700}
+  /* célula final do grid: a pergunta que abre o discovery */
+  .askcell{display:flex;align-items:center;justify-content:center;text-align:center;padding:18px 26px;
+    border:3px dashed rgba(221,87,49,.45);border-radius:18px}
+  .askcell span{font-family:'Newsreader',serif;font-weight:600;font-style:italic;
+    font-size:34px;line-height:1.28;color:var(--accT)}
+
+  /* caixa de destaque */
+  .box{border:3px solid var(--acc);border-radius:20px;padding:20px 30px;background:rgba(221,87,49,.05)}
+  .box .bt{font-family:'Archivo';font-weight:700;font-size:28px;line-height:1.35}
+  .box .bd{font-family:'Archivo';font-weight:400;font-size:23px;line-height:1.38;color:var(--mut);margin-top:7px}
+
+  /* campo preenchível ao vivo */
+  .fill{border-bottom:3px dashed rgba(221,87,49,.55);padding:0 10px;min-width:340px;
+    display:inline-block;outline:none;color:var(--accT)}
+  .fill.sm{min-width:210px;border-bottom-width:2px}
+  .fill:focus{background:rgba(221,87,49,.08);border-bottom-style:solid}
+
+  /* tela de anotação */
+  .noteg{display:flex;gap:22px;margin-top:38px;height:660px}
+  .notecol{flex:1;display:flex;flex-direction:column}
+  .notelb{font-family:'Space Grotesk';font-weight:700;font-size:21px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--mut);margin-bottom:12px}
+  .notebx{flex:1;background:var(--card);border-radius:18px;border:1px solid rgba(22,19,15,.07);
+    box-shadow:0 10px 26px rgba(22,19,15,.06);padding:26px 30px;outline:none;overflow:auto;
+    font-family:'Archivo';font-weight:500;font-size:28px;line-height:1.5;color:var(--ink)}
+  .notebx:empty::before{content:attr(data-ph);color:rgba(117,105,90,.5);font-weight:400}
+  .notebx:focus{border-color:rgba(221,87,49,.45);box-shadow:0 10px 26px rgba(221,87,49,.14)}
+  .btn{font-family:'Space Grotesk';font-weight:700;font-size:20px;letter-spacing:.06em;
+    background:var(--ink);color:#F6F0E4;border:0;border-radius:30px;padding:12px 28px;cursor:pointer}
+  .btn:hover{background:var(--acc)}
+
+  /* ===== animações (só no modo apresentação) ===== */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  body.present .slide.active .a1{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) both}
+  body.present .slide.active .a2{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) .12s both}
+  body.present .slide.active .a3{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) .24s both}
+  body.present .slide.active .a4{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) .36s both}
+  body.present .slide.active .fade{animation:fadeIn .8s ease .5s both}
+  @media (prefers-reduced-motion: reduce){
+    body.present .slide.active .a1,body.present .slide.active .a2,
+    body.present .slide.active .a3,body.present .slide.active .a4,
+    body.present .slide.active .fade{animation:none}
+  }
+  body.noanim .a1,body.noanim .a2,body.noanim .a3,body.noanim .a4,
+  body.noanim .fade{animation:none !important}
+</style>
+</head>
+<body>
+
+<!-- ============ 01 · Capa ============ -->
+<div class="slide">
+  <div class="pad" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+    <div class="a1"><img src="sparo-logo-ink.png" alt="Sparo" style="height:84px;width:auto"/></div>
+    <div class="a2" style="font-family:'Archivo';font-weight:900;font-size:100px;line-height:1.03;letter-spacing:-.025em;margin-top:76px;max-width:1500px">
+      Automação com IA<br/>para a Xtreme
+    </div>
+    <div class="claim a3" style="margin-top:40px;max-width:1150px">
+      Quinze minutos pra eu entender onde aperta de verdade — e te mandar a proposta amanhã de manhã.
+    </div>
+    <div class="a4" style="margin-top:56px;font-family:'Space Grotesk';font-weight:500;font-size:24px;letter-spacing:.1em;color:var(--mut)">
+      ENZO BARBATTO &nbsp;·&nbsp; SPARO &nbsp;·&nbsp; 30 DE JULHO DE 2026
+    </div>
+  </div>
+  <div class="pgnum">01 — 05</div>
+</div>
+
+<!-- ============ 02 · O padrão (INSTRUMENTO DE DISCOVERY) ============ -->
+<div class="slide">
+  <div class="pad">
+    <div class="kicker a1">Sugestões</div>
+    <div class="h1 a1" style="margin-top:26px">O que dá pra automatizar <span class="em">numa operação como a sua</span></div>
+
+    <div class="grid2">
+      <div class="acard a2">
+        <div class="hd"><span class="n">01</span><span class="t">Escopo e propostas de sub</span></div>
+        <ul>
+          <li><b>Scope builder</b> — quebra o escopo por CSI direto das plantas e do spec book</li>
+          <li><b>Scope gap</b> — aponta item faltando ou conflitante antes de você fechar preço</li>
+          <li><b>Bid leveling</b> — compara as propostas dos subs lado a lado, no mesmo critério</li>
+        </ul>
+      </div>
+
+      <div class="acard a2">
+        <div class="hd"><span class="n">02</span><span class="t">Submittals</span></div>
+        <ul>
+          <li><b>Submittal requirements</b> — extrai o que a spec exige, por CSI</li>
+          <li><b>Submittal review</b> — revisa antes de mandar e escreve a carta de resposta</li>
+          <li><b>Procurement tracker</b> — lead time, status de PO e risco de atraso na entrega</li>
+        </ul>
+      </div>
+
+      <div class="acard a3">
+        <div class="hd"><span class="n">03</span><span class="t">Revisão de plantas</span></div>
+        <ul>
+          <li><b>Diff de revisão</b> — compara os sets e lista o que mudou entre eles</li>
+          <li><b>Aviso pro campo</b> — manda pro time o que mudou, antes de virar retrabalho</li>
+        </ul>
+      </div>
+
+      <div class="acard a3">
+        <div class="hd"><span class="n">04</span><span class="t">Revisão de contrato</span></div>
+        <ul>
+          <li><b>Risco</b> — sinaliza cláusula desfavorável e exposição antes de assinar</li>
+          <li><b>Entregáveis</b> — lista o que você se comprometeu a entregar, escondido no meio</li>
+        </ul>
+      </div>
+
+      <div class="acard a4">
+        <div class="hd"><span class="n">05</span><span class="t">Documento de subcontratado</span></div>
+        <ul>
+          <li><b>Cobrança</b> — persegue sozinho o que falta: seguro, W-9, certified payroll</li>
+          <li><b>Vencimento</b> — avisa antes da apólice vencer, não depois</li>
+        </ul>
+      </div>
+
+      <div class="askcell a4">
+        <span>Quais desses fazem sentido<br/>pra Xtreme — e o que falta aqui?</span>
+      </div>
+    </div>
+  </div>
+  <div class="wm"><img src="sparo-logo-ink.png" alt="Sparo" style="height:24px;width:auto"/></div>
+  <div class="pgnum">02 — 05</div>
+</div>
+
+<!-- ============ 03 · Como a gente entrega ============ -->
+<div class="slide">
+  <div class="pad">
+    <div class="kicker a1">Como a gente entrega</div>
+    <div class="h1 a1" style="margin-top:26px">Um agente por vez, <span class="em">dentro do que você já usa</span></div>
+
+    <div class="rows" style="margin-top:40px">
+      <div class="row a2">
+        <div class="n">01</div>
+        <div>
+          <div class="t">Escopo</div>
+          <div class="d">Mapeio o processo por trás do agente, confirmo de onde vem o dado (Procore, planilha, e-mail, plantas) e a gente define o que é "pronto"</div>
+        </div>
+      </div>
+      <div class="row a2">
+        <div class="n">02</div>
+        <div>
+          <div class="t">Construção</div>
+          <div class="d">Construído em cima do jeito que a Xtreme já trabalha — e rodando em contas no nome da Xtreme, não nas minhas</div>
+        </div>
+      </div>
+      <div class="row a3">
+        <div class="n">03</div>
+        <div>
+          <div class="t">Teste e vai ao ar</div>
+          <div class="d">Teste junto com quem faz o processo hoje. Sobe quando você aprovar, não quando eu achar que está pronto</div>
+        </div>
+      </div>
+      <div class="row a4">
+        <div class="n">04</div>
+        <div>
+          <div class="t">Otimização</div>
+          <div class="d">Acompanho rodando: corrijo, melhoro e mantenho o custo de operação previsível conforme o uso cresce</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="claim a4" style="margin-top:32px;margin-left:190px;font-size:31px;color:var(--ink);font-weight:600">
+      Nada de trocar de sistema. A automação entra por cima do que já existe.
+    </div>
+  </div>
+  <div class="wm"><img src="sparo-logo-ink.png" alt="Sparo" style="height:24px;width:auto"/></div>
+  <div class="pgnum">03 — 05</div>
+</div>
+
+<!-- ============ 04 · A proposta: começar por um ============ -->
+<div class="slide">
+  <div class="pad">
+    <div class="kicker a1">Próximos passos</div>
+    <div class="h1 a1" style="margin-top:26px">O que acontece <span class="em">depois desta call</span>.</div>
+
+    <div class="rows">
+      <div class="row a2">
+        <div class="n">01</div>
+        <div>
+          <div class="t">Eu organizo o que você me contou</div>
+          <div class="d">Ainda hoje: junto os processos, priorizo por onde paga mais rápido e escolho o primeiro agente</div>
+        </div>
+      </div>
+      <div class="row a3">
+        <div class="n">02</div>
+        <div>
+          <div class="t">Proposta na sua mão — <span class="fill sm" contenteditable="true" id="f-data-proposta" data-save="1">amanhã de manhã</span></div>
+          <div class="d">Escopo do primeiro agente, prazo, investimento e o critério de aceite — tudo por escrito, sem você ter que lembrar de nada</div>
+        </div>
+      </div>
+      <div class="row a3">
+        <div class="n">03</div>
+        <div>
+          <div class="t">A gente conversa — <span class="fill sm" contenteditable="true" id="f-data-call" data-save="1">marcar agora</span></div>
+          <div class="d">20 minutos pra você me dar o retorno. Marco com você agora, antes de desligar</div>
+        </div>
+      </div>
+      <div class="row a4">
+        <div class="n">04</div>
+        <div>
+          <div class="t">Começamos por um</div>
+          <div class="d">Um agente só, uma semana rodando de verdade dentro da operação. Bateu o critério, a gente formaliza e segue pros próximos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box a4" style="margin-top:24px;margin-left:190px">
+      <div class="bt">
+        O critério de aceite vai <span class="em">escrito na proposta</span>.
+      </div>
+      <div class="bd">
+        A gente combina o que precisa acontecer pra dizer que deu certo — antes de eu construir qualquer coisa.
+      </div>
+    </div>
+  </div>
+  <div class="wm"><img src="sparo-logo-ink.png" alt="Sparo" style="height:24px;width:auto"/></div>
+  <div class="pgnum">04 — 05</div>
+</div>
+
+<!-- ============ 05 · Anotação ao vivo ============ -->
+<div class="slide">
+  <div class="pad">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between">
+      <div>
+        <div class="kicker a1">Anotando</div>
+        <div class="h1 a1" style="margin-top:22px">O que eu ouvi de você</div>
+      </div>
+      <div class="noadvance" style="display:flex;gap:12px;align-items:center">
+        <span id="saved" style="font-family:'Space Grotesk';font-size:19px;color:var(--mut)"></span>
+        <button class="btn" id="copy">COPIAR RESUMO</button>
+      </div>
+    </div>
+
+    <div class="noteg">
+      <div class="notecol">
+        <div class="notelb">Processos que você citou</div>
+        <div class="notebx noadvance" contenteditable="true" id="n-proc" data-save="1"
+             data-ph="O que dói hoje, na ordem que ele falar…"></div>
+      </div>
+      <div class="notecol">
+        <div class="notelb">Números — horas, pessoas, frequência</div>
+        <div class="notebx noadvance" contenteditable="true" id="n-num" data-save="1"
+             data-ph="Quem faz · quanto tempo por semana · o que trava quando falta…"></div>
+      </div>
+      <div class="notecol">
+        <div class="notelb">Por onde começar</div>
+        <div class="notebx noadvance" contenteditable="true" id="n-first" data-save="1"
+             data-ph="Volume alto · regra clara · dado acessível · erro barato…"></div>
+      </div>
+    </div>
+  </div>
+  <div class="wm"><img src="sparo-logo-ink.png" alt="Sparo" style="height:24px;width:auto"/></div>
+  <div class="pgnum">05 — 05</div>
+</div>
+
+<style>
+  /* ===== modo apresentação (tecla P liga/desliga · setas navegam · F11 = tela cheia) ===== */
+  body.present{overflow:hidden;height:100vh}
+  body.present .slide{display:none;position:fixed;top:50%;left:50%;margin:0;
+    transform:translate(-50%,-50%) scale(var(--pscale,1));transform-origin:center center}
+  body.present .slide.active{display:block}
+  #hint{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:99;
+    background:rgba(22,19,15,.85);color:#F1E9DC;font-family:'Space Grotesk',monospace;
+    font-size:15px;padding:10px 22px;border-radius:30px;display:none;transition:opacity .4s}
+  body.present #hint{display:block}
+</style>
+<div id="hint">← → navegam &nbsp;·&nbsp; P sai do modo apresentação &nbsp;·&nbsp; F11 tela cheia</div>
+<script>
+  document.fonts.ready.then(()=>{ setTimeout(()=>{ window.__ready = true; }, 300); });
+
+  /* rota /slides (ou ?noanim) = mesma apresentação sem animações */
+  const NOANIM = location.pathname.replace(/\/$/,'').endsWith('/slides') || location.search.includes('noanim');
+  if (NOANIM) document.body.classList.add('noanim');
+
+  /* ===== anotação: salva sozinho no navegador ===== */
+  const KEY = 'xtreme-call-2026-07-30';
+  const fields = () => [...document.querySelectorAll('[data-save]')];
+  function load(){
+    let d = {};
+    try { d = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){}
+    fields().forEach(el => { if (d[el.id] != null) el.innerHTML = d[el.id]; });
+  }
+  let t;
+  function save(){
+    const d = {};
+    fields().forEach(el => d[el.id] = el.innerHTML);
+    try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e){}
+    const s = document.getElementById('saved');
+    s.textContent = 'salvo';
+    clearTimeout(t); t = setTimeout(()=>{ s.textContent = ''; }, 1600);
+  }
+  addEventListener('input', e => { if (e.target.dataset && e.target.dataset.save) save(); });
+  load();
+
+  document.getElementById('copy').addEventListener('click', () => {
+    const txt = (el) => (document.getElementById(el).innerText || '').trim() || '—';
+    const out = [
+      'Call Sparo × Xtreme — 30/07/2026',
+      '',
+      'PROCESSOS CITADOS:', txt('n-proc'),
+      '',
+      'NÚMEROS:', txt('n-num'),
+      '',
+      'POR ONDE COMEÇAR:', txt('n-first'),
+      '',
+      'COMPROMISSOS:',
+      '- Proposta até: ' + txt('f-data-proposta'),
+      '- Call de retorno: ' + txt('f-data-call'),
+    ].join('\n');
+    navigator.clipboard.writeText(out).then(()=>{
+      const b = document.getElementById('copy');
+      const old = b.textContent; b.textContent = 'COPIADO ✓';
+      setTimeout(()=>{ b.textContent = old; }, 1800);
+    });
+  });
+
+  /* ===== apresentação ===== */
+  const slides = () => [...document.querySelectorAll('.slide')];
+  let cur = 0;
+  function fit(){
+    const s = Math.min(innerWidth/1920, innerHeight/1080);
+    document.documentElement.style.setProperty('--pscale', s.toFixed(4));
+  }
+  function show(i){
+    const ss = slides();
+    cur = Math.max(0, Math.min(ss.length-1, i));
+    ss.forEach((el,k)=>el.classList.toggle('active', k===cur));
+  }
+  function toggle(on){
+    const p = on ?? !document.body.classList.contains('present');
+    document.body.classList.toggle('present', p);
+    if(p){ fit(); show(cur); const h=document.getElementById('hint');
+      h.style.opacity=1; setTimeout(()=>{h.style.opacity=0},3500); }
+    else slides().forEach(el=>el.classList.remove('active'));
+  }
+  addEventListener('resize', fit);
+  addEventListener('keydown', e=>{
+    /* digitando numa caixa de anotação: teclado é do texto, não da navegação */
+    const typing = e.target && (e.target.isContentEditable || /^(INPUT|TEXTAREA)$/.test(e.target.tagName));
+    if (typing) { if (e.key === 'Escape') e.target.blur(); return; }
+    if(e.key==='p'||e.key==='P'){ toggle(); return; }
+    if(!document.body.classList.contains('present')) return;
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); show(cur+1); }
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); show(cur-1); }
+    if(e.key==='Home') show(0);
+    if(e.key==='End') show(slides().length-1);
+    if(e.key==='Escape') toggle(false);
+  });
+  addEventListener('click', e=>{
+    if(!document.body.classList.contains('present')) return;
+    /* clicar pra digitar (ou no botão copiar) não pode avançar o slide */
+    if (e.target.closest('.noadvance') || e.target.closest('[contenteditable]')) return;
+    show(cur+1);
+  });
+  if(location.search.includes('present')) addEventListener('load', ()=>toggle(true));
+</script>
+</body>
+</html>

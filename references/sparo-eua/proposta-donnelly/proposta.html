@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--
+  proposta.html — Proposta comercial Sparo × Donnelly Construction.
+  Formato Letter (EUA), 2 páginas. Identidade do deck (ink + coral, sem creme
+  de fundo pra imprimir bem). Campos [AMARELOS] = preencher com o Enzzo antes de enviar.
+  Gerar PDF com render-pdf.mjs.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Sparo × Donnelly — Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{ --ink:#16130F; --mut:#6C6155; --acc:#DD5731; --line:#E8E2D8; --panel:#FAF7F1; }
+  @page{ size:Letter; margin:0 }
+  body{font-family:'Archivo',sans-serif;color:var(--ink);font-size:10.5pt;line-height:1.45}
+  .page{width:8.5in;height:11in;padding:.7in .75in;position:relative;page-break-after:always;overflow:hidden}
+  .page:last-child{page-break-after:auto}
+  .page::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--acc)}
+  .eyebrow{font-family:'Space Grotesk';font-weight:700;font-size:8.5pt;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--acc);margin-top:14px}
+
+  .brand{display:flex;align-items:center;gap:8px}
+  .brand .sq{width:10px;height:10px;background:var(--acc)}
+  .brand .nm{font-weight:800;font-size:11pt;letter-spacing:.2em}
+  h1{font-weight:900;font-size:21pt;letter-spacing:-.01em;margin-top:14px}
+  .sub{font-family:'Space Grotesk';color:var(--mut);font-size:9pt;margin-top:4px}
+  .rule{height:2px;background:var(--acc);width:44px;border-radius:2px;margin:12px 0 16px}
+
+  h2{font-weight:800;font-size:12pt;margin:13px 0 6px;display:flex;align-items:center;gap:8px}
+  h2::before{content:'';width:8px;height:8px;background:var(--acc);display:inline-block}
+
+  .agent{border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:6px;margin-bottom:7px;overflow:hidden}
+  .agent.energy{border-left-color:#3E7A44}
+  .agent .hd{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--panel);font-weight:700;font-size:10.5pt}
+  .agent .hd .n{font-family:'Space Grotesk';font-weight:700;color:var(--acc);font-size:9pt}
+  .agent .bd{padding:5px 10px 7px;color:var(--mut);font-size:9pt;line-height:1.4}
+  .agent .bd b{color:var(--ink)}
+  .energy .hd{background:#EFF5EE}
+  .energy .hd .n{color:#3E7A44}
+  .tag{font-family:'Space Grotesk';font-size:7.5pt;letter-spacing:.08em;color:#3E7A44;border:1px solid #3E7A44;border-radius:10px;padding:1px 7px;margin-left:auto}
+
+  table{width:100%;border-collapse:collapse;font-size:9.5pt}
+  td,th{padding:4px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-family:'Space Grotesk';font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600}
+
+  .fee{border:2px solid var(--acc);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:18px;margin:8px 0}
+  .fee .num{font-family:'Space Grotesk';font-weight:700;font-size:20pt;color:var(--acc);white-space:nowrap}
+  .fee .desc{font-size:9.5pt;color:var(--mut)}
+  .fee .desc b{color:var(--ink)}
+
+  ul{margin:3px 0 3px 16px}
+  li{margin:2px 0;font-size:9.5pt}
+  .fill{background:#FFF3B0;padding:0 4px;border-radius:3px;font-weight:700}
+  .foot{position:absolute;bottom:.45in;left:.75in;right:.75in;display:flex;justify-content:space-between;
+    font-family:'Space Grotesk';font-size:7.5pt;color:var(--mut)}
+  .note{font-size:8.5pt;color:var(--mut);font-style:italic;margin-top:6px}
+  .twocol{display:flex;gap:18px}
+  .twocol > div{flex:1}
+</style>
+</head>
+<body>
+
+<!-- ================= PÁGINA 1 — ESCOPO ================= -->
+<div class="page">
+  <div class="brand" style="display:flex;justify-content:space-between;align-items:center">
+    <img src="sparo-logo-ink.png" alt="Sparo" style="height:26px;width:auto"/>
+    <span style="font-family:'Space Grotesk';font-size:8pt;letter-spacing:.1em;color:var(--mut)">AI AUTOMATION · sparo.com.br</span>
+  </div>
+  <div class="eyebrow">Proposal · July 2026</div>
+  <h1 style="margin-top:6px">AI Automation Partnership</h1>
+  <div class="sub">Prepared for <b style="color:var(--ink)">Donnelly Construction</b> &nbsp;·&nbsp; July 17, 2026 &nbsp;·&nbsp; Private &amp; Confidential</div>
+  <div class="rule"></div>
+
+  <p style="font-size:10pt;color:var(--mut)">Based on our call and on Donnelly's AI agent structure, this proposal covers the design, build and operation of the seven AI agents below — delivered one by one, integrated with your existing tools (including Procore), and running on infrastructure set up in Donnelly's name.</p>
+
+  <h2>Scope — your seven agents</h2>
+
+  <div class="agent"><div class="hd"><span class="n">01</span>Project Scope</div>
+    <div class="bd"><b>Scope builder</b> — full CSI scope breakdown from drawings and plans · <b>Scope gap</b> — flags missing or conflicting scope items · <b>Bid leveling</b> — compares subcontractor bids side by side</div></div>
+
+  <div class="agent"><div class="hd"><span class="n">02</span>Submittals</div>
+    <div class="bd"><b>Submittal requirements</b> — extracts required submittals by CSI from spec books · <b>Submittal review</b> — 5-stage AI review with response letter · <b>Procurement tracker</b> — lead times, PO status and delivery risk through construction</div></div>
+
+  <div class="agent"><div class="hd"><span class="n">03</span>Value Engineering</div>
+    <div class="bd">AI-assisted VE suggestions generated from plans and specs</div></div>
+
+  <div class="agent"><div class="hd"><span class="n">04</span>Customer Contract Review</div>
+    <div class="bd">Flags risks, unfavorable items and project deliverables before signing</div></div>
+
+  <div class="agent"><div class="hd"><span class="n">05</span>Plan Revision Check</div>
+    <div class="bd">Scans drawing revisions, identifies changes between sets and alerts field teams</div></div>
+
+  <div class="agent energy"><div class="hd"><span class="n">06</span>Energy Project Qualification<span class="tag">ENERGY DIVISION</span></div>
+    <div class="bd">Analyzes utility bills to determine incentive qualifications</div></div>
+
+  <div class="agent energy"><div class="hd"><span class="n">07</span>Energy Proposals Creation<span class="tag">ENERGY DIVISION</span></div>
+    <div class="bd">Creates customer proposals structured to maximize incentives</div></div>
+
+  <p class="note">Agents 06–07 belong to the energy company and run as a separate track. Sub-features may be delivered as sub-agents where that makes the system simpler and cheaper to run — we confirm this during the audit of each agent.</p>
+
+  <div class="foot"><span>SPARO · AI Automation · sparo.com.br</span><span>Page 1 of 2</span></div>
+</div>
+
+<!-- ================= PÁGINA 2 — COMERCIAL ================= -->
+<div class="page">
+  <div class="brand"><img src="sparo-logo-ink.png" alt="Sparo" style="height:26px;width:auto"/></div>
+  <div class="rule" style="margin-top:14px"></div>
+
+  <h2>How we deliver</h2>
+  <ul>
+    <li><b>1 · Audit</b> — we map the process behind each agent, confirm data sources (Procore, spec books, drawings) and define what "done" looks like</li>
+    <li><b>2 · Build</b> — agent developed into how you already work, including a custom Procore integration, on accounts in Donnelly's name</li>
+    <li><b>3 · Test &amp; go live</b> — collaborative testing; each agent launches as it is approved</li>
+    <li><b>4 · Optimize</b> — we stay on: monitoring, improving and tuning efficiency as usage grows</li>
+  </ul>
+
+  <h2>Timeline</h2>
+  <ul>
+    <li><b>First agent live:</b> 45–60 days from kickoff (sooner for simpler agents)</li>
+    <li><b>Full scope (all seven agents):</b> approximately 6 months — a deliberately conservative estimate; agents launch one by one as they are completed</li>
+  </ul>
+
+  <h2>Investment</h2>
+  <div class="fee">
+    <div class="num">$4,400/month</div>
+    <div class="desc"><b>One flat monthly partnership — no variables, no surprises.</b> Covers everything from audit to build to optimization: development of all seven agents, Procore and systems integrations, infrastructure set up in Donnelly's name, collaborative testing, team training and ongoing improvements during implementation.</div>
+  </div>
+  <ul style="list-style:none;margin-left:2px">
+    <li style="padding-left:17px;text-indent:-17px"><span style="color:var(--acc);font-weight:800">✓</span>&nbsp; <b>No per-user fees.</b> Your whole team uses the agents at no extra cost per seat.</li>
+    <li style="padding-left:17px;text-indent:-17px"><span style="color:var(--acc);font-weight:800">✓</span>&nbsp; <b>Token efficiency by design.</b> We engineer context, model routing and skills so usage costs stay predictable — this is where most AI implementations leak money, and where we focus.</li>
+    <li style="padding-left:17px;text-indent:-17px"><span style="color:var(--acc);font-weight:800">✓</span>&nbsp; <b>After implementation:</b> ongoing support and optimization continues at <b>25% of the monthly fee</b> — we monitor, fix and keep improving what is live.</li>
+    <li style="padding-left:17px;text-indent:-17px"><span style="color:var(--acc);font-weight:800">✓</span>&nbsp; <b>Cloud &amp; API usage</b> runs on Donnelly's own accounts, billed at cost — no markup, full transparency.</li>
+  </ul>
+
+  <h2>Why this pays for itself</h2>
+  <p style="font-size:10pt">Seven agents working across scope, submittals, VE, contracts, revisions and energy — around the clock, for <b>about half the cost of a single project engineer</b>. Each agent that goes live starts returning hours to your team immediately; you don't wait six months to see value.</p>
+
+  <h2>Next steps</h2>
+  <table>
+    <tr><td style="width:.35in"><b>1</b></td><td>Approve this proposal (valid until July 31, 2026)</td></tr>
+    <tr><td><b>2</b></td><td>Kickoff call — audit of Agent 01 begins the same week</td></tr>
+    <tr><td><b>3</b></td><td>Access setup with your IT support company + Procore → first agent live in 45–60 days</td></tr>
+  </table>
+
+  <h2 style="margin-top:10px">Acceptance</h2>
+  <p style="font-size:9pt;color:var(--mut)">By signing below, Donnelly Construction authorizes Sparo to begin the kickoff audit under the terms above. A formal services agreement will follow for signature before the first invoice.</p>
+  <div class="twocol" style="margin-top:8px">
+    <div>
+      <div style="border-bottom:1.5px solid var(--ink);height:.26in"></div>
+      <div style="font-family:'Space Grotesk';font-size:8pt;letter-spacing:.08em;color:var(--mut);text-transform:uppercase;margin-top:4px">Donnelly Construction</div>
+      <div style="font-size:9pt;color:var(--mut);margin-top:2px">Name · Title · Date</div>
+    </div>
+    <div>
+      <div style="border-bottom:1.5px solid var(--ink);height:.26in"></div>
+      <div style="font-family:'Space Grotesk';font-size:8pt;letter-spacing:.08em;color:var(--mut);text-transform:uppercase;margin-top:4px">Sparo</div>
+      <div style="font-size:8.5pt;color:var(--mut);margin-top:2px">Enzo Barbatto, Founder<br/>enzo@sparo.com.br · +55 21 96402-8125</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel v3 — rodada 2 de referências (capas D–G)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter+Tight:wght@600..900&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Syne:wght@600..800&family=Instrument+Sans:wght@400..700&display=block" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#2b2b2b; display:flex; flex-direction:column; align-items:center; gap:48px; padding:48px; }
+  .slide { width:1080px; height:1350px; position:relative; overflow:hidden; flex:none; }
+  .pag { position:absolute; top:88px; right:96px; font:500 24px/1 "Instrument Sans", sans-serif; letter-spacing:.08em; }
+  .star { position:absolute; top:76px; left:96px; }
+
+  /* =========================================================
+     D — Terminal chic (Space Mono, quase-preto esverdeado)
+     ========================================================= */
+  .dD { background:#0D100E; color:#E9E4D8; padding:96px; display:flex; flex-direction:column; font-family:"Space Mono", monospace; }
+  .dD .pag { font-family:"Space Mono", monospace; color:#5F6A5E; letter-spacing:0; }
+  .dD .path { font:400 28px/1 "Space Mono", monospace; color:#5F6A5E; }
+  .dD h1 { font:700 92px/1.18 "Space Mono", monospace; letter-spacing:-0.02em; margin:auto 0; }
+  .dD h1 .coral { color:#DD5731; }
+  .dD h1 .cursor { display:inline-block; width:.55em; height:.95em; background:#DD5731; vertical-align:-0.08em; margin-left:.12em; }
+  .dD .sub { font:400 30px/1 "Space Mono", monospace; color:#8A937F; }
+
+  /* =========================================================
+     E — Suíço claro (Inter Tight 900, branco puro)
+     ========================================================= */
+  .dE { background:#FFFFFF; color:#0B0B0B; padding:96px; display:flex; flex-direction:column; }
+  .dE .pag { color:#B9B9B9; }
+  .dE h1 { font:900 148px/0.98 "Inter Tight", sans-serif; letter-spacing:-0.045em; margin:auto 0; }
+  .dE h1 .coral { color:#DD5731; }
+  .dE .foot { border-top:3px solid #0B0B0B; padding-top:36px; display:flex; justify-content:space-between; align-items:center; }
+  .dE .foot span { font:600 30px/1 "Inter Tight", sans-serif; letter-spacing:-0.01em; }
+  .dE .foot .arrow { color:#DD5731; font-size:40px; }
+
+  /* =========================================================
+     F — Serifa dramática (Fraunces, espresso escuro)
+     ========================================================= */
+  .dF { background:#16110D; color:#F2EADF; padding:96px; display:flex; flex-direction:column; }
+  .dF .pag { color:#7A6E60; }
+  .dF h1 { font:300 112px/1.16 "Fraunces", serif; font-variation-settings:"opsz" 144; letter-spacing:0; margin:auto 0; }
+  .dF h1 em { font-style:italic; font-weight:500; color:#DD5731; }
+  .dF .sub { font:400 30px/1 "Instrument Sans", sans-serif; letter-spacing:.18em; text-transform:uppercase; color:#7A6E60; }
+
+  /* =========================================================
+     G — Split geométrico (Syne, coral × papel)
+     ========================================================= */
+  .dG { display:flex; flex-direction:column; }
+  .dG .half-top { height:58%; background:#DD5731; position:relative; display:flex; align-items:center; justify-content:center; }
+  .dG .half-top .num { font:800 560px/1 "Syne", sans-serif; color:#F6F1E7; letter-spacing:-0.04em; }
+  .dG .half-top .pag { color:rgba(246,241,231,.7); }
+  .dG .half-bottom { flex:1; background:#F6F1E7; color:#171310; padding:72px 96px; display:flex; flex-direction:column; justify-content:center; gap:28px; }
+  .dG h1 { font:700 76px/1.1 "Syne", sans-serif; letter-spacing:-0.02em; }
+  .dG h1 .coral { color:#DD5731; }
+  .dG .sub { font:600 32px/1 "Syne", sans-serif; color:#8C8272; }
+</style>
+</head>
+<body>
+
+<!-- ============ D — Terminal chic ============ -->
+<section class="slide dD" data-screen-label="D1">
+  <div class="pag">@enzosparo · 1/7</div>
+  <div class="path">~/enzosparo/dominio-de-ia</div>
+  <h1>existem<br><span class="coral">5 níveis</span> de<br>domínio<br>de IA<span class="cursor"></span></h1>
+  <div class="sub">// em qual você está?</div>
+</section>
+
+<!-- ============ E — Suíço claro ============ -->
+<section class="slide dE" data-screen-label="E1">
+  <svg class="star" width="52" height="52" viewBox="-50 -50 100 100">
+    <g stroke="#DD5731" stroke-width="13" stroke-linecap="round">
+      <line x1="0" y1="-40" x2="0" y2="40"/><line x1="-40" y1="0" x2="40" y2="0"/>
+      <line x1="-28" y1="-28" x2="28" y2="28"/><line x1="-28" y1="28" x2="28" y2="-28"/>
+    </g>
+  </svg>
+  <div class="pag">@enzosparo · 1/7</div>
+  <h1>Existem<br><span class="coral">5 níveis</span><br>de domínio<br>de IA.</h1>
+  <div class="foot"><span>Em qual você está?</span><span class="arrow">→</span></div>
+</section>
+
+<!-- ============ F — Serifa dramática ============ -->
+<section class="slide dF" data-screen-label="F1">
+  <svg class="star" width="52" height="52" viewBox="-50 -50 100 100">
+    <g stroke="#F2EADF" stroke-width="13" stroke-linecap="round">
+      <line x1="0" y1="-40" x2="0" y2="40"/><line x1="-40" y1="0" x2="40" y2="0"/>
+      <line x1="-28" y1="-28" x2="28" y2="28"/><line x1="-28" y1="28" x2="28" y2="-28"/>
+    </g>
+  </svg>
+  <div class="pag">@enzosparo · 1/7</div>
+  <h1>Existem <em>cinco níveis</em> de domínio de IA.</h1>
+  <div class="sub">Em qual você está?</div>
+</section>
+
+<!-- ============ G — Split geométrico ============ -->
+<section class="slide dG" data-screen-label="G1">
+  <div class="half-top">
+    <div class="pag">@enzosparo · 1/7</div>
+    <div class="num">5</div>
+  </div>
+  <div class="half-bottom">
+    <h1>Existem 5 níveis de<br><span class="coral">domínio de IA.</span></h1>
+    <div class="sub">Em qual você está? →</div>
+  </div>
+</section>
+
+<script>
+  document.fonts.ready.then(function () { window.__ready = true; });
+</script>
+</body>
+</html>

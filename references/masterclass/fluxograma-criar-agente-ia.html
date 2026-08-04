@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A ordem certa pra criar um agente de IA — MasterClass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06080e; --surface:#0b0f18; --card:#0f1522; --card-2:#131a2a;
+    --line:rgba(148,163,190,.14); --line-soft:rgba(148,163,190,.08);
+    --txt:#eaeef7; --dim:#93a0b4; --faint:#5c6880;
+    --cyan:#3ee0ff; --amber:#ffb23e; --blue:#7aa2ff; --green:#31d97c; --red:#ff5f75;
+    --disp:"Bricolage Grotesque", sans-serif;
+    --body:"Instrument Sans", sans-serif;
+    --mono:"Spline Sans Mono", monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--txt);font-family:var(--body);font-size:16px;line-height:1.55;overflow-x:hidden}
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:linear-gradient(rgba(122,162,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(122,162,255,.035) 1px,transparent 1px);
+    background-size:56px 56px;mask-image:radial-gradient(ellipse 90% 70% at 50% 30%,#000 40%,transparent 100%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+  ::selection{background:var(--amber);color:#100a00}
+  .wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 clamp(20px,5vw,40px)}
+
+  /* ---------- HERO ---------- */
+  .hero{min-height:94svh;display:flex;flex-direction:column;justify-content:center;padding:70px 0 50px;position:relative}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:14px;margin-bottom:22px}
+  .kicker::before{content:"";width:34px;height:1px;background:var(--faint)}
+  .kicker .tag{padding:3px 11px;border-radius:99px;border:1px solid rgba(255,178,62,.35);color:var(--amber);background:rgba(255,178,62,.1);letter-spacing:.16em}
+  h1{font-family:var(--disp);font-weight:800;font-size:clamp(38px,6.4vw,84px);line-height:1.02;letter-spacing:-.02em;max-width:16ch;text-wrap:balance}
+  h1 .hl{color:var(--amber);text-shadow:0 0 46px rgba(255,178,62,.34)}
+  .hero .sub{color:var(--dim);font-size:clamp(16px,1.5vw,20px);max-width:56ch;margin-top:24px}
+  .hero .sub strong{color:var(--txt);font-weight:600}
+  .rule{
+    margin-top:36px;max-width:64ch;border:1px solid rgba(255,178,62,.3);border-radius:16px;
+    background:linear-gradient(120deg,rgba(255,178,62,.09),transparent 70%);
+    padding:20px 24px;display:flex;gap:16px;align-items:flex-start;
+  }
+  .rule .ic{font-size:26px;line-height:1.2;flex:none}
+  .rule .rt{font-size:clamp(15px,1.35vw,18px);color:var(--dim)}
+  .rule .rt b{color:var(--amber);font-family:var(--disp);font-weight:700}
+  .rule .rt span{color:var(--txt);font-weight:600}
+  .scrollhint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scrollhint .arw{width:14px;height:14px;border-right:2px solid var(--faint);border-bottom:2px solid var(--faint);transform:rotate(45deg);animation:bob 1.6s infinite}
+  @keyframes bob{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.4}50%{transform:rotate(45deg) translate(3px,3px);opacity:1}}
+
+  /* ---------- FLOW ---------- */
+  .flow{position:relative;padding:10px 0 30px}
+  .flow::before{content:"";position:absolute;left:35px;top:8px;bottom:70px;width:2px;
+    background:linear-gradient(180deg,var(--cyan) 0%,var(--amber) 22%,var(--amber) 58%,var(--blue) 72%,var(--green) 90%);opacity:.42}
+
+  .node{--pc:var(--amber);display:grid;grid-template-columns:72px 1fr;gap:22px;align-items:start;margin-bottom:20px}
+  .node .num{width:52px;height:52px;margin-left:9px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--mono);font-weight:600;font-size:19px;color:var(--pc);
+    background:var(--surface);border:1.5px solid var(--pc);position:relative;z-index:2;
+    box-shadow:0 0 26px -8px var(--pc)}
+  .node .card{
+    border:1px solid var(--line);border-left:3px solid var(--pc);border-radius:16px;
+    background:linear-gradient(100deg,color-mix(in srgb,var(--pc) 7%,var(--card)),var(--surface));
+    padding:18px 26px;transition:border-color .3s,transform .3s,box-shadow .3s;
+  }
+  .node .card:hover{transform:translateX(4px);border-color:var(--pc);box-shadow:0 14px 40px -14px var(--pc)}
+  .node .stage{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--pc);font-weight:600;display:block;margin-bottom:7px}
+  .node .card h3{font-family:var(--disp);font-weight:700;font-size:clamp(19px,2vw,26px);line-height:1.12;margin-bottom:7px}
+  .node .card h3 small{font-family:var(--body);font-weight:400;font-size:.62em;color:var(--faint);letter-spacing:0}
+  .node .card p{color:var(--dim);font-size:clamp(14px,1.25vw,16px);line-height:1.5}
+  .node .card p b{color:var(--txt);font-weight:600}
+  .node .card .tip{margin-top:10px;font-size:13.5px;color:var(--faint);border-top:1px solid var(--line-soft);padding-top:10px}
+  .node .card .tip b{color:var(--dim)}
+
+  /* checkpoint (a decisão, agora como etapa) */
+  .node.gate .num{border-radius:13px;background:color-mix(in srgb,var(--amber) 15%,var(--surface))}
+  .node.gate .card{border-style:dashed;border-left-style:solid;border-color:rgba(255,178,62,.4);border-left-color:var(--amber);background:rgba(255,178,62,.05)}
+  .node.gate .loop{margin-top:12px;display:flex;flex-wrap:wrap;gap:10px}
+  .loopchip{border-radius:10px;padding:9px 14px;font-size:13px;line-height:1.4;border:1px solid var(--line);flex:1;min-width:210px}
+  .loopchip.no{border-color:rgba(255,95,117,.4);background:rgba(255,95,117,.06)}
+  .loopchip.yes{border-color:rgba(49,217,124,.4);background:rgba(49,217,124,.06)}
+  .loopchip .lk{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;display:block;margin-bottom:3px}
+  .loopchip.no .lk{color:var(--red)} .loopchip.yes .lk{color:var(--green)}
+  .loopchip span{color:var(--dim)} .loopchip span b{color:var(--txt)}
+
+  /* fecho */
+  .close{text-align:center;padding:30px 0 90px}
+  .close .seq{font-family:var(--mono);font-size:clamp(12px,1.35vw,16px);letter-spacing:.1em;color:var(--dim);margin-bottom:22px}
+  .close .seq .c{color:var(--cyan)} .close .seq .a{color:var(--amber)} .close .seq .b{color:var(--blue)} .close .seq .g{color:var(--green)} .close .seq i{color:var(--faint);font-style:normal;padding:0 6px}
+  .close h2{font-family:var(--disp);font-weight:800;font-size:clamp(26px,4vw,52px);line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+  .close h2 .hl{color:var(--amber)}
+  .close .foot{margin-top:26px;font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.scrollhint .arw{animation:none}}
+  @media(max-width:560px){
+    .flow::before{left:25px}
+    .node{grid-template-columns:52px 1fr;gap:14px}
+    .node .num{width:38px;height:38px;margin-left:6px;font-size:15px}
+    .loopchip{min-width:100%}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker"><span class="tag">Método</span> criar qualquer agente de IA</div>
+    <h1>A ordem certa pra criar um <span class="hl">agente de IA</span></h1>
+    <p class="sub">O passo a passo que eu recomendo — do zero até no ar. Vale pra <strong>qualquer agente</strong>, não só o da clínica. A ordem importa tanto quanto os passos.</p>
+    <div class="rule">
+      <span class="ic">🛠️</span>
+      <p class="rt"><b>Regra de ouro:</b> prove o motor na bancada antes de botar o carro na rua. <span>Cérebro primeiro; canal por último.</span></p>
+    </div>
+  </div>
+  <div class="scrollhint">role pra ver a ordem<span class="arw"></span></div>
+</header>
+
+<main class="wrap">
+  <div class="flow">
+
+    <div class="node reveal" style="--pc:var(--cyan)">
+      <span class="num">1</span>
+      <div class="card">
+        <span class="stage">Planejar</span>
+        <h3>Planeje o agente</h3>
+        <p>Defina <b>o que ele resolve</b> e reúna a <b>base de conhecimento</b> — a verdade do negócio (serviços, preços, regras). Quem preenche é o dono; a IA só monta a estrutura.</p>
+        <p class="tip"><b>Dica:</b> já dispare o que depende de terceiros (verificação da Meta, acessos) — costuma demorar dias e pode correr em paralelo.</p>
+      </div>
+    </div>
+
+    <div class="node reveal" style="--pc:var(--amber)">
+      <span class="num">2</span>
+      <div class="card">
+        <span class="stage">Cérebro · no sandbox</span>
+        <h3>Monte o cérebro na bancada</h3>
+        <p>Um app de teste no navegador, <b>longe do canal</b>. Dê a ele a personalidade (o <b>prompt</b>: quem é, o tom, os limites) e a <b>memória</b> pra lembrar da conversa.</p>
+      </div>
+    </div>
+
+    <div class="node reveal" style="--pc:var(--amber)">
+      <span class="num">3</span>
+      <div class="card">
+        <span class="stage">Cérebro · no sandbox</span>
+        <h3>Dê conhecimento e ferramentas</h3>
+        <p>Pluga a base e as <b>ferramentas</b> — agora ele <b>percebe → decide → age</b>: consulta preço, vê agenda, registra o lead, chama um humano. Áudio e imagem, se precisar.</p>
+      </div>
+    </div>
+
+    <div class="node gate reveal" style="--pc:var(--amber)">
+      <span class="num">4</span>
+      <div class="card">
+        <span class="stage">◆ Checkpoint</span>
+        <h3>Teste até convencer</h3>
+        <p>Converse com ele na bancada e ajuste o prompt e as ferramentas até ficar bom. <b>Só passa adiante quando a conversa convence.</b></p>
+        <div class="loop">
+          <div class="loopchip no"><span class="lk">✗ ainda não</span><span>volta e ajusta — aqui errar custa <b>um prompt</b>; no cliente, custa a confiança.</span></div>
+          <div class="loopchip yes"><span class="lk">✓ convenceu</span><span>agora sim: pode <b>conectar o canal</b>.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node reveal" style="--pc:var(--blue)">
+      <span class="num">5</span>
+      <div class="card">
+        <span class="stage">Canal · só agora</span>
+        <h3>Conecte o canal</h3>
+        <p>Só depois que o cérebro convence: WhatsApp, site, Instagram. <b>Canal em agente vazio só adianta a parte chata</b> — o cérebro entra pronto.</p>
+      </div>
+    </div>
+
+    <div class="node reveal" style="--pc:var(--green)">
+      <span class="num">6</span>
+      <div class="card">
+        <span class="stage">Produção</span>
+        <h3>Blinde, coloque no ar e cobre</h3>
+        <p>Segurança, limites e <b>a hora certa de chamar um humano</b>. Publica, cobra e <b>reaproveita o mesmo esqueleto</b> no próximo cliente — daí é só trocar a base.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="close reveal">
+    <div class="seq"><span class="c">planejar</span><i>→</i><span class="a">cérebro na bancada</span><i>→</i><span class="a">testar</span><i>→</i><span class="b">canal</span><i>→</i><span class="g">produção</span></div>
+    <h2>Sempre <span class="hl">nessa ordem</span>.<br>O cérebro se prova antes de ganhar o mundo.</h2>
+    <div class="foot">MasterClass Automatize-se · Método pra criar agentes de IA</div>
+  </div>
+</main>
+
+<script>
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.15,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

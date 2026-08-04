@@ -122,7 +122,7 @@
               <option value="bold">Arial Bold</option>
             </select></label>
           <label>Posição
-            <select id="ig-pos2"><option value="middle">no meio</option><option value="bottom">embaixo</option></select></label>
+            <select id="ig-pos2"><option value="top">em cima</option><option value="middle">no meio</option><option value="bottom">embaixo</option></select></label>
           <button class="btn-primario" id="ig-aplicar">Atualizar capas</button>
         </div>
       </div>

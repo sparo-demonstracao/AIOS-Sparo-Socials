@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Definição de Cargo — Gerente de Conteúdo e Automação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  :root {
+    --coral:#DD5731; --paper:#F4EFE6; --ink:#17130E; --dark:#0F0E0C;
+    --ink-soft:rgba(23,19,14,.72); --ink-faint:rgba(23,19,14,.5);
+    --line:rgba(20,15,10,.14); --grid:rgba(20,15,10,.05);
+  }
+  html,body { background:#e9e4da; }
+  @page { size:A4; margin:0; }
+  .page {
+    width:210mm; height:296.6mm; position:relative; overflow:hidden;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Archivo','Segoe UI',sans-serif;
+    padding:20mm 17mm 16mm;
+    page-break-after:always;
+  }
+  .page:last-child { page-break-after:auto; }
+  @media screen {
+    body { padding:28px 0; }
+    .page { margin:0 auto 28px; box-shadow:0 3px 28px rgba(20,15,10,.2); }
+  }
+
+  .ribbon { position:absolute; top:0; left:17mm; width:11mm; height:16mm; background:var(--coral); }
+  .ribbon::after { content:''; position:absolute; bottom:-4.4mm; left:0;
+    border-left:5.5mm solid var(--coral); border-right:5.5mm solid var(--coral);
+    border-bottom:4.4mm solid transparent; }
+
+  .pager { position:absolute; top:9mm; right:17mm; display:flex; align-items:center; gap:2.6mm;
+    font-family:'Space Grotesk',monospace; font-size:8.6pt; color:var(--ink-soft); letter-spacing:.04em; }
+  .pager .pill { background:var(--dark); color:#F4EFE6; border-radius:20mm; padding:1.1mm 3.4mm; font-size:8pt; font-weight:600; }
+
+  .foot { position:absolute; bottom:9mm; left:17mm; right:17mm; display:flex; justify-content:space-between;
+    border-top:.35mm solid var(--line); padding-top:2.6mm;
+    font-family:'Space Grotesk',monospace; font-size:7.4pt; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-faint); }
+
+  .eyebrow { font-family:'Space Grotesk',monospace; font-size:9.4pt; font-weight:700; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--coral); margin-bottom:5mm; }
+  h1 { font-weight:900; font-size:37pt; line-height:1.02; letter-spacing:-.022em; }
+  .sub { font-family:'Newsreader',serif; font-style:italic; font-size:14.5pt; color:var(--ink-soft); margin-top:3.4mm; }
+  .meta { font-family:'Space Grotesk',monospace; font-size:9pt; color:var(--ink-soft); margin-top:6mm;
+    display:flex; gap:7mm; }
+  .meta b { color:var(--ink); font-weight:600; }
+
+  .lede { font-size:11.4pt; line-height:1.55; color:var(--ink-soft); max-width:152mm; margin-top:7mm; }
+  .lede strong { color:var(--ink); font-weight:700; }
+
+  h2 { font-weight:800; font-size:15.5pt; letter-spacing:-.01em; margin-bottom:4mm; display:flex; align-items:baseline; gap:3mm; }
+  h2 .n { font-family:'Space Grotesk',monospace; font-size:9.4pt; font-weight:700; color:var(--coral); letter-spacing:.08em; }
+  .section { margin-top:9mm; }
+
+  .card { background:#FBF8F2; border:.35mm solid var(--line); border-radius:2.6mm; }
+
+  /* frentes 2×2 */
+  .fronts { display:grid; grid-template-columns:1fr 1fr; gap:4mm; }
+  .front { padding:5mm 5mm 4.8mm; position:relative; }
+  .front .tag { font-family:'Space Grotesk',monospace; font-size:7.6pt; font-weight:700; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--coral); }
+  .front h3 { font-size:12.5pt; font-weight:800; margin:1.8mm 0 2.2mm; }
+  .front p { font-size:9.4pt; line-height:1.52; color:var(--ink-soft); }
+  .front .bar { position:absolute; top:0; left:5mm; right:5mm; height:1.1mm; background:var(--coral); border-radius:0 0 1mm 1mm; }
+
+  /* autonomia */
+  .cols2 { display:grid; grid-template-columns:1fr 1fr; gap:4mm; }
+  .auton { padding:4.6mm 5mm; }
+  .auton h4 { font-family:'Space Grotesk',monospace; font-size:8.4pt; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-bottom:2.6mm; }
+  .auton.voce h4 { color:var(--coral); }
+  .auton.enzo h4 { color:var(--ink-soft); }
+  .auton li { font-size:9.6pt; line-height:1.5; color:var(--ink-soft); list-style:none; padding-left:4.2mm; position:relative; margin-bottom:1.4mm; }
+  .auton li::before { content:'→'; position:absolute; left:0; color:var(--coral); font-weight:700; }
+  .auton.enzo li::before { color:var(--ink-faint); }
+
+  /* timeline de fases */
+  .fase { display:grid; grid-template-columns:34mm 1fr; gap:0; margin-top:4mm; overflow:hidden; }
+  .fase .side { background:var(--dark); color:#F4EFE6; padding:4.8mm 4.4mm; display:flex; flex-direction:column; justify-content:center; border-radius:2.6mm 0 0 2.6mm; }
+  .fase.f2 .side { background:var(--coral); }
+  .fase .side .fn { font-family:'Space Grotesk',monospace; font-size:8pt; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,239,230,.75); }
+  .fase .side .fp { font-size:13pt; font-weight:900; letter-spacing:-.01em; margin-top:1mm; line-height:1.1; }
+  .fase .bodyc { background:#FBF8F2; border:.35mm solid var(--line); border-left:none; border-radius:0 2.6mm 2.6mm 0; padding:4.4mm 5.4mm; }
+  .fase .bodyc h3 { font-size:11.6pt; font-weight:800; margin-bottom:1.6mm; }
+  .fase .bodyc p { font-size:9.6pt; line-height:1.55; color:var(--ink-soft); }
+  .fase .bodyc p b { color:var(--ink); }
+  .fase .up { display:inline-block; margin-top:2.2mm; background:rgba(221,87,49,.12); border:.3mm solid rgba(221,87,49,.4);
+    color:var(--coral); font-family:'Space Grotesk',monospace; font-size:8.2pt; font-weight:700; letter-spacing:.06em;
+    border-radius:1.6mm; padding:1.4mm 3mm; }
+  .mapnote { font-family:'Newsreader',serif; font-style:italic; font-size:10.6pt; color:var(--ink-soft); margin-top:5mm; max-width:150mm; }
+
+  /* remuneração */
+  .money { display:grid; grid-template-columns:62mm 1fr; gap:4mm; }
+  .fixo { background:var(--dark); color:#F4EFE6; border-radius:2.6mm; padding:6mm 5.6mm; position:relative; overflow:hidden; }
+  .fixo .tag { font-family:'Space Grotesk',monospace; font-size:7.8pt; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#E9BFAF; }
+  .fixo .val { font-size:27pt; font-weight:900; letter-spacing:-.02em; margin-top:2mm; }
+  .fixo .val small { font-size:10.5pt; font-weight:600; color:rgba(244,239,230,.65); }
+  .fixo p { font-size:8.8pt; line-height:1.5; color:rgba(244,239,230,.72); margin-top:2.4mm; }
+  .fixo .glow { position:absolute; right:-14mm; bottom:-14mm; width:34mm; height:34mm; border-radius:50%; background:radial-gradient(circle, rgba(221,87,49,.5), transparent 70%); }
+
+  .bonus { padding:4.6mm 5mm 4mm; }
+  .bonus h4 { font-size:10.6pt; font-weight:800; margin-bottom:2.4mm; }
+  .tier { display:flex; justify-content:space-between; align-items:baseline; padding:1.9mm 0;
+    border-top:.3mm dashed var(--line); font-size:9.6pt; }
+  .tier:first-of-type { border-top:none; }
+  .tier .cond { color:var(--ink-soft); }
+  .tier .plus { font-family:'Space Grotesk',monospace; font-weight:700; color:var(--coral); }
+  .bonus .note { font-family:'Newsreader',serif; font-style:italic; font-size:9.2pt; color:var(--ink-faint); margin-top:1.6mm; }
+
+  .total { margin-top:4mm; background:var(--coral); color:#fff; border-radius:2.6mm; padding:4.6mm 6mm;
+    display:flex; justify-content:space-between; align-items:center; }
+  .total .lbl { font-family:'Space Grotesk',monospace; font-size:8.6pt; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.85); max-width:80mm; }
+  .total .val { font-size:20pt; font-weight:900; letter-spacing:-.02em; }
+  .total .val small { font-size:10pt; font-weight:600; opacity:.8; }
+
+  /* tabela formato */
+  table.fmt { width:100%; border-collapse:collapse; background:#FBF8F2; border:.35mm solid var(--line); border-radius:2.6mm; overflow:hidden; }
+  .fmt th, .fmt td { padding:3.4mm 4.4mm; text-align:left; vertical-align:top; font-size:9.5pt; line-height:1.45; }
+  .fmt thead th { font-family:'Space Grotesk',monospace; font-size:8.6pt; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+  .fmt thead th:nth-child(2) { background:var(--coral); color:#fff; }
+  .fmt thead th:nth-child(3) { background:var(--dark); color:#F4EFE6; }
+  .fmt tbody th { font-family:'Space Grotesk',monospace; font-size:8pt; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); width:24mm; border-top:.3mm solid var(--line); }
+  .fmt tbody td { color:var(--ink-soft); border-top:.3mm solid var(--line); width:70mm; }
+  .fmt tbody td b { color:var(--ink); }
+  .fmt-note { font-family:'Newsreader',serif; font-style:italic; font-size:9.4pt; color:var(--ink-faint); margin-top:2.6mm; }
+
+  /* compromissos */
+  .commit { display:grid; grid-template-columns:1fr 1fr 1fr; gap:4mm; }
+  .commit .c { padding:4.4mm 4.6mm; }
+  .commit h4 { font-size:10.4pt; font-weight:800; margin-bottom:1.8mm; }
+  .commit p { font-size:8.9pt; line-height:1.5; color:var(--ink-soft); }
+
+  /* 90 dias */
+  .trial { display:flex; gap:5mm; align-items:stretch; }
+  .trial .big { background:var(--dark); color:#F4EFE6; border-radius:2.6mm; padding:5mm 6mm; min-width:40mm;
+    display:flex; flex-direction:column; justify-content:center; }
+  .trial .big .n90 { font-size:25pt; font-weight:900; letter-spacing:-.02em; }
+  .trial .big .l { font-family:'Space Grotesk',monospace; font-size:8pt; letter-spacing:.16em; text-transform:uppercase; color:#E9BFAF; }
+  .trial .txt { font-size:9.8pt; line-height:1.55; color:var(--ink-soft); align-self:center; }
+  .trial .txt b { color:var(--ink); }
+
+  .sign { display:grid; grid-template-columns:1fr 1fr; gap:10mm; margin-top:8mm; }
+  .sign .s { border-top:.4mm solid var(--ink); padding-top:2.2mm; }
+  .sign .nm { font-weight:800; font-size:10.5pt; }
+  .sign .rl { font-family:'Space Grotesk',monospace; font-size:8pt; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); margin-top:.8mm; }
+
+  .start { margin-top:8mm; background:#FBF8F2; border:.35mm solid var(--line); border-left:1.6mm solid var(--coral);
+    border-radius:1.6mm; padding:4mm 5mm; font-size:10pt; line-height:1.5; color:var(--ink-soft); }
+  .start b { color:var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ PÁGINA 1 — CAPA + FRENTES ═══════════════ -->
+<div class="page">
+  <div class="ribbon"></div>
+  <div class="pager">Sparo Automações <span class="pill">1/4</span></div>
+
+  <div style="margin-top:14mm">
+    <div class="eyebrow">Definição de cargo</div>
+    <h1 style="font-size:29pt">Gerente de Conteúdo<br>e Automação</h1>
+    <div class="sub">Automatize-se&nbsp;+&nbsp;Sparo Automações</div>
+    <div class="meta"><span>Documento interno</span><span>Julho de 2026</span><span>Confidencial</span></div>
+  </div>
+
+  <p class="lede">
+    Este documento define o cargo de <strong>Gerente de Conteúdo e Automação</strong>: escopo,
+    entregas, plano de crescimento, remuneração e formato de contratação. O cargo responde
+    pelo crescimento do YouTube, do Instagram e do tráfego pago — e evolui, fase a fase,
+    para braço direito da operação em automações.
+  </p>
+
+  <div class="section">
+    <h2><span class="n">01</span> Fase 1 — as quatro frentes</h2>
+    <div class="fronts">
+      <div class="card front"><div class="bar"></div>
+        <div class="tag">Frente A</div>
+        <h3>Edição</h3>
+        <p>Edição de 8 a 12 vídeos mensais do YouTube (com prêmio de produção por vídeo) e dos Reels dentro do expediente, mantendo a identidade visual do canal.</p>
+      </div>
+      <div class="card front"><div class="bar"></div>
+        <div class="tag">Frente B</div>
+        <h3>Roteiros</h3>
+        <p>Participação na roteirização dos vídeos: rascunho, estrutura e revisão em conjunto com o Enzo.</p>
+      </div>
+      <div class="card front"><div class="bar"></div>
+        <div class="tag">Frente C</div>
+        <h3>Instagram</h3>
+        <p>Gestão do perfil no lançamento: calendário editorial, publicação e análise de desempenho para orientar os próximos conteúdos.</p>
+      </div>
+      <div class="card front"><div class="bar"></div>
+        <div class="tag">Frente D</div>
+        <h3>Automação</h3>
+        <p>Criação das primeiras automações internas da operação desde os primeiros dias, aplicando o método da casa.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Definição de cargo · Gerente de Conteúdo e Automação</span><span>Enzo Barbatto · Sparo</span></div>
+</div>
+
+<!-- ═══════════════ PÁGINA 2 — MAPA DE CRESCIMENTO ═══════════════ -->
+<div class="page">
+  <div class="ribbon"></div>
+  <div class="pager">Sparo Automações <span class="pill">2/4</span></div>
+
+  <div style="margin-top:8mm">
+    <div class="eyebrow">O papel ao longo do tempo</div>
+    <h1 style="font-size:26pt">Plano de crescimento<br>do cargo</h1>
+    <p class="lede" style="margin-top:5mm">O cargo evolui em três fases. Cada fase adiciona
+    uma frente de atuação; <strong>a remuneração é revista na virada para a Fase 3</strong>,
+    junto com o aumento de responsabilidade.</p>
+  </div>
+
+  <div class="section" style="margin-top:7mm">
+    <div class="fase">
+      <div class="side"><div class="fn">Fase 1</div><div class="fp">1º–2º<br>mês</div></div>
+      <div class="bodyc">
+        <h3>Consolidação</h3>
+        <p>As frentes da página 1: publicação em ritmo constante, Instagram em operação e as primeiras automações internas criadas.</p>
+      </div>
+    </div>
+    <div class="fase">
+      <div class="side"><div class="fn">Fase 2</div><div class="fp">2º–4º<br>mês</div></div>
+      <div class="bodyc">
+        <h3>Crescimento</h3>
+        <p>Início do <b>tráfego pago (Meta Ads)</b> e <b>responsabilidade pelas automações internas</b>: todo o fluxo de conteúdo da operação, pago e orgânico, automatizado por ele. Com o fim do estágio, <b>jornada integral</b>.</p>
+      </div>
+    </div>
+    <div class="fase f2">
+      <div class="side"><div class="fn">Fase 3</div><div class="fp">4º–6º<br>mês</div></div>
+      <div class="bodyc">
+        <h3>Escala</h3>
+        <p><b>Google Ads</b>, criação de <b>automações para a Sparo Automações</b>, e a formação e gestão do próximo editor da equipe — transição gradual da edição.</p>
+        <span class="up">Virada para a Fase 3: reavaliação do salário fixo e dos prêmios por resultado</span>
+      </div>
+    </div>
+    <p class="mapnote">A cada fase, maior participação nas decisões estratégicas: o que testar, onde investir e o que priorizar.</p>
+  </div>
+
+  <div class="foot"><span>Definição de cargo · Gerente de Conteúdo e Automação</span><span>Enzo Barbatto · Sparo</span></div>
+</div>
+
+<!-- ═══════════════ PÁGINA 3 — REMUNERAÇÃO ═══════════════ -->
+<div class="page">
+  <div class="ribbon"></div>
+  <div class="pager">Sparo Automações <span class="pill">3/4</span></div>
+
+  <div style="margin-top:8mm">
+    <div class="eyebrow">Remuneração — Fase 1</div>
+    <h1 style="font-size:26pt">Fixo mensal garantido,<br>variável por resultado</h1>
+    <p class="lede" style="margin-top:5mm">Previsibilidade todo mês, com participação no resultado
+    da meta principal do trimestre: <strong>a receita do curso</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="money">
+      <div class="fixo">
+        <div class="glow"></div>
+        <div class="tag">Salário mensal — CLT</div>
+        <div class="val">R$ 2.200<small>/mês · 1º–2º mês</small></div>
+        <div class="val" style="font-size:15pt; margin-top:1.4mm; color:#E9BFAF">R$ 3.520<small>/mês · do 3º</small></div>
+        <p>Garantido, independente de meta. Meio período no estágio; integral depois.</p>
+      </div>
+      <div class="card bonus">
+        <h4>+ Prêmios por resultado <span style="font-family:'Space Grotesk',monospace;font-size:8pt;font-weight:600;color:var(--ink-faint)">(receita líquida mensal do curso)</span></h4>
+        <div class="tier"><span class="cond">Receita acima de R$ 45 mil</span><span class="plus">+ R$ 1.000</span></div>
+        <div class="tier"><span class="cond">Receita acima de R$ 65 mil</span><span class="plus">+ R$ 2.000</span></div>
+        <div class="tier"><span class="cond">Receita acima de R$ 85 mil</span><span class="plus">+ R$ 3.500</span></div>
+        <div class="note">Vale o maior patamar atingido no mês. Apuração pelo valor líquido do dashboard da Kiwify.</div>
+      </div>
+    </div>
+
+    <div class="card bonus" style="margin-top:4mm">
+      <h4>+ Prêmio de produção <span style="font-family:'Space Grotesk',monospace;font-size:8pt;font-weight:600;color:var(--ink-faint)">(por vídeo longo do YouTube entregue — pago na folha)</span></h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:8mm">
+        <div class="tier" style="border-top:none"><span class="cond">Até 10 minutos</span><span class="plus">R$ 70–100</span></div>
+        <div class="tier" style="border-top:none"><span class="cond">10 a 20 minutos</span><span class="plus">R$ 100–130</span></div>
+        <div class="tier"><span class="cond">20 a 30 minutos</span><span class="plus">R$ 130–150</span></div>
+        <div class="tier"><span class="cond">30 a 40 minutos</span><span class="plus">R$ 150–170</span></div>
+      </div>
+      <div class="note">Valor por vídeo conforme a complexidade. Reels e criativos de tráfego: dentro do expediente, sem prêmio por unidade.</div>
+    </div>
+
+    <div class="total">
+      <div class="lbl">Potencial total (meta máx. + 12 vídeos) — revisto na Fase 3</div>
+      <div class="val">~R$ 9.000<small>/mês · do 3º mês</small></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="n">02</span> Compromissos — dos dois lados</h2>
+    <div class="commit" style="grid-template-columns:1fr 1fr">
+      <div class="card c">
+        <h4>Exclusividade de nicho</h4>
+        <p>Durante a vigência do contrato, sem atendimento a outros canais ou creators do nicho de automação, IA e educação tech no Brasil. Trabalhos fora do nicho, na opção PJ, permanecem livres.</p>
+      </div>
+      <div class="card c">
+        <h4>Confidencialidade</h4>
+        <p>Processos, números, clientes e materiais internos permanecem confidenciais — durante o contrato e por 2 anos após o término.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Definição de cargo · Gerente de Conteúdo e Automação</span><span>Enzo Barbatto · Sparo</span></div>
+</div>
+
+<!-- ═══════════════ PÁGINA 4 — FORMATO + 90 DIAS ═══════════════ -->
+<div class="page">
+  <div class="ribbon"></div>
+  <div class="pager">Sparo Automações <span class="pill">4/4</span></div>
+
+  <div style="margin-top:8mm">
+    <div class="eyebrow">Formato</div>
+    <h1 style="font-size:26pt">Formato de contratação:<br>CLT meio período</h1>
+    <p class="lede" style="margin-top:5mm">Meio período (art. 58-A) nos dois primeiros meses,
+    enquanto dura a reta final do estágio; <strong>a partir do 3º mês, tempo integral</strong> —
+    8h por dia, de segunda a sexta (40h semanais).</p>
+  </div>
+
+  <div class="section">
+    <table class="fmt">
+      <tbody>
+        <tr><th>Salário</th>
+          <td><b>R$ 2.200/mês</b> no meio período → <b>R$ 3.520/mês a partir do 3º mês</b> (proporcional à jornada integral), + prêmios; com 13º, férias, FGTS e INSS</td></tr>
+        <tr><th>Jornada</th>
+          <td>Meses 1–2: 4h/dia seg–sex + 5h aos sábados (25h). Do 3º mês: 8h/dia, seg–sex (40h)</td></tr>
+        <tr><th>Início</th>
+          <td><b>30 de julho de 2026</b>, com o registro CLT feito na conclusão da migração da empresa para ME</td></tr>
+        <tr><th>Aditivos</th>
+          <td>No 3º mês, virada para o tempo integral; na virada para a Fase 3, reavaliação do salário fixo e dos prêmios por resultado</td></tr>
+      </tbody>
+    </table>
+    <p class="fmt-note">A data de início acompanha a conclusão da migração do CNPJ — o registro sai antes do primeiro dia de trabalho.</p>
+  </div>
+
+  <div class="start">
+    <b>Início: 30 de julho de 2026.</b> O registro CLT é feito com a conclusão da migração
+    da empresa para ME, antes do primeiro dia de trabalho.
+  </div>
+
+  <div class="sign">
+    <div class="s"><div class="nm">Enzo Barbatto</div><div class="rl">Automatize-se · Sparo Automações</div></div>
+    <div class="s"><div class="nm">Pedro</div><div class="rl">Gerente de Conteúdo e Automação</div></div>
+  </div>
+
+  <div class="foot"><span>Definição de cargo · Gerente de Conteúdo e Automação</span><span>Enzo Barbatto · Sparo</span></div>
+</div>
+
+<script>
+  document.fonts.ready.then(() => { window.__ready = true; });
+</script>
+</body>
+</html>

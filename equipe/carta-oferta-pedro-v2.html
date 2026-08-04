@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Condições de Contratação — Conteúdo e Automação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  :root {
+    --coral:#DD5731; --paper:#F4EFE6; --ink:#17130E; --dark:#0F0E0C;
+    --ink-soft:rgba(23,19,14,.72); --ink-faint:rgba(23,19,14,.5);
+    --line:rgba(20,15,10,.14);
+  }
+  html,body { background:#e9e4da; }
+  @page { size:A4; margin:0; }
+  .page {
+    width:210mm; height:296.6mm; position:relative; overflow:hidden;
+    background:var(--paper); color:var(--ink);
+    font-family:'Archivo','Segoe UI',sans-serif;
+    padding:20mm 17mm 16mm; page-break-after:always;
+  }
+  .page:last-child { page-break-after:auto; }
+  @media screen {
+    body { padding:28px 0; }
+    .page { margin:0 auto 28px; box-shadow:0 3px 28px rgba(20,15,10,.2); }
+  }
+
+  .ribbon { position:absolute; top:0; left:17mm; width:11mm; height:16mm; background:var(--coral); }
+  .ribbon::after { content:''; position:absolute; bottom:-4.4mm; left:0;
+    border-left:5.5mm solid var(--coral); border-right:5.5mm solid var(--coral);
+    border-bottom:4.4mm solid transparent; }
+
+  .pager { position:absolute; top:9mm; right:17mm; display:flex; align-items:center; gap:2.6mm;
+    font-family:'Space Grotesk',monospace; font-size:8.6pt; color:var(--ink-soft); letter-spacing:.04em; }
+  .pager .pill { background:var(--dark); color:#F4EFE6; border-radius:20mm; padding:1.1mm 3.4mm; font-size:8pt; font-weight:600; }
+
+  .foot { position:absolute; bottom:9mm; left:17mm; right:17mm; display:flex; justify-content:space-between;
+    border-top:.35mm solid var(--line); padding-top:2.6mm;
+    font-family:'Space Grotesk',monospace; font-size:7.4pt; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-faint); }
+
+  .eyebrow { font-family:'Space Grotesk',monospace; font-size:9.4pt; font-weight:700; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--coral); margin-bottom:4mm; }
+  h1 { font-weight:900; font-size:30pt; line-height:1.04; letter-spacing:-.02em; }
+  .sub { font-family:'Newsreader',serif; font-style:italic; font-size:13.5pt; color:var(--ink-soft); margin-top:2.6mm; }
+
+  .fields { margin-top:6mm; background:#FBF8F2; border:.35mm solid var(--line); border-radius:2.6mm;
+    display:grid; grid-template-columns:.85fr 1fr 1.5fr 1fr; }
+  .fields .f.hi { background:rgba(221,87,49,.1); }
+  .fields .f.hi .k { color:var(--coral); }
+  .fields .f { padding:3mm 4.4mm; border-left:.3mm solid var(--line); }
+  .fields .f:first-child { border-left:none; }
+  .fields .k { font-family:'Space Grotesk',monospace; font-size:7.6pt; font-weight:700; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--ink-faint); }
+  .fields .v { font-size:10.6pt; font-weight:700; margin-top:1mm; }
+  .fields .v small { display:block; font-size:7.8pt; font-weight:600; color:var(--ink-faint); margin-top:.4mm; }
+
+  h2 { font-weight:800; font-size:14pt; letter-spacing:-.01em; margin-bottom:2.2mm; display:flex; align-items:baseline; gap:3mm; }
+  h2 .n { font-family:'Space Grotesk',monospace; font-size:9pt; font-weight:700; color:var(--coral); letter-spacing:.08em; }
+  .section { margin-top:4.4mm; }
+  .card { background:#FBF8F2; border:.35mm solid var(--line); border-radius:2.6mm; }
+
+  .desc { font-size:10.4pt; line-height:1.55; color:var(--ink-soft); max-width:158mm; }
+  .desc strong { color:var(--ink); }
+
+  table.rows { width:100%; border-collapse:collapse; background:#FBF8F2; border:.35mm solid var(--line); border-radius:2.6mm; overflow:hidden; }
+  .rows th { font-family:'Space Grotesk',monospace; font-size:8pt; font-weight:700; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--coral); text-align:left; width:30mm; padding:2.1mm 4.4mm; vertical-align:top; border-top:.3mm solid var(--line); }
+  .rows td { font-size:9.5pt; line-height:1.45; color:var(--ink-soft); padding:2.1mm 4.4mm 2.1mm 0; border-top:.3mm solid var(--line); }
+  .rows td b { color:var(--ink); }
+  .rows tr:first-child th, .rows tr:first-child td { border-top:none; }
+
+  .money { display:grid; grid-template-columns:63mm 1fr; gap:4mm; }
+  .fixo { background:var(--dark); color:#F4EFE6; border-radius:2.6mm; padding:4.2mm 4.6mm; position:relative; overflow:hidden; }
+  .fixo .tag { font-family:'Space Grotesk',monospace; font-size:7.8pt; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#E9BFAF; }
+  .fixo .val { font-size:24pt; font-weight:900; letter-spacing:-.02em; margin-top:1.8mm; }
+  .fixo .val small { font-size:9.4pt; font-weight:600; color:rgba(244,239,230,.65); }
+  .fixo .aux { margin-top:3.4mm; padding-top:2.8mm; border-top:.3mm solid rgba(244,239,230,.22); }
+  .fixo .aux .at { font-family:'Space Grotesk',monospace; font-size:7.4pt; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#E9BFAF; }
+  .fixo .aux .av { font-size:14pt; font-weight:900; margin-top:.8mm; }
+  .fixo .aux .av small { font-size:8.6pt; font-weight:600; color:rgba(244,239,230,.65); }
+  .fixo p { font-size:8.4pt; line-height:1.45; color:rgba(244,239,230,.7); margin-top:2mm; }
+  .fixo .glow { position:absolute; right:-14mm; bottom:-14mm; width:34mm; height:34mm; border-radius:50%; background:radial-gradient(circle, rgba(221,87,49,.5), transparent 70%); }
+
+  .bonus { padding:3.6mm 5mm 3mm; }
+  .bonus h4 { font-size:10.2pt; font-weight:800; margin-bottom:1.8mm; }
+  .bonus h4 span { font-family:'Space Grotesk',monospace; font-size:8pt; font-weight:600; color:var(--ink-faint); }
+  .tier { display:flex; justify-content:space-between; align-items:baseline; padding:1.5mm 0;
+    border-top:.3mm dashed var(--line); font-size:9.6pt; }
+  .tier:first-of-type { border-top:none; }
+  .tier .cond { color:var(--ink-soft); }
+  .tier .plus { font-family:'Space Grotesk',monospace; font-weight:700; color:var(--coral); }
+  .bonus .note { font-family:'Newsreader',serif; font-style:italic; font-size:9pt; color:var(--ink-faint); margin-top:1.4mm; }
+
+  .total { margin-top:2.8mm; background:var(--coral); color:#fff; border-radius:2.6mm; padding:2.8mm 6mm;
+    display:flex; justify-content:space-between; align-items:center; }
+  .total .lbl { font-family:'Space Grotesk',monospace; font-size:8.4pt; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.85); max-width:92mm; }
+  .total .val { font-size:19pt; font-weight:900; letter-spacing:-.02em; }
+  .total .val small { font-size:10pt; font-weight:600; opacity:.8; }
+
+  .fasec { display:grid; grid-template-columns:30mm 1fr; margin-top:2.4mm; overflow:hidden; }
+  .fasec .side { background:var(--dark); color:#F4EFE6; padding:3.2mm 4mm; border-radius:2.6mm 0 0 2.6mm; display:flex; flex-direction:column; justify-content:center; }
+  .fasec.f2 .side { background:var(--coral); }
+  .fasec .side .fn { font-family:'Space Grotesk',monospace; font-size:7.6pt; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:rgba(244,239,230,.75); }
+  .fasec .side .fp { font-size:10.6pt; font-weight:900; margin-top:.6mm; }
+  .fasec .bodyc { background:#FBF8F2; border:.35mm solid var(--line); border-left:none; border-radius:0 2.6mm 2.6mm 0; padding:2.2mm 4.8mm; }
+  .fasec .bodyc p { font-size:9.3pt; line-height:1.45; color:var(--ink-soft); }
+  .fasec .bodyc p b { color:var(--ink); }
+  .upnote { display:inline-block; margin-top:1.4mm; background:rgba(221,87,49,.12); border:.3mm solid rgba(221,87,49,.4);
+    color:var(--coral); font-family:'Space Grotesk',monospace; font-size:7.8pt; font-weight:700; letter-spacing:.05em;
+    border-radius:1.6mm; padding:1.2mm 2.8mm; }
+
+  .conds li { font-size:9.4pt; line-height:1.5; color:var(--ink-soft); list-style:none; position:relative;
+    padding-left:4.4mm; margin-bottom:1.2mm; }
+  .conds li::before { content:'—'; position:absolute; left:0; color:var(--coral); font-weight:700; }
+  .conds b { color:var(--ink); }
+
+  .steps { counter-reset:st; }
+  .steps li { list-style:none; position:relative; padding-left:8.4mm; font-size:9.8pt; line-height:1.5;
+    color:var(--ink-soft); margin-bottom:1mm; }
+  .steps li::before { counter-increment:st; content:counter(st); position:absolute; left:0; top:.1mm;
+    width:5.6mm; height:5.6mm; border-radius:50%; background:var(--dark); color:#F4EFE6;
+    font-family:'Space Grotesk',monospace; font-size:8pt; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .steps b { color:var(--ink); }
+
+  .accept { margin-top:3mm; background:#FBF8F2; border:.35mm solid var(--line); border-left:1.6mm solid var(--coral);
+    border-radius:1.6mm; padding:2.6mm 5.6mm; }
+  .accept .t { font-family:'Space Grotesk',monospace; font-size:8.6pt; font-weight:700; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--coral); margin-bottom:2mm; }
+  .accept p { font-size:9.8pt; line-height:1.5; color:var(--ink-soft); }
+  .sign { display:grid; grid-template-columns:1.3fr 1fr 26mm; gap:7mm; margin-top:4mm; margin-bottom:.6mm; }
+  .sign .s { border-top:.4mm solid var(--ink); padding-top:2mm; }
+  .sign .nm { font-weight:800; font-size:10pt; }
+  .sign .rl { font-family:'Space Grotesk',monospace; font-size:7.6pt; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); margin-top:.6mm; }
+
+  .callout { margin-top:4mm; background:rgba(221,87,49,.08); border:.3mm solid rgba(221,87,49,.32);
+    border-radius:2.6mm; padding:3.4mm 5mm; }
+  .callout .ct { font-family:'Space Grotesk',monospace; font-size:8pt; font-weight:700; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--coral); margin-bottom:1.6mm; }
+  .callout p { font-size:9.4pt; line-height:1.5; color:var(--ink-soft); }
+  .callout p b { color:var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- ═══════ PÁGINA 1 ═══════ -->
+<div class="page">
+  <div class="ribbon"></div>
+  <div class="pager">Sparo Automações <span class="pill">1/3</span></div>
+
+  <div style="margin-top:9mm">
+    <div class="eyebrow">Condições de contratação</div>
+    <h1 style="font-size:25pt">Conteúdo<br>e Automação</h1>
+    <div class="sub">Automatize-se&nbsp;+&nbsp;Sparo Automações</div>
+    <div class="fields">
+      <div class="f"><div class="k">Para</div><div class="v">Pedro</div></div>
+      <div class="f"><div class="k">Data</div><div class="v">31/07/2026</div></div>
+      <div class="f"><div class="k">Cargo em carteira</div><div class="v">Analista de Marketing<small>CBO 142335</small></div></div>
+      <div class="f hi"><div class="k">Início</div><div class="v">03/08/2026<small>segunda-feira</small></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="n">01</span> A função</h2>
+    <p class="desc">Você responde pelo <strong>crescimento da marca</strong> — YouTube, Instagram e,
+    na sequência, tráfego pago — e evolui, fase a fase, para <strong>braço direito da operação em
+    automações</strong>. O cargo registrado em carteira é Analista de Marketing, que é o código
+    exigido pelo eSocial; o escopo real é o descrito aqui.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="n">02</span> Escopo — Fase 1</h2>
+    <table class="rows">
+      <tr><th>Edição</th><td>Vídeos de formato longo do YouTube — com prêmio de produção por vídeo (seção 06) — mais Reels e criativos dentro do expediente, mantendo a identidade visual do canal.</td></tr>
+      <tr><th>Roteiros</th><td>Participação na roteirização: rascunho, estrutura e revisão em conjunto com o Enzo.</td></tr>
+      <tr><th>Instagram</th><td>Gestão do perfil: calendário editorial, publicação e análise de desempenho.</td></tr>
+      <tr><th>Cursos</th><td>Apoio à produção das aulas — edição, montagem e organização do material — e <b>atendimento aos alunos</b>: suporte de acesso e dúvidas administrativas.</td></tr>
+      <tr><th>Automação</th><td>Criação das primeiras automações internas da operação, aplicando o método da casa.</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2><span class="n">03</span> Plano de crescimento</h2>
+    <div class="fasec">
+      <div class="side"><div class="fn">Fase 1</div><div class="fp">1º–2º mês</div></div>
+      <div class="bodyc"><p>Consolidação das frentes de conteúdo e criação das primeiras automações internas da operação.</p></div>
+    </div>
+    <div class="fasec">
+      <div class="side"><div class="fn">Fase 2</div><div class="fp">a partir de out.</div></div>
+      <div class="bodyc"><p>Início do <b>tráfego pago (Meta Ads)</b> e <b>responsabilidade pelas automações internas</b>: todo o fluxo de conteúdo da operação, pago e orgânico, automatizado por você.</p>
+      <span class="upnote">Fim do estágio → tempo integral: 8h/dia, salário R$ 3.520</span></div>
+    </div>
+    <div class="fasec f2">
+      <div class="side"><div class="fn">Fase 3</div><div class="fp">a partir de dez.</div></div>
+      <div class="bodyc"><p><b>Google Ads</b>, criação de <b>automações para a Sparo Automações</b> e formação do próximo editor — transição gradual da edição.</p>
+      <span class="upnote">Virada para a Fase 3: reavaliação do salário fixo e dos prêmios</span></div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Condições de contratação · Conteúdo e Automação</span><span>Enzo Barbatto · Sparo</span></div>
+</div>
+
+<!-- ═══════ PÁGINA 2 ═══════ -->
+<div class="page">
+  <div class="ribbon"></div>
+  <div class="pager">Sparo Automações <span class="pill">2/3</span></div>
+
+  <div style="margin-top:1.5mm">
+    <h2><span class="n">04</span> Formato de contratação</h2>
+    <table class="rows">
+      <tr><th>Regime</th><td><b>Até 30/09:</b> CLT meio período (art. 58-A) — 25h semanais, das 14h às 18h de segunda a sexta e das 9h às 14h15 aos sábados, compatível com a reta final do estágio. <b>A partir de 1º/10:</b> tempo integral — 8h por dia, das 9h às 18h, de segunda a sexta. Com 13º salário, férias remuneradas, FGTS e INSS.</td></tr>
+      <tr><th>Modalidade</th><td><b>Teletrabalho integral</b>, de Maringá. Equipamentos próprios; softwares, licenças e ferramentas por conta da empresa.</td></tr>
+      <tr><th>Experiência</th><td>Contrato de experiência de 45 dias, prorrogável uma vez por igual período. Passando desse prazo, torna-se contrato por prazo indeterminado.</td></tr>
+      <tr><th>Aditivos</th><td>Em 1º/10, aditivo da virada para o tempo integral (salário proporcional à nova jornada). Na virada para a Fase 3, <b>reavaliação do salário fixo e dos prêmios</b>.</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2><span class="n">05</span> Condições</h2>
+    <ul class="conds">
+      <li><b>Exclusividade de nicho:</b> durante a vigência do contrato, sem atendimento a outros canais ou creators do nicho de automação, IA e educação tech no Brasil. Trabalhos fora do nicho e fora do horário contratado permanecem livres — <b>inclusive pelo seu MEI</b>.</li>
+      <li><b>Confidencialidade:</b> processos, números, clientes e materiais internos — durante o contrato e por 2 anos após o término.</li>
+      <li><b>Portfólio:</b> uso do material produzido no seu portfólio pessoal, com os créditos combinados.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2><span class="n">06</span> Remuneração</h2>
+    <div class="money">
+      <div class="fixo">
+        <div class="glow"></div>
+        <div class="tag">Salário mensal — CLT</div>
+        <div class="val">R$ 2.200<small>/mês · até 30/09</small></div>
+        <div class="val" style="font-size:16pt; margin-top:1.4mm; color:#E9BFAF">R$ 3.520<small>/mês · de 1º/10 em diante</small></div>
+        <div class="aux">
+          <div class="at">+ Ajuda de custo</div>
+          <div class="av">R$ 480<small>/mês · todo mês</small></div>
+          <p>Internet, energia e desgaste do equipamento. Não sofre desconto de imposto nem de INSS — cai integral.</p>
+        </div>
+      </div>
+      <div class="card bonus">
+        <h4>+ Prêmios por resultado <span>(receita líquida mensal do curso)</span></h4>
+        <div class="tier"><span class="cond">Receita acima de R$ 45 mil</span><span class="plus">+ R$ 1.000</span></div>
+        <div class="tier"><span class="cond">Receita acima de R$ 65 mil</span><span class="plus">+ R$ 2.000</span></div>
+        <div class="tier"><span class="cond">Receita acima de R$ 85 mil</span><span class="plus">+ R$ 3.500</span></div>
+        <div class="note">Vale o maior patamar atingido no mês. Apuração pelo valor líquido do dashboard da Kiwify (mês-calendário); pagamento junto com o fixo. Tabela revista a cada quadrimestre.</div>
+      </div>
+    </div>
+    <div class="card bonus" style="margin-top:4mm">
+      <h4>+ Prêmio de produção <span>(por vídeo longo do YouTube, a partir do 5º vídeo entregue no mês)</span></h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:8mm">
+        <div class="tier" style="border-top:none"><span class="cond">Até 10 minutos</span><span class="plus">R$ 70–100</span></div>
+        <div class="tier" style="border-top:none"><span class="cond">10 a 20 minutos</span><span class="plus">R$ 100–130</span></div>
+        <div class="tier"><span class="cond">20 a 30 minutos</span><span class="plus">R$ 130–150</span></div>
+        <div class="tier"><span class="cond">30 a 40 minutos</span><span class="plus">R$ 150–170</span></div>
+      </div>
+      <div class="note">Valor conforme a complexidade. Os 4 primeiros vídeos do mês, os Reels e os criativos de tráfego entram no expediente.</div>
+    </div>
+    <div class="total">
+      <div class="lbl">Potencial total mensal (meta máx. + 12 vídeos) — ~R$ 7.500 até 30/09</div>
+      <div class="val">~R$ 8.900<small>/mês · de out. em diante</small></div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Condições de contratação · Conteúdo e Automação</span><span>Enzo Barbatto · Sparo</span></div>
+</div>
+
+<!-- ═══════ PÁGINA 3 ═══════ -->
+<div class="page">
+  <div class="ribbon"></div>
+  <div class="pager">Sparo Automações <span class="pill">3/3</span></div>
+
+  <div style="margin-top:8mm">
+    <h2><span class="n">07</span> O que mudou desde a nossa reunião</h2>
+    <table class="rows">
+      <tr><th>Início</th><td>Passou de 30/07 para <b>3 de agosto</b>, por conta do prazo da contabilidade para registrar a admissão.</td></tr>
+      <tr><th>Cargo</th><td>Em carteira consta <b>Analista de Marketing</b> — é o código que o eSocial exige e que a contabilidade registrou. A função e os valores combinados não mudam.</td></tr>
+      <tr><th>Ajuda de custo</th><td><b>Novo:</b> R$ 480 por mês para internet, energia e desgaste do seu equipamento. Não sofre desconto.</td></tr>
+      <tr><th>Prêmio por vídeo</th><td>Passa a contar <b>a partir do 5º vídeo entregue no mês</b> — os 4 primeiros entram no salário. Na prática o total é o mesmo: num mês de 10 vídeos, os R$ 480 de ajuda de custo cobrem exatamente a diferença, e ainda entram sem desconto de imposto.</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2><span class="n">08</span> Próximos passos</h2>
+    <ol class="steps">
+      <li style="margin-bottom:3mm"><b>Exame admissional</b> na clínica indicada, com o resultado enviado à contabilidade.</li>
+      <li style="margin-bottom:3mm"><b>Assinatura do contrato</b> em duas vias, com duas testemunhas.</li>
+      <li><b>Início: 3 de agosto de 2026</b>, já registrado em carteira.</li>
+    </ol>
+  </div>
+
+  <div class="accept" style="margin-top:10mm; padding:6mm 8mm">
+    <div class="t">Ciência e concordância</div>
+    <p>De acordo com as condições descritas neste documento, que integram o contrato de trabalho
+    assinado entre as partes.</p>
+    <div class="sign" style="margin-top:14mm">
+      <div class="s"><div class="nm">Pedro Henrique Naves Szekut</div><div class="rl">Analista de Marketing</div></div>
+      <div class="s"><div class="nm">Enzo Barbatto</div><div class="rl">Automatize-se · Sparo</div></div>
+      <div class="s"><div class="nm">&nbsp;</div><div class="rl">Data</div></div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Condições de contratação · Conteúdo e Automação</span><span>Enzo Barbatto · Sparo</span></div>
+</div>
+
+<script>
+  document.fonts.ready.then(() => { window.__ready = true; });
+</script>
+</body>
+</html>

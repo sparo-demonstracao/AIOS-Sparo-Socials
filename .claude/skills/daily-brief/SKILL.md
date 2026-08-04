@@ -14,8 +14,10 @@ responder e o item sumia. Cada fonte tem um filtro de **"não respondido"**:
 - **Zoho** — e-mails da Inbox (7d) sem uma resposta do Enzo pra aquela pessoa depois (compara com a pasta Enviados).
 - **YouTube** — comentários (7d) sem uma resposta do canal (`part=snippet,replies`).
 
-Na montagem, o que é de **HOJE** fica no topo (por fonte) e o que tem **2+ dias** vai pra um bloco cruzado
-**"Pendentes da semana"** (com etiqueta de fonte + "há N dias", mais atrasado no topo). Quem decide o que é
+Na montagem, o que é de **HOJE** fica no topo (por fonte) e o que tem **2+ dias** vai pro bloco
+**"Pendentes da semana"**, AGRUPADO POR ORIGEM (subcabeçalho por fonte: WhatsApp / E-mail Gmail /
+E-mail Zoho / YouTube; o grupo com o item mais atrasado vem primeiro e, dentro do grupo, o mais antigo
+no topo; cada item leva o "há N dias"). Quem decide o que é
 "importante" e escreve os rascunhos é o `claude -p` (headless, usa a assinatura, sem custo de API), seguindo
 a voz do Enzo (PT-BR, "você", direto; rebaixa divulgação/newsletter pro "ver mais").
 

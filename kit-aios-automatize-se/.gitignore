@@ -1,0 +1,11 @@
+# Segredos — NUNCA suba senha, chave ou token pro GitHub
+.env
+.env.*
+*credencial*
+*token*.json
+*secret*
+
+# Lixo de sistema
+.DS_Store
+Thumbs.db
+desktop.ini

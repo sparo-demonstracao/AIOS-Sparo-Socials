@@ -3,6 +3,9 @@
 // Mesma lógica da triagem do Gmail (triar.mjs), mas na caixa de atendimento e sobre a API REST do Zoho:
 //   classifica (Haiku via OpenRouter) → aplica a TAG certa (PUT /updatemessage) →
 //   rascunha resposta na VOZ DE ATENDIMENTO/EQUIPE (POST /messages mode:draft), exceto Médio/Sem Importância.
+// O rascunho é VINCULADO À THREAD do e-mail original: busca o Message-ID RFC via GET .../header?raw=false
+// e manda inReplyTo + refHeader no save-draft — assim ele aparece na conversa da Inbox, não só em Rascunhos.
+// Se a busca do header falhar, cai no comportamento antigo (rascunho solto) sem quebrar a triagem.
 // Voz: references/voz-atendimento.md. Parceria NÃO passa por pesquisa web — o rascunho só agradece e
 // avisa que repassou pro Enzo (decisão dele). L2 — NADA é enviado; só aplica tag e cria rascunho.
 //
@@ -111,6 +114,59 @@ async function zoho(method, path, body) {
   return j;
 }
 
+// Pasta Rascunhos do Zoho (conta atendimento@) — um rascunho NÃO é resposta enviada, então é ignorado
+// ao decidir "essa conversa já foi respondida?". Override por .env se trocar de conta. Ver zoho-mail-api.md.
+const DRAFTS_FOLDER = env('ZOHO_DRAFTS_FOLDER_ID') || '8159880000000008016';
+const MINE_RX = /@sparo\.com\.br/i;   // e-mail nosso (a caixa é atendimento@sparo.com.br)
+
+// Conversa INTEIRA por threadId (Inbox + Enviados juntos, cross-folder). Monta um transcript cronológico
+// (Cliente vs. Nós) pra o rascunho entender o contexto de TODA a troca — não só o último e-mail —, e diz se
+// a conversa JÁ foi respondida (última mensagem, ignorando rascunho, saiu de um endereço nosso).
+async function threadContext(accountId, threadId) {
+  if (!threadId) return { transcript: '', alreadyReplied: false, count: 0 };
+  try {
+    const conv = await zoho('GET', `/api/accounts/${accountId}/messages/view?threadId=${threadId}&limit=50&status=all`);
+    let msgs = (conv.data || []).filter(x => String(x.folderId) !== DRAFTS_FOLDER);
+    msgs.sort((a, b) => (Number(a.receivedTime) || 0) - (Number(b.receivedTime) || 0));
+    if (!msgs.length) return { transcript: '', alreadyReplied: false, count: 0 };
+    const last = msgs[msgs.length - 1];
+    const alreadyReplied = MINE_RX.test(last.fromAddress || '');
+    // já respondida: o chamador vai pular o rascunho, então nem busca o corpo (economiza chamadas)
+    if (alreadyReplied) return { transcript: '', alreadyReplied: true, count: msgs.length };
+    // busca o corpo de cada mensagem da conversa (thread costuma ser curto; cap nas 8 mais recentes)
+    const recent = msgs.slice(-8);
+    const parts = [];
+    for (const mm of recent) {
+      const fid = String(mm.folderId || '');
+      let body = '';
+      try {
+        const c = await zoho('GET', `/api/accounts/${accountId}/folders/${fid}/messages/${String(mm.messageId)}/content`);
+        body = stripHtml(c?.data?.content || c?.data || '');
+      } catch { body = ''; }
+      if (!body) body = mm.summary || '';
+      const mine = MINE_RX.test(mm.fromAddress || '');
+      const who = mine ? 'NÓS (Equipe Sparo)' : `CLIENTE <${emailOf(mm.fromAddress || '')}>`;
+      parts.push(`>>> ${who} — "${(mm.subject || '').slice(0, 80)}"\n${body.slice(0, 1500)}`);
+    }
+    return { transcript: parts.join('\n\n'), alreadyReplied, count: msgs.length };
+  } catch { return { transcript: '', alreadyReplied: false, count: 0 }; }
+}
+
+// Message-ID RFC + References do e-mail original (p/ vincular o rascunho à thread).
+// raw=false devolve headerContent como objeto { Nome-Do-Header: [valores] }; nomes variam de caixa, então casa case-insensitive.
+async function rfcHeaders(accountId, folderId, mid) {
+  try {
+    const h = await zoho('GET', `/api/accounts/${accountId}/folders/${folderId}/messages/${mid}/header?raw=false`);
+    const hc = h?.data?.headerContent || {};
+    const get = (name) => {
+      const k = Object.keys(hc).find(x => x.toLowerCase() === name);
+      const v = k ? hc[k] : '';
+      return (Array.isArray(v) ? v[0] : v || '').replace(/\s+/g, ' ').trim();
+    };
+    return { rfcId: get('message-id'), references: get('references') };
+  } catch { return { rfcId: '', references: '' }; }
+}
+
 // ---------- HTML → texto / texto → HTML ----------
 const stripHtml = (h) => (h || '').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<script[\s\S]*?<\/script>/gi, ' ')
   .replace(/<br\s*\/?>/gi, '\n').replace(/<\/p>/gi, '\n').replace(/<[^>]+>/g, ' ')
@@ -145,6 +201,7 @@ const DRAFT_SYS = `Você escreve um RASCUNHO de resposta de e-mail na VOZ DA EQU
 ${VOZ}
 
 Instruções:
+- Você pode receber a CONVERSA INTEIRA (vários e-mails, do mais antigo pro mais novo, marcados ">>> CLIENTE" e ">>> NÓS"). LEIA tudo e entenda o contexto geral do que a pessoa pede — não responda só o último e-mail isolado. Responda ao ÚLTIMO e-mail do cliente levando em conta todo o histórico (o que já foi pedido, o que já respondemos, o que ficou pendente). Não repita o que já dissemos.
 - Espelhe o idioma do remetente (PT→PT, EN→EN).
 - Se "isRefundRequest" for true (aluno pedindo reembolso): SIGA ESTE ROTEIRO — (1) agradeça sempre o contato; (2) peça o e-mail que a pessoa usou pra COMPRAR a Masterclass (é a informação que precisamos pra localizar o pedido); (3) pergunte, com cuidado e de forma acolhedora, o MOTIVO do reembolso ("pra gente entender melhor o que aconteceu e ver se consegue te ajudar de outra forma"). NÃO processe o reembolso, NÃO prometa prazo, NÃO negue. Nunca escreva que o objetivo é reduzir reembolso — isso é interno.
 - Se "needsEnzo" for true: NÃO decida/negocie nada. Agradeça, diga com transparência que já repassou a mensagem pro Enzo e que ele retorna pessoalmente, e feche cordial. (Parcerias/propostas caem sempre aqui.)
@@ -195,12 +252,13 @@ async function run() {
   log(`\n📥 ${recent.length} e-mails nos últimos ${DAYS}d (de ${msgs.length} retornados)\n`);
 
   const seen = loadSeen();
-  const report = [], counts = Object.fromEntries(CAT_NAMES.map(c => [c, 0])), dupSeen = new Set();
-  let drafted = 0, skippedAuto = 0, skippedSeen = 0, errors = 0, dups = 0;
+  const report = [], counts = Object.fromEntries(CAT_NAMES.map(c => [c, 0])), dupSeen = new Set(), draftedThreads = new Set();
+  let drafted = 0, skippedAuto = 0, skippedSeen = 0, errors = 0, dups = 0, skippedReplied = 0;
 
   for (let n = 0; n < recent.length; n++) {
     const m = recent[n];
     const mid = String(m.messageId);
+    const threadId = m.threadId ? String(m.threadId) : '';
     const folderId = String(m.folderId || Z.folderId || '');
     const from = m.fromAddress || '';
     const senderEmail = emailOf(from);
@@ -235,34 +293,55 @@ async function run() {
       // rascunho (menos Médio/Sem Importância, e só p/ humano real esperando resposta)
       const dupKey = `${senderEmail.toLowerCase()}|${subject.toLowerCase().replace(/[\s\W]+/g, ' ').trim().slice(0, 45)}`;
       const isDup = dupSeen.has(dupKey); dupSeen.add(dupKey); if (isDup) dups++;
-      const wantsDraft = CATEGORIES[category].draft && cls.shouldDraft && !cls.isAutomation && !isDup;
+      let wantsDraft = CATEGORIES[category].draft && cls.shouldDraft && !cls.isAutomation && !isDup;
+
+      // CONTEXTO DA CONVERSA: antes de rascunhar, puxa a thread inteira (todos os e-mails dessa troca).
+      // Serve pra (1) o rascunho entender o histórico completo, não só o último e-mail; e (2) NÃO rascunhar
+      // se a conversa já foi respondida (última msg, fora rascunho, foi nossa) ou se já rascunhamos essa
+      // thread nesta passada (evita 2 rascunhos pra "X" e "Re: X" da mesma conversa).
+      let convText = `De: ${from}\nAssunto: ${subject}\n\n${bodyText}`;
+      let skipReason = '';
+      if (wantsDraft) {
+        const ctx = await threadContext(accountId, threadId);
+        if (ctx.alreadyReplied) { wantsDraft = false; skipReason = 'já respondida'; skippedReplied++; }
+        else if (threadId && draftedThreads.has(threadId)) { wantsDraft = false; skipReason = 'thread já rascunhada'; }
+        else if (ctx.transcript) { convText = ctx.transcript; }
+      }
 
       if (wantsDraft) {
         const dr = parseJson(await llm(DRAFT_MODEL, DRAFT_SYS,
-          `Categoria: ${category}\nisRefundRequest: ${cls.isRefundRequest ? 'true' : 'false'}\nneedsEnzo: ${cls.needsEnzo ? 'true' : 'false'}\nIdioma: ${cls.language || 'pt'}\n\n--- E-mail recebido ---\nDe: ${from}\nAssunto: ${subject}\n\n${bodyText}`, 1200, 0.4));
+          `Categoria: ${category}\nisRefundRequest: ${cls.isRefundRequest ? 'true' : 'false'}\nneedsEnzo: ${cls.needsEnzo ? 'true' : 'false'}\nIdioma: ${cls.language || 'pt'}\n\n--- CONVERSA (do mais antigo pro mais novo; responda ao ÚLTIMO e-mail do cliente com base em tudo) ---\n${convText}`, 1200, 0.4));
         const subj = dr.subject && /^re:/i.test(dr.subject) ? dr.subject : `Re: ${subject}`;
         if (!DRY) {
-          await zoho('POST', `/api/accounts/${accountId}/messages`, {
+          const draft = {
             mode: 'draft', fromAddress: FROM, toAddress: senderEmail,
             subject: subj, content: toHtml(dr.body || ''), mailFormat: 'html',
-          });
+          };
+          // vincula à thread do original (inReplyTo = Message-ID RFC; refHeader = cadeia References + ele)
+          const { rfcId, references } = await rfcHeaders(accountId, folderId, mid);
+          if (rfcId) { draft.inReplyTo = rfcId; draft.refHeader = references ? `${references} ${rfcId}` : rfcId; }
+          else log(`   ⚠️ sem Message-ID RFC (${mid}) — rascunho vai sem vínculo de thread`);
+          await zoho('POST', `/api/accounts/${accountId}/messages`, draft);
         }
+        if (threadId) draftedThreads.add(threadId);
         drafted++;
         report.push({ mid, from: senderEmail, subject, category, needsEnzo: !!cls.needsEnzo, drafted: true, corpo: DRY ? dr.body : undefined });
         log(`${n + 1}/${recent.length}  ✍️ [${category}]${cls.needsEnzo ? ' →Enzo' : ''}  ${senderEmail} — ${subject.slice(0, 55)}`);
       } else {
-        report.push({ mid, from: senderEmail, subject, category, drafted: false, reason: isDup ? 'duplicado' : (cls.reason || '') });
-        log(`${n + 1}/${recent.length}  ${isDup ? '🔁' : '🏷️ '} [${category}]  ${senderEmail} — ${subject.slice(0, 55)}`);
+        const reason = skipReason || (isDup ? 'duplicado' : (cls.reason || ''));
+        const icon = skipReason === 'já respondida' ? '✅' : (isDup || skipReason) ? '🔁' : '🏷️ ';
+        report.push({ mid, from: senderEmail, subject, category, drafted: false, reason });
+        log(`${n + 1}/${recent.length}  ${icon} [${category}]${skipReason ? ` (${skipReason})` : ''}  ${senderEmail} — ${subject.slice(0, 55)}`);
       }
 
       if (!DRY) { seen.add(mid); saveSeen(seen); }
     } catch (e) { errors++; log(`✗ ${n + 1}/${recent.length} ${String(e.message).slice(0, 160)}`); report.push({ mid, from: senderEmail, subject, error: String(e.message).slice(0, 200) }); }
   }
 
-  writeFileSync(OUT, JSON.stringify({ when: new Date().toISOString(), dry: DRY, days: DAYS, counts, drafted, dups, skippedAuto, skippedSeen, errors, report }, null, 2));
+  writeFileSync(OUT, JSON.stringify({ when: new Date().toISOString(), dry: DRY, days: DAYS, counts, drafted, dups, skippedAuto, skippedSeen, skippedReplied, errors, report }, null, 2));
   log(`\n──────── RESUMO ${DRY ? '(DRY-RUN)' : ''} ────────`);
   for (const c of CAT_NAMES) log(`  ${c.padEnd(20)} ${counts[c]}`);
-  log(`  rascunhos: ${drafted} · duplicados: ${dups} · automação: ${skippedAuto} · já vistos: ${skippedSeen} · erros: ${errors}`);
+  log(`  rascunhos: ${drafted} · já respondidas: ${skippedReplied} · duplicados: ${dups} · automação: ${skippedAuto} · já vistos: ${skippedSeen} · erros: ${errors}`);
   log(`  detalhe: ${OUT}`);
 }
 

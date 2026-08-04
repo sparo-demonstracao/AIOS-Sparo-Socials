@@ -1,0 +1,12 @@
+{
+  "name": "deck-donnelly",
+  "version": "1.0.0",
+  "description": "Pitch deck Donnelly Construction — Sparo (apresentação hospedada)",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

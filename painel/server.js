@@ -175,6 +175,19 @@ const servidor = http.createServer(async (req, res) => {
       return json(res, r.ok ? 200 : 400, r);
     }
 
+    // Feed de carrosséis prontos (skill /instagram-design) — lê C:\tmp\aios-instagram-posts.
+    if (rota === "/api/instagram/feed" && req.method === "GET") {
+      return json(res, 200, insta.feedCarrosseis());
+    }
+
+    // Serve um slide PNG de um post do feed, com caminho validado.
+    if (rota === "/api/instagram/slide" && req.method === "GET") {
+      const p = insta.caminhoSlide(url.searchParams.get("post"), url.searchParams.get("name"));
+      if (!p) { res.writeHead(404); return res.end("404"); }
+      res.writeHead(200, { "Content-Type": "image/png", "Cache-Control": "max-age=300" });
+      return fs.createReadStream(p).pipe(res);
+    }
+
     // Serve uma imagem (capa-N.png) do job, com caminho validado.
     if (rota === "/api/instagram/file" && req.method === "GET") {
       const p = insta.caminhoImagem(url.searchParams.get("job"), url.searchParams.get("name"));
