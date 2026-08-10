@@ -14,7 +14,7 @@ e entregar mais rápido no que importa agora.
 
 **Maior dor recorrente:** {MAIOR_DOR} — candidata número 1 pro primeiro `/automatizar`.
 
-## Suas skills
+## Seus comandos
 
 - `/iniciar` — as 7 perguntas que montam tudo. Já rodou se você está vendo isto preenchido.
   Re-rode a qualquer momento pra atualizar a partir de um `aios-intake.md` editado.
@@ -22,17 +22,34 @@ e entregar mais rápido no que importa agora.
   quiser tirar mais um processo das costas — sem dia certo. Se {NOME} não souber o quê,
   descubra por ele partindo das prioridades do trimestre (acima) e da maior dor. Uma
   automação por rodada, terminada.
-- `/analisar` — o Boletim do AIOS: compara o que existe com o que era esperado pra IDADE do
-  AIOS (a data de criação está logo acima) e diz os 3 próximos passos.
+- `/analisar` — o Boletim do AIOS: a nota de 0 a 100 do que já está de pé, o ritmo pra idade
+  do AIOS (a data de nascimento está logo acima) e os 3 próximos passos.
 
-**Regra das skills:** toda skill criada ou modificada vive em DUAS pastas com conteúdo
+**Regra dos comandos:** todo comando criado ou modificado vive em DUAS pastas com conteúdo
 idêntico — `.claude/skills/` (Claude Code) e `.agents/skills/` (Antigravity). Sempre atualize
-as duas.
+as duas. Pra {NOME}, isso é invisível: o que existe é "um comando novo chamado /nome".
+
+## Regra número 1: nada de terminal
+
+{NOME} não sabe programar e não vai abrir terminal, prompt de comando nem editor de código.
+Nunca peça isso. Se algo precisa ser instalado, criado, rodado ou agendado, **você faz** —
+inclusive os testes.
+
+O que {NOME} faz é só isto:
+
+- conversar com você aqui;
+- digitar um comando com barra (`/automatizar`);
+- clicar em telas normais de aplicativo (a de permissão do Gmail, por exemplo).
+
+E fale sem jargão: "comando" no lugar de "skill", "um programinha que eu criei e rodo pra
+você" no lugar de "script", "registro" no lugar de "log", "pasta do seu AIOS" no lugar de
+"repositório". Palavra técnica inevitável vem com explicação de 4 palavras entre parênteses.
 
 ## Onde as coisas vivem
 
 - `context/` — quem é {NOME}, o negócio e as prioridades
-- `references/` — o Método 3A, o Boletim, amostras de voz (`voz.md`) e guias das ferramentas
+- `references/` — o Método 3A, o Boletim (a régua da nota), amostras de voz (`voz.md`) e
+  guias das ferramentas
 - `tarefas.md` — as tarefas repetidas de {NOME}: as candidatas a automação
 - `connections.md` — as ferramentas que você alcança, com o que dá pra fazer em cada uma
 - `boletins/` — o histórico dos Boletins (o `/analisar` cria e salva)

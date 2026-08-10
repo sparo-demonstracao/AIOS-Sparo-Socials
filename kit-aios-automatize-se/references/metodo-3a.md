@@ -51,24 +51,30 @@ Duas regras de bolso:
   tarefa inteira nunca.
 
 E às vezes o que falta não é a automação — é a peça antes dela: uma ferramenta conectada,
-mais amostras da sua voz, uma skill nova. Quando for o caso, essa peça é a entrega da rodada,
+mais amostras da sua voz, um comando novo. Quando for o caso, essa peça é a entrega da rodada,
 e a automação vem logo atrás, já destravada.
 
 ## 3. AUTOMATIZAR
 
-Construa na hora, com o AIOS, a menor versão que já resolve — e teste com um caso real (um
-e-mail de verdade, a planilha de verdade). Exemplo inventado esconde exatamente o erro que
-vai te morder depois.
+Quem constrói é o AIOS, na hora, na menor versão que já resolve — e ele testa com um caso
+real (um e-mail de verdade, a planilha de verdade). Exemplo inventado esconde exatamente o
+erro que vai te morder depois.
+
+**Você não precisa mexer em nada técnico.** Se a automação precisar de um programa, de uma
+instalação ou de um horário agendado no computador, ele faz tudo. No fim, ele te diz em uma
+frase como disparar dali pra frente: pedindo aqui na conversa, digitando um comando novo
+(ex.: `/cobrar`), ou nem isso — porque ela já dispara sozinha no horário.
 
 Toda automação nova nasce pedindo sua aprovação: a IA prepara, você confere antes de valer.
-Quando ela rodar uma semana inteira sem erro, pode passar a rodar sozinha — e aí você não é
-mais o gargalo.
+Quando ela rodar uma semana inteira sem erro, pode passar a rodar sozinha — e aí ela não
+depende mais de você.
 
 ---
 
 Pra rodar o método, digite `/automatizar` sempre que quiser tirar mais um processo das
-costas. Pra saber se o seu AIOS está no ritmo certo, rode o `/analisar` — o Boletim cobra
-pelo tempo de vida do AIOS, e a meta do primeiro mês é ter cerca de 5 automações funcionando.
+costas. Pra saber como está o seu AIOS, digite `/analisar` — o Boletim dá a nota do que já
+está de pé e diz se isso está em dia com a idade dele. A meta do primeiro mês é ter cerca de
+5 automações funcionando.
 
 ---
 

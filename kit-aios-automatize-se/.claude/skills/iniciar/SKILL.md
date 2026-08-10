@@ -12,7 +12,7 @@ das respostas. No final, o usuário sai com o kit funcionando e sabendo os dois 
 
 Leia o `aios-intake.md` na raiz do kit.
 
-- **Se já estiver preenchido** (respostas reais no lugar dos `{PLACEHOLDERS}`): não refaça a
+- **Se já estiver preenchido** (respostas reais no lugar dos campos `{ENTRE_CHAVES}`): não refaça a
   entrevista. Mostre um resumo de 3 linhas do que entendeu e pergunte: *"Atualizo todos os
   arquivos a partir daqui, ou você quer revisar alguma resposta antes?"* Depois pule direto
   pro passo "Gerar os arquivos". É assim que o usuário atualiza o AIOS: edita o intake e
@@ -29,6 +29,10 @@ Regras da conversa:
 - **Uma pergunta por mensagem.** Espere a resposta antes da próxima.
 - **Resposta vaga? Aprofunde na hora.** "Vendo serviços" → qual serviço, pra quem, por quanto.
 - **Linguagem simples, frases curtas.** O usuário pode ser dono de salão, corretor, lojista.
+  Nada de palavra técnica: não use "skill", "script", "repositório", "arquivo de configuração".
+  Fale em "comando", "programa que eu crio e rodo pra você", "pasta do seu AIOS".
+- **Nunca peça pra ele abrir terminal, prompt de comando ou digitar comando de sistema.**
+  Tudo que precisa ser rodado, você roda. Ele só conversa com você.
 - **Sempre "você/seu/sua". Nunca "tu/teu/tua".**
 
 As 7 perguntas (as mesmas do `aios-intake.md`, na mesma ordem):
@@ -57,13 +61,13 @@ Com as respostas em mãos, crie/atualize nesta ordem:
 
 1. **`aios-intake.md`** — salve cada resposta sob a pergunta correspondente. É a fonte da
    verdade do kit.
-2. **`CLAUDE.md`** — substitua TODOS os `{PLACEHOLDERS}` pelas respostas. Regra dura: nenhum
-   placeholder pode sobrar. Faltou informação? Volte e pergunte — não invente.
-   **Inclui a certidão de nascimento:** pegue a data de HOJE do ambiente (rode `date` se
-   precisar) e preencha a linha `**AIOS criado em:** {DATA_DE_CRIACAO}` com ela, no formato
-   AAAA-MM-DD. É essa data que o `/analisar` usa pra saber a idade do AIOS e cobrar o
-   esperado — não pule. (Se estiver re-rodando o `/iniciar` e a data já estiver preenchida,
-   NÃO mude: aniversário não se reseta.)
+2. **`CLAUDE.md`** — substitua TODOS os campos `{ENTRE_CHAVES}` pelas respostas. Regra dura:
+   nenhum campo pode sobrar em branco. Faltou informação? Volte e pergunte — não invente.
+   **Inclui a data de nascimento do AIOS:** pegue a data de HOJE do ambiente sozinho (nunca
+   pergunte a data pro usuário nem peça pra ele rodar nada) e preencha a linha
+   `**AIOS criado em:** {DATA_DE_CRIACAO}`, no formato AAAA-MM-DD. É essa data que o
+   `/analisar` usa pra saber a idade do AIOS — não pule. (Se estiver re-rodando o `/iniciar`
+   e a data já estiver preenchida, NÃO mude: aniversário não se reseta.)
 3. **`context/sobre-mim.md`**, **`context/sobre-negocio.md`**, **`context/prioridades.md`** —
    preencha os templates a partir das respostas (organize, não copie cru).
 4. **`references/voz.md`** — as amostras da pergunta 6, copiadas na íntegra e marcadas como
@@ -84,15 +88,18 @@ partir do intake.
 
 Feche em três blocos:
 
-1. **O que foi criado** — liste os arquivos, um por linha.
-2. **Onde o AIOS está na régua de idade** — o Boletim (`references/boletim.md`) cobra pelo
-   tempo de vida: hoje, dia 0, ele só cobra contexto completo — então um `/iniciar` bem
-   respondido já nasce **Em dia**. Diga isso e já avise o que a régua cobra até o dia 7:
-   a primeira ferramenta conectada e a primeira automação construída.
+1. **O que foi criado** — liste os arquivos, um por linha, cada um com o que guarda.
+2. **Onde o AIOS está hoje** — seja honesto, sem inflar. Hoje ele **conhece você, mas ainda
+   não conectou nada e não automatizou nada**. Na régua do Boletim
+   (`references/boletim.md`) isso é **nota 25 de 100 — e 25 é exatamente o esperado pro
+   dia 0**. Diga nessa ordem: a nota é baixa porque quase tudo ainda está por construir, e
+   pra idade dele você está em dia. Depois avise o que vem até o dia 7: a primeira
+   ferramenta conectada e a primeira automação funcionando (nota 41).
 3. **Os dois próximos passos:**
    - **Quando aparecer a primeira tarefa chata** (pode ser agora): digite `/automatizar` —
      a maior dor que você contou na pergunta 4 é a candidata número 1.
-   - **No dia 7:** rode `/analisar` — o primeiro Boletim de verdade, já cobrando pela idade.
+   - **No dia 7:** digite `/analisar` — o primeiro boletim que já cobra alguma coisa.
 
 Termine perguntando qual ferramenta ele quer conectar primeiro — e-mail e agenda costumam
-ser as mais rápidas.
+ser as mais rápidas. Deixe claro que quem conecta é você: ele só diz qual, e responde as
+telas de permissão que aparecerem.

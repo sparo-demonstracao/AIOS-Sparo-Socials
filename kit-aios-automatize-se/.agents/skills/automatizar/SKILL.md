@@ -16,8 +16,19 @@ aproxima ele DESSA meta, não a mais impressionante. Toda recomendação desta s
 
 **Regra de ouro: uma entrega por rodada, terminada.** Na maioria das vezes a entrega é uma
 automação — mas ela também pode ser a peça que faltava pra automação existir: uma ferramenta
-conectada e testada, uma skill nova, ou contexto melhorado (mais amostras de voz, prioridades
+conectada e testada, um comando novo, ou contexto melhorado (mais amostras de voz, prioridades
 atualizadas). O que não vale é terminar sem nada de pé. Melhor 1 funcionando que 3 pela metade.
+
+**Regra de linguagem e de mão na massa (vale a rodada inteira):**
+
+- O usuário **não sabe programar e não vai abrir terminal**. Nunca peça pra ele digitar
+  comando de sistema, instalar programa pela linha de comando, editar arquivo na mão ou
+  "configurar" qualquer coisa técnica. Tudo isso é você quem faz.
+- O que ele faz é: **conversar com você aqui, clicar em telas normais de aplicativo** (a de
+  permissão do Gmail, por exemplo) e **digitar um comando com barra** (`/automatizar`).
+- Fale sem jargão: "comando" no lugar de "skill", "um programinha que eu criei e rodo pra
+  você" no lugar de "script", "registro" no lugar de "log". Se precisar usar uma palavra
+  técnica, explique em 4 palavras entre parênteses.
 
 ## Antes de falar com o usuário
 
@@ -77,63 +88,75 @@ pra frente, **partindo da meta que ele declarou no `/iniciar`**:
    escolhida.
 
    As alternativas não precisam ser todas automações: quando o maior desbloqueio do momento
-   for uma conexão nova ("conectar sua agenda"), uma skill ou contexto melhor ("colar mais
+   for uma conexão nova ("conectar sua agenda"), um comando novo ou contexto melhor ("colar mais
    amostras da sua voz"), inclua no cardápio — sempre dizendo o que cada uma destrava.
 
 Aproveite e anote TODAS as tarefas que aparecerem na conversa em `tarefas.md` — as que não
 forem automatizadas hoje ficam prontas pra próxima rodada. Se o usuário colar uma lista de
 tarefas que anotou no celular durante o dia, anote todas de uma vez.
 
-## Passo 2 — AVALIAR (escopo que cabe em uma sessão)
+## Passo 2 — AVALIAR (tamanho que cabe em uma sentada)
 
 **Quebre a tarefa em passos** e mostre em linguagem direta o que cabe a cada um:
 *"desses 5 passos, a IA faz 3 (achar quem atrasou, escrever a mensagem no seu tom, anotar que
 cobrou), você continua com 2 (decidir se cobra, apertar enviar) — e 1 a gente corta, porque
 nem precisava existir."*
 
-Regra de segurança pro começo: prefira o recorte onde o erro da IA custa barato (um rascunho
+Regra de segurança pro começo: prefira a parte onde o erro da IA custa barato (um rascunho
 ruim que ninguém envia não custa nada; um Pix errado custa caro).
 
 **Cheque as peças antes de construir:** a tarefa escolhida precisa de uma ferramenta que o
 AIOS ainda não alcança (agenda, e-mail, planilha)? Então conectar e testar essa ferramenta é
 a primeira parte da entrega — e se a conexão comer a sessão inteira, ela É a entrega da
 rodada (registre em `connections.md` com a data do teste; a automação já fica escolhida pra
-próxima). Falta contexto pro resultado sair bom (ex.: rascunhos com cara de robô porque
-`references/voz.md` tem pouca amostra)? Resolva isso junto, na mesma rodada.
+próxima). Conectar é trabalho seu: o usuário só diz qual ferramenta e clica no "permitir"
+que aparecer na tela. Falta contexto pro resultado sair bom (ex.: rascunhos com cara de robô
+porque `references/voz.md` tem pouca amostra)? Resolva isso junto, na mesma rodada.
 
-**Feche o escopo em uma frase e confirme:** *"A partir de hoje o AIOS faz X, você continua
-fazendo Y."* Se não couber em uma sessão de trabalho, encolha até caber.
+**Feche em uma frase e confirme:** *"A partir de hoje o AIOS faz X, você continua fazendo
+Y."* Se não couber em uma sentada, encolha até caber.
 
 ## Passo 3 — AUTOMATIZAR (construir agora)
 
-Construa nesta sessão a menor versão que já resolve — um script, uma skill nova, um modelo de
-mensagem, uma tarefa agendada (algo que o computador dispara sozinho no horário marcado).
-Escolha a forma mais simples que resolve.
+Construa nesta sessão a menor versão que já resolve — um comando novo, um modelo de mensagem,
+um programinha que você mesmo cria e roda, uma rotina que o computador dispara sozinha no
+horário marcado. Escolha a forma mais simples que resolve.
 
 Regras:
 
-1. **Teste com caso real, nunca inventado.** Peça o material de verdade: um e-mail real, a
-   planilha da segunda passada, a última mensagem daquele cliente. Rode o teste junto com o
-   usuário e mostre o resultado.
-2. **Toda automação nova nasce pedindo aprovação:** a IA prepara, o usuário confere antes de
+1. **Nada de terminal pro usuário.** Se a automação precisa de um programa, de uma instalação
+   ou de um agendamento no computador, **você faz tudo**: cria, instala, agenda e testa. O
+   usuário nunca vê uma linha de comando.
+2. **Toda automação tem que ter um jeito humano de disparar.** No fim da rodada, ela roda de
+   uma destas formas — e você diz qual em uma frase: (a) ele **pede aqui na conversa**;
+   (b) você criou um **comando com barra** pra ele digitar (ex.: `/cobrar`); ou (c) ela
+   **dispara sozinha** no horário, porque você deixou agendada. Automação que só funciona se
+   alguém abrir o terminal não está terminada.
+3. **Teste com caso real, nunca inventado.** Peça o material de verdade: um e-mail real, a
+   planilha da segunda passada, a última mensagem daquele cliente. Rode o teste você mesmo e
+   mostre o resultado pra ele conferir.
+4. **Toda automação nova nasce pedindo aprovação:** a IA prepara, o usuário confere antes de
    valer. Só depois de uma semana rodando sem erro ela pode passar a rodar sozinha (decisão
    que se toma na abertura de um próximo `/automatizar`).
-3. **Não ficou de pé em uma sessão? O escopo estava grande.** Volte ao passo 2 e encolha.
+5. **Não ficou de pé em uma sessão? Estava grande demais.** Volte ao passo 2 e encolha.
    Não é fracasso — é o tamanho certo.
-4. **Se criar uma skill nova:** grave em `.claude/skills/` E em `.agents/skills/` (cópia
-   idêntica, pra funcionar no Claude Code e no Antigravity).
+6. **Se criar um comando novo:** grave a pasta em `.claude/skills/` E em `.agents/skills/`
+   (cópia idêntica, pra funcionar no Claude Code e no Antigravity). Isso é serviço seu — pro
+   usuário, o que existe é "um comando novo chamado /nome".
 
 ## Fechar a rodada
 
-1. **Registre em `decisions/log.md`:** a data, o que foi entregue (automação, conexão, skill
-   ou contexto), o que faz, como rodar, o que ainda NÃO faz, e a data de revisão (daqui a
-   7 dias). Se a entrega foi uma conexão, registre também em `connections.md`, com nível de
-   acesso e data do teste.
+1. **Registre em `decisions/log.md`:** a data, o que foi entregue (automação, conexão,
+   comando novo ou contexto), o que faz, **como o usuário dispara**, o que ainda NÃO faz, e a
+   data de revisão (daqui a 7 dias). Se a entrega foi uma conexão, registre também em
+   `connections.md`, com nível de acesso e data do teste.
 2. **Atualize `tarefas.md`:** marque a tarefa como automatizada; as outras ficam na lista.
-3. Feche convidando pra próxima: *"apareceu outra tarefa chata? É só digitar /automatizar de
-   novo — não precisa esperar dia certo. E de vez em quando roda o /analisar pra ver se o seu
-   AIOS está em dia com a idade dele."*
+3. **Diga em uma frase como usar daqui pra frente** — o gatilho do item 2 do passo 3, com as
+   palavras exatas que ele digita ou o horário em que a coisa dispara sozinha.
+4. Feche convidando pra próxima: *"apareceu outra tarefa chata? É só digitar /automatizar de
+   novo — não precisa esperar dia certo. E de vez em quando roda o /analisar pra ver como
+   está a nota do seu AIOS."*
 
 **Se nada foi construído** (raro): registre em `decisions/log.md` o motivo em uma linha —
-qual processo foi escolhido, onde travou e qual escopo menor será tentado na próxima rodada.
+qual processo foi escolhido, onde travou e qual pedaço menor será tentado na próxima rodada.
 Motivo registrado também é entrega; sumir sem registro não é.

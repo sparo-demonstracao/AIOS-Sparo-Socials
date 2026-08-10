@@ -16,9 +16,10 @@ automações fazendo o trabalho exatamente do seu jeito.**
 - **Profissionais** que querem automatizar o próprio trabalho.
 
 Se você nunca escreveu uma linha de código, está no lugar certo. Tudo em português, em
-linguagem de gente.
+linguagem de gente. **Você nunca vai precisar abrir terminal nem digitar comando de
+programador** — quem faz isso é o seu AIOS. Você só conversa com ele.
 
-## As 3 skills
+## Os 3 comandos
 
 - **`/iniciar`** — roda uma vez. Faz 7 perguntas sobre você e seu negócio, monta toda a
   estrutura sozinho e registra a data de nascimento do seu AIOS.
@@ -27,8 +28,10 @@ linguagem de gente.
   souber o que automatizar, ele descobre por você: parte das metas que você contou no
   `/iniciar` e acha o que está te roubando tempo delas. E quando faltar uma peça no caminho
   (uma ferramenta conectada, mais contexto), ele resolve a peça junto.
-- **`/analisar`** — dá a nota do seu AIOS (0 a 100) comparando com a **idade** dele: um AIOS
-  de 3 dias não é cobrado como um de 3 semanas. E diz exatamente o que fazer pra ficar em dia.
+- **`/analisar`** — dá a nota do seu AIOS de 0 a 100: quanto dele já está de pé e
+  funcionando. Junto vem o **ritmo**, que compara essa nota com a idade dele. AIOS recém
+  criado tira nota baixa — e está certo assim: 25 no dia 0 é o esperado. E ele fecha dizendo
+  os 3 próximos passos, com quantos pontos cada um devolve.
 
 ## O método por trás
 
@@ -38,29 +41,26 @@ Dois nomes pra você guardar — e mais nada:
   **Avaliar** o que vale automatizar → **Automatizar** na hora. Está explicado em
   [`references/metodo-3a.md`](references/metodo-3a.md).
 - **Boletim do AIOS** — a régua do `/analisar`: 4 notas de 25 pontos (ele te conhece? alcança
-  suas ferramentas? entrega trabalho? roda sozinho?), sempre cobradas **pela idade do AIOS** —
-  nota 100 significa "em dia com o esperado", e a régua do primeiro mês termina em 5
-  automações. Está em [`references/boletim.md`](references/boletim.md).
+  suas ferramentas? entrega trabalho? roda sozinho?). A nota mede o que já está funcionando —
+  nota 100 é o AIOS do fim do primeiro mês, com 5 automações e uma rotina disparando sozinha.
+  Está em [`references/boletim.md`](references/boletim.md).
 
-## Como instalar e começar
+## Como começar (sem terminal, sem código)
 
-1. **Baixe o kit** (clone ou ZIP):
+1. **Baixe o kit.** Nesta página, clique no botão verde **Code → Download ZIP**. Depois
+   clique com o botão direito no arquivo baixado e escolha **Extrair tudo** — vai virar uma
+   pasta no seu computador. Guarde ela onde você achar fácil (Documentos, por exemplo).
 
-   ```
-   git clone https://github.com/enzosparo/aios-automatize-se.git
-   ```
+2. **Abra essa pasta no Claude Code ou no Antigravity.** Nos dois é a mesma ideia: abra o
+   programa e mande ele abrir a pasta que você acabou de extrair (**Abrir pasta**, ou
+   arraste a pasta pra dentro dele).
 
-   Não sabe o que é "clonar"? Baixe o ZIP pelo botão verde **Code → Download ZIP** e
-   descompacte numa pasta sua.
-
-2. **Abra a pasta no Claude Code ou no Antigravity.** No Claude Code: abra o terminal na pasta
-   e digite `claude`. No Antigravity: abra a pasta como projeto.
-
-3. **Rode `/iniciar`.** É uma conversa de uns 15 minutos: ele pergunta, você responde, ele
-   monta tudo.
+3. **Digite `/iniciar` e dê Enter.** É uma conversa de uns 15 minutos: ele pergunta, você
+   responde com suas palavras, ele monta tudo sozinho.
 
 Daí em diante: **`/automatizar` sempre que quiser tirar uma tarefa das costas, e `/analisar`
-pra ver se o seu AIOS está em dia com a idade.**
+pra ver a nota do seu AIOS.** Se em algum momento você não souber o que fazer, é só
+perguntar pra ele ali mesmo na conversa.
 
 ## Estrutura de pastas
 
@@ -73,8 +73,8 @@ aios-automatize-se/
 ├── EXPANSOES.md         ← o que adicionar quando seu AIOS crescer
 ├── tarefas.md           ← suas tarefas repetidas: as candidatas a automação
 ├── connections.md       ← as ferramentas que seu AIOS alcança
-├── .claude/skills/      ← as 3 skills (Claude Code)
-├── .agents/skills/      ← as mesmas 3 skills (Antigravity)
+├── .claude/skills/      ← os 3 comandos (Claude Code)
+├── .agents/skills/      ← os mesmos 3 comandos (Antigravity)
 ├── references/          ← Método 3A, Boletim e amostras da sua voz
 ├── context/             ← quem você é, seu negócio, suas prioridades
 ├── boletins/            ← o histórico das suas notas (o /analisar cria)

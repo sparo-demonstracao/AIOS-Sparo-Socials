@@ -1,7 +1,7 @@
 # Registro de decisões
 
 Este arquivo só cresce: toda decisão importante entra no topo, com data e porquê — e nada se apaga.
-Bateu o martelo sobre algo (preço, escopo, ferramenta, regra do negócio)? Peça ao seu AIOS: "registra essa decisão".
+Bateu o martelo sobre algo (preço, ferramenta, regra do negócio, jeito de atender)? Peça ao seu AIOS: "registra essa decisão".
 
 Formato de cada entrada:
 
