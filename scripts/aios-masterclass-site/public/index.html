@@ -343,6 +343,17 @@
   .foot-in a { color: var(--soft); text-decoration: none; margin-left: 22px; }
   .foot-in a:hover { color: var(--ink); }
 
+  /* ── AJUSTES MOBILE (depois das regras-base pra vencer a cascata) ── */
+  @media (max-width: 560px) {
+    .strip { padding: 16px 0; }
+    .strip-in { gap: 8px 18px; font-size: 11.5px; letter-spacing: .06em; }
+    .eyebrow { font-size: 11px; letter-spacing: .06em; padding: 6px 12px; }
+    .mentor-nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .mnum { padding: 12px 8px; text-align: center; }
+    .mnum b { font-size: 18px; }
+    .mnum span { font-size: 9.5px; letter-spacing: .04em; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .term-body .cursor { animation: none; }
@@ -399,7 +410,7 @@
 <section class="dor">
   <div class="wrap center">
     <span class="eyebrow">A vida de operador solo</span>
-    <h2 class="sec-title">Você não tem um negócio. <em>Você É o negócio.</em></h2>
+    <h2 class="sec-title">Você não tem um negócio.<br><em>Você É o negócio.</em></h2>
     <p class="sec-sub">Vendedor de manhã, atendente à tarde, financeiro à noite, criador de conteúdo no fim de semana. Tudo funciona — enquanto você aguenta.</p>
     <div class="grid3" style="text-align:left">
       <div class="card card-dor">
@@ -418,7 +429,7 @@
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18"/><path d="M5 21V13l4 3 4-6 6 4"/><path d="M19 21H5"/></svg></span>
         <span class="dor-tag">O teto</span>
         <h3>Crescer significava contratar</h3>
-        <p>Você já está no limite das suas horas. A próxima etapa era um funcionário de R$ 2.000 por mês — que você ainda ia ter que treinar, gerenciar e segurar.</p>
+        <p>Você já está no limite das suas horas. A próxima etapa era um funcionário de R$&nbsp;2.000 por mês — que você ainda ia ter que treinar, gerenciar e segurar.</p>
       </div>
     </div>
     <p class="dor-fecho">O AIOS assume o repetido, centraliza a operação e não precisa de gestão. <b>É o primeiro contratado que chega pronto — e custa uma vez.</b></p>
@@ -441,7 +452,7 @@
     <a class="video-ph" href="https://www.youtube.com/@enzosparo" target="_blank" rel="noopener">
       <span class="play">▶</span>
       <strong>Assista o meu AIOS trabalhando</strong>
-      <em>O vídeo completo no canal — 38 minutos de demonstração real</em>
+      <em>O vídeo completo no canal — 32 minutos de demonstração real</em>
     </a>
   </div>
 </section>
@@ -564,7 +575,7 @@
 <section id="oferta">
   <div class="wrap center">
     <span class="eyebrow">A oferta</span>
-    <h2 class="sec-title">A Sparo cobra R$ 8.000 pra implantar um sistema desses. <em>Você aplica por muito menos.</em></h2>
+    <h2 class="sec-title">A Sparo cobra R$&nbsp;8.000 pra implantar um sistema desses. <em>Você aplica por muito menos.</em></h2>
     <p class="sec-sub">Pagamento único, acesso vitalício. O AIOS não falta, não esquece e não pede aumento. E se o seu plano é vender automação como serviço, o combo com a MasterClass é a fábrica inteira.</p>
     <div class="promo-faixa">
       <span class="promo-selo">🔥 Promoção de lançamento</span>
