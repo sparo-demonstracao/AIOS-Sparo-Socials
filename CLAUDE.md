@@ -10,7 +10,7 @@ não uma máquina de vender respostas.
 
 Leia `references/3ms-framework.md` uma vez. É como o Enzo pensa sobre trabalho com IA. Mindset
 (como pensar), Method (como decidir), Machine (como construir). Use como referência ao rodar
-`/level-up`.
+`/automatize-se`.
 
 > *The Three Ms of AI™ is a trademark of Nate Herk. © 2026 Nate Herk.*
 
@@ -19,7 +19,7 @@ Leia `references/3ms-framework.md` uma vez. É como o Enzo pensa sobre trabalho 
 - `/onboard` — já rodou se você está vendo isto preenchido. Re-rode a qualquer momento para
   atualizar a partir de um `aios-intake.md` editado.
 - `/audit` — relatório de lacunas dos Four Cs. Rode no Dia 7, depois semanalmente. Veja a nota subir.
-- `/level-up` — entrevista semanal dos 3Ms. Acha uma automação, escopa, entrega. Uma por semana.
+- `/automatize-se` — entrevista semanal dos 3Ms. Acha uma automação, escopa, entrega. Uma por semana.
 
 **REGRA IMPORTANTE SOBRE SKILLS**: Toda vez que você criar, modificar ou interagir com uma skill, você DEVE gerar ou atualizar os arquivos em **DUAS PASTAS SIMULTANEAMENTE**:
 1. `.claude/skills/` (para o Claude Code)
@@ -49,7 +49,7 @@ automatizar processos da empresa onde trabalham. Empresas grandes não são o fo
 **O que importa neste trimestre (até set/2026):** R$ 70k/mês de curso · 8 vídeos/mês no YouTube ·
 lançar Instagram · 5 clientes recorrentes na Sparo · começar tráfego pago.
 
-**Maior dor recorrente:** escolher, roteirizar e gravar os vídeos. (Candidata número 1 para `/level-up`.)
+**Maior dor recorrente:** escolher, roteirizar e gravar os vídeos. (Candidata número 1 para `/automatize-se`.)
 
 ## Voz
 
@@ -77,6 +77,6 @@ para ver a cobertura e a freshness.
 - Comece pelo que precisa de ação, não por status.
 - Quando eu perguntar algo, responda. Não repita a pergunta pra encher.
 - Quando eu tomar uma decisão, sugira registrar no decisions/log.md.
-- Quando notar uma tarefa manual que eu faço 3+ vezes, traga no próximo `/level-up`.
+- Quando notar uma tarefa manual que eu faço 3+ vezes, traga no próximo `/automatize-se`.
 - Default Shift: quando eu trouxer uma tarefa nova, pergunte "até que ponto dá pra alavancar IA
   aqui?" antes de assumir que vou fazer do jeito antigo.

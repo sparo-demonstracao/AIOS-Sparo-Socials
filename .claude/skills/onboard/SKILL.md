@@ -12,7 +12,7 @@ Single combined wizard. Reads or writes `aios-intake.md` (the canonical intake),
 ## When NOT to run this
 
 - If the user has already onboarded and wants to refresh: still run, but skip questions already answered (idempotent).
-- If the user wants to add a new connection: that's not onboarding — point them at `connections.md` to edit directly, or schedule a `/level-up` Phase 2 walk.
+- If the user wants to add a new connection: that's not onboarding — point them at `connections.md` to edit directly, or schedule a `/automatize-se` Phase 2 walk.
 
 ## Execution
 
@@ -51,7 +51,7 @@ Email (Gmail/Outlook), Slack/Teams/Discord, DMs. Map to Domains 2 + 4.
 Map to Domains 6 + 7.
 
 **Q7 — What's the one task that eats your week, and where do you currently track work?**
-Capture top_pain (used by `/level-up` Day-14) + Domain 5 (tasks).
+Capture top_pain (used by `/automatize-se` Day-14) + Domain 5 (tasks).
 
 Domain 3 (Calendar) is auto-inferred from Q5: Gmail → Google Cal; Outlook → Outlook Cal. Confirm in Step 3.
 
@@ -83,7 +83,7 @@ When the user runs the closing prompt ("what should I focus on this week?"), res
 - Each bullet ties back to a stated 90-day priority from Q3
 - Final line: *"If I had to pick one thing for Monday, it'd be [X], because [reason from priorities]. Want me to draft the first email? And — where could the Default Shift apply here? To what extent could AI be leveraged on this task?"*
 
-The Default Shift question seeds the Mindset framework before `/level-up` formally introduces it on Day 14.
+The Default Shift question seeds the Mindset framework before `/automatize-se` formally introduces it on Day 14.
 
 ## Critical implementation rules
 
@@ -92,7 +92,7 @@ The Default Shift question seeds the Mindset framework before `/level-up` formal
 3. **One-shot scaffold.** After Step 2 ends, write Step 3 files in a single batch. No multi-turn confirmation. The user iterates by editing `aios-intake.md` and re-running.
 4. **Idempotent.** Re-running with an edited intake refreshes context files; backs up originals to `archives/intake-{ts}/`. Skips questions already answered unless the user wants to revise.
 5. **Closing screen is three lines.** Not a menu.
-6. **No extra skills generated.** Don't scaffold `/today`, `/draft`, `/connect`, etc. The kit ships 3 skills; the user authors more via `/level-up`.
+6. **No extra skills generated.** Don't scaffold `/today`, `/draft`, `/connect`, etc. The kit ships 3 skills; the user authors more via `/automatize-se`.
 7. **Read-only on `references/3ms-framework.md`.** It already ships in the kit. Don't overwrite.
 8. **No `.env` writes.** Don't ask for API keys on Day 1. Connections come Day 2.
 

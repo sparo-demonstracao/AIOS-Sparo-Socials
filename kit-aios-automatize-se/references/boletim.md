@@ -74,4 +74,5 @@ Um exemplo: nota 25 no dia 2 é **Em dia**. A mesma nota 25 no dia 25 é **Atras
 
 ---
 
-© 2026 Enzo Barbatto. Boletim do AIOS é marca de Enzo Barbatto. Conteúdo sob licença MIT.
+© 2026 Enzo Barbatto. Todos os direitos reservados. Boletim do AIOS é marca de Enzo
+Barbatto. Uso conforme o arquivo `LICENSE` do kit.

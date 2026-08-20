@@ -2,7 +2,7 @@
 
 A free, MIT-licensed starter kit that turns Claude Code into your personal **AI Operating System (AIOS)**. Audience: anyone building automations — solopreneurs, small business operators, managers, creators, AI consultants. Pairs with a companion masterclass video.
 
-The kit personalizes itself to you via an `/onboard` interview, then gives you two recurring thinking skills (`/audit`, `/level-up`) to keep building leverage week over week.
+The kit personalizes itself to you via an `/onboard` interview, then gives you two recurring thinking skills (`/audit`, `/automatize-se`) to keep building leverage week over week.
 
 > **AIS-OS** stands for **AI Automation Society OS** — the way Nate designed this AIOS to be set up for members of his community, [AI Automation Society](https://www.skool.com/ai-automation-society). The kit is universal (it works for anyone), but the structure mirrors how AIS members run their own businesses on top of it.
 
@@ -50,7 +50,7 @@ The kit teaches two complementary frameworks. **Three Ms first, Four Cs second.*
 | **Method** | Find Constraint → EAD (Eliminate, Automate, Delegate) → Map Process → Pick Autonomy Level → Tie to KPI. |
 | **Machine** | Lego Principle, Validation Chain, Bike Method, Intern Rule, Kill Switch. *Boring is beautiful. Workflows beat agents.* |
 
-Full breakdown in `references/3ms-framework.md`. The `/level-up` skill walks you through all three weekly.
+Full breakdown in `references/3ms-framework.md`. The `/automatize-se` skill walks you through all three weekly.
 
 > *The Three Ms of AI™ is a trademark of Nate Herk. © 2026 Nate Herk.*
 
@@ -79,9 +79,9 @@ The kit is intentionally lean. Skills here are ideation prompts and thinking too
 |---|---|---|
 | `/onboard` | Setup wizard (one-time) | Day 1, immediately after clone. 7-question interview. Generates Day-1 file set + fills `CLAUDE.md`. |
 | `/audit` | Recurring thinking skill | Day 7, then weekly. Four-Cs gap report. Read-only. Watch the score climb. |
-| `/level-up` | Recurring thinking skill | Day 14, then weekly. Three Ms interview (Mindset → Method → Machine). One run = one shipped artifact. |
+| `/automatize-se` | Recurring thinking skill | Day 14, then weekly. Three Ms interview (Mindset → Method → Machine). One run = one shipped artifact. |
 
-`/audit` asks *"is the AIOS built right?"* (form). `/level-up` asks *"what business leverage am I missing?"* (function). They work in series — fix structure first, then capability planning becomes meaningful.
+`/audit` asks *"is the AIOS built right?"* (form). `/automatize-se` asks *"what business leverage am I missing?"* (function). They work in series — fix structure first, then capability planning becomes meaningful.
 
 ---
 
@@ -91,8 +91,8 @@ The kit is intentionally lean. Skills here are ideation prompts and thinking too
 2. **Open it in Claude Code** and run `/onboard`. Answer the 7 questions honestly. Voice samples must be pasted, not described. Takes ~15 minutes. Day-1 file set drops at the end.
 3. **Use it for a week.** Bring real questions. Make real decisions. Log them via `/decision` (or just append to `decisions/log.md`).
 4. **Day 7:** run `/audit`. Read the Four-Cs gap report. Pick one gap to close.
-5. **Day 14:** run `/level-up`. The Three Ms interview surfaces one automation worth building. Build it.
-6. **Week 3+:** weekly `/level-up` ritual. One shipped artifact per week.
+5. **Day 14:** run `/automatize-se`. The Three Ms interview surfaces one automation worth building. Build it.
+6. **Week 3+:** weekly `/automatize-se` ritual. One shipped artifact per week.
 
 ---
 
@@ -117,7 +117,7 @@ AIS-OS/
     └── skills/
         ├── onboard/SKILL.md
         ├── audit/SKILL.md
-        └── level-up/SKILL.md
+        └── automatize-se/SKILL.md
 ```
 
 See `EXPANSIONS.md` for what to add as you grow (`projects/`, `templates/`, `scripts/`, `.claude/agents/`, sub-OS folders, etc.).

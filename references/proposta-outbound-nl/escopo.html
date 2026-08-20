@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--
+  escopo.html — VERSÃO SEM PREÇO da proposta (Sparo × empresa da Susana, Holanda).
+  Mesmo conteúdo do proposta.html, mas SEM a seção Investment e SEM assinaturas: serve pra ela
+  confirmar se o ESCOPO está certo ANTES de ver o orçamento. Se algo mudar aqui, mudar lá também.
+  A versão com preço (€2.700 + €350/mês) é o proposta.html.
+  Gerar PDF: node render-pdf.mjs escopo
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Sparo — AI Prospecting &amp; Outreach Scope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{ --ink:#16130F; --mut:#6C6155; --acc:#DD5731; --line:#E8E2D8; --panel:#FAF7F1; --grn:#3E7A44; }
+  @page{ size:A4; margin:0 }
+  body{font-family:'Archivo',sans-serif;color:var(--ink);font-size:10.5pt;line-height:1.5}
+  .page{width:210mm;height:297mm;padding:18mm 20mm;position:relative;page-break-after:always;overflow:hidden}
+  .page:last-child{page-break-after:auto}
+  .page::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--acc)}
+  .eyebrow{font-family:'Space Grotesk';font-weight:700;font-size:8.5pt;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--acc);margin-top:16px}
+  .brand{display:flex;align-items:center;gap:8px}
+  h1{font-weight:900;font-size:22pt;letter-spacing:-.01em;margin-top:10px;line-height:1.15}
+  .sub{font-family:'Space Grotesk';color:var(--mut);font-size:9pt;margin-top:7px}
+  .rule{height:2px;background:var(--acc);width:44px;border-radius:2px;margin:14px 0 16px}
+  h2{font-weight:800;font-size:12.5pt;margin:22px 0 10px;display:flex;align-items:center;gap:9px}
+  .page2 h2{margin:20px 0 9px}
+  h2::before{content:'';width:8px;height:8px;background:var(--acc);display:inline-block}
+
+  /* módulos — UMA linha cada */
+  .mod{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .mod:last-of-type{border-bottom:none}
+  .mod .n{font-family:'Space Grotesk';font-weight:700;color:var(--acc);font-size:9pt;width:20px;flex:none}
+  .mod .t{font-weight:700;flex:none}
+  .mod .d{color:var(--mut);font-size:9.6pt}
+  .mod.gate .n{color:var(--grn)}
+  .mod.gate .t::after{content:'●';color:var(--grn);font-size:7pt;vertical-align:middle;margin-left:6px}
+
+  .punch{border-left:3px solid var(--acc);padding:6px 0 6px 14px;margin-top:16px;font-size:11pt;font-weight:600;line-height:1.45}
+
+  table{width:100%;border-collapse:collapse;font-size:10pt}
+  td,th{padding:8px 10px 8px 0;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-family:'Space Grotesk';font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600;padding-bottom:5px}
+
+  /* caixa de pedido de revisão — substitui a seção de preço */
+  .ask{border:2px solid var(--acc);border-radius:8px;padding:14px 18px;background:rgba(221,87,49,.04);margin:10px 0}
+  .ask .flb{font-family:'Space Grotesk';font-weight:600;font-size:7.5pt;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--acc)}
+  .ask p{margin-top:6px;font-size:10pt;line-height:1.5}
+
+  ul{margin:6px 0 6px 17px}
+  li{margin:5px 0;font-size:10pt}
+  .foot{position:absolute;bottom:12mm;left:20mm;right:20mm;display:flex;justify-content:space-between;
+    font-family:'Space Grotesk';font-size:7.5pt;color:var(--mut)}
+  .note{font-size:9pt;color:var(--mut);font-style:italic;margin-top:12px;line-height:1.45}
+  .note b{color:var(--ink);font-style:normal}
+  .sign{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);
+    font-size:9.5pt;color:var(--mut);line-height:1.6}
+  .sign b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<!-- ================= PAGE 1 — THE PROBLEM + WHAT IT DOES ================= -->
+<div class="page">
+  <div class="brand" style="display:flex;justify-content:space-between;align-items:center">
+    <img src="sparo-logo-ink.png" alt="Sparo" style="height:28px;width:auto"/>
+    <span style="font-family:'Space Grotesk';font-size:8pt;letter-spacing:.1em;color:var(--mut)">AI AUTOMATION · sparo.com.br</span>
+  </div>
+  <div class="eyebrow">Scope for review · August 2026</div>
+  <h1>Automated Advertiser<br/>Prospecting &amp; Outreach</h1>
+  <div class="sub">Prepared for Susana &nbsp;·&nbsp; August 12, 2026</div>
+  <div class="rule"></div>
+
+  <p style="color:var(--mut)">Your workflow today runs across five tools that don't talk to each other — Monday.com, LinkedIn, RocketReach, Gmelius and Gmail — with a person as the integration layer between them. Every prospect costs the same manual sequence, and the qualification that decides whether a company is even worth contacting happens in someone's head.</p>
+
+  <div class="punch">This project makes Monday.com the only place you work. You add a company; the system does the rest and comes back to you for the one decision that needs a human — approving the email.</div>
+
+  <h2>What the system does</h2>
+
+  <div class="mod gate"><span class="n">01</span><span class="t">Qualifies</span><span class="d">— researches each new company and scores it against your ideal advertiser profile</span></div>
+  <div class="mod"><span class="n">02</span><span class="t">Finds the right people</span><span class="d">— BD, Affiliate, Partnerships, UA, Performance Marketing</span></div>
+  <div class="mod"><span class="n">03</span><span class="t">Gets their email</span><span class="d">— through your RocketReach account, verified before use</span></div>
+  <div class="mod"><span class="n">04</span><span class="t">Ranks the contacts</span><span class="d">— by role fit, seniority and data confidence, written back to Monday</span></div>
+  <div class="mod"><span class="n">05</span><span class="t">Writes the email</span><span class="d">— personalised to the company, the contact and the vertical</span></div>
+  <div class="mod gate"><span class="n">06</span><span class="t">Waits for your approval</span><span class="d">— then sends through your existing Gmail / Gmelius setup</span></div>
+  <div class="mod"><span class="n">07</span><span class="t">Runs the follow-ups</span><span class="d">— and stops the moment someone replies</span></div>
+  <div class="mod"><span class="n">08</span><span class="t">Reads the replies</span><span class="d">— interested, not interested, later, wrong contact — and updates Monday to match</span></div>
+
+  <p class="note"><span style="color:var(--grn)">●</span> &nbsp;The two green steps are the ones that make this more than data entry: <b>nothing enters your queue unqualified, and nothing leaves without you.</b></p>
+
+  <h2>How it's built</h2>
+  <p style="color:var(--mut)"><b style="color:var(--ink)">Monday.com stays your only interface</b> — there is no new tool for your team to learn. Behind it, <b style="color:var(--ink)">n8n</b> orchestrates every step and <b style="color:var(--ink)">Claude</b> handles the research, qualification, writing and reply classification. Contacts come from <b style="color:var(--ink)">RocketReach</b>, and email goes out through the <b style="color:var(--ink)">Gmail / Gmelius</b> setup you already use. Everything runs on accounts in your name and stays yours.</p>
+  <p class="note"><b>One honest note on LinkedIn:</b> it offers no public API for contact discovery, and automating a personal account risks getting it restricted. We source contacts through compliant data providers instead — same result, without putting your account or your GDPR position at risk.</p>
+
+  <div class="foot"><span>SPARO · AI Automation · sparo.com.br</span><span>Page 1 of 2</span></div>
+</div>
+
+<!-- ================= PAGE 2 — DELIVERY, WHAT WE NEED, YOUR REVIEW ================= -->
+<div class="page page2">
+  <div class="brand"><img src="sparo-logo-ink.png" alt="Sparo" style="height:28px;width:auto"/></div>
+  <div class="rule" style="margin-top:16px"></div>
+
+  <h2 style="margin-top:0">Delivery</h2>
+  <table>
+    <tr><th style="width:30%">Phase</th><th style="width:17%">Timing</th><th>Live at the end of it</th></tr>
+    <tr><td><b>1 · Intelligence</b></td><td>Weeks 1–2</td><td>Steps 01–04 — companies qualified, contacts found and ranked in Monday</td></tr>
+    <tr><td><b>2 · Outreach</b></td><td>Weeks 3–4</td><td>Steps 05–06 — emails drafted, approved by you, sent, Monday updated</td></tr>
+    <tr><td><b>3 · Feedback loop</b></td><td>Weeks 5–6</td><td>Steps 07–08 — follow-ups, reply classification, handover</td></tr>
+  </table>
+  <p class="note">Each phase ends with acceptance criteria agreed <b>before</b> we build it, and Phase 1 runs on a real batch of your companies — so you judge the qualification quality before committing to the outreach side.</p>
+
+  <h2>To get started, we need</h2>
+  <ul>
+    <li>Around <b>20 companies you'd call ideal and 20 you'd reject</b> — this is how the system learns your judgement instead of guessing</li>
+    <li>Your current <b>email templates</b> and the verticals you sell into</li>
+    <li>Access to <b>Monday, RocketReach and Gmail/Gmelius</b></li>
+  </ul>
+
+  <h2>Not included</h2>
+  <p style="color:var(--mut)">New sending domains and mailbox warm-up · migration away from Monday.com · LinkedIn messaging automation · email sequences in languages other than English · new modules requested after Phase 1 is signed off. All of these are possible — they are simply outside this scope, and we would quote them separately.</p>
+
+  <h2>Over to you</h2>
+  <div class="ask">
+    <div class="flb">This document is the scope — not the offer</div>
+    <p>Before we put numbers on it, we want to be sure we described <b>your</b> process and not our assumption of it. Read it with a red pen: tell us what is wrong, what is missing, and what you would never use. Changes are free now and expensive once we start building.</p>
+  </div>
+
+  <h2>Next steps</h2>
+  <p style="color:var(--mut)"><b style="color:var(--ink)">1.</b> Send us your corrections to this scope &nbsp;·&nbsp; <b style="color:var(--ink)">2.</b> A 15-minute call to walk through it together &nbsp;·&nbsp; <b style="color:var(--ink)">3.</b> We send the final proposal, with pricing and dates, based on the scope you confirmed.</p>
+
+  <div class="sign">
+    <b>Enzo Barbatto</b> · Founder, Sparo<br/>
+    enzo@sparo.com.br &nbsp;·&nbsp; +55 21 96402-8125 &nbsp;·&nbsp; sparo.com.br
+  </div>
+
+  <div class="foot"><span>SPARO · AI Automation · sparo.com.br</span><span>Page 2 of 2</span></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,835 @@
+<title>Ibiza em Três Dias</title>
+<style>
+:root{
+  --ground:#F5F3F8; --surface:#FFFFFF; --surface-2:#EEEBF4; --line:#DCD7E6;
+  --text:#1B1633; --text-2:#544C72; --text-3:#8A82A4;
+  --accent:#D93A16; --accent-soft:#FFEDE7;
+  --dia:#0E8F86; --dia-soft:#DFF5F2;
+  --sunset:#C2521A; --sunset-soft:#FFEEE0;
+  --noite:#5B47D6; --noite-soft:#EAE6FF;
+  --shadow:0 1px 2px rgba(27,22,51,.06), 0 8px 24px -12px rgba(27,22,51,.18);
+  --display:"Arial Black","Helvetica Neue",system-ui,sans-serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#14102E; --surface:#1E1842; --surface-2:#272052; --line:#332B60;
+    --text:#EFECFA; --text-2:#B0A7D4; --text-3:#7D74A6;
+    --accent:#FF6134; --accent-soft:#3A1F1B;
+    --dia:#29C9BC; --dia-soft:#123331;
+    --sunset:#FF9A4C; --sunset-soft:#33231A;
+    --noite:#9C8BFF; --noite-soft:#231C4D;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14102E; --surface:#1E1842; --surface-2:#272052; --line:#332B60;
+  --text:#EFECFA; --text-2:#B0A7D4; --text-3:#7D74A6;
+  --accent:#FF6134; --accent-soft:#3A1F1B;
+  --dia:#29C9BC; --dia-soft:#123331;
+  --sunset:#FF9A4C; --sunset-soft:#33231A;
+  --noite:#9C8BFF; --noite-soft:#231C4D;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--text);
+  font-family:var(--body); font-size:16px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px; margin:0 auto; padding:0 20px 80px}
+a{color:inherit}
+
+/* ---- hero ---- */
+.hero{padding:56px 0 28px; border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--accent); margin:0 0 14px;
+}
+.hero h1{
+  font-family:var(--display); font-weight:900; text-transform:uppercase;
+  font-size:clamp(40px,8.5vw,86px); line-height:.92; letter-spacing:-.03em;
+  margin:0 0 18px; text-wrap:balance;
+}
+.hero h1 em{font-style:normal; color:var(--accent)}
+.lede{margin:0; max-width:62ch; font-size:17px; color:var(--text-2)}
+.stats{display:flex; flex-wrap:wrap; gap:10px 28px; margin:26px 0 0; padding:0; list-style:none}
+.stats li{display:flex; flex-direction:column; gap:2px}
+.stats b{font-family:var(--mono); font-size:26px; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+.stats span{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3)}
+
+/* ---- nav ---- */
+.nav{
+  position:sticky; top:0; z-index:20; display:flex; gap:8px; flex-wrap:wrap;
+  padding:12px 0; margin-bottom:8px;
+  background:color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+}
+.nav a{
+  display:flex; align-items:baseline; gap:8px; text-decoration:none;
+  padding:7px 14px; border:1px solid var(--line); border-radius:999px;
+  background:var(--surface); font-size:14px; transition:border-color .15s, color .15s;
+}
+.nav a:hover,.nav a:focus-visible{border-color:var(--accent); color:var(--accent)}
+.nav a i{font-style:normal; font-family:var(--mono); font-size:12px; color:var(--text-3)}
+
+/* ---- avisos ---- */
+.avisos{display:grid; gap:12px; margin:30px 0 8px}
+.aviso{
+  display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start;
+  padding:16px 18px; border-radius:12px; background:var(--surface);
+  border:1px solid var(--line); border-left:3px solid var(--accent); box-shadow:var(--shadow);
+}
+.aviso .tag{
+  font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--accent); white-space:nowrap; padding-top:2px;
+}
+.aviso p{margin:0; font-size:15px; color:var(--text-2)}
+.aviso p + p{margin-top:8px}
+.aviso strong{color:var(--text); font-weight:600}
+
+/* ---- dia ---- */
+.dia{margin-top:64px; scroll-margin-top:76px}
+.dia-cab{display:flex; align-items:center; gap:18px; padding-bottom:18px; border-bottom:2px solid var(--text)}
+.dia-data{display:flex; align-items:baseline; gap:5px; font-family:var(--display); color:var(--accent)}
+.dia-num{font-size:56px; font-weight:900; letter-spacing:-.05em; line-height:.8}
+.dia-mes{font-size:17px; text-transform:uppercase; letter-spacing:.02em}
+.dia-txt h2{
+  font-family:var(--display); text-transform:uppercase; letter-spacing:-.02em;
+  font-size:28px; font-weight:900; margin:0 0 4px; line-height:1;
+}
+.dia-meta{margin:0; font-size:13px; color:var(--text-3); display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.ptsep{color:var(--line)}
+.pt{font-family:var(--mono); font-size:12px}
+.pt-dia{color:var(--dia)} .pt-sunset{color:var(--sunset)} .pt-noite{color:var(--noite)}
+
+/* ---- trilha ---- */
+.trilha{margin-top:34px}
+.trilha-cab{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:12px}
+.trilha-cab h3{
+  font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin:0;
+}
+.trilha-cab .faixa{font-family:var(--mono); font-size:12px; color:var(--text-3)}
+.trilha-cab .desc{font-size:13px; color:var(--text-3); font-style:italic}
+.trilha-cab .conta{
+  margin-left:auto; font-family:var(--mono); font-size:11px; padding:2px 9px; border-radius:999px;
+}
+.trilha-dia .trilha-cab h3{color:var(--dia)}
+.trilha-dia .trilha-cab .conta{background:var(--dia-soft); color:var(--dia)}
+.trilha-sunset .trilha-cab h3{color:var(--sunset)}
+.trilha-sunset .trilha-cab .conta{background:var(--sunset-soft); color:var(--sunset)}
+.trilha-noite .trilha-cab h3{color:var(--noite)}
+.trilha-noite .trilha-cab .conta{background:var(--noite-soft); color:var(--noite)}
+
+/* ---- evento ---- */
+.evs{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+.ev{
+  display:grid; grid-template-columns:112px 1fr auto; gap:18px; align-items:start;
+  padding:15px 18px; background:var(--surface); border:1px solid var(--line);
+  border-radius:12px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.ev::before{content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--line)}
+.trilha-dia .ev::before{background:var(--dia)}
+.trilha-sunset .ev::before{background:var(--sunset)}
+.trilha-noite .ev::before{background:var(--noite)}
+.hora{
+  font-family:var(--mono); font-size:13px; font-variant-numeric:tabular-nums;
+  color:var(--text-2); padding-top:2px; white-space:nowrap;
+}
+.venue{
+  margin:0 0 3px; font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--text-3); display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+}
+.chip{
+  font-family:var(--mono); font-size:10px; letter-spacing:.08em; padding:2px 7px;
+  border-radius:4px; text-transform:uppercase;
+}
+.chip-superclube{background:var(--accent-soft); color:var(--accent)}
+.chip-beach{background:var(--dia-soft); color:var(--dia)}
+.chip-clube{background:var(--noite-soft); color:var(--noite)}
+.chip-barco{background:var(--surface-2); color:var(--text-2)}
+.nome{margin:0; font-size:18px; font-weight:650; letter-spacing:-.01em; line-height:1.25; text-wrap:balance}
+.nome a{text-decoration:none; background-image:linear-gradient(var(--accent),var(--accent));
+  background-size:0 1.5px; background-repeat:no-repeat; background-position:0 100%; transition:background-size .2s}
+.nome a:hover,.nome a:focus-visible{background-size:100% 1.5px; color:var(--accent)}
+.lineup{margin:6px 0 0; font-size:14px; color:var(--text-2); line-height:1.45}
+.lineup .sep{color:var(--text-3); padding:0 2px}
+.obs{margin:6px 0 0; font-size:12.5px; color:var(--text-3); font-style:italic}
+.preco{
+  font-family:var(--mono); font-size:15px; font-variant-numeric:tabular-nums;
+  white-space:nowrap; padding-top:1px; font-weight:600;
+}
+
+/* ---- rodapé ---- */
+.fim{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); font-size:13px; color:var(--text-3)}
+.fim p{margin:0 0 6px; max-width:70ch}
+.fim a{color:var(--accent)}
+
+@media (max-width:720px){
+  .ev{grid-template-columns:1fr auto; gap:6px 14px}
+  .hora{grid-column:1; font-size:12px}
+  .preco{grid-column:2; grid-row:1; text-align:right}
+  .corpo{grid-column:1 / -1}
+  .dia-cab{gap:12px}
+  .dia-num{font-size:42px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">Sáb 12 — Seg 14 · Setembro de 2026</p>
+    <h1>Ibiza em <em>três dias</em></h1>
+    <p class="lede">Tudo que está marcado na ilha na janela que vocês estão lá — dos pool parties
+      da tarde aos clubes que só fecham de manhã. Cada dia dividido em três trilhas, porque é assim
+      que se monta um dia em Ibiza: uma coisa de dia, uma de pôr do sol, uma de madrugada.</p>
+    <ul class="stats">
+      <li><b>48</b><span>festas</span></li>
+      <li><b>3</b><span>dias</span></li>
+      <li><b>22</b><span>casas</span></li>
+      <li><b>15 €</b><span>a mais barata</span></li>
+    </ul>
+  </header>
+
+  <nav class="nav" aria-label="Navegar por dia">
+      <a href="#d12"><b>Sáb 12</b><i>19</i></a>
+      <a href="#d13"><b>Dom 13</b><i>16</i></a>
+      <a href="#d14"><b>Seg 14</b><i>13</i></a>
+  </nav>
+
+  <div class="avisos">
+    <div class="aviso">
+      <span class="tag">Atenção</span>
+      <div>
+        <p><strong>O voo de segunda às 20h corta a noite inteira do dia 14.</strong> Todas as
+          festas de clube da segunda começam 23h ou depois — se vocês saírem no horário do roteiro,
+          não pega nenhuma. Da lista de segunda sobram só as de dia: O Beach (13h—22h),
+          Ibiza Rocks (14h—21h) e o Ushuaïa com o David Guetta (17h—23h, e ainda assim sai no meio).</p>
+        <p>É o argumento concreto pra proposta que já está no roteiro de <strong>empurrar o voo
+          pra terça 15 de manhã</strong>: aí a segunda abre Armin van Buuren no UNVRS, NRG na Amnesia
+          e Sonny Fodera no Pacha.</p>
+      </div>
+    </div>
+    <div class="aviso">
+      <span class="tag">Lacuna</span>
+      <div>
+        <p><strong>DC10 e Circoloco não aparecem em lugar nenhum.</strong> Varri setembro inteiro no
+          Ibiza Spotlight e o DC10 não tem uma data sequer listada — o que bate com a fama da casa de
+          não fazer divulgação e vender por canal próprio. Não dá pra afirmar que não vai ter
+          Circoloco na segunda 14; dá pra afirmar que não está publicado aqui. Confirma direto com a
+          casa antes de contar com isso no roteiro.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="dia" id="d12">
+    <header class="dia-cab">
+      <div class="dia-data"><span class="dia-num">12</span><span class="dia-mes">set</span></div>
+      <div class="dia-txt">
+        <h2>Sábado</h2>
+        <p class="dia-meta">19 festas <span class="ptsep">—</span> <span class="pt pt-dia">5 dia</span><span class="pt pt-sunset">7 pôr do sol</span><span class="pt pt-noite">7 madrugada</span></p>
+      </div>
+    </header>
+      <div class="trilha trilha-dia">
+        <div class="trilha-cab">
+          <h3>Dia</h3>
+          <span class="faixa">antes das 16h</span>
+          <span class="desc">praia, piscina e barco</span>
+          <span class="conta">5</span>
+        </div>
+        <ul class="evs">
+        <li class="ev tipo-barco">
+          <div class="hora">10:30 - 20:15</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-barco">barco</span></p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/ibiza-boat-club-formentera" target="_blank" rel="noopener">Formentera With Benefits</a></h4>
+            
+            <p class="obs">operated by Ibiza Boat Club</p>
+          </div>
+          <div class="preco">179.99 €</div>
+        </li>
+        <li class="ev tipo-beach">
+          <div class="hora">11:00 - 20:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-beach">beach club</span>Bam-Bu-Ku Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/el-kiddo-bam-bu-ku" target="_blank" rel="noopener">El Kiddo</a></h4>
+            <p class="lineup">Harry Mc <span class="sep">·</span> + special guests</p>
+            <p class="obs">El Kiddo is an intergenerational parent-child party concept · free admission for children 23 months and under</p>
+          </div>
+          <div class="preco">15 €</div>
+        </li>
+        <li class="ev tipo-beach">
+          <div class="hora">13:00 - 22:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-beach">beach club</span>O Beach Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/soul-heaven" target="_blank" rel="noopener">Soul Heaven</a></h4>
+            <p class="lineup">Barbara Tucker (live PA) <span class="sep">·</span> Jamie Love <span class="sep">·</span> Lucy Jane</p>
+            
+          </div>
+          <div class="preco">25 €</div>
+        </li>
+        <li class="ev tipo-barco">
+          <div class="hora">13:00 - 17:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-barco">barco</span></p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/five-star-boat-party-ibiza-boat-club" target="_blank" rel="noopener">Bottomless Brunch Boat Party</a></h4>
+            
+            <p class="obs">operated by Ibiza Boat Club</p>
+          </div>
+          <div class="preco">119.99 €</div>
+        </li>
+        <li class="ev tipo-beach">
+          <div class="hora">14:00 - 21:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-beach">beach club</span>Ibiza Rocks Pool Club</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/ibiza-anthems-ibiza-rocks" target="_blank" rel="noopener">Ibiza Anthems Pool Party</a></h4>
+            <p class="lineup">Switch Disco <span class="sep">·</span> Harlee (live PA) <span class="sep">·</span> Dom Townsend <span class="sep">·</span> Issy Smith</p>
+            <p class="obs">all pre-sale tickets include credit to spend at the bar</p>
+          </div>
+          <div class="preco">32 €</div>
+        </li>
+        </ul>
+      </div>
+      <div class="trilha trilha-sunset">
+        <div class="trilha-cab">
+          <h3>Pôr do sol</h3>
+          <span class="faixa">16h — 22h</span>
+          <span class="desc">open air que vira noite</span>
+          <span class="conta">7</span>
+        </div>
+        <ul class="evs">
+        <li class="ev tipo-superclube">
+          <div class="hora">17:00 - 23:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>Ushuaïa Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/ants" target="_blank" rel="noopener">ANTS</a></h4>
+            <p class="lineup">Andrea Oliva <span class="sep">·</span> Chelina Manuhutu B2B Syreeta <span class="sep">·</span> Joëlla Jackson <span class="sep">·</span> Sidney Charles</p>
+            
+          </div>
+          <div class="preco">30 €</div>
+        </li>
+        <li class="ev tipo-beach">
+          <div class="hora">17:00 - 04:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-beach">beach club</span>Playa Soleil - Bora Bora</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/creme-de-creme" target="_blank" rel="noopener">Crême de Crême</a></h4>
+            
+            
+          </div>
+          <div class="preco">20 €</div>
+        </li>
+        <li class="ev tipo-barco">
+          <div class="hora">17:00 - 20:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-barco">barco</span></p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/pukka-up-saturdays" target="_blank" rel="noopener">Pukka Up Sunset Boat Party</a></h4>
+            
+            <p class="obs">upgrade to include entrance to any day at O Beach and any night at Amnesia</p>
+          </div>
+          <div class="preco">65 €</div>
+        </li>
+        <li class="ev tipo-barco">
+          <div class="hora">17:30 - 20:30</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-barco">barco</span></p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/aftersun-ibiza-ibiza-boat-club" target="_blank" rel="noopener">Aftersun Ibiza Boat Party</a></h4>
+            
+            <p class="obs">operated by Ibiza Boat Club</p>
+          </div>
+          <div class="preco">89.99 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">18:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Akasha - Las Dalias</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/supernova-las-dalias" target="_blank" rel="noopener">Supernova</a></h4>
+            <p class="lineup">Words Of Niō <span class="sep">·</span> Medusa Odyssey (live) <span class="sep">·</span> Parra For Cuva <span class="sep">·</span> Medusa Oddysey</p>
+            <p class="obs">Las Dalias garden (open to 23.00 h) · Akasha (from 23.00 h till close) · free entry to the garden from open to 23.00 h · free entry to Akasha for island residents before midnight</p>
+          </div>
+          <div class="preco">15 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">18:00 - 04:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>528 Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/pikes-presents-528" target="_blank" rel="noopener">Pikes Presents | Special Edition</a></h4>
+            <p class="lineup">Kruder &amp; Dorfmeister <span class="sep">·</span> Pikes resident DJs</p>
+            
+          </div>
+          <div class="preco">29.50 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">19:00 - 05:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Cova Santa</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/cova-santa-presents" target="_blank" rel="noopener">Cova Santa presents Mosimann</a></h4>
+            <p class="lineup">Mosimann <span class="sep">·</span> Elfico <span class="sep">·</span> Ofenbach <span class="sep">·</span> Sébastien Léger</p>
+            
+          </div>
+          <div class="preco">32 €</div>
+        </li>
+        </ul>
+      </div>
+      <div class="trilha trilha-noite">
+        <div class="trilha-cab">
+          <h3>Madrugada</h3>
+          <span class="faixa">a partir das 23h</span>
+          <span class="desc">os clubes, até de manhã</span>
+          <span class="conta">7</span>
+        </div>
+        <ul class="evs">
+        <li class="ev tipo-superclube">
+          <div class="hora">23:00 - 06:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>Pacha Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/robin-schulz" target="_blank" rel="noopener">Robin Schulz</a></h4>
+            <p class="lineup">Robin Schulz <span class="sep">·</span> NERVO <span class="sep">·</span> Jodie Harsh <span class="sep">·</span> The Menendez Brothers</p>
+            
+          </div>
+          <div class="preco">30 €</div>
+        </li>
+        <li class="ev tipo-superclube">
+          <div class="hora">23:30</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>[UNVRS]</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/elrow-unvrs" target="_blank" rel="noopener">elrow Ibiza | Neo Kaos Garden</a></h4>
+            <p class="lineup">AAT <span class="sep">·</span> Ilario Alicante <span class="sep">·</span> Joris Voorn <span class="sep">·</span> Toni Varga</p>
+            <p class="obs">A-Z</p>
+          </div>
+          <div class="preco">85 €</div>
+        </li>
+        <li class="ev tipo-superclube">
+          <div class="hora">23:30</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>Hï Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/black-coffee" target="_blank" rel="noopener">Black Coffee</a></h4>
+            <p class="lineup">Black Coffee <span class="sep">·</span> Mahmut Orhan <span class="sep">·</span> Kasango <span class="sep">·</span> Skepta (DJ set) <span class="sep">·</span> SG Lewis <span class="sep">·</span> Arielle Free</p>
+            
+          </div>
+          <div class="preco">85 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">23:30 - 06:30</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Chinois Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/masquerade-chinois" target="_blank" rel="noopener">Claptone presents The Masquerade</a></h4>
+            <p class="lineup">Claptone <span class="sep">·</span> Hannah Wants B2B Paul Woolford <span class="sep">·</span> Chus &amp; Ceballos <span class="sep">·</span> Peverell</p>
+            
+          </div>
+          <div class="preco">35 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">23:45 - 06:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Eden</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/eden-early-season-parties" target="_blank" rel="noopener">Stack City</a></h4>
+            
+            
+          </div>
+          <div class="preco">40 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">23:45 - 05:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Lío Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/kodo" target="_blank" rel="noopener">Kōdō</a></h4>
+            
+            
+          </div>
+          <div class="preco">40 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">23:59 - 06:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Es Paradis</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/fiesta-del-agua" target="_blank" rel="noopener">Fiesta del Agua</a></h4>
+            
+            
+          </div>
+          <div class="preco">25 €</div>
+        </li>
+        </ul>
+      </div>
+  </section>
+
+  <section class="dia" id="d13">
+    <header class="dia-cab">
+      <div class="dia-data"><span class="dia-num">13</span><span class="dia-mes">set</span></div>
+      <div class="dia-txt">
+        <h2>Domingo</h2>
+        <p class="dia-meta">16 festas <span class="ptsep">—</span> <span class="pt pt-dia">6 dia</span><span class="pt pt-sunset">5 pôr do sol</span><span class="pt pt-noite">5 madrugada</span></p>
+      </div>
+    </header>
+      <div class="trilha trilha-dia">
+        <div class="trilha-cab">
+          <h3>Dia</h3>
+          <span class="faixa">antes das 16h</span>
+          <span class="desc">praia, piscina e barco</span>
+          <span class="conta">6</span>
+        </div>
+        <ul class="evs">
+        <li class="ev tipo-barco">
+          <div class="hora">10:30 - 20:15</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-barco">barco</span></p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/ibiza-boat-club-formentera" target="_blank" rel="noopener">Formentera With Benefits</a></h4>
+            
+            <p class="obs">operated by Ibiza Boat Club</p>
+          </div>
+          <div class="preco">179.99 €</div>
+        </li>
+        <li class="ev tipo-barco">
+          <div class="hora">12:00 - 17:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-barco">barco</span></p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/day-paradise" target="_blank" rel="noopener">A Day In Paradise</a></h4>
+            
+            
+          </div>
+          <div class="preco">75 €</div>
+        </li>
+        <li class="ev tipo-beach">
+          <div class="hora">13:00 - 22:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-beach">beach club</span>O Beach Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/kiss-uk-pool-party" target="_blank" rel="noopener">KISS Pool Party Live</a></h4>
+            <p class="lineup">Cameo <span class="sep">·</span> Sam Dungate</p>
+            
+          </div>
+          <div class="preco">40 €</div>
+        </li>
+        <li class="ev tipo-barco">
+          <div class="hora">13:00 - 17:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-barco">barco</span></p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/five-star-boat-party-ibiza-boat-club" target="_blank" rel="noopener">Bottomless Brunch Boat Party</a></h4>
+            
+            <p class="obs">operated by Ibiza Boat Club</p>
+          </div>
+          <div class="preco">119.99 €</div>
+        </li>
+        <li class="ev tipo-beach">
+          <div class="hora">14:00 - 21:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-beach">beach club</span>Ibiza Rocks Pool Club</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/r-and-b-affair" target="_blank" rel="noopener">R&amp;B Affair Pool Party</a></h4>
+            <p class="lineup">DJ Spoony <span class="sep">·</span> Jonezy <span class="sep">·</span> DJ Policy <span class="sep">·</span> Lewis Bones</p>
+            <p class="obs">all pre-sale tickets include credit to spend at the bar</p>
+          </div>
+          <div class="preco">32 €</div>
+        </li>
+        <li class="ev tipo-barco">
+          <div class="hora">14:30 - 17:30</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-barco">barco</span></p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/cruise-crush-boat-party" target="_blank" rel="noopener">Cruise Crush Boat Party</a></h4>
+            
+            
+          </div>
+          <div class="preco">69 €</div>
+        </li>
+        </ul>
+      </div>
+      <div class="trilha trilha-sunset">
+        <div class="trilha-cab">
+          <h3>Pôr do sol</h3>
+          <span class="faixa">16h — 22h</span>
+          <span class="desc">open air que vira noite</span>
+          <span class="conta">5</span>
+        </div>
+        <ul class="evs">
+        <li class="ev tipo-clube">
+          <div class="hora">16:00 - 23:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>528 Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/nexup-528" target="_blank" rel="noopener">Max Dean presents NEXUP Ibiza</a></h4>
+            <p class="lineup">Max Dean</p>
+            <p class="obs">includes complimentary shuttle bus service to San Antonio bus station after the party</p>
+          </div>
+          <div class="preco">53 €</div>
+        </li>
+        <li class="ev tipo-beach">
+          <div class="hora">16:00 - 23:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-beach">beach club</span>Playa Soleil - Bora Bora</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/playa-soleil-parties" target="_blank" rel="noopener">Afropiano Laici</a></h4>
+            
+            
+          </div>
+          <div class="preco">—</div>
+        </li>
+        <li class="ev tipo-superclube">
+          <div class="hora">17:00 - 23:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>Ushuaïa Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/swedish_house_mafia_i.htm" target="_blank" rel="noopener">Swedish House Mafia Closing Party</a></h4>
+            <p class="lineup">Swedish House Mafia <span class="sep">·</span> Bea Sylvan <span class="sep">·</span> Nosefine</p>
+            
+          </div>
+          <div class="preco">110 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">19:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Akasha - Las Dalias</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/nido" target="_blank" rel="noopener">Nido</a></h4>
+            <p class="lineup">Pomboklap <span class="sep">·</span> Marc Werner <span class="sep">·</span> LazyKay <span class="sep">·</span> Stefan Obermaier</p>
+            <p class="obs">Las Dalias garden (open to 23.00 h) · Akasha (from 23.00 till late) · free entry to the garden from open to 23.00 h · free entry to Akasha for island residents before midnight</p>
+          </div>
+          <div class="preco">15 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">19:00 - 05:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Cova Santa</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/pantheon" target="_blank" rel="noopener">Pantheøn</a></h4>
+            <p class="lineup">Mr. Belt &amp; Wezol <span class="sep">·</span> Sem Jacobs</p>
+            <p class="obs">A-Z</p>
+          </div>
+          <div class="preco">32 €</div>
+        </li>
+        </ul>
+      </div>
+      <div class="trilha trilha-noite">
+        <div class="trilha-cab">
+          <h3>Madrugada</h3>
+          <span class="faixa">a partir das 23h</span>
+          <span class="desc">os clubes, até de manhã</span>
+          <span class="conta">5</span>
+        </div>
+        <ul class="evs">
+        <li class="ev tipo-superclube">
+          <div class="hora">23:00 - 06:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>Pacha Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/solomun_plus1_i.htm" target="_blank" rel="noopener">Solomun +1</a></h4>
+            <p class="lineup">Solomun <span class="sep">·</span> Desiree</p>
+            
+          </div>
+          <div class="preco">50 €</div>
+        </li>
+        <li class="ev tipo-superclube">
+          <div class="hora">23:00 - 06:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>Amnesia</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/pyramid" target="_blank" rel="noopener">Pyramid</a></h4>
+            <p class="lineup">Ricardo Villalobos B2B Luciano <span class="sep">·</span> Francesco Del Garda <span class="sep">·</span> Saoirse <span class="sep">·</span> Marco Faraone <span class="sep">·</span> Nina Kraviz</p>
+            
+          </div>
+          <div class="preco">50 €</div>
+        </li>
+        <li class="ev tipo-superclube">
+          <div class="hora">23:30</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>[UNVRS]</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/carl-cox" target="_blank" rel="noopener">Carl Cox</a></h4>
+            <p class="lineup">Carl Cox <span class="sep">·</span> Louie Vega <span class="sep">·</span> Dimitri From Paris <span class="sep">·</span> Souldynamic <span class="sep">·</span> Melon Bomb</p>
+            <p class="obs">Wild Comet</p>
+          </div>
+          <div class="preco">50 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">23:30 - 06:30</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Chinois Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/saga-chinois" target="_blank" rel="noopener">Bedouin presents Saga</a></h4>
+            <p class="lineup">Bedouin <span class="sep">·</span> Jan Blomqvist (live) <span class="sep">·</span> Baron B2B Dorian Craft</p>
+            
+          </div>
+          <div class="preco">35 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">23:45 - 05:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Lío Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/travieso" target="_blank" rel="noopener">Travieso</a></h4>
+            
+            
+          </div>
+          <div class="preco">40 €</div>
+        </li>
+        </ul>
+      </div>
+  </section>
+
+  <section class="dia" id="d14">
+    <header class="dia-cab">
+      <div class="dia-data"><span class="dia-num">14</span><span class="dia-mes">set</span></div>
+      <div class="dia-txt">
+        <h2>Segunda</h2>
+        <p class="dia-meta">13 festas <span class="ptsep">—</span> <span class="pt pt-dia">4 dia</span><span class="pt pt-sunset">2 pôr do sol</span><span class="pt pt-noite">7 madrugada</span></p>
+      </div>
+    </header>
+      <div class="trilha trilha-dia">
+        <div class="trilha-cab">
+          <h3>Dia</h3>
+          <span class="faixa">antes das 16h</span>
+          <span class="desc">praia, piscina e barco</span>
+          <span class="conta">4</span>
+        </div>
+        <ul class="evs">
+        <li class="ev tipo-barco">
+          <div class="hora">10:30 - 20:15</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-barco">barco</span></p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/ibiza-boat-club-formentera" target="_blank" rel="noopener">Formentera With Benefits</a></h4>
+            
+            <p class="obs">operated by Ibiza Boat Club</p>
+          </div>
+          <div class="preco">179.99 €</div>
+        </li>
+        <li class="ev tipo-beach">
+          <div class="hora">13:00 - 22:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-beach">beach club</span>O Beach Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/zuva-o-beach" target="_blank" rel="noopener">ZUVA</a></h4>
+            <p class="lineup">Jamie Love <span class="sep">·</span> Sam Dungate</p>
+            
+          </div>
+          <div class="preco">20 €</div>
+        </li>
+        <li class="ev tipo-beach">
+          <div class="hora">14:00 - 21:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-beach">beach club</span>Ibiza Rocks Pool Club</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/nothing-new" target="_blank" rel="noopener">Nothing New Pool Party</a></h4>
+            <p class="lineup">Ibiza Rocks resident DJs</p>
+            <p class="obs">all pre-sale tickets include credit to spend at the bar</p>
+          </div>
+          <div class="preco">32 €</div>
+        </li>
+        <li class="ev tipo-barco">
+          <div class="hora">14:30 - 17:30</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-barco">barco</span></p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/cruise-crush-boat-party" target="_blank" rel="noopener">Cruise Crush Boat Party</a></h4>
+            
+            
+          </div>
+          <div class="preco">69 €</div>
+        </li>
+        </ul>
+      </div>
+      <div class="trilha trilha-sunset">
+        <div class="trilha-cab">
+          <h3>Pôr do sol</h3>
+          <span class="faixa">16h — 22h</span>
+          <span class="desc">open air que vira noite</span>
+          <span class="conta">2</span>
+        </div>
+        <ul class="evs">
+        <li class="ev tipo-superclube">
+          <div class="hora">17:00 - 23:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>Ushuaïa Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/f-me-im-famous-ushuaia" target="_blank" rel="noopener">David Guetta presents F*** ME I'M FAMOUS!</a></h4>
+            <p class="lineup">David Guetta <span class="sep">·</span> Miss Monique <span class="sep">·</span> Tini Gessler <span class="sep">·</span> Paul Reynolds</p>
+            
+          </div>
+          <div class="preco">120 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">19:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Akasha - Las Dalias</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/peace-n-music" target="_blank" rel="noopener">Peace N' Music</a></h4>
+            <p class="lineup">DJ Pippi <span class="sep">·</span> Willie Graff</p>
+            <p class="obs">Las Dalias garden (free entry from open to 22.59 h) · Akasha (from 23.00 h till close)</p>
+          </div>
+          <div class="preco">15 €</div>
+        </li>
+        </ul>
+      </div>
+      <div class="trilha trilha-noite">
+        <div class="trilha-cab">
+          <h3>Madrugada</h3>
+          <span class="faixa">a partir das 23h</span>
+          <span class="desc">os clubes, até de manhã</span>
+          <span class="conta">7</span>
+        </div>
+        <ul class="evs">
+        <li class="ev tipo-superclube">
+          <div class="hora">23:00 - 06:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>Amnesia</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/nrg-amnesia" target="_blank" rel="noopener">NRG</a></h4>
+            <p class="lineup">Ben Hemsley <span class="sep">·</span> Dart B2B Kyle Starkey <span class="sep">·</span> Datsko B2B Prada2000 <span class="sep">·</span> Hannah Laing</p>
+            
+          </div>
+          <div class="preco">50 €</div>
+        </li>
+        <li class="ev tipo-superclube">
+          <div class="hora">23:00 - 06:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>Pacha Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/sonny-fodera" target="_blank" rel="noopener">Sonny Fodera</a></h4>
+            <p class="lineup">Sonny Fodera <span class="sep">·</span> Lost Frequencies <span class="sep">·</span> Danny Howard <span class="sep">·</span> Laeet</p>
+            
+          </div>
+          <div class="preco">35 €</div>
+        </li>
+        <li class="ev tipo-superclube">
+          <div class="hora">23:30 - 06:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>[UNVRS]</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/armin-van-buuren-unvrs" target="_blank" rel="noopener">Armin van Buuren presents A State of Trance</a></h4>
+            <p class="lineup">Armin van Buuren (extended set)</p>
+            
+          </div>
+          <div class="preco">50 €</div>
+        </li>
+        <li class="ev tipo-superclube">
+          <div class="hora">23:30</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-superclube">superclube</span>Hï Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/francis-mercier-hi-ibiza" target="_blank" rel="noopener">Francis Mercier presents Solèy</a></h4>
+            <p class="lineup">Francis Mercier B2B Kölsch <span class="sep">·</span> Patrick Mason <span class="sep">·</span> KILIMANJARO <span class="sep">·</span> Andrea Oliva <span class="sep">·</span> HoneyLuv</p>
+            
+          </div>
+          <div class="preco">30 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">23:30 - 06:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Chinois Ibiza</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/la-troya-club-chinois" target="_blank" rel="noopener">La Troya</a></h4>
+            <p class="lineup">Ben Westbeech <span class="sep">·</span> Dymos <span class="sep">·</span> Shizzo <span class="sep">·</span> Oscar Colorado B2B 2Lovers</p>
+            
+          </div>
+          <div class="preco">30 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">23:45 - 06:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Eden</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/actin-bad" target="_blank" rel="noopener">Actic' Bad Closing Party</a></h4>
+            
+            <p class="obs">presented by Holler At Me</p>
+          </div>
+          <div class="preco">30 €</div>
+        </li>
+        <li class="ev tipo-clube">
+          <div class="hora">23:45 - 07:00</div>
+          <div class="corpo">
+            <p class="venue"><span class="chip chip-clube">clube</span>Es Paradis</p>
+            <h4 class="nome"><a href="https://www.ibiza-spotlight.com/night/promoters/you-know-vibes" target="_blank" rel="noopener">You Know The Vibes Party</a></h4>
+            <p class="lineup">DJ Policy</p>
+            
+          </div>
+          <div class="preco">25 €</div>
+        </li>
+        </ul>
+      </div>
+  </section>
+
+  <footer class="fim">
+    <p>Levantado com navegador automatizado no calendário do
+      <a href="https://www.ibiza-spotlight.com/night/events/2026/09" target="_blank" rel="noopener">Ibiza Spotlight</a>,
+      páginas dos dias 12, 13 e 14 de setembro de 2026. Consultado em 13 de agosto de 2026.</p>
+    <p>Preços são o valor de entrada mais barato anunciado (pré-venda, sem taxa) e mudam conforme
+      a data e o lote. Line-up de clube costuma mudar até a semana da festa — reconfirme antes de comprar.</p>
+  </footer>
+
+</div>

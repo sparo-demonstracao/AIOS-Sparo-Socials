@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LLM Wiki — telas (@enzosparo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#F6F4EF;
+  --ink:#1A1815;
+  --mut:#8A8378;
+  --hair:rgba(26,24,21,.12);
+  --acc:#D9481F;
+}
+*{box-sizing:border-box;margin:0;padding:0;border-radius:0}
+html,body{height:100%;overflow:hidden;background:#0b0b0a}
+body{font-family:'Archivo',-apple-system,'Segoe UI',sans-serif;color:var(--ink)}
+
+#stage{position:fixed;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center;background:var(--bg)}
+.tela{position:absolute;inset:0;padding:78px 130px 70px;display:none;flex-direction:column}
+.tela.ativa{display:flex}
+
+.selo{font-family:'IBM Plex Mono',monospace;font-size:19px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mut);flex:0 0 auto}
+.assina{position:absolute;right:130px;top:78px;font-family:'IBM Plex Mono',monospace;font-size:19px;
+  letter-spacing:.1em;color:var(--mut)}
+
+h1{font-weight:800;font-size:78px;line-height:1.03;letter-spacing:-.03em;margin-top:26px;flex:0 0 auto}
+h1 b{color:var(--acc);font-weight:800}
+.abaixo{font-size:27px;font-weight:500;color:var(--mut);margin-top:16px;flex:0 0 auto}
+
+[data-show]{opacity:0;transition:opacity .5s ease}
+[data-show].on{opacity:1}
+
+/* ---------- passos ---------- */
+.passos{flex:1;display:flex;flex-direction:column;justify-content:center;gap:0;min-height:0;margin-top:8px}
+.passo{display:flex;align-items:center;gap:56px;padding:38px 0;border-top:1px solid var(--hair)}
+.passo:first-child{border-top:none}
+.passo .n{flex:0 0 96px;font-size:82px;font-weight:800;line-height:1;color:var(--acc);letter-spacing:-.04em}
+.passo .txt{flex:1}
+.passo h2{font-size:46px;font-weight:700;letter-spacing:-.022em;line-height:1.08}
+.passo p{font-size:26px;font-weight:500;color:var(--mut);margin-top:10px;max-width:700px;line-height:1.35}
+.passo .vis{flex:0 0 540px;display:flex;align-items:center;justify-content:flex-start}
+
+.arqs{font-family:'IBM Plex Mono',monospace;font-size:23px;line-height:2.1;color:#5D564C}
+.arqs i{color:var(--acc);font-style:normal;margin-right:14px}
+.fala{font-family:'IBM Plex Mono',monospace;font-size:24px;color:#5D564C}
+.fala i{color:var(--acc);font-style:normal;margin-right:12px}
+
+/* ---------- abertura (beat 0) ---------- */
+.abre{position:absolute;inset:0;background:var(--bg);z-index:3;padding:78px 130px 70px;
+  display:flex;flex-direction:column;justify-content:center}
+.abre .grande{font-size:104px;font-weight:800;line-height:1.02;letter-spacing:-.035em}
+.abre .grande b{color:var(--acc);font-weight:800}
+.abre .pe{font-size:30px;font-weight:500;color:var(--mut);margin-top:38px;max-width:900px;line-height:1.4}
+
+/* ---------- fecho de acúmulo ---------- */
+.fecho{flex:0 0 auto;border-top:1px solid var(--hair);padding-top:32px;display:flex;align-items:center;gap:80px}
+.fecho .diz{flex:1;font-size:34px;font-weight:700;letter-spacing:-.015em;line-height:1.2}
+.fecho .diz span{display:block;font-size:24px;font-weight:500;color:var(--mut);margin-top:10px;letter-spacing:0}
+.fecho .par{flex:0 0 620px;display:flex;align-items:center;gap:36px}
+.fecho .um{flex:1}
+.fecho .um .leg{font-size:20px;color:var(--mut);font-weight:600;margin-bottom:8px}
+.fecho .um .leg b{color:var(--acc)}
+.fecho svg{display:block;width:100%;height:96px}
+.fecho .maior{font-size:34px;color:var(--mut)}
+
+/* ---------- comparação ---------- */
+.dois{flex:1;display:flex;gap:130px;margin-top:20px;min-height:0}
+.meio{flex:1 1 0;display:flex;flex-direction:column;min-width:0}
+.meio .top{font-size:22px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.meio.b .top{color:var(--acc)}
+.meio h2{font-size:52px;font-weight:800;letter-spacing:-.028em;margin-top:8px}
+.meio .des{flex:1;display:flex;align-items:center;min-height:0;padding:26px 0}
+.meio .diz{font-size:27px;font-weight:500;line-height:1.4;color:#4A443C}
+.meio .diz b{color:var(--acc);font-weight:700}
+
+.remate{position:absolute;left:130px;right:130px;bottom:70px;background:var(--bg);z-index:4;
+  border-top:3px solid var(--acc);padding-top:30px}
+.remate .a{font-size:56px;font-weight:800;letter-spacing:-.03em}
+.remate .a b{color:var(--acc);font-weight:800}
+.remate .b{font-size:24px;font-weight:500;color:var(--mut);margin-top:14px;max-width:1180px;line-height:1.4}
+.remate .b b{color:var(--ink);font-weight:600}
+
+/* ---------- hud ---------- */
+#hud{position:fixed;left:16px;bottom:14px;z-index:20;font-family:'IBM Plex Mono',monospace;font-size:13px;
+  color:rgba(255,255,255,.55);background:rgba(0,0,0,.5);padding:8px 12px;transition:opacity .4s;pointer-events:none}
+#hud.off{opacity:0}
+#hud b{color:#fff;font-weight:500}
+#prog{position:fixed;left:0;bottom:0;height:3px;background:var(--acc);width:0;z-index:20;transition:width .35s ease}
+#prog.off{opacity:0}
+</style>
+</head>
+<body>
+
+<div id="stage">
+
+  <!-- ==================== TELA 1 ==================== -->
+  <section class="tela ativa" id="t1" data-beats="5">
+    <div class="assina">@enzosparo</div>
+
+    <!-- beat 0 -->
+    <div class="abre" data-show="0" data-until="0">
+      <div class="grande">Você aprende uma coisa.<br />Fecha a aba.<br />E <b>esquece</b>.</div>
+      <div class="pe">Semana que vem você pergunta de novo. E de novo. Toda conversa com a IA começa do zero, porque nada do que você aprendeu virou memória.</div>
+    </div>
+
+    <div class="selo">Como funciona</div>
+    <h1>Um segundo cérebro que <b>cresce sozinho</b></h1>
+    <div class="abaixo">Três passos. Nenhum deles precisa de código.</div>
+
+    <div class="passos">
+
+      <div class="passo" data-show="1">
+        <div class="n">1</div>
+        <div class="txt">
+          <h2>Você joga tudo numa pasta</h2>
+          <p>Aula, artigo, print, transcrição de reunião. Sem organizar, sem formatar.</p>
+        </div>
+        <div class="vis">
+          <div class="arqs">
+            <div><i>+</i>aula-de-ontem.txt</div>
+            <div><i>+</i>artigo-que-salvei.md</div>
+            <div><i>+</i>print-do-erro.png</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="passo" data-show="2">
+        <div class="n">2</div>
+        <div class="txt">
+          <h2>A IA lê e organiza</h2>
+          <p>Um pedido em português. Ela entende do que se trata e separa por assunto.</p>
+        </div>
+        <div class="vis">
+          <div class="fala"><i>›</i>organiza o que tá na pasta</div>
+        </div>
+      </div>
+
+      <div class="passo" data-show="3">
+        <div class="n">3</div>
+        <div class="txt">
+          <h2>Vira páginas ligadas</h2>
+          <p>Curtas, em português, uma puxando a outra. Você abre e lê quando quiser.</p>
+        </div>
+        <div class="vis">
+          <svg viewBox="0 0 440 130" style="width:100%;height:130px">
+            <g stroke="#C6BFB2" stroke-width="2">
+              <line x1="60" y1="40" x2="180" y2="95"/>
+              <line x1="180" y1="95" x2="300" y2="35"/>
+              <line x1="300" y1="35" x2="395" y2="90"/>
+              <line x1="60" y1="40" x2="300" y2="35"/>
+            </g>
+            <g fill="#D9481F">
+              <circle cx="60" cy="40" r="11"/><circle cx="180" cy="95" r="11"/>
+              <circle cx="300" cy="35" r="11"/><circle cx="395" cy="90" r="11"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fecho" data-show="4">
+      <div class="diz">
+        E aí ele cresce sozinho.
+        <span>Cada coisa nova que entra deixa tudo que já estava lá mais fácil de achar.</span>
+      </div>
+      <div class="par">
+        <div class="um">
+          <div class="leg">Semana 1 · <b>8 páginas</b></div>
+          <svg id="g1" viewBox="0 0 260 96"></svg>
+        </div>
+        <div class="maior">→</div>
+        <div class="um">
+          <div class="leg">Mês 3 · <b>180 páginas</b></div>
+          <svg id="g2" viewBox="0 0 260 96"></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TELA 2 ==================== -->
+  <section class="tela" id="t2" data-beats="4">
+    <div class="assina">@enzosparo</div>
+
+    <div class="selo">A pergunta que sempre vem</div>
+    <h1>Mas isso não é <b>RAG</b>?</h1>
+    <div class="abaixo">Não. São duas formas bem diferentes de dar memória pra uma IA.</div>
+
+    <div class="dois">
+
+      <div class="meio a" data-show="1">
+        <div class="top">O jeito comum</div>
+        <h2>RAG</h2>
+        <div class="des">
+          <svg viewBox="0 0 620 260" style="width:100%;height:100%">
+            <g fill="none" stroke="#C6BFB2" stroke-width="2">
+              <rect x="10" y="60" width="110" height="140"/>
+              <line x1="30" y1="90" x2="100" y2="90"/><line x1="30" y1="115" x2="100" y2="115"/>
+              <line x1="30" y1="140" x2="100" y2="140"/><line x1="30" y1="165" x2="76" y2="165"/>
+            </g>
+            <text x="175" y="140" font-size="34" fill="#8A8378">→</text>
+            <g stroke-width="2">
+              <rect x="250" y="42" width="104" height="48" fill="#F6F4EF" stroke="#C6BFB2"/>
+              <rect x="380" y="30" width="104" height="48" fill="#F6F4EF" stroke="#C6BFB2"/>
+              <rect x="506" y="52" width="104" height="48" fill="#D9481F" stroke="#D9481F"/>
+              <rect x="250" y="118" width="104" height="48" fill="#D9481F" stroke="#D9481F"/>
+              <rect x="384" y="112" width="104" height="48" fill="#F6F4EF" stroke="#C6BFB2"/>
+              <rect x="504" y="132" width="104" height="48" fill="#F6F4EF" stroke="#C6BFB2"/>
+              <rect x="246" y="196" width="104" height="48" fill="#F6F4EF" stroke="#C6BFB2"/>
+              <rect x="378" y="192" width="104" height="48" fill="#D9481F" stroke="#D9481F"/>
+              <rect x="508" y="208" width="104" height="48" fill="#F6F4EF" stroke="#C6BFB2"/>
+            </g>
+          </svg>
+        </div>
+        <div class="diz" data-show="1" data-until="2">Ele <b>pica o texto em pedacinhos</b>. Na hora da pergunta, devolve os 3 pedaços mais parecidos — mesmo que soltos, sem contexto.</div>
+      </div>
+
+      <div class="meio b" data-show="2">
+        <div class="top">O jeito wiki</div>
+        <h2>Wiki</h2>
+        <div class="des">
+          <svg viewBox="0 0 620 260" style="width:100%;height:100%">
+            <g stroke="#C6BFB2" stroke-width="2">
+              <line x1="300" y1="60" x2="110" y2="140"/>
+              <line x1="300" y1="60" x2="500" y2="120"/>
+              <line x1="110" y1="140" x2="250" y2="215"/>
+              <line x1="500" y1="120" x2="430" y2="212"/>
+            </g>
+            <g stroke="#D9481F" stroke-width="4">
+              <line x1="300" y1="60" x2="250" y2="215"/>
+              <line x1="250" y1="215" x2="430" y2="212"/>
+            </g>
+            <g stroke-width="2">
+              <rect x="248" y="34" width="104" height="52" fill="#D9481F" stroke="#D9481F"/>
+              <rect x="198" y="189" width="104" height="52" fill="#D9481F" stroke="#D9481F"/>
+              <rect x="378" y="186" width="104" height="52" fill="#D9481F" stroke="#D9481F"/>
+              <rect x="58"  y="114" width="104" height="52" fill="#F6F4EF" stroke="#C6BFB2"/>
+              <rect x="448" y="94"  width="104" height="52" fill="#F6F4EF" stroke="#C6BFB2"/>
+            </g>
+            <g stroke="rgba(255,255,255,.75)" stroke-width="2">
+              <line x1="266" y1="52" x2="334" y2="52"/><line x1="266" y1="68" x2="316" y2="68"/>
+              <line x1="216" y1="207" x2="284" y2="207"/><line x1="216" y1="223" x2="266" y2="223"/>
+              <line x1="396" y1="204" x2="464" y2="204"/><line x1="396" y1="220" x2="446" y2="220"/>
+            </g>
+            <g stroke="#C6BFB2" stroke-width="2">
+              <line x1="76" y1="132" x2="144" y2="132"/><line x1="76" y1="148" x2="126" y2="148"/>
+              <line x1="466" y1="112" x2="534" y2="112"/><line x1="466" y1="128" x2="516" y2="128"/>
+            </g>
+          </svg>
+        </div>
+        <div class="diz" data-show="2" data-until="2">Ele <b>guarda o texto inteiro</b> e liga uma página na outra. Na hora da pergunta, segue os links — igual você faria na Wikipédia.</div>
+      </div>
+
+    </div>
+
+    <div class="remate" data-show="3">
+      <div class="a">RAG procura pedaço. <b>Wiki entende o assunto.</b></div>
+      <div class="b">E pra ser justo: RAG ganha quando são milhões de documentos de uma empresa. Pro <b>seu</b> conhecimento — o que você aprende toda semana — o wiki ganha de longe, e não custa nada.</div>
+    </div>
+  </section>
+
+</div>
+
+<div id="prog"></div>
+<div id="hud"><b>→</b> avança &nbsp; <b>←</b> volta &nbsp; <b>1 2</b> tela &nbsp; <b>F</b> tela cheia &nbsp; <b>H</b> esconde isto</div>
+
+<script>
+const stage = document.getElementById('stage');
+const fit = () => stage.style.transform =
+  `translate(-50%,-50%) scale(${Math.min(innerWidth/1920, innerHeight/1080)})`;
+addEventListener('resize', fit); fit();
+
+/* nuvenzinhas de páginas — posições fixas */
+let seed = 23;
+const rnd = () => (seed = (seed*1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+function nuvem(id, n){
+  const W = 260, H = 96, p = [];
+  for(let i=0;i<n;i++) p.push([7 + rnd()*(W-14), 7 + rnd()*(H-14)]);
+  let s = '<g stroke="#CFC8BB" stroke-width="1">';
+  for(let i=1;i<n;i++){
+    const j = Math.floor(rnd()*i);
+    s += `<line x1="${p[i][0].toFixed(1)}" y1="${p[i][1].toFixed(1)}" x2="${p[j][0].toFixed(1)}" y2="${p[j][1].toFixed(1)}"/>`;
+  }
+  s += '</g><g fill="#D9481F">';
+  const r = n > 100 ? 1.7 : 4;
+  for(const q of p) s += `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="${r}"/>`;
+  document.getElementById(id).innerHTML = s + '</g>';
+}
+nuvem('g1', 8); nuvem('g2', 180);
+
+/* beats */
+const telas = [...document.querySelectorAll('.tela')];
+let t = 0, b = 0;
+const beatsDe = i => +telas[i].dataset.beats;
+
+function render(){
+  telas.forEach((el,i) => el.classList.toggle('ativa', i === t));
+  const tela = telas[t];
+  tela.querySelectorAll('[data-show]').forEach(el => {
+    const de = +el.dataset.show, ate = el.dataset.until ? +el.dataset.until : 99;
+    el.classList.toggle('on', b >= de && b <= ate);
+  });
+  const total = telas.reduce((a,el) => a + (+el.dataset.beats), 0);
+  const feito = telas.slice(0,t).reduce((a,el) => a + (+el.dataset.beats), 0) + b + 1;
+  prog.style.width = (feito/total*100) + '%';
+}
+function anda(d){
+  b += d;
+  if(b >= beatsDe(t)){ if(t < telas.length-1){ t++; b = 0; } else b = beatsDe(t)-1; }
+  if(b < 0){ if(t > 0){ t--; b = beatsDe(t)-1; } else b = 0; }
+  render();
+}
+const vaiPara = i => { t = i; b = 0; render(); };
+
+addEventListener('keydown', e => {
+  const k = e.key;
+  if(k === 'ArrowRight' || k === ' ' || k === 'PageDown'){ e.preventDefault(); anda(1); }
+  else if(k === 'ArrowLeft' || k === 'PageUp'){ e.preventDefault(); anda(-1); }
+  else if(k === '1'){ vaiPara(0); }
+  else if(k === '2'){ vaiPara(1); }
+  else if(k === 'r' || k === 'R'){ vaiPara(0); }
+  else if(k === 'f' || k === 'F'){
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  }
+  else if(k === 'h' || k === 'H'){ hud.classList.toggle('off'); prog.classList.toggle('off'); }
+});
+addEventListener('click', () => anda(1));
+
+setTimeout(() => hud.classList.add('off'), 5000);
+render();
+</script>
+</body>
+</html>

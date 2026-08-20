@@ -7,7 +7,7 @@ description: Use when someone asks for an AIOS audit, asks to score their setup 
 
 Runs the **Four Cs Audit** on the current Claude Code project. Reads (never writes) the project's operating manual, memory, skills, agents, MCPs, decisions, and references. Scores each of the Four Cs out of 25. Surfaces strengths and the top 3 leverage-weighted gaps with concrete next-step commands.
 
-**Scope is structural — "is the AIOS built right?"** It is NOT a capability planner. Capability gaps ("you could build a daily brief if you connected calendar") belong to `/level-up`. The audit answers: are the files, folders, registries, and connections in good shape?
+**Scope is structural — "is the AIOS built right?"** It is NOT a capability planner. Capability gaps ("you could build a daily brief if you connected calendar") belong to `/automatize-se`. The audit answers: are the files, folders, registries, and connections in good shape?
 
 First run is the baseline. Re-run weekly to watch the score climb. That's the compounding hook.
 
@@ -93,7 +93,7 @@ A "reachable" connection counts via ANY mechanism: MCP, script, export pipeline,
 | Criterion | Points | How to detect |
 |---|---|---|
 | 3+ skills installed | 10 | Count `.claude/skills/*/SKILL.md` |
-| 1+ user-built skill | 10 | Skill names not in: `onboard`, `audit`, `level-up`, `skill-creator`, `skill-builder`, `decision`, `connect`, `connect-check`, `memory-prune`, `scaffold-skill`, `scaffold-agent`, `draft`, `standup` (canonical AIS-OS + Anthropic shipped skills) |
+| 1+ user-built skill | 10 | Skill names not in: `onboard`, `audit`, `automatize-se`, `skill-creator`, `skill-builder`, `decision`, `connect`, `connect-check`, `memory-prune`, `scaffold-skill`, `scaffold-agent`, `draft`, `standup` (canonical AIS-OS + Anthropic shipped skills) |
 | 1+ agent defined | 5 | Count `.claude/agents/*.md` ≥ 1 |
 
 #### Cadence (25 pts)
@@ -163,7 +163,7 @@ Cadence        {bar}  {n}/25  {label}
 ## Suggested next: {single most leveraged action}
 
 ---
-Structural gaps only. To explore CAPABILITY gaps (what your AIOS could DO that it can't yet), run /level-up after this audit.
+Structural gaps only. To explore CAPABILITY gaps (what your AIOS could DO that it can't yet), run /automatize-se after this audit.
 ```
 
 ### Step 5: Offer to save the report

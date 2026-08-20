@@ -1,0 +1,617 @@
+{
+  "2026/09/12": [
+    {
+      "venue": "[UNVRS]",
+      "nome": "elrow Ibiza | Neo Kaos Garden",
+      "hora": "23:30",
+      "preco": 85,
+      "djs": [
+        "AAT",
+        "Ilario Alicante",
+        "Joris Voorn",
+        "Toni Varga"
+      ],
+      "obs": [
+        "A-Z"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/elrow-unvrs"
+    },
+    {
+      "venue": "Ushuaïa Ibiza",
+      "nome": "ANTS",
+      "hora": "17:00 - 23:00",
+      "preco": 30,
+      "djs": [
+        "Andrea Oliva",
+        "Chelina Manuhutu B2B Syreeta",
+        "Joëlla Jackson",
+        "Sidney Charles"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/ants"
+    },
+    {
+      "venue": "Pacha Ibiza",
+      "nome": "Robin Schulz",
+      "hora": "23:00 - 06:00",
+      "preco": 30,
+      "djs": [
+        "Robin Schulz",
+        "NERVO",
+        "Jodie Harsh",
+        "The Menendez Brothers"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/robin-schulz"
+    },
+    {
+      "venue": "Hï Ibiza",
+      "nome": "Black Coffee",
+      "hora": "23:30",
+      "preco": 85,
+      "djs": [
+        "Black Coffee",
+        "Mahmut Orhan",
+        "Kasango",
+        "Skepta (DJ set)",
+        "SG Lewis",
+        "Arielle Free"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/black-coffee"
+    },
+    {
+      "venue": "Akasha - Las Dalias",
+      "nome": "Supernova",
+      "hora": "18:00",
+      "preco": 15,
+      "djs": [
+        "Words Of Niō",
+        "Medusa Odyssey (live)",
+        "Parra For Cuva",
+        "Medusa Oddysey"
+      ],
+      "obs": [
+        "Las Dalias garden (open to 23.00 h)",
+        "Akasha (from 23.00 h till close)",
+        "free entry to the garden from open to 23.00 h",
+        "free entry to Akasha for island residents before midnight"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/supernova-las-dalias"
+    },
+    {
+      "venue": "528 Ibiza",
+      "nome": "Pikes Presents | Special Edition",
+      "hora": "18:00 - 04:00",
+      "preco": 29.5,
+      "djs": [
+        "Kruder & Dorfmeister",
+        "Pikes resident DJs"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/pikes-presents-528"
+    },
+    {
+      "venue": "Cova Santa",
+      "nome": "Cova Santa presents Mosimann",
+      "hora": "19:00 - 05:00",
+      "preco": 32,
+      "djs": [
+        "Mosimann",
+        "Elfico",
+        "Ofenbach",
+        "Sébastien Léger"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/cova-santa-presents"
+    },
+    {
+      "venue": "O Beach Ibiza",
+      "nome": "Soul Heaven",
+      "hora": "13:00 - 22:00",
+      "preco": 25,
+      "djs": [
+        "Barbara Tucker (live PA)",
+        "Jamie Love",
+        "Lucy Jane"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/soul-heaven"
+    },
+    {
+      "venue": "Chinois Ibiza",
+      "nome": "Claptone presents The Masquerade",
+      "hora": "23:30 - 06:30",
+      "preco": 35,
+      "djs": [
+        "Claptone",
+        "Hannah Wants B2B Paul Woolford",
+        "Chus & Ceballos",
+        "Peverell"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/masquerade-chinois"
+    },
+    {
+      "venue": "Playa Soleil - Bora Bora",
+      "nome": "Crême de Crême",
+      "hora": "17:00 - 04:00",
+      "preco": 20,
+      "djs": [],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/creme-de-creme"
+    },
+    {
+      "venue": "Ibiza Rocks Pool Club",
+      "nome": "Ibiza Anthems Pool Party",
+      "hora": "14:00 - 21:00",
+      "preco": 32,
+      "djs": [
+        "Switch Disco",
+        "Harlee (live PA)",
+        "Dom Townsend",
+        "Issy Smith"
+      ],
+      "obs": [
+        "all pre-sale tickets include credit to spend at the bar"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/ibiza-anthems-ibiza-rocks"
+    },
+    {
+      "venue": "Eden",
+      "nome": "Stack City",
+      "hora": "23:45 - 06:00",
+      "preco": 40,
+      "djs": [],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/eden-early-season-parties"
+    },
+    {
+      "venue": "Es Paradis",
+      "nome": "Fiesta del Agua",
+      "hora": "23:59 - 06:00",
+      "preco": 25,
+      "djs": [],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/fiesta-del-agua"
+    },
+    {
+      "venue": "Lío Ibiza",
+      "nome": "Kōdō",
+      "hora": "23:45 - 05:00",
+      "preco": 40,
+      "djs": [],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/kodo"
+    },
+    {
+      "venue": "Bam-Bu-Ku Ibiza",
+      "nome": "El Kiddo",
+      "hora": "11:00 - 20:00",
+      "preco": 15,
+      "djs": [
+        "Harry Mc",
+        "+ special guests"
+      ],
+      "obs": [
+        "El Kiddo is an intergenerational parent-child party concept",
+        "free admission for children 23 months and under"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/el-kiddo-bam-bu-ku"
+    },
+    {
+      "venue": "Bottomless Brunch Boat Party",
+      "nome": "Bottomless Brunch Boat Party",
+      "hora": "13:00 - 17:00",
+      "preco": 119.99,
+      "djs": [],
+      "obs": [
+        "operated by Ibiza Boat Club"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/five-star-boat-party-ibiza-boat-club"
+    },
+    {
+      "venue": "Aftersun Ibiza Boat Party",
+      "nome": "Aftersun Ibiza Boat Party",
+      "hora": "17:30 - 20:30",
+      "preco": 89.99,
+      "djs": [],
+      "obs": [
+        "operated by Ibiza Boat Club"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/aftersun-ibiza-ibiza-boat-club"
+    },
+    {
+      "venue": "Pukka Up Sunset Boat Party",
+      "nome": "Pukka Up Sunset Boat Party",
+      "hora": "17:00 - 20:00",
+      "preco": 65,
+      "djs": [],
+      "obs": [
+        "upgrade to include entrance to any day at O Beach and any night at Amnesia"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/pukka-up-saturdays"
+    },
+    {
+      "venue": "Formentera With Benefits",
+      "nome": "Formentera With Benefits",
+      "hora": "10:30 - 20:15",
+      "preco": 179.99,
+      "djs": [],
+      "obs": [
+        "operated by Ibiza Boat Club"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/ibiza-boat-club-formentera"
+    }
+  ],
+  "2026/09/13": [
+    {
+      "venue": "[UNVRS]",
+      "nome": "Carl Cox",
+      "hora": "23:30",
+      "preco": 50,
+      "djs": [
+        "Carl Cox",
+        "Louie Vega",
+        "Dimitri From Paris",
+        "Souldynamic",
+        "Melon Bomb"
+      ],
+      "obs": [
+        "Wild Comet"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/carl-cox"
+    },
+    {
+      "venue": "Ushuaïa Ibiza",
+      "nome": "Swedish House Mafia Closing Party",
+      "hora": "17:00 - 23:00",
+      "preco": 110,
+      "djs": [
+        "Swedish House Mafia",
+        "Bea Sylvan",
+        "Nosefine"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/swedish_house_mafia_i.htm"
+    },
+    {
+      "venue": "Pacha Ibiza",
+      "nome": "Solomun +1",
+      "hora": "23:00 - 06:00",
+      "preco": 50,
+      "djs": [
+        "Solomun",
+        "Desiree"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/solomun_plus1_i.htm"
+    },
+    {
+      "venue": "Amnesia",
+      "nome": "Pyramid",
+      "hora": "23:00 - 06:00",
+      "preco": 50,
+      "djs": [
+        "Ricardo Villalobos B2B Luciano",
+        "Francesco Del Garda",
+        "Saoirse",
+        "Marco Faraone",
+        "Nina Kraviz"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/pyramid"
+    },
+    {
+      "venue": "Akasha - Las Dalias",
+      "nome": "Nido",
+      "hora": "19:00",
+      "preco": 15,
+      "djs": [
+        "Pomboklap",
+        "Marc Werner",
+        "LazyKay",
+        "Stefan Obermaier"
+      ],
+      "obs": [
+        "Las Dalias garden (open to 23.00 h)",
+        "Akasha (from 23.00 till late)",
+        "free entry to the garden from open to 23.00 h",
+        "free entry to Akasha for island residents before midnight"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/nido"
+    },
+    {
+      "venue": "528 Ibiza",
+      "nome": "Max Dean presents NEXUP Ibiza",
+      "hora": "16:00 - 23:00",
+      "preco": 53,
+      "djs": [
+        "Max Dean"
+      ],
+      "obs": [
+        "includes complimentary shuttle bus service to San Antonio bus station after the party"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/nexup-528"
+    },
+    {
+      "venue": "Cova Santa",
+      "nome": "Pantheøn",
+      "hora": "19:00 - 05:00",
+      "preco": 32,
+      "djs": [
+        "Mr. Belt & Wezol",
+        "Sem Jacobs"
+      ],
+      "obs": [
+        "A-Z"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/pantheon"
+    },
+    {
+      "venue": "O Beach Ibiza",
+      "nome": "KISS Pool Party Live",
+      "hora": "13:00 - 22:00",
+      "preco": 40,
+      "djs": [
+        "Cameo",
+        "Sam Dungate"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/kiss-uk-pool-party"
+    },
+    {
+      "venue": "Chinois Ibiza",
+      "nome": "Bedouin presents Saga",
+      "hora": "23:30 - 06:30",
+      "preco": 35,
+      "djs": [
+        "Bedouin",
+        "Jan Blomqvist (live)",
+        "Baron B2B Dorian Craft"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/saga-chinois"
+    },
+    {
+      "venue": "Playa Soleil - Bora Bora",
+      "nome": "Afropiano Laici",
+      "hora": "16:00 - 23:00",
+      "preco": null,
+      "djs": [],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/playa-soleil-parties"
+    },
+    {
+      "venue": "Ibiza Rocks Pool Club",
+      "nome": "R&B Affair Pool Party",
+      "hora": "14:00 - 21:00",
+      "preco": 32,
+      "djs": [
+        "DJ Spoony",
+        "Jonezy",
+        "DJ Policy",
+        "Lewis Bones"
+      ],
+      "obs": [
+        "all pre-sale tickets include credit to spend at the bar"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/r-and-b-affair"
+    },
+    {
+      "venue": "Lío Ibiza",
+      "nome": "Travieso",
+      "hora": "23:45 - 05:00",
+      "preco": 40,
+      "djs": [],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/travieso"
+    },
+    {
+      "venue": "Bottomless Brunch Boat Party",
+      "nome": "Bottomless Brunch Boat Party",
+      "hora": "13:00 - 17:00",
+      "preco": 119.99,
+      "djs": [],
+      "obs": [
+        "operated by Ibiza Boat Club"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/five-star-boat-party-ibiza-boat-club"
+    },
+    {
+      "venue": "Cruise Crush Boat Party",
+      "nome": "Cruise Crush Boat Party",
+      "hora": "14:30 - 17:30",
+      "preco": 69,
+      "djs": [],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/cruise-crush-boat-party"
+    },
+    {
+      "venue": "Formentera With Benefits",
+      "nome": "Formentera With Benefits",
+      "hora": "10:30 - 20:15",
+      "preco": 179.99,
+      "djs": [],
+      "obs": [
+        "operated by Ibiza Boat Club"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/ibiza-boat-club-formentera"
+    },
+    {
+      "venue": "A Day In Paradise",
+      "nome": "A Day In Paradise",
+      "hora": "12:00 - 17:00",
+      "preco": 75,
+      "djs": [],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/day-paradise"
+    }
+  ],
+  "2026/09/14": [
+    {
+      "venue": "[UNVRS]",
+      "nome": "Armin van Buuren presents A State of Trance",
+      "hora": "23:30 - 06:00",
+      "preco": 50,
+      "djs": [
+        "Armin van Buuren (extended set)"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/armin-van-buuren-unvrs"
+    },
+    {
+      "venue": "Hï Ibiza",
+      "nome": "Francis Mercier presents Solèy",
+      "hora": "23:30",
+      "preco": 30,
+      "djs": [
+        "Francis Mercier B2B Kölsch",
+        "Patrick Mason",
+        "KILIMANJARO",
+        "Andrea Oliva",
+        "HoneyLuv"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/francis-mercier-hi-ibiza"
+    },
+    {
+      "venue": "Amnesia",
+      "nome": "NRG",
+      "hora": "23:00 - 06:00",
+      "preco": 50,
+      "djs": [
+        "Ben Hemsley",
+        "Dart B2B Kyle Starkey",
+        "Datsko B2B Prada2000",
+        "Hannah Laing"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/nrg-amnesia"
+    },
+    {
+      "venue": "Pacha Ibiza",
+      "nome": "Sonny Fodera",
+      "hora": "23:00 - 06:00",
+      "preco": 35,
+      "djs": [
+        "Sonny Fodera",
+        "Lost Frequencies",
+        "Danny Howard",
+        "Laeet"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/sonny-fodera"
+    },
+    {
+      "venue": "Ushuaïa Ibiza",
+      "nome": "David Guetta presents F*** ME I'M FAMOUS!",
+      "hora": "17:00 - 23:00",
+      "preco": 120,
+      "djs": [
+        "David Guetta",
+        "Miss Monique",
+        "Tini Gessler",
+        "Paul Reynolds"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/f-me-im-famous-ushuaia"
+    },
+    {
+      "venue": "Akasha - Las Dalias",
+      "nome": "Peace N' Music",
+      "hora": "19:00",
+      "preco": 15,
+      "djs": [
+        "DJ Pippi",
+        "Willie Graff"
+      ],
+      "obs": [
+        "Las Dalias garden (free entry from open to 22.59 h)",
+        "Akasha (from 23.00 h till close)"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/peace-n-music"
+    },
+    {
+      "venue": "O Beach Ibiza",
+      "nome": "ZUVA",
+      "hora": "13:00 - 22:00",
+      "preco": 20,
+      "djs": [
+        "Jamie Love",
+        "Sam Dungate"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/zuva-o-beach"
+    },
+    {
+      "venue": "Chinois Ibiza",
+      "nome": "La Troya",
+      "hora": "23:30 - 06:00",
+      "preco": 30,
+      "djs": [
+        "Ben Westbeech",
+        "Dymos",
+        "Shizzo",
+        "Oscar Colorado B2B 2Lovers"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/la-troya-club-chinois"
+    },
+    {
+      "venue": "Eden",
+      "nome": "Actic' Bad Closing Party",
+      "hora": "23:45 - 06:00",
+      "preco": 30,
+      "djs": [],
+      "obs": [
+        "presented by Holler At Me"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/actin-bad"
+    },
+    {
+      "venue": "Ibiza Rocks Pool Club",
+      "nome": "Nothing New Pool Party",
+      "hora": "14:00 - 21:00",
+      "preco": 32,
+      "djs": [
+        "Ibiza Rocks resident DJs"
+      ],
+      "obs": [
+        "all pre-sale tickets include credit to spend at the bar"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/nothing-new"
+    },
+    {
+      "venue": "Es Paradis",
+      "nome": "You Know The Vibes Party",
+      "hora": "23:45 - 07:00",
+      "preco": 25,
+      "djs": [
+        "DJ Policy"
+      ],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/you-know-vibes"
+    },
+    {
+      "venue": "Cruise Crush Boat Party",
+      "nome": "Cruise Crush Boat Party",
+      "hora": "14:30 - 17:30",
+      "preco": 69,
+      "djs": [],
+      "obs": [],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/cruise-crush-boat-party"
+    },
+    {
+      "venue": "Formentera With Benefits",
+      "nome": "Formentera With Benefits",
+      "hora": "10:30 - 20:15",
+      "preco": 179.99,
+      "djs": [],
+      "obs": [
+        "operated by Ibiza Boat Club"
+      ],
+      "url": "https://www.ibiza-spotlight.com/night/promoters/ibiza-boat-club-formentera"
+    }
+  ]
+}

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIOS — Os 4 Fundamentos (apresentação)</title>
+<style>
+  :root {
+    --bg: #0F0C08;
+    --surface: #17120B;
+    --surface-2: #1F1810;
+    --line: #2E261B;
+    --line-hi: #4A3B26;
+    --text: #F5EFE4;
+    --muted: #A2947D;
+    --faint: #6E6250;
+    --accent: #F08A3C;
+    --accent-dim: #C96F2C;
+    --accent-glow: rgba(240, 138, 60, 0.14);
+    --ok: #93C572;
+    --mono: "Cascadia Code", Consolas, "Courier New", monospace;
+    --sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: clamp(16px, 1.6vw, 22px);
+    line-height: 1.5;
+    cursor: default;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  #pontos { position: fixed; inset: 0; z-index: 0; }
+  .vinheta {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background: radial-gradient(ellipse 75% 60% at 50% 42%, var(--accent-glow), transparent 72%);
+  }
+
+  /* ===== slides ===== */
+  .slide {
+    position: fixed; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6vh 8vw;
+    opacity: 0; visibility: hidden;
+    transition: opacity 420ms ease, visibility 0s linear 420ms;
+  }
+  .slide.ativa {
+    opacity: 1; visibility: visible;
+    transition: opacity 420ms ease;
+    z-index: 3;
+  }
+
+  /* entrada dos elementos quando o slide ativa */
+  .rv { opacity: 0; transform: translateY(30px); }
+  .slide.ativa .rv { animation: sobe 650ms cubic-bezier(.2,.7,.2,1) forwards; }
+  .slide.ativa .rv.d1 { animation-delay: 120ms; }
+  .slide.ativa .rv.d2 { animation-delay: 260ms; }
+  .slide.ativa .rv.d3 { animation-delay: 400ms; }
+  .slide.ativa .rv.d4 { animation-delay: 540ms; }
+  .slide.ativa .rv.d5 { animation-delay: 680ms; }
+  @keyframes sobe { to { opacity: 1; transform: none; } }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: clamp(12px, 1.1vw, 16px);
+    letter-spacing: 0.26em; text-transform: uppercase; color: var(--accent);
+    display: flex; align-items: center; gap: 16px; margin-bottom: 3vh;
+  }
+  .eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--accent-dim); }
+  h1 {
+    font-size: clamp(44px, 7.5vw, 110px); font-weight: 900;
+    letter-spacing: -0.03em; line-height: 1.0; text-wrap: balance;
+  }
+  h2 { font-size: clamp(36px, 5.5vw, 80px); font-weight: 850; letter-spacing: -0.02em; line-height: 1.02; text-wrap: balance; }
+  em { font-style: normal; color: var(--accent); }
+  .sub { color: var(--muted); font-size: clamp(18px, 1.9vw, 26px); max-width: 34em; margin-top: 3vh; }
+  .sub strong { color: var(--text); font-weight: 600; }
+
+  /* ===== slide das 4 peças (diagrama conectado) ===== */
+  .pecas-slide h2 { font-size: clamp(28px, 3.8vw, 54px); }
+  .diagrama { position: relative; flex: 1; margin-top: 2vh; min-height: 62vh; }
+  .diagrama svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .lin-base { stroke: var(--line-hi); stroke-width: 1.5; opacity: 0; }
+  .lin-fluxo { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 3 15; opacity: 0; }
+  .slide.ativa .lin-base { animation: aparece 700ms 850ms ease forwards; }
+  .slide.ativa .lin-fluxo { animation: aparece 700ms 1050ms ease forwards, flui 1.5s linear infinite; }
+  @keyframes aparece { to { opacity: 0.8; } }
+  @keyframes flui { to { stroke-dashoffset: -36; } }
+
+  .no {
+    position: absolute; transform: translate(-50%, -50%); z-index: 2; opacity: 0;
+    width: min(31vw, 420px);
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--line-hi); border-radius: 14px;
+    padding: 2.4vh 1.5vw;
+    box-shadow: 0 20px 50px -30px rgba(0,0,0,0.9);
+  }
+  .no.p1 { left: 21%; top: 24%; } .no.p2 { left: 79%; top: 24%; }
+  .no.p3 { left: 21%; top: 78%; } .no.p4 { left: 79%; top: 78%; }
+  .slide.ativa .no { animation: sobeCentro 650ms cubic-bezier(.2,.7,.2,1) forwards; }
+  .slide.ativa .no.p1 { animation-delay: 100ms; }
+  .slide.ativa .no.p2 { animation-delay: 240ms; }
+  .slide.ativa .no.p3 { animation-delay: 380ms; }
+  .slide.ativa .no.p4 { animation-delay: 520ms; }
+  @keyframes sobeCentro {
+    from { opacity: 0; transform: translate(-50%, calc(-50% + 26px)); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+  }
+  .no .cab { display: flex; align-items: baseline; gap: 12px; margin-bottom: 0.8vh; }
+  .no .n { font-family: var(--mono); color: var(--accent); font-weight: 700; font-size: clamp(14px, 1.4vw, 20px); }
+  .no h3 { font-size: clamp(24px, 2.6vw, 40px); font-weight: 850; letter-spacing: -0.01em; }
+  .no .papel { color: var(--muted); font-size: clamp(13px, 1.35vw, 18px); line-height: 1.45; }
+  .no .papel strong { color: var(--text); }
+  .arquivo {
+    margin-top: 1.4vh; font-family: var(--mono); font-size: clamp(12px, 1.2vw, 16px);
+    color: var(--accent); background: var(--bg); border: 1px solid var(--line);
+    border-radius: 7px; padding: 7px 12px; display: inline-block;
+  }
+  .arquivo::before { content: "📁 "; font-size: 0.8em; }
+
+  .hub {
+    position: absolute; left: 50%; top: 50%; z-index: 3; opacity: 0;
+    transform: translate(-50%, -50%);
+    width: clamp(100px, 11vw, 150px); height: clamp(100px, 11vw, 150px);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 50% 36%, var(--surface-2), var(--bg) 80%);
+    border: 1px solid var(--accent-dim);
+    font-weight: 900; font-size: clamp(18px, 1.9vw, 28px); letter-spacing: 0.02em;
+    box-shadow: 0 0 60px var(--accent-glow);
+  }
+  .hub span { color: var(--accent); }
+  .slide.ativa .hub {
+    animation: sobeCentro 650ms 660ms cubic-bezier(.2,.7,.2,1) forwards,
+               respira 3s 1500ms ease-in-out infinite;
+  }
+  @keyframes respira { 50% { box-shadow: 0 0 95px rgba(240, 138, 60, 0.30); } }
+
+  /* ===== slide comandos ===== */
+  .terms { display: flex; flex-direction: column; gap: 2.4vh; margin-top: 5vh; }
+  .term {
+    background: #0B0906; border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+  }
+  .term-bar {
+    display: flex; align-items: center; gap: 8px; padding: 10px 16px;
+    background: var(--surface); border-bottom: 1px solid var(--line);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot:nth-child(1) { background: #52392a; } .dot:nth-child(2) { background: #4a3b26; } .dot:nth-child(3) { background: #2E261B; }
+  .term-bar .quando {
+    margin-left: auto; font-family: var(--mono); font-size: clamp(11px, 1vw, 14px);
+    color: var(--faint); letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .term-body {
+    padding: 2.4vh 2vw; display: grid; grid-template-columns: minmax(240px, 17vw) 1fr;
+    gap: 2.5vw; align-items: baseline;
+  }
+  .term-cmd { font-family: var(--mono); font-size: clamp(22px, 2.4vw, 34px); font-weight: 700; color: var(--accent); white-space: nowrap; }
+  .term-cmd .ps { color: var(--faint); }
+  .term-cmd .tipa.digitando::after {
+    content: ""; display: inline-block; width: 0.45em; height: 1.05em; margin-left: 4px;
+    background: var(--accent); vertical-align: text-bottom;
+    animation: pisca 0.9s steps(1) infinite;
+  }
+  @keyframes pisca { 50% { opacity: 0; } }
+  .term-desc { color: var(--muted); font-size: clamp(16px, 1.7vw, 23px); }
+  .term-desc strong { color: var(--text); }
+
+  /* ===== slide 3A ===== */
+  .flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 1.6vw; align-items: stretch; margin-top: 6vh; }
+  .passo {
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--line); border-radius: 12px; padding: 3.4vh 2vw;
+  }
+  .passo .letra { font-family: var(--mono); font-size: clamp(11px, 1vw, 14px); letter-spacing: 0.22em; color: var(--faint); margin-bottom: 1.6vh; }
+  .passo h3 { font-size: clamp(24px, 2.6vw, 38px); font-weight: 800; color: var(--accent); margin-bottom: 1.2vh; }
+  .passo p { color: var(--muted); font-size: clamp(15px, 1.6vw, 22px); }
+  .passo p strong { color: var(--text); }
+  .seta { align-self: center; font-family: var(--mono); font-size: clamp(24px, 2.6vw, 38px); color: var(--accent-dim); }
+  .slide.ativa .seta { animation: pulsa 2.2s ease-in-out infinite; }
+  @keyframes pulsa { 50% { opacity: 0.4; transform: translateX(4px); } }
+
+  /* ===== slide metas ===== */
+  .metas { margin-top: 5vh; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .meta-row { display: grid; grid-template-columns: 1fr 1.5fr; }
+  .meta-row + .meta-row { border-top: 1px solid var(--line); }
+  .meta-row > div { padding: 2.6vh 2.2vw; }
+  .meta-row .m {
+    background: rgba(255,255,255,0.015); font-weight: 700;
+    font-size: clamp(18px, 2vw, 27px); display: flex; align-items: center;
+  }
+  .meta-row .m::before { content: "“"; color: var(--accent-dim); margin-right: 8px; font-size: 1.4em; line-height: 0; }
+  .meta-row .a { color: var(--muted); font-size: clamp(16px, 1.8vw, 24px); display: flex; align-items: center; gap: 1.2vw; }
+  .meta-row .a::before { content: "→"; font-family: var(--mono); color: var(--accent); flex-shrink: 0; }
+
+  /* ===== slide primeiro mês ===== */
+  .barra { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2vw; margin-top: 7vh; }
+  .etapa { display: flex; flex-direction: column; gap: 1.6vh; }
+  .etapa .pontos {
+    font-family: var(--mono); font-variant-numeric: tabular-nums;
+    font-size: clamp(40px, 5.5vw, 84px); font-weight: 700; line-height: 1;
+  }
+  .etapa .fill { height: 1.6vh; border-radius: 5px; background: var(--surface-2); overflow: hidden; }
+  .etapa .fill i {
+    display: block; height: 100%; width: 0;
+    background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+    border-radius: 5px;
+    transition: width 1100ms cubic-bezier(.25,.8,.25,1);
+  }
+  .etapa .dia { font-family: var(--mono); font-size: clamp(11px, 1.1vw, 15px); color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; }
+  .etapa .obs { font-size: clamp(13px, 1.4vw, 19px); color: var(--muted); }
+  .etapa.full .pontos { color: var(--ok); }
+  .etapa.full .fill i { background: linear-gradient(90deg, #6d9c52, var(--ok)); }
+
+  /* ===== slide final ===== */
+  .final { text-align: center; align-items: center; }
+  .final .marca { font-size: clamp(56px, 9vw, 130px); font-weight: 900; letter-spacing: -0.03em; }
+  .final .marca span { color: var(--accent); }
+  .final .sub { margin: 2vh auto 0; }
+
+  /* ===== HUD ===== */
+  .hud {
+    position: fixed; z-index: 10; bottom: 26px;
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.16em;
+    color: var(--faint); text-transform: uppercase; user-select: none;
+  }
+  .hud.esq { left: 34px; }
+  .hud.dir { right: 34px; display: flex; gap: 22px; align-items: center; }
+  .hud .contador { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .hud .dica { transition: opacity 500ms; }
+  .hud .dica.some { opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rv, .slide.ativa .rv { animation: none !important; opacity: 1; transform: none; }
+    .seta, .term-cmd .tipa.digitando::after { animation: none !important; }
+    .etapa .fill i { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="pontos"></canvas>
+<div class="vinheta"></div>
+
+<!-- 1 · AS 4 PEÇAS (diagrama conectado) -->
+<section class="slide pecas-slide">
+  <div class="eyebrow rv">Por dentro</div>
+  <h2 class="rv d1">Os 4 fundamentos de um <em>AIOS</em> — um usando o outro</h2>
+  <div class="diagrama">
+    <svg id="linhas" aria-hidden="true"></svg>
+    <div class="no p1">
+      <div class="cab"><span class="n">1</span><h3>Conexões</h3></div>
+      <div class="papel"><strong>As ferramentas que ele alcança:</strong> e-mail, agenda,
+      WhatsApp, planilha. Fazer, não só falar.</div>
+      <div class="arquivo">connections.md</div>
+    </div>
+    <div class="no p2">
+      <div class="cab"><span class="n">2</span><h3>Automações</h3></div>
+      <div class="papel"><strong>O que roda sozinho:</strong> rotinas que trabalham todo dia
+      — sem você precisar pedir.</div>
+      <div class="arquivo">agendadas · todo dia</div>
+    </div>
+    <div class="no p3">
+      <div class="cab"><span class="n">3</span><h3>Habilidades</h3></div>
+      <div class="papel"><strong>O que ele sabe executar:</strong> processos inteiros
+      guardados em comandos. Treinou uma vez, nunca mais repete.</div>
+      <div class="arquivo">/iniciar · /automatizar · /analisar</div>
+    </div>
+    <div class="no p4">
+      <div class="cab"><span class="n">4</span><h3>Contexto</h3></div>
+      <div class="papel"><strong>Tudo que ele sabe de você:</strong> seu negócio, suas metas,
+      seu jeito de trabalhar. Lido antes de toda tarefa.</div>
+      <div class="arquivo">CLAUDE.md · context/</div>
+    </div>
+    <div class="hub"><span>AI</span>OS</div>
+  </div>
+</section>
+
+<!-- 6 · OS 3 COMANDOS -->
+<section class="slide" data-tipa>
+  <div class="eyebrow rv">Os comandos</div>
+  <h2 class="rv d1">Três comandos. <em>Só isso.</em></h2>
+  <div class="terms">
+    <div class="term rv d1">
+      <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="quando">roda 1 vez</span></div>
+      <div class="term-body">
+        <div class="term-cmd"><span class="ps">&gt; </span><span class="tipa" data-cmd="/iniciar" data-espera="600"></span></div>
+        <div class="term-desc"><strong>7 perguntas, 15 minutos.</strong> Você responde com as
+        suas palavras — ele monta a estrutura inteira sozinho.</div>
+      </div>
+    </div>
+    <div class="term rv d2">
+      <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="quando">o dia a dia</span></div>
+      <div class="term-body">
+        <div class="term-cmd"><span class="ps">&gt; </span><span class="tipa" data-cmd="/automatizar" data-espera="1500"></span></div>
+        <div class="term-desc"><strong>Apareceu tarefa chata? Digitou, saiu das costas.</strong>
+        Se você não souber o quê, ele descobre — partindo das suas metas.</div>
+      </div>
+    </div>
+    <div class="term rv d3">
+      <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="quando">quando quiser</span></div>
+      <div class="term-body">
+        <div class="term-cmd"><span class="ps">&gt; </span><span class="tipa" data-cmd="/analisar" data-espera="2700"></span></div>
+        <div class="term-desc"><strong>O boletim do seu AIOS:</strong> nota de 0 a 100, o ritmo
+        pra idade dele, e os 3 próximos passos.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · MÉTODO 3A -->
+<section class="slide">
+  <div class="eyebrow rv">O método</div>
+  <h2 class="rv d1">Método <em>3A</em></h2>
+  <p class="sub rv d2">A receita que o <strong>/automatizar</strong> segue toda vez.</p>
+  <div class="flow rv d2">
+    <div class="passo">
+      <div class="letra">PASSO A·1</div>
+      <h3>Anotar</h3>
+      <p>A tarefa repetida entra na lista na hora em que aparece. <strong>Anotar, não
+      resolver.</strong></p>
+    </div>
+    <div class="seta">→</div>
+    <div class="passo">
+      <div class="letra">PASSO A·2</div>
+      <h3>Avaliar</h3>
+      <p>Vale automatizar? O que rouba mais tempo da <strong>meta</strong> vem primeiro.</p>
+    </div>
+    <div class="seta">→</div>
+    <div class="passo">
+      <div class="letra">PASSO A·3</div>
+      <h3>Automatizar</h3>
+      <p>Construída, testada e entregue <strong>na mesma conversa</strong>. Terminada.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · META → AUTOMAÇÃO -->
+<section class="slide">
+  <div class="eyebrow rv">Por onde começar</div>
+  <h2 class="rv d1">A meta escolhe a automação</h2>
+  <div class="metas rv d2">
+    <div class="meta-row">
+      <div class="m">Quero reduzir faltas</div>
+      <div class="a">Confirmações do dia seguinte, prontas pra revisar e enviar</div>
+    </div>
+    <div class="meta-row">
+      <div class="m">Quero responder mais rápido</div>
+      <div class="a">Caixa triada + respostas rascunhadas na sua voz</div>
+    </div>
+    <div class="meta-row">
+      <div class="m">Quero ser constante no conteúdo</div>
+      <div class="a">Pauta da semana montada a partir do que a audiência pergunta</div>
+    </div>
+    <div class="meta-row">
+      <div class="m">Quero vender mais</div>
+      <div class="a">Follow-up dos orçamentos parados, um resumo por dia</div>
+    </div>
+  </div>
+  <p class="sub rv d3">É assim que o <strong>/automatizar</strong> escolhe: parte da meta do
+  seu trimestre — não da ferramenta da moda.</p>
+</section>
+
+<!-- 9 · PRIMEIRO MÊS -->
+<section class="slide" data-regua>
+  <div class="eyebrow rv">A evolução</div>
+  <h2 class="rv d1">O primeiro mês, em pontos</h2>
+  <p class="sub rv d2">A nota só conta o que <strong>funciona hoje</strong>. Recém-nascido
+  tira 25 — e tá certo assim.</p>
+  <div class="barra rv d2">
+    <div class="etapa">
+      <div class="pontos" data-alvo="25">0</div>
+      <div class="fill"><i data-w="25"></i></div>
+      <div class="dia">Dia 0</div>
+      <div class="obs">Nasceu: 7 perguntas respondidas</div>
+    </div>
+    <div class="etapa">
+      <div class="pontos" data-alvo="41">0</div>
+      <div class="fill"><i data-w="41"></i></div>
+      <div class="dia">Semana 1</div>
+      <div class="obs">Primeiras ferramentas conectadas</div>
+    </div>
+    <div class="etapa">
+      <div class="pontos" data-alvo="58">0</div>
+      <div class="fill"><i data-w="58"></i></div>
+      <div class="dia">Semana 2</div>
+      <div class="obs">Automações entrando em uso</div>
+    </div>
+    <div class="etapa">
+      <div class="pontos" data-alvo="80">0</div>
+      <div class="fill"><i data-w="80"></i></div>
+      <div class="dia">Semana 3</div>
+      <div class="obs">Trabalhando todo dia com você</div>
+    </div>
+    <div class="etapa full">
+      <div class="pontos" data-alvo="100">0</div>
+      <div class="fill"><i data-w="100"></i></div>
+      <div class="dia">Dia 30</div>
+      <div class="obs">5 automações + rotina sozinha</div>
+    </div>
+  </div>
+  <p class="sub rv d3"><strong>Em um mês:</strong> um funcionário com 5 tarefas suas nas
+  costas dele.</p>
+</section>
+
+<!-- 10 · FECHO -->
+<section class="slide final">
+  <div class="eyebrow rv" style="justify-content:center">Automatize todo o seu negócio</div>
+  <div class="marca rv d1">AIOS <span>Sparo</span></div>
+  <p class="sub rv d2">Sem saber programação. Começando com <strong>7 perguntas</strong>.</p>
+</section>
+
+<div class="hud esq">AIOS · Os 4 fundamentos</div>
+<div class="hud dir">
+  <span class="dica" id="dica">← → navegar · F pra tela cheia</span>
+  <span class="contador" id="contador">1 / 6</span>
+</div>
+
+<script>
+(function () {
+  var reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var atual = 0;
+  var timers = [];
+  var contador = document.getElementById("contador");
+  var dica = document.getElementById("dica");
+  var navegou = false;
+
+  function limpaTimers() {
+    timers.forEach(clearTimeout);
+    timers = [];
+  }
+
+  function resetaSlide(s) {
+    s.querySelectorAll(".tipa").forEach(function (el) {
+      el.textContent = "";
+      el.classList.remove("digitando");
+    });
+    s.querySelectorAll(".pontos[data-alvo]").forEach(function (el) { el.textContent = "0"; });
+    s.querySelectorAll(".fill i").forEach(function (b) { b.style.width = "0"; });
+  }
+
+  function digita(el) {
+    var alvo = el.getAttribute("data-cmd");
+    if (reduz) { el.textContent = alvo; return; }
+    el.classList.add("digitando");
+    var i = 0;
+    (function passo() {
+      el.textContent = alvo.slice(0, i);
+      i++;
+      if (i <= alvo.length) timers.push(setTimeout(passo, 70));
+    })();
+  }
+
+  function conta(el) {
+    var alvo = parseInt(el.getAttribute("data-alvo"), 10);
+    if (reduz) { el.textContent = alvo; return; }
+    var ini = null;
+    function frame(ts) {
+      if (!ini) ini = ts;
+      var p = Math.min((ts - ini) / 1100, 1);
+      p = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(alvo * p);
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function dispara(s) {
+    if (s.hasAttribute("data-tipa")) {
+      s.querySelectorAll(".tipa").forEach(function (el) {
+        var espera = parseInt(el.getAttribute("data-espera") || "0", 10);
+        timers.push(setTimeout(function () { digita(el); }, reduz ? 0 : espera));
+      });
+    }
+    if (s.hasAttribute("data-regua")) {
+      timers.push(setTimeout(function () {
+        s.querySelectorAll(".pontos[data-alvo]").forEach(conta);
+        s.querySelectorAll(".fill i").forEach(function (b) {
+          b.style.width = b.getAttribute("data-w") + "%";
+        });
+      }, reduz ? 0 : 700));
+    }
+  }
+
+  function vai(n) {
+    if (n < 0 || n >= slides.length || n === atual) return;
+    limpaTimers();
+    var velho = slides[atual];
+    velho.classList.remove("ativa");
+    setTimeout(function () { resetaSlide(velho); }, 450);
+    atual = n;
+    var novo = slides[atual];
+    resetaSlide(novo);
+    novo.classList.add("ativa");
+    dispara(novo);
+    contador.textContent = (atual + 1) + " / " + slides.length;
+    if (!navegou) { navegou = true; setTimeout(function () { dica.classList.add("some"); }, 2500); }
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown" || e.key === "Enter") { e.preventDefault(); vai(atual + 1); }
+    else if (e.key === "ArrowLeft" || e.key === "PageUp" || e.key === "Backspace") { e.preventDefault(); vai(atual - 1); }
+    else if (e.key === "Home") { vai(0); }
+    else if (e.key === "End") { vai(slides.length - 1); }
+    else if (e.key === "f" || e.key === "F") {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+    }
+  });
+  document.addEventListener("click", function (e) {
+    vai(e.clientX > window.innerWidth / 2 ? atual + 1 : atual - 1);
+  });
+
+  /* linhas do diagrama das 4 peças */
+  var svgLin = document.getElementById("linhas");
+  var nos = Array.prototype.slice.call(document.querySelectorAll(".no"));
+  var pares = [[0, 1], [0, 2], [1, 3], [2, 3], [0, 3], [1, 2]];
+  var svgNS = "http://www.w3.org/2000/svg";
+  var linhas = pares.map(function () {
+    var b = document.createElementNS(svgNS, "line");
+    b.setAttribute("class", "lin-base");
+    var f = document.createElementNS(svgNS, "line");
+    f.setAttribute("class", "lin-fluxo");
+    svgLin.appendChild(b);
+    svgLin.appendChild(f);
+    return [b, f];
+  });
+  function montaLinhas() {
+    pares.forEach(function (par, i) {
+      var a = nos[par[0]], c = nos[par[1]];
+      linhas[i].forEach(function (l) {
+        l.setAttribute("x1", a.offsetLeft); l.setAttribute("y1", a.offsetTop);
+        l.setAttribute("x2", c.offsetLeft); l.setAttribute("y2", c.offsetTop);
+      });
+    });
+  }
+  montaLinhas();
+  window.addEventListener("resize", montaLinhas);
+
+  /* fundo de pontos */
+  var cv = document.getElementById("pontos");
+  var ctx = cv.getContext("2d");
+  var W, H, grade = [];
+  function monta() {
+    W = cv.width = innerWidth * devicePixelRatio;
+    H = cv.height = innerHeight * devicePixelRatio;
+    cv.style.width = innerWidth + "px";
+    cv.style.height = innerHeight + "px";
+    grade = [];
+    var passo = 58 * devicePixelRatio;
+    for (var x = passo / 2; x < W; x += passo)
+      for (var y = passo / 2; y < H; y += passo)
+        grade.push({ x: x, y: y, f: Math.sin(x * 13.37 + y * 7.77) * 3.14, v: 0.5 + ((x * y) % 97) / 97 });
+  }
+  monta();
+  window.addEventListener("resize", monta);
+  var t = 0;
+  function desenha() {
+    ctx.clearRect(0, 0, W, H);
+    for (var k = 0; k < grade.length; k++) {
+      var p = grade[k];
+      var a = 0.035 + 0.09 * Math.max(0, Math.sin(t * p.v + p.f));
+      ctx.fillStyle = "rgba(240,138,60," + a.toFixed(3) + ")";
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 1.4 * devicePixelRatio, 0, 6.284);
+      ctx.fill();
+    }
+    t += 0.016;
+    if (!reduz) requestAnimationFrame(desenha);
+  }
+  desenha();
+
+  /* liga o primeiro slide */
+  slides[0].classList.add("ativa");
+  dispara(slides[0]);
+  contador.textContent = "1 / " + slides.length;
+})();
+</script>
+</body>
+</html>

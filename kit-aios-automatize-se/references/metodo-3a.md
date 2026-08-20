@@ -78,4 +78,5 @@ está de pé e diz se isso está em dia com a idade dele. A meta do primeiro mê
 
 ---
 
-© 2026 Enzo Barbatto. Método 3A é marca de Enzo Barbatto. Conteúdo sob licença MIT.
+© 2026 Enzo Barbatto. Todos os direitos reservados. Método 3A é marca de Enzo Barbatto.
+Uso conforme o arquivo `LICENSE` do kit.

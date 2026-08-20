@@ -24,6 +24,9 @@ e entregar mais rápido no que importa agora.
   automação por rodada, terminada.
 - `/analisar` — o Boletim do AIOS: a nota de 0 a 100 do que já está de pé, o ritmo pra idade
   do AIOS (a data de nascimento está logo acima) e os 3 próximos passos.
+- `/painel` — a Central de Comando: monta (ou atualiza) o Painel do Dono em `painel/` e abre
+  no navegador — conexões, automações, capacidades e recomendações numa tela só. Automação
+  com saída que {NOME} revisa ganha aba própria no menu.
 
 **Regra dos comandos:** todo comando criado ou modificado vive em DUAS pastas com conteúdo
 idêntico — `.claude/skills/` (Claude Code) e `.agents/skills/` (Antigravity). Sempre atualize

@@ -15,7 +15,7 @@ The AIOS structure should look like a small, well-run business. Not a hoarder's 
 | `decisions/log.md` | Append-only record of what was decided and why. |
 | `archives/` | Old files. Don't delete — move here. |
 | `connections.md` | Registry of every system your AIOS can reach. |
-| `.claude/skills/` | Your skills: `/onboard`, `/audit`, `/level-up`. Add more via `/level-up`. |
+| `.claude/skills/` | Your skills: `/onboard`, `/audit`, `/automatize-se`. Add more via `/automatize-se`. |
 | `aios-intake.md` | Source-of-truth for `/onboard`. Edit and re-run any time. |
 | `CLAUDE.md` | Root operating manual. Filled by `/onboard`. Edit when your role/voice changes. |
 
@@ -40,12 +40,12 @@ The AIOS structure should look like a small, well-run business. Not a hoarder's 
 
 When each surface gets routinely touched:
 
-- `decisions/log.md` — every meaningful decision (`/level-up` Phase 2 captures these automatically)
+- `decisions/log.md` — every meaningful decision (`/automatize-se` Phase 2 captures these automatically)
 - `archives/` — quarterly cleanup; move stale projects, deprecated skills, old intake versions
 - `references/sops/` — when a process gets re-run by someone new, write the SOP
 - `connections.md` — every time a new tool gets wired in, add a row
 - `references/{tool}-api.md` — same time as `connections.md` update; capture the API once
-- `CLAUDE.md` — quarterly review; rewrite the persona/priorities section after `/level-up` Q90
+- `CLAUDE.md` — quarterly review; rewrite the persona/priorities section after `/automatize-se` Q90
 
 ---
 
@@ -68,7 +68,7 @@ Ask three questions:
 
 1. **Is this conceptually new?** Or does it fit somewhere existing?
 2. **Will I touch this 3+ times in the next month?** If not, it's premature.
-3. **Could `/level-up` route a future skill into here naturally?** If yes, the AIOS will use it. If no, you're organizing for yourself, not for the system.
+3. **Could `/automatize-se` route a future skill into here naturally?** If yes, the AIOS will use it. If no, you're organizing for yourself, not for the system.
 
 Two yeses = add. One yes = wait.
 

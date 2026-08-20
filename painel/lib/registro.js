@@ -163,7 +163,7 @@ const AUTOMACOES = [
 // rótulos amigáveis e a ordem.
 const SKILLS_CATALOGO = [
   { id: "roteiro-aula", emoji: "📝", grupo: "Conteúdo" },
-  { id: "level-up", emoji: "⚡", grupo: "Operação" },
+  { id: "automatize-se", emoji: "⚡", grupo: "Operação" },
   { id: "audit", emoji: "🔎", grupo: "Operação" },
   { id: "obsidian", emoji: "🧠", grupo: "Conhecimento" },
   { id: "daily-brief", emoji: "🌅", grupo: "Operação" },
