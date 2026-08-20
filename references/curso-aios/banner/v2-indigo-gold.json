@@ -1,0 +1,22 @@
+[
+  {
+    "id": "fc2c9e85-a86b-450f-b128-ec08606ea7eb",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3B4oRnkYczFwSpQrfkRufOPJA8N/hf_20260819_173028_fc2c9e85-a86b-450f-b128-ec08606ea7eb.png",
+    "created_at": 1787160628.676576,
+    "params": {
+      "width": 1344,
+      "height": 752,
+      "prompt": "Abstract premium banner background: deep indigo and violet gradient like a dark nebula, elegant streams of fine golden glitter particles flowing in smooth curved waves, cinematic soft glow, luxurious tech aesthetic. No text, no letters, no people, no logos. Dark background suitable for white text overlay.",
+      "medias": [],
+      "aspect_ratio": "16:9",
+      "quality": "low",
+      "resolution": "1k",
+      "model": "videotape-alpha",
+      "remove_bg": false,
+      "reference_elements": []
+    }
+  }
+]

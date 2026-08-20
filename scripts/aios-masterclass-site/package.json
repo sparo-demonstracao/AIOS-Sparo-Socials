@@ -1,0 +1,12 @@
+{
+  "name": "aios-masterclass-site",
+  "version": "1.0.0",
+  "description": "Landing page da AIOS MasterClass — aios.sparo.com.br",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

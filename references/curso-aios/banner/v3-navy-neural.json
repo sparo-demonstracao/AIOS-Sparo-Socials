@@ -1,0 +1,22 @@
+[
+  {
+    "id": "5fa99b27-9e9f-4ccf-a608-c9ab6074ef99",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3B4oRnkYczFwSpQrfkRufOPJA8N/hf_20260819_172951_5fa99b27-9e9f-4ccf-a608-c9ab6074ef99.png",
+    "created_at": 1787160591.68304,
+    "params": {
+      "width": 1344,
+      "height": 752,
+      "prompt": "Abstract premium banner background: midnight navy blue, luminous thin light trails in cyan and gold flowing like neural network data streams across the frame, subtle particle sparks, futuristic AI operating system aesthetic, cinematic depth of field. No text, no letters, no people, no logos. Dark background suitable for white text overlay.",
+      "medias": [],
+      "aspect_ratio": "16:9",
+      "quality": "low",
+      "resolution": "1k",
+      "model": "videotape-alpha",
+      "remove_bg": false,
+      "reference_elements": []
+    }
+  }
+]

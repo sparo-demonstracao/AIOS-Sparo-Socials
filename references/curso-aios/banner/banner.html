@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Banner AIOS MasterClass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,800;1,800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1783px; height: 1080px; overflow: hidden; font-family: 'Montserrat', Arial, sans-serif; background: #0a1a24; }
+
+  .banner { position: relative; width: 1783px; height: 1080px; }
+
+  .bg {
+    position: absolute; inset: 0;
+    background: url('v1-teal-gold.png') center / cover no-repeat;
+  }
+
+  /* escurece a coluna esquerda pra foto (fundo preto) fundir com o banner */
+  .left-shade {
+    position: absolute; top: 0; left: 0; width: 680px; height: 1080px;
+    background: linear-gradient(90deg,
+      rgba(4,10,16,.96) 0%, rgba(4,10,16,.88) 40%,
+      rgba(4,10,16,.55) 62%, rgba(4,10,16,.25) 80%, rgba(4,10,16,0) 100%);
+  }
+
+  /* linha tracejada vertical */
+  .dash-v {
+    position: absolute; left: 375px; top: 0; height: 660px; width: 0;
+    border-left: 3px dashed rgba(255,255,255,.85);
+  }
+  /* linha tracejada horizontal acima do título */
+  .dash-h {
+    position: absolute; left: 545px; right: 60px; top: 856px; height: 0;
+    border-top: 3px dashed rgba(255,255,255,.85);
+  }
+
+  .logo-block { position: absolute; top: 44px; left: 36px; width: 300px; text-align: center; }
+  .logo-block img { width: 250px; display: block; margin: 0 auto; filter: drop-shadow(0 0 18px rgba(120,140,255,.35)); }
+  .logo-block .wordmark {
+    margin-top: 14px; color: #fff; font-size: 44px; font-weight: 800; font-style: italic;
+    letter-spacing: .5px; text-shadow: 0 2px 14px rgba(0,0,0,.6);
+  }
+
+  .foto {
+    position: absolute; top: 268px; left: 0; width: 372px; height: 372px;
+    background: url('../../../scripts/sparo-socials/public/foto.jpg') center top / cover no-repeat;
+    -webkit-mask-image: radial-gradient(140% 140% at 40% 42%, #000 55%, transparent 92%);
+            mask-image: radial-gradient(140% 140% at 40% 42%, #000 55%, transparent 92%);
+  }
+
+  .qr-box {
+    position: absolute; left: 12px; bottom: 26px; width: 340px; height: 340px;
+    background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  }
+  .qr-box img { width: 296px; height: 296px; image-rendering: pixelated; }
+
+  .text-block { position: absolute; left: 545px; right: 60px; top: 878px; text-align: center; color: #fff; }
+  .subtitle {
+    font-size: 26px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap;
+    text-shadow: 0 2px 12px rgba(0,0,0,.65);
+  }
+  .title {
+    margin-top: 8px; font-size: 67px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap;
+    text-shadow: 0 0 26px rgba(180,220,255,.85), 0 0 70px rgba(140,190,255,.5), 0 3px 16px rgba(0,0,0,.6);
+  }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="bg"></div>
+    <div class="left-shade"></div>
+    <div class="dash-v"></div>
+    <div class="dash-h"></div>
+
+    <div class="logo-block">
+      <img src="../../../painel/public/aios-logo.png" alt="AIOS">
+      <div class="wordmark">MasterClass</div>
+    </div>
+
+    <div class="foto"></div>
+
+    <div class="qr-box"><img src="qr.png" alt="QR"></div>
+
+    <div class="text-block">
+      <div class="subtitle">Acesso vitalício ao curso de AIOS, ao kit pronto e à comunidade</div>
+      <div class="title">Promoção de Lançamento</div>
+    </div>
+  </div>
+</body>
+</html>

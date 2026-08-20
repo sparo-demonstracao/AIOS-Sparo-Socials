@@ -937,3 +937,55 @@ herdado: sem referências ao painel da 9.7 (ainda não existirá) e regra do nú
 
 **Owner:** Enzo — gravar A7 e A8; AIOS mantém roteiro local anotado (Notion pendente de
 autorização do conector pra sincronizar).
+
+---
+
+## 2026-08-17 — AIOS Sparo vira produto PAGO: kit deixa de ser grátis (reverte 03/07 e parte de 06/07)
+
+**Decision:** O **Kit AIOS Automatize-se** deixa de ser distribuído grátis e vira o núcleo do
+produto pago **"AIOS Sparo — Automatize todo o seu negócio sem saber programação"**:
+
+1. **Preço:** R$ 600 o AIOS Sparo sozinho; **bundle R$ 800** com a MasterClass completa de
+   Claude Code + Antigravity (R$ 1.000 separado → 20% off). **Alunos atuais da MasterClass
+   ganham o desconto** (entram pelo bundle).
+2. **O comprador recebe SOMENTE o kit** (`kit-aios-automatize-se/`) pra montar o AIOS dele do
+   zero — nunca o AIOS pessoal do Enzo, nem `.env`, tokens ou scripts privados.
+3. **Distribuição:** ZIP na área de aluno (Kiwify), não mais GitHub público. README reescrito
+   (sem "Code → Download ZIP") e **licença trocada de MIT → licença de uso proprietária**
+   (uso pessoal, sem redistribuição). Nomes "Método 3A" e "Boletim do AIOS" seguem como marcas.
+4. **Lançamento:** vídeo do YouTube sobre o AIOS no padrão do canal (prática → teoria →
+   começar do zero com o kit), com a oferta no final.
+
+**Why:** O AIOS já era produto próprio separado da MasterClass (decisão de 06/07); o Enzo
+decidiu monetizá-lo diretamente em vez de usar o kit como isca grátis — o kit É o produto.
+MIT permitiria a qualquer comprador redistribuir de graça legalmente, o que mataria a venda;
+como o repo público ainda não tinha sido criado, a troca de licença sai limpa, sem versão MIT
+em circulação.
+
+**Alternatives considered:** (a) Kit grátis como isca + curso pago só com a implementação
+guiada — descartado pelo Enzo: quer cobrar pelo AIOS em si. (b) Manter MIT e cobrar só pela
+conveniência — descartado: sem exclusividade legal, o produto vaza.
+
+**Owner:** Enzo. Pendências antes do vídeo: subir o produto na Kiwify (R$ 600 + bundle R$ 800
++ cupom/oferta pros alunos atuais) e empacotar o painel em .exe com segredos blindados
+(rclone.conf tem token do Drive) antes de mostrar em tela.
+
+## 2026-08-19 — Público-alvo do AIOS MasterClass: operador solo (primário) + futuro dono de agência (secundário)
+
+**Decision:** A comunicação do AIOS MasterClass mira o **operador solo** — quem toca um negócio
+(ou vida profissional) inteiro sozinho: criador de conteúdo, dono de agência pequena, consultor,
+corretor, prestador de serviço, dono de PME sem equipe estruturada. Segundo público (linha de
+argumento própria, ponte pro combo): **futuro dono de agência de automação**, que compra pra
+aprender o modelo e replicar como serviço. Funcionário CLT vira público **terciário** — atendido
+no FAQ, sem diluir a mensagem principal.
+
+**Why:** (1) Autonomia total sobre as ferramentas — o AIOS só rende conectado a Gmail/WhatsApp/
+agenda/financeiro, e só o dono conecta tudo sem pedir permissão; CLT esbarra em TI e compliance.
+(2) A dor certa — o valor do AIOS é centralizar operação dispersa, e quem mais sofre dispersão é
+quem faz venda, atendimento, conteúdo e financeiro no mesmo dia. (3) Espelho do Enzo — o produto
+é o AIOS que ele usa pra tocar a Sparo, e a audiência do YouTube se vê nele.
+
+**Impacto:** copy da página de vendas (v7 do site refeita nesse ângulo — "Você faz tudo sozinho.
+Até agora." / primeiro contratado), temas de vídeo, e futuramente o roteiro do curso do kit.
+
+**Owner:** Enzo. Artefato: `scripts/aios-masterclass-site/index-v7-solo.html`.

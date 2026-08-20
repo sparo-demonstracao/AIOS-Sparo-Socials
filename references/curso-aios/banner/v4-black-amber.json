@@ -1,0 +1,22 @@
+[
+  {
+    "id": "efbd5d42-f2a8-4f3e-be25-c629760dd934",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3B4oRnkYczFwSpQrfkRufOPJA8N/hf_20260819_172951_efbd5d42-f2a8-4f3e-be25-c629760dd934.png",
+    "created_at": 1787160591.671422,
+    "params": {
+      "width": 1344,
+      "height": 752,
+      "prompt": "Abstract premium banner background: charcoal black gradient, elegant silky waves of warm amber and gold light flowing horizontally with fine glowing particles, high-end cinematic look, dramatic and luxurious. No text, no letters, no people, no logos. Dark background suitable for white text overlay.",
+      "medias": [],
+      "aspect_ratio": "16:9",
+      "quality": "low",
+      "resolution": "1k",
+      "model": "videotape-alpha",
+      "remove_bg": false,
+      "reference_elements": []
+    }
+  }
+]

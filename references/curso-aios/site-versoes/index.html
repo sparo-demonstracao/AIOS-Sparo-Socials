@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIOS MasterClass — o contratado que não dorme</title>
+<meta name="description" content="Um assistente de IA que conhece sua operação e trabalha de verdade — enquanto você cuida do que só você pode fazer. Kit pronto + 14 aulas sem código.">
+<link rel="icon" href="assets/aios-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════ TOKENS ══════════════ */
+:root {
+  --preto: #050508;          /* turno da noite */
+  --carvao: #0b0b12;         /* sala escura */
+  --carvao2: #101019;
+  --laranja: #ff5400;        /* sparo */
+  --laranja-q: #ff7a33;
+  --branco: #f4f2ee;         /* luz de tela, levemente quente */
+  --meia: rgba(244,242,238,.55);
+  --meia-2: rgba(244,242,238,.32);
+  --linha: rgba(244,242,238,.09);
+  --ok: #4ade80;
+  --display: 'Geist', system-ui, sans-serif;
+  --body: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--preto); color: var(--branco);
+  font-family: var(--body); font-size: 17px; line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+/* grão sutil sobre a página inteira */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 99;
+  opacity: .5; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -.04em; line-height: 1.02; text-wrap: balance; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+::selection { background: var(--laranja); color: #fff; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 min(5vw, 48px); }
+
+.mono-tag {
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--laranja-q);
+}
+.mono-tag::before { content: "[ "; color: var(--meia-2); }
+.mono-tag::after  { content: " ]"; color: var(--meia-2); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--display); font-weight: 600; font-size: 16px;
+  padding: 16px 32px; border-radius: 999px; text-decoration: none;
+  cursor: pointer; border: 1px solid transparent;
+  transition: transform .18s cubic-bezier(.2,.7,.2,1), box-shadow .18s;
+}
+.btn-cheio { background: var(--laranja); color: #fff; box-shadow: -5px 6px 0 rgba(255,84,0,.45), inset 0 -2px 5px rgba(255,255,255,.18); }
+.btn-cheio:hover { transform: translate(2px,-2px); box-shadow: -8px 9px 0 rgba(255,84,0,.45), inset 0 -2px 5px rgba(255,255,255,.18); }
+.btn-linha { border-color: var(--linha); color: var(--branco); background: rgba(255,255,255,.02); }
+.btn-linha:hover { border-color: rgba(244,242,238,.3); }
+.btn:focus-visible { outline: 2px solid var(--laranja); outline-offset: 3px; }
+
+/* reveal genérico */
+.rev { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.rev.on { opacity: 1; transform: none; }
+
+/* ══════════════ NAV ══════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  border-bottom: 1px solid transparent;
+  transition: background .3s, border-color .3s;
+}
+nav.solida { background: rgba(5,5,8,.85); backdrop-filter: blur(14px); border-color: var(--linha); }
+.nav-in { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+.brand { display: flex; align-items: baseline; gap: 10px; text-decoration: none; }
+.brand img { height: 22px; width: auto; }
+.brand b { font-family: var(--display); font-weight: 700; font-style: italic; font-size: 16px; letter-spacing: -.02em; }
+.nav-links { display: flex; gap: 30px; font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--meia); }
+.nav-links a { text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: var(--branco); }
+.nav-cta { font-size: 14px; padding: 11px 22px; }
+@media (max-width: 900px) { .nav-links { display: none; } }
+@media (max-width: 480px) { .brand b { display: none; } .nav-cta { padding: 10px 18px; font-size: 13px; } }
+
+/* ══════════════ HERO ══════════════ */
+.hero {
+  min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
+  padding: 130px 0 40px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(52% 42% at 82% 0%, rgba(255,84,0,.20), transparent 65%),
+    radial-gradient(30% 30% at 0% 18%, rgba(255,84,0,.07), transparent 60%),
+    var(--preto);
+}
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(244,242,238,.02) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(0deg, rgba(244,242,238,.02) 0 1px, transparent 1px 80px);
+  mask-image: radial-gradient(75% 65% at 50% 35%, #000 30%, transparent 100%);
+}
+.hero-in { position: relative; }
+.hero h1 {
+  font-size: clamp(48px, 7.6vw, 112px); font-weight: 800; text-transform: uppercase;
+  margin: 26px 0 40px; white-space: nowrap;
+}
+.hero-baixo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .94fr); gap: 56px; align-items: start; }
+@media (max-width: 980px) { .hero h1 { white-space: normal; } .hero-baixo { grid-template-columns: 1fr; } }
+.hero h1 .l1 { display: block; color: var(--meia); font-weight: 600; font-size: .42em; letter-spacing: -.02em; }
+.hero h1 .l2 { display: block; }
+.hero h1 .ponto { color: var(--laranja); }
+.hero h1 .l1, .hero h1 .l2 { overflow: hidden; }
+.hero h1 .l1 span, .hero h1 .l2 span { display: block; transform: translateY(110%); animation: sobe 1s cubic-bezier(.2,.75,.15,1) forwards; }
+.hero h1 .l2 span { animation-delay: .12s; }
+@keyframes sobe { to { transform: none; } }
+.hero-sub { color: var(--meia); font-size: 19px; max-width: 46ch; }
+.hero-sub strong { color: var(--branco); font-weight: 600; }
+.hero-ctas { display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+.hero-meta { margin-top: 22px; font-family: var(--mono); font-size: 12.5px; color: var(--meia-2); letter-spacing: .06em; }
+
+/* terminal */
+.term {
+  background: rgba(11,11,18,.92); border: 1px solid rgba(255,84,0,.28); border-radius: 14px;
+  box-shadow: 0 30px 90px rgba(0,0,0,.6), 0 0 70px rgba(255,84,0,.07);
+  font-family: var(--mono); font-size: 13.5px; line-height: 1.8; overflow: hidden;
+}
+.term-bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--linha); }
+.term-bar i { width: 10px; height: 10px; border-radius: 50%; background: rgba(244,242,238,.15); }
+.term-bar i:first-child { background: var(--laranja); }
+.term-bar span { margin-left: 8px; font-size: 11.5px; color: var(--meia-2); letter-spacing: .06em; }
+.term-body { padding: 18px 20px; min-height: 320px; }
+.term-body .sis  { color: var(--meia-2); }
+.term-body .sis b { color: var(--laranja-q); font-weight: 500; }
+.term-body .voce { color: #8ecbff; }
+.term-body .aios { color: rgba(244,242,238,.9); }
+.term-body .okl  { color: var(--ok); }
+.term-body .cursor { display: inline-block; width: 8px; height: 15px; background: var(--laranja); vertical-align: -2px; animation: pisca 1s steps(1) infinite; }
+@keyframes pisca { 50% { opacity: 0; } }
+@media (max-width: 980px) { .term-body { min-height: 260px; } }
+
+/* marquee */
+.marquee { border-block: 1px solid var(--linha); padding: 18px 0; overflow: hidden; background: var(--carvao); }
+.marquee-in { display: flex; gap: 0; width: max-content; animation: anda 36s linear infinite; }
+.marquee span {
+  font-family: var(--mono); font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--meia); white-space: nowrap; padding-right: 18px;
+}
+.marquee span i { color: var(--laranja); font-style: normal; padding-right: 18px; }
+@keyframes anda { to { transform: translateX(-50%); } }
+
+/* ══════════════ MANIFESTO ══════════════ */
+.manifesto { padding: 170px 0 150px; }
+.manifesto p {
+  font-family: var(--display); font-weight: 700; letter-spacing: -.035em; line-height: 1.12;
+  font-size: clamp(30px, 4.6vw, 58px); max-width: 21ch;
+}
+.manifesto p + p { margin-top: 34px; }
+.manifesto .fraco { color: var(--meia-2); }
+.manifesto .forte { color: var(--branco); }
+.manifesto .queima { color: var(--laranja); }
+.manifesto p span.w { opacity: .08; transition: opacity .4s; }
+.manifesto p span.w.on { opacity: 1; }
+
+/* ══════════════ UM DIA (ASSINATURA) ══════════════ */
+.dia { position: relative; height: 520vh; background: var(--carvao); border-block: 1px solid var(--linha); }
+.dia-sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; align-items: center; }
+.dia-head { position: absolute; top: 42px; left: 0; right: 0; text-align: center; z-index: 3; }
+.dia-in { position: relative; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.relogio {
+  font-family: var(--mono); font-weight: 700; font-variant-numeric: tabular-nums;
+  font-size: clamp(84px, 12vw, 190px); letter-spacing: -.04em; line-height: 1;
+  color: var(--branco); text-shadow: 0 0 80px rgba(255,84,0,.25);
+}
+.relogio.madrugada { color: var(--laranja); text-shadow: 0 0 90px rgba(255,84,0,.5); }
+.dia-legenda { margin-top: 18px; font-family: var(--mono); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--meia-2); min-height: 20px; }
+.dia-rail { display: flex; gap: 8px; margin-top: 30px; }
+.dia-rail i { width: 34px; height: 3px; background: rgba(244,242,238,.12); border-radius: 2px; transition: background .3s; }
+.dia-rail i.on { background: var(--laranja); }
+
+.notifs { position: relative; height: 420px; }
+.notif {
+  position: absolute; left: 0; right: 0; top: 50%;
+  transform: translateY(-40%) scale(.96); opacity: 0; visibility: hidden;
+  transition: opacity .45s cubic-bezier(.2,.7,.2,1), transform .45s cubic-bezier(.2,.7,.2,1), visibility 0s .45s;
+  background: var(--carvao2); border: 1px solid var(--linha); border-radius: 14px;
+  padding: 24px 26px; box-shadow: 0 24px 70px rgba(0,0,0,.55);
+  pointer-events: none;
+}
+.notif.on { opacity: 1; visibility: visible; transform: translateY(-50%) scale(1); z-index: 2; transition-delay: 0s; }
+.notif.saiu { opacity: 0; transform: translateY(-64%) scale(.97); z-index: 1; }
+.notif-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.notif-app { display: flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--meia); }
+.notif-app::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--laranja); box-shadow: 0 0 12px rgba(255,84,0,.8); }
+.notif-hora { font-family: var(--mono); font-size: 12px; color: var(--meia-2); font-variant-numeric: tabular-nums; }
+.notif h3 { font-size: 21px; letter-spacing: -.02em; margin-bottom: 8px; }
+.notif p { color: var(--meia); font-size: 15.5px; }
+.notif.humano { border-color: rgba(255,84,0,.5); background: linear-gradient(180deg, rgba(255,84,0,.12), rgba(255,84,0,.03)), var(--carvao2); }
+.notif.humano .notif-app::before { background: var(--ok); box-shadow: 0 0 12px rgba(74,222,128,.8); }
+@media (max-width: 900px) {
+  .dia { height: 560vh; }
+  .dia-in { grid-template-columns: 1fr; gap: 22px; align-content: center; }
+  .relogio { font-size: clamp(64px, 17vw, 110px); }
+  .notifs { height: 300px; }
+}
+
+/* ══════════════ COMANDOS ══════════════ */
+.comandos { padding: 150px 0; }
+.sec-head { max-width: 760px; margin-bottom: 64px; }
+.sec-head h2 { font-size: clamp(34px, 4.6vw, 56px); margin-top: 20px; }
+.sec-head h2 em { font-style: normal; color: var(--laranja-q); }
+.sec-head .lead { color: var(--meia); margin-top: 16px; max-width: 56ch; }
+.cmd-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 26px; }
+.cmd-tab {
+  font-family: var(--mono); font-size: 14.5px; font-weight: 500;
+  padding: 11px 20px; border-radius: 999px; border: 1px solid var(--linha);
+  background: transparent; color: var(--meia); cursor: pointer; transition: all .2s;
+}
+.cmd-tab:hover { color: var(--branco); border-color: rgba(244,242,238,.25); }
+.cmd-tab.on { background: var(--laranja); border-color: var(--laranja); color: #fff; box-shadow: 0 6px 26px rgba(255,84,0,.35); }
+.cmd-tab:focus-visible { outline: 2px solid var(--laranja); outline-offset: 2px; }
+.cmd-painel {
+  border: 1px solid var(--linha); border-radius: 14px; background: var(--carvao);
+  display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; min-height: 280px;
+}
+.cmd-info { padding: 40px 44px; }
+.cmd-info .mono-tag { color: var(--meia); }
+.cmd-info h3 { font-size: 27px; margin: 14px 0 12px; }
+.cmd-info p { color: var(--meia); font-size: 16px; max-width: 42ch; }
+.cmd-out { border-left: 1px solid var(--linha); background: var(--carvao2); padding: 32px 36px; font-family: var(--mono); font-size: 13.5px; line-height: 1.9; }
+.cmd-out .sis { color: var(--meia-2); }
+.cmd-out .okl { color: var(--ok); }
+.cmd-out .lar { color: var(--laranja-q); }
+@media (max-width: 860px) { .cmd-painel { grid-template-columns: 1fr; } .cmd-out { border-left: 0; border-top: 1px solid var(--linha); } }
+
+/* ══════════════ CURSO ══════════════ */
+.curso { padding: 150px 0; background: var(--carvao); border-block: 1px solid var(--linha); }
+.mods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+@media (max-width: 940px) { .mods-grid { grid-template-columns: 1fr; } }
+.mod {
+  border: 1px solid var(--linha); border-radius: 14px; overflow: hidden; background: var(--carvao2);
+  transition: transform .25s cubic-bezier(.2,.7,.2,1), border-color .25s;
+}
+.mod:hover { transform: translateY(-6px); border-color: rgba(255,84,0,.4); }
+.mod img { aspect-ratio: 1/0.92; object-fit: cover; object-position: center 28%; }
+.mod-body { padding: 24px 26px 20px; }
+.mod-body .mono-tag { color: var(--meia); font-size: 11px; }
+.mod-body h3 { font-size: 22px; margin-top: 10px; }
+.mod-body details { margin-top: 12px; }
+.mod-body summary { cursor: pointer; list-style: none; font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--laranja-q); padding: 6px 0; }
+.mod-body summary::after { content: " +"; }
+.mod-body details[open] summary::after { content: " –"; }
+.mod-body ol { margin: 8px 0 8px 20px; color: var(--meia); font-size: 14.5px; }
+.mod-body ol li { margin-bottom: 5px; }
+.kit-faixa {
+  margin-top: 26px; border: 1px solid rgba(255,84,0,.4); border-radius: 14px;
+  background: linear-gradient(90deg, rgba(255,84,0,.12), rgba(255,84,0,.03));
+  padding: 26px 32px; display: flex; align-items: center; gap: 22px; flex-wrap: wrap;
+}
+.kit-faixa .zip {
+  font-family: var(--mono); font-size: 13px; color: var(--laranja-q);
+  border: 1px dashed rgba(255,84,0,.5); border-radius: 8px; padding: 10px 14px; white-space: nowrap;
+}
+.kit-faixa p { color: var(--meia); flex: 1; min-width: 260px; }
+.kit-faixa p b { color: var(--branco); }
+
+/* ══════════════ BOLETIM ══════════════ */
+.boletim { padding: 150px 0; }
+.bol-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--linha); border-radius: 14px; overflow: hidden; }
+@media (max-width: 900px) { .bol-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 540px) { .bol-grid { grid-template-columns: 1fr; } }
+.bol {
+  padding: 34px 30px; background: var(--carvao); border-right: 1px solid var(--linha);
+}
+.bol:last-child { border-right: 0; }
+@media (max-width: 900px) { .bol { border-bottom: 1px solid var(--linha); } }
+.bol .semana { font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--meia-2); }
+.bol .valor {
+  font-family: var(--mono); font-weight: 700; font-size: 58px; letter-spacing: -.04em;
+  color: var(--laranja); font-variant-numeric: tabular-nums; margin: 10px 0 4px;
+  text-shadow: 0 0 40px rgba(255,84,0,.3);
+}
+.bol .valor small { font-size: 20px; color: var(--meia-2); font-weight: 400; }
+.bol p { color: var(--meia); font-size: 14.5px; }
+
+/* ══════════════ PRA QUEM ══════════════ */
+.praquem { padding: 150px 0; background: var(--carvao); border-block: 1px solid var(--linha); }
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+@media (max-width: 860px) { .duo { grid-template-columns: 1fr; } }
+.persona {
+  border: 1px solid var(--linha); border-radius: 14px; padding: 42px 40px; background: var(--carvao2);
+  transition: border-color .25s, transform .25s cubic-bezier(.2,.7,.2,1);
+}
+.persona:hover { border-color: rgba(255,84,0,.4); transform: translateY(-4px); }
+.persona h3 { font-size: 26px; margin: 14px 0 20px; }
+.persona ul { list-style: none; }
+.persona li { padding: 9px 0 9px 30px; position: relative; color: var(--meia); font-size: 15.5px; border-top: 1px solid var(--linha); }
+.persona li:first-child { border-top: 0; }
+.persona li::before { content: "→"; position: absolute; left: 0; color: var(--laranja); font-family: var(--mono); }
+
+/* ══════════════ MENTOR ══════════════ */
+.mentor { padding: 150px 0; }
+.mentor-in { display: grid; grid-template-columns: 380px 1fr; gap: 64px; align-items: center; }
+@media (max-width: 900px) { .mentor-in { grid-template-columns: 1fr; } }
+.mentor-foto {
+  position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--linha);
+  background: radial-gradient(90% 75% at 50% 100%, rgba(255,84,0,.35), transparent 70%), var(--carvao2);
+  padding-top: 30px;
+}
+.mentor-foto .selo {
+  position: absolute; top: 16px; left: 50%; transform: translateX(-50%); z-index: 2;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  background: rgba(5,5,8,.85); border: 1px solid rgba(255,84,0,.4); color: var(--laranja-q);
+  padding: 6px 14px; border-radius: 999px;
+}
+.mentor h2 { font-size: clamp(30px, 4vw, 46px); margin: 18px 0 18px; }
+.mentor h2 em { font-style: normal; color: var(--laranja-q); }
+.mentor .fala { color: var(--meia); max-width: 54ch; }
+.mentor-nums { display: flex; gap: 0; margin-top: 34px; border: 1px solid var(--linha); border-radius: 12px; overflow: hidden; width: fit-content; }
+.mnum { padding: 18px 28px; border-right: 1px solid var(--linha); }
+.mnum:last-child { border-right: 0; }
+.mnum b { display: block; font-family: var(--mono); font-weight: 700; font-size: 24px; color: var(--laranja-q); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.mnum span { font-family: var(--mono); font-size: 10.5px; color: var(--meia-2); letter-spacing: .12em; text-transform: uppercase; }
+@media (max-width: 560px) { .mentor-nums { flex-direction: column; width: 100%; } .mnum { border-right: 0; border-bottom: 1px solid var(--linha); } }
+
+/* ══════════════ OFERTA ══════════════ */
+.oferta { padding: 150px 0 120px; background: var(--carvao); border-block: 1px solid var(--linha); position: relative; overflow: hidden; }
+.oferta::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(50% 45% at 50% 0%, rgba(255,84,0,.12), transparent 70%);
+}
+.oferta .sec-head { margin-inline: auto; text-align: center; }
+.oferta .sec-head .lead { margin-inline: auto; }
+.planos { display: grid; grid-template-columns: 1fr 1.12fr 1fr; gap: 20px; margin-top: 70px; align-items: stretch; position: relative; }
+@media (max-width: 940px) { .planos { grid-template-columns: 1fr; } }
+.plano {
+  border: 1px solid var(--linha); border-radius: 16px; background: var(--carvao2);
+  padding: 36px 34px; display: flex; flex-direction: column;
+}
+.plano .rotulo { font-family: var(--mono); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; color: var(--meia-2); margin-bottom: 16px; }
+.plano h3 { font-size: 22px; letter-spacing: -.02em; }
+.plano .preco { font-family: var(--mono); font-weight: 700; font-size: 52px; letter-spacing: -.05em; margin: 20px 0 2px; font-variant-numeric: tabular-nums; }
+.plano .cond { font-size: 14px; color: var(--meia-2); margin-bottom: 24px; }
+.plano .econ { background: rgba(255,84,0,.14); color: var(--laranja-q); font-weight: 600; padding: 2px 10px; border-radius: 999px; white-space: nowrap; font-size: 13px; }
+.plano ul { list-style: none; margin-bottom: 30px; }
+.plano li { padding: 8px 0 8px 26px; position: relative; color: var(--meia); font-size: 15px; }
+.plano li::before { content: "✓"; position: absolute; left: 0; color: var(--ok); font-weight: 700; }
+.plano li.nao { opacity: .38; } .plano li.nao::before { content: "—"; color: var(--meia-2); }
+.plano .btn { margin-top: auto; justify-content: center; }
+.plano.destaque { border-color: rgba(255,84,0,.6); background: linear-gradient(180deg, rgba(255,84,0,.10), rgba(255,84,0,.02)), var(--carvao2); box-shadow: 0 24px 80px rgba(255,84,0,.15); }
+.plano.destaque .selo {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  background: var(--laranja); color: #fff; font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; padding: 6px 16px; border-radius: 999px; white-space: nowrap;
+  box-shadow: 0 6px 24px rgba(255,84,0,.5);
+}
+.plano.destaque { position: relative; }
+.plano.destaque .preco { color: var(--laranja-q); }
+.garantia { margin: 70px auto 0; max-width: 620px; text-align: center; }
+.garantia h3 { font-size: 22px; margin-bottom: 8px; }
+.garantia p { color: var(--meia); font-size: 15.5px; }
+.garantia .mono-tag { color: var(--meia); }
+
+/* ══════════════ FAQ ══════════════ */
+.faq { padding: 150px 0; }
+.faq-list { max-width: 780px; margin-top: 10px; }
+.faq-list details { border-bottom: 1px solid var(--linha); }
+.faq-list details:first-of-type { border-top: 1px solid var(--linha); }
+.faq-list summary {
+  cursor: pointer; list-style: none; font-family: var(--display); font-weight: 600; font-size: 18px;
+  padding: 24px 40px 24px 0; position: relative; letter-spacing: -.01em;
+}
+.faq-list summary::after {
+  content: "+"; position: absolute; right: 4px; top: 22px;
+  font-family: var(--mono); font-weight: 400; font-size: 22px; color: var(--laranja);
+  transition: transform .25s;
+}
+.faq-list details[open] summary::after { transform: rotate(45deg); }
+.faq-list .resp { padding: 0 0 26px; color: var(--meia); font-size: 15.5px; max-width: 62ch; }
+
+/* ══════════════ FINAL ══════════════ */
+.final {
+  padding: 170px 0 150px; text-align: center; position: relative; overflow: hidden;
+  background: radial-gradient(60% 70% at 50% 115%, rgba(255,84,0,.3), transparent 70%), var(--preto);
+  border-top: 1px solid var(--linha);
+}
+.final h2 { font-size: clamp(44px, 8vw, 110px); font-weight: 800; text-transform: uppercase; letter-spacing: -.04em; }
+.final h2 .ponto { color: var(--laranja); }
+.final p { color: var(--meia); max-width: 46ch; margin: 22px auto 40px; }
+.final .relogio-mini { font-family: var(--mono); font-size: 13px; color: var(--meia-2); letter-spacing: .1em; margin-top: 26px; font-variant-numeric: tabular-nums; }
+
+footer { border-top: 1px solid var(--linha); padding: 36px 0; background: var(--carvao); }
+.foot-in { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; font-size: 14px; color: var(--meia-2); }
+.foot-in .brand img { height: 18px; }
+.foot-in a { color: var(--meia-2); text-decoration: none; margin-left: 22px; }
+.foot-in a:hover { color: var(--branco); }
+
+/* ══════════════ MOVIMENTO REDUZIDO ══════════════ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero h1 .l1 span, .hero h1 .l2 span { animation: none; transform: none; }
+  .marquee-in { animation: none; }
+  .term-body .cursor { animation: none; }
+  .rev { opacity: 1; transform: none; transition: none; }
+  .manifesto p span.w { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#"><img src="assets/aios-logo.png" alt="AIOS"><b>MasterClass</b></a>
+    <div class="nav-links">
+      <a href="#dia">Um dia</a>
+      <a href="#comandos">Comandos</a>
+      <a href="#curso">O curso</a>
+      <a href="#oferta">Oferta</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <!-- TODO: checkout Kiwify -->
+    <a class="btn btn-cheio nav-cta" href="#oferta">Quero meu AIOS</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="wrap hero-in">
+    <span class="mono-tag">aios masterclass · kit pronto + 14 aulas</span>
+    <h1>
+      <span class="l1"><span>Não é um chat.</span></span>
+      <span class="l2"><span>É um contratado<i class="ponto">.</i></span></span>
+    </h1>
+    <div class="hero-baixo">
+      <div>
+        <p class="hero-sub">Um assistente de IA que <strong>conhece a sua operação</strong> e trabalha de verdade — e-mail, cobrança, relatório, agenda — <strong>enquanto você cuida do que só você pode fazer</strong>. Sem escrever uma linha de código.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-cheio" href="#oferta">Quero meu AIOS →</a>
+          <a class="btn btn-linha" href="#dia">Ver um dia de trabalho dele</a>
+        </div>
+        <p class="hero-meta">funciona no claude code e no antigravity · garantia de 7 dias · pagamento único</p>
+      </div>
+      <div class="term" aria-label="Terminal do AIOS">
+        <div class="term-bar"><i></i><i></i><i></i><span>seu-aios — inicializando</span></div>
+        <div class="term-body" id="term"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-in" id="marquee">
+    <span>responde em minutos <i>◆</i> cobra sem constrangimento <i>◆</i> relatório pronto às 7h <i>◆</i> não falta <i>◆</i> não esquece <i>◆</i> não pede aumento <i>◆</i> lembra de tudo <i>◆</i> trabalha de madrugada <i>◆</i> </span>
+  </div>
+</div>
+
+<section class="manifesto wrap" id="manifesto">
+  <p class="fraco" data-words>Você não precisa de mais um aplicativo.</p>
+  <p class="forte" data-words>Precisa de alguém que faça.</p>
+  <p class="queima" data-words>Conheça o AIOS.</p>
+</section>
+
+<section class="dia" id="dia">
+  <div class="dia-sticky">
+    <div class="dia-head"><span class="mono-tag">um dia com o seu aios</span></div>
+    <div class="wrap dia-in">
+      <div>
+        <div class="relogio" id="relogio">07:55</div>
+        <div class="dia-legenda" id="dia-legenda">o dia começa sem você</div>
+        <div class="dia-rail" id="dia-rail"></div>
+      </div>
+      <div class="notifs" id="notifs">
+        <div class="notif" data-t="475" data-legenda="o dia começa sem você">
+          <div class="notif-top"><span class="notif-app">Resumo matinal</span><span class="notif-hora">07:55</span></div>
+          <h3>Sua manhã, já resolvida</h3>
+          <p>"3 e-mails precisam de você. Os outros 11 eu respondi em rascunho. Sua agenda tem um buraco às 15h — sugiro usar pro orçamento da Silva & Costa."</p>
+        </div>
+        <div class="notif" data-t="552" data-legenda="nenhum lead esfria">
+          <div class="notif-top"><span class="notif-app">WhatsApp · lead novo</span><span class="notif-hora">09:12</span></div>
+          <h3>Lead respondido em 40 segundos</h3>
+          <p>Pedido de orçamento chegou, o AIOS respondeu com suas condições e seu tom. O cliente nem soube que você estava em reunião.</p>
+        </div>
+        <div class="notif" data-t="750" data-legenda="o caixa não espera">
+          <div class="notif-top"><span class="notif-app">Cobrança</span><span class="notif-hora">12:30</span></div>
+          <h3>3 Pix atrasados, cobrados</h3>
+          <p>Mensagem cordial, do seu jeito, sem constrangimento. Dois pagaram antes das 14h. Você estava almoçando.</p>
+        </div>
+        <div class="notif" data-t="947" data-legenda="pronto antes de pedirem">
+          <div class="notif-top"><span class="notif-app">Relatório</span><span class="notif-hora">15:47</span></div>
+          <h3>Números da semana na sua mão</h3>
+          <p>Vendas, pendências e a comparação com a semana passada — formatado, antes da reunião. Ninguém pediu. Ele sabia que você ia precisar.</p>
+        </div>
+        <div class="notif humano" data-t="1082" data-legenda="a parte que importa">
+          <div class="notif-top"><span class="notif-app">Você</span><span class="notif-hora">18:02</span></div>
+          <h3>Saindo no horário</h3>
+          <p>Com mais entregue do que ontem. O trabalho repetido ficou com ele. O resto do dia é seu.</p>
+        </div>
+        <div class="notif" data-t="1421" data-legenda="enquanto você vive">
+          <div class="notif-top"><span class="notif-app">WhatsApp · lead novo</span><span class="notif-hora">23:41</span></div>
+          <h3>O lead da madrugada não escapou</h3>
+          <p>Respondido em 1 minuto, orçamento na mão. Amanhã ele ia fechar com o concorrente que respondesse primeiro. Respondeu você.</p>
+        </div>
+        <div class="notif" data-t="1620" data-legenda="cadência: o 4º C">
+          <div class="notif-top"><span class="notif-app">Rotina noturna</span><span class="notif-hora">03:00</span></div>
+          <h3>Ele não dorme. Você sim.</h3>
+          <p>Contexto atualizado, caixa de entrada organizada, resumo de amanhã preparado. Às 07:55 tudo recomeça — pronto antes de você acordar.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="comandos wrap" id="comandos">
+  <div class="sec-head rev">
+    <span class="mono-tag">como você opera</span>
+    <h2>Quatro comandos. <em>Zero código.</em></h2>
+    <p class="lead">AIOS é uma pasta no seu computador que vira um assistente. Você conversa em português e usa 4 comandos — o resto é com ele.</p>
+  </div>
+  <div class="rev">
+    <div class="cmd-tabs" role="tablist" id="cmd-tabs">
+      <button class="cmd-tab on" role="tab" data-cmd="0">/iniciar</button>
+      <button class="cmd-tab" role="tab" data-cmd="1">/automatizar</button>
+      <button class="cmd-tab" role="tab" data-cmd="2">/analisar</button>
+      <button class="cmd-tab" role="tab" data-cmd="3">/painel</button>
+    </div>
+    <div class="cmd-painel">
+      <div class="cmd-info">
+        <span class="mono-tag" id="cmd-sub">ele nasce</span>
+        <h3 id="cmd-titulo">7 perguntas e ele existe</h3>
+        <p id="cmd-desc">Uma conversa de 15 minutos sobre você e seu negócio. Ele monta a estrutura inteira sozinho e nasce sabendo quem você é, o que você vende e o que te rouba tempo.</p>
+      </div>
+      <div class="cmd-out" id="cmd-out" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="curso" id="curso">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <span class="mono-tag">o que você recebe</span>
+      <h2>O kit pronto + <em>o caminho</em>.</h2>
+      <p class="lead">Você não começa do zero: baixa o meu kit com os 4 comandos instalados e aprende a extrair o máximo dele em 3 módulos, 14 aulas sem código.</p>
+    </div>
+    <div class="mods-grid">
+      <div class="mod rev">
+        <img src="assets/mod1-nasce.jpg" alt="Módulo 1 — Seu AIOS nasce" loading="lazy">
+        <div class="mod-body">
+          <span class="mono-tag">módulo 01 · 4 aulas</span>
+          <h3>Seu AIOS nasce</h3>
+          <details><summary>ver aulas</summary><ol>
+            <li>O que é um AIOS (e o que ele não é)</li>
+            <li>Instalação sem terminal</li>
+            <li>As 7 perguntas que montam tudo</li>
+            <li>Conhecendo seu AIOS por dentro</li>
+          </ol></details>
+        </div>
+      </div>
+      <div class="mod rev">
+        <img src="assets/mod2-cerebro.jpg" alt="Módulo 2 — Cérebro e mãos" loading="lazy">
+        <div class="mod-body">
+          <span class="mono-tag">módulo 02 · 4 aulas</span>
+          <h3>Cérebro e mãos</h3>
+          <details><summary>ver aulas</summary><ol>
+            <li>Os 4 jeitos do seu AIOS errar</li>
+            <li>Organizando o cérebro do seu AIOS</li>
+            <li>Conexões: dando mãos ao seu AIOS</li>
+            <li>Segurança: as regras antes de dar a chave</li>
+          </ol></details>
+        </div>
+      </div>
+      <div class="mod rev">
+        <img src="assets/mod3-trabalha.jpg" alt="Módulo 3 — Colocando pra trabalhar" loading="lazy">
+        <div class="mod-body">
+          <span class="mono-tag">módulo 03 · 6 aulas</span>
+          <h3>Colocando pra trabalhar</h3>
+          <details><summary>ver aulas</summary><ol>
+            <li>Como escolher o que automatizar</li>
+            <li>Sua primeira automação, do zero ao fim</li>
+            <li>Autonomia sem susto</li>
+            <li>Cadência: trabalhando enquanto você dorme</li>
+            <li>Medindo seu AIOS: nota e painel</li>
+            <li>Os 3 erros que matam um AIOS</li>
+          </ol></details>
+        </div>
+      </div>
+    </div>
+    <div class="kit-faixa rev">
+      <span class="zip">aios-sparo.zip</span>
+      <p><b>O kit vem junto — e pronto.</b> Estrutura completa, 4 comandos instalados, Método 3A e Boletim inclusos. Baixou, extraiu, abriu: seu AIOS existe. As aulas fazem ele trabalhar.</p>
+    </div>
+  </div>
+</section>
+
+<section class="boletim wrap" id="boletim">
+  <div class="sec-head rev">
+    <span class="mono-tag">o jogo dos 30 dias</span>
+    <h2>Da nota 25 à nota 100 <em>no primeiro mês</em>.</h2>
+    <p class="lead">O Boletim dá uma nota de 0 a 100 pro seu AIOS. Todo AIOS nasce com 25 — o curso é o caminho, semana a semana, até os 100.</p>
+  </div>
+  <div class="bol-grid rev" id="bol-grid">
+    <div class="bol"><span class="semana">semana 01</span><div class="valor"><span data-alvo="40">25</span><small>/100</small></div><p>Ele nasce sabendo do seu negócio e já lê seu e-mail</p></div>
+    <div class="bol"><span class="semana">semana 02</span><div class="valor"><span data-alvo="60">25</span><small>/100</small></div><p>As 2 primeiras tarefas saem das suas costas</p></div>
+    <div class="bol"><span class="semana">semana 03</span><div class="valor"><span data-alvo="80">25</span><small>/100</small></div><p>Trabalho chegando pronto sem você pedir</p></div>
+    <div class="bol"><span class="semana">semana 04</span><div class="valor"><span data-alvo="100">25</span><small>/100</small></div><p>5 automações rodando — horas de volta toda semana</p></div>
+  </div>
+</section>
+
+<section class="praquem" id="praquem">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <span class="mono-tag">pra quem é</span>
+      <h2>Dois jeitos de usar. <em>O mesmo AIOS.</em></h2>
+      <p class="lead">O kit nasce das suas 7 respostas — então ele vira o assistente da SUA realidade, seja ela a empresa inteira ou o seu setor.</p>
+    </div>
+    <div class="duo">
+      <div class="persona rev">
+        <span class="mono-tag">dono de negócio</span>
+        <h3>Pra operar sem depender de você</h3>
+        <ul>
+          <li>Lead respondido em minutos — inclusive às 23h</li>
+          <li>Cobrança em dia, sem constrangimento</li>
+          <li>Relatórios prontos quando você acorda</li>
+          <li>A empresa anda enquanto você pensa no crescimento</li>
+        </ul>
+      </div>
+      <div class="persona rev">
+        <span class="mono-tag">profissional clt ou pj</span>
+        <h3>Pra virar a referência em IA da empresa</h3>
+        <ul>
+          <li>Entregue em horas o que hoje leva dias</li>
+          <li>Automatize o seu setor sem depender de TI</li>
+          <li>Apresente resultado que ninguém mais sabe fazer</li>
+          <li>Saia no horário — com mais entregue que todo mundo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mentor wrap" id="mentor">
+  <div class="mentor-in">
+    <div class="mentor-foto rev">
+      <span class="selo">● fundador da sparo · mentor</span>
+      <img src="assets/enzo-cutout.png" alt="Enzo Barbatto">
+    </div>
+    <div class="rev">
+      <span class="mono-tag">quem vai te guiar</span>
+      <h2>Eu uso o meu AIOS <em>todos os dias</em>. Você vai levar ele pronto.</h2>
+      <p class="fala">Sou o Enzo, fundador da Sparo. Entreguei mais de 200 automações pra 40+ empresas — e o AIOS que eu vendo aqui é o mesmo sistema que roda o meu negócio: responde meu e-mail, resume minha manhã, prepara meus posts. Você não recebe uma teoria. Recebe a minha operação, adaptada pro seu contexto pelas suas 7 respostas.</p>
+      <div class="mentor-nums">
+        <div class="mnum"><b>+200</b><span>automações</span></div>
+        <div class="mnum"><b>40+</b><span>empresas</span></div>
+        <div class="mnum"><b>R$120k</b><span>maior contrato</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="oferta" id="oferta">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <span class="mono-tag">a oferta</span>
+      <h2>Um assistente custa R$ 2.000 <em>por mês</em>.<br>O seu custa uma vez.</h2>
+      <p class="lead">Pagamento único, acesso vitalício. O AIOS não falta, não esquece e não pede aumento. A MasterClass ensina a construir do zero — juntos, são a operação e a fábrica.</p>
+    </div>
+    <div class="planos">
+      <div class="plano rev">
+        <span class="rotulo">pra quem quer aprender a construir</span>
+        <h3>MasterClass Antigravity + Claude Code</h3>
+        <div class="preco">R$ 400</div>
+        <div class="cond">ou 12x no cartão</div>
+        <ul>
+          <li>9 módulos · 70+ aulas</li>
+          <li>Do zero ao primeiro projeto de R$ 10k</li>
+          <li>Comunidade Automatize-se+</li>
+          <li class="nao">Kit AIOS pronto</li>
+          <li class="nao">Curso do AIOS (14 aulas)</li>
+        </ul>
+        <a class="btn btn-linha" href="https://masterclass.sparo.com.br" target="_blank" rel="noopener">Ver a MasterClass</a>
+      </div>
+      <div class="plano destaque rev">
+        <span class="selo">mais escolhido</span>
+        <span class="rotulo">a operação + a fábrica</span>
+        <h3>Combo AIOS + MasterClass</h3>
+        <div class="preco">R$ 800</div>
+        <div class="cond"><span class="econ">economize R$ 200</span> · ou 12x no cartão</div>
+        <ul>
+          <li>Tudo do AIOS MasterClass</li>
+          <li>Tudo da MasterClass completa</li>
+          <li>Kit AIOS pronto (ZIP)</li>
+          <li>Comunidade Automatize-se+</li>
+          <li>Todas as atualizações incluídas</li>
+        </ul>
+        <!-- TODO: checkout Kiwify do COMBO -->
+        <a class="btn btn-cheio" href="#">Quero o combo →</a>
+      </div>
+      <div class="plano rev">
+        <span class="rotulo">pra quem quer usar hoje</span>
+        <h3>AIOS MasterClass</h3>
+        <div class="preco">R$ 600</div>
+        <div class="cond">ou 12x no cartão</div>
+        <ul>
+          <li>Kit AIOS pronto (ZIP)</li>
+          <li>3 módulos · 14 aulas sem código</li>
+          <li>Método 3A + Boletim</li>
+          <li>Roteiro dos 30 dias</li>
+          <li class="nao">MasterClass completa</li>
+        </ul>
+        <!-- TODO: checkout Kiwify do AIOS -->
+        <a class="btn btn-linha" href="#">Quero só o AIOS</a>
+      </div>
+    </div>
+    <div class="garantia rev">
+      <span class="mono-tag">risco zero</span>
+      <h3>Garantia incondicional de 7 dias.</h3>
+      <p>Entra, baixa o kit, roda o /iniciar, assiste as aulas. Se em 7 dias você não sentir que vale, devolvemos 100% — sem burocracia, sem perguntas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq wrap" id="faq">
+  <div class="sec-head rev">
+    <span class="mono-tag">perguntas frequentes</span>
+    <h2>Tira a última dúvida <em>e entra</em>.</h2>
+  </div>
+  <div class="faq-list rev">
+    <details><summary>Não entendo nada de tecnologia. Isso é pra mim?</summary><div class="resp">É exatamente pra você. A regra número 1 do kit: você nunca abre terminal nem escreve código — quem faz isso é o AIOS. Seu papel é conversar em português e clicar em telas normais (tipo a de permissão do Gmail).</div></details>
+    <details><summary>Funciona no meu tipo de negócio?</summary><div class="resp">O AIOS nasce das SUAS 7 respostas — clínica, loja, agência, consultoria, criação de conteúdo. Ele não vem com processos prontos de um nicho: ele aprende os seus. Se o seu dia tem tarefa repetida, tem o que automatizar.</div></details>
+    <details><summary>Sou CLT — consigo usar na empresa onde trabalho?</summary><div class="resp">Consegue, e é um dos usos que mais cresce. Você começa pelo que já está na sua mão: seu e-mail, suas planilhas, seus relatórios — sem pedir nada pra TI. O kit ensina a regra de ouro: só leitura primeiro, rascunho antes de envio. Muita automação de setor não precisa de nenhum acesso especial.</div></details>
+    <details><summary>Quanto tempo por dia isso exige de mim?</summary><div class="resp">A instalação é uma conversa de 15 minutos. Depois, o plano dos 30 dias pede 30–60 minutos por dia — e cada automação entregue passa a DEVOLVER tempo. Na semana 4 a conta já virou.</div></details>
+    <details><summary>Preciso do Claude Code ou do Antigravity? Pago algo a mais?</summary><div class="resp">O kit funciona nos dois — você escolhe um e as aulas mostram os dois caminhos. As ferramentas têm planos próprios (inclusive gratuitos pra começar); a aula de instalação te guia na escolha.</div></details>
+    <details><summary>O que exatamente vem no kit?</summary><div class="resp">Um ZIP com a estrutura completa do AIOS: os 4 comandos instalados (/iniciar, /automatizar, /analisar, /painel), o Método 3A, o Boletim e as pastas de contexto. Baixou e abriu, ele existe — as aulas fazem ele trabalhar.</div></details>
+    <details><summary>Já sou aluno da MasterClass. Tenho desconto?</summary><div class="resp">Tem. Alunos da MasterClass recebem uma condição exclusiva dentro da área de membros e da comunidade. Procura o aviso lá — ou chama no suporte.</div></details>
+    <details><summary>E se não funcionar pra mim?</summary><div class="resp">Garantia incondicional de 7 dias: se não sentir que vale, devolvemos 100% do valor. Sem perguntas.</div></details>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <span class="mono-tag">última chamada</span>
+    <h2 style="margin-top:22px">Começa hoje<span class="ponto">.</span></h2>
+    <p>Amanhã às 07:55 ele pode estar te entregando o primeiro resumo. Ou você pode continuar respondendo o mesmo WhatsApp. Você escolhe.</p>
+    <!-- TODO: checkout Kiwify -->
+    <a class="btn btn-cheio" href="#oferta">Quero meu AIOS agora →</a>
+    <div class="relogio-mini" id="agora"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <a class="brand" href="#"><img src="assets/aios-logo.png" alt="AIOS"><b style="font-family:var(--display);font-weight:700;font-style:italic;font-size:14px;">MasterClass</b></a>
+    <div>© 2026 Sparo · Todos os direitos reservados.</div>
+    <div>
+      <a href="https://masterclass.sparo.com.br" target="_blank" rel="noopener">MasterClass</a>
+      <a href="mailto:contato@sparo.com.br">Contato</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── nav sólida ao rolar ── */
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('solida', scrollY > 30), { passive: true });
+
+/* ── marquee: duplica o conteúdo pra loop perfeito ── */
+const mq = document.getElementById('marquee');
+mq.innerHTML += mq.innerHTML;
+
+/* ── terminal: boot + conversa ── */
+const LINHAS = [
+  { cls: 'sis',  txt: 'AIOS v2.6 — inicializando…' },
+  { cls: 'sis',  txt: 'contexto: <b>carregado</b> ✓' },
+  { cls: 'sis',  txt: 'conexões: gmail ✓ agenda ✓ whatsapp ✓' },
+  { cls: 'sis',  txt: 'cadência: ativa — próxima rotina 07:55' },
+  { cls: 'sis',  txt: '&nbsp;' },
+  { cls: 'voce', txt: 'você > /automatizar' },
+  { cls: 'aios', txt: 'aios > O que mais te roubou tempo essa semana?' },
+  { cls: 'voce', txt: 'você > cobrar os clientes que atrasam o pix' },
+  { cls: 'aios', txt: 'aios > Anotado. Isso te toma ~2h toda semana. Construindo… pronto ✓' },
+  { cls: 'aios', txt: 'aios > Amanhã às 8h os rascunhos chegam prontos. Você só aprova.' },
+  { cls: 'okl',  txt: '✓ 2 horas por semana de volta' },
+];
+const term = document.getElementById('term');
+function termEstatico() { term.innerHTML = LINHAS.map(l => `<div class="${l.cls}">${l.txt}</div>`).join(''); }
+async function termDigita() {
+  term.innerHTML = '';
+  for (const l of LINHAS) {
+    const div = document.createElement('div'); div.className = l.cls; term.appendChild(div);
+    if (l.cls === 'sis') { div.innerHTML = l.txt; await new Promise(r => setTimeout(r, 340)); continue; }
+    const cur = document.createElement('span'); cur.className = 'cursor'; div.appendChild(cur);
+    const plain = l.txt.replace(/<[^>]+>/g, '');
+    for (const ch of plain) { cur.before(ch); await new Promise(r => setTimeout(r, l.cls === 'voce' ? 50 : 16)); }
+    await new Promise(r => setTimeout(r, 560)); cur.remove();
+  }
+  await new Promise(r => setTimeout(r, 7000)); termDigita();
+}
+reduz ? termEstatico() : termDigita();
+
+/* ── manifesto: palavras acendem ao rolar ── */
+document.querySelectorAll('[data-words]').forEach(p => {
+  p.innerHTML = p.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
+});
+const manifesto = document.getElementById('manifesto');
+const palavras = [...manifesto.querySelectorAll('.w')];
+function manifestoTick() {
+  const r = manifesto.getBoundingClientRect();
+  const p = Math.min(Math.max((innerHeight * .75 - r.top) / (r.height * .9), 0), 1);
+  const n = Math.floor(p * palavras.length);
+  palavras.forEach((w, i) => w.classList.toggle('on', i < n || reduz));
+}
+
+/* ── UM DIA: relógio dirigido pelo scroll ── */
+const dia = document.getElementById('dia');
+const relogio = document.getElementById('relogio');
+const legenda = document.getElementById('dia-legenda');
+const notifs = [...document.querySelectorAll('.notif')];
+const tempos = notifs.map(n => +n.dataset.t);           // minutos (07:55=475 … 03:00=1620)
+const rail = document.getElementById('dia-rail');
+notifs.forEach(() => rail.appendChild(document.createElement('i')));
+const dots = [...rail.children];
+function fmt(min) {
+  const m = ((Math.round(min) % 1440) + 1440) % 1440;
+  const h = String(Math.floor(m / 60)).padStart(2, '0');
+  const mm = String(m % 60).padStart(2, '0');
+  return `${h}:${mm}`;
+}
+function diaTick() {
+  const r = dia.getBoundingClientRect();
+  const total = r.height - innerHeight;
+  const p = Math.min(Math.max(-r.top / total, 0), 1);
+  const seg = 1 / (notifs.length - 1);
+  const i = Math.min(Math.floor(p / seg), notifs.length - 2);
+  const f = (p - i * seg) / seg;
+  const min = tempos[i] + (tempos[i + 1] - tempos[i]) * f;
+  const ativo = f < .5 ? i : i + 1;
+  relogio.innerHTML = fmt(min);
+  relogio.classList.toggle('madrugada', min >= 1320 || min % 1440 < 360);
+  if (min >= 1320) relogio.classList.add('madrugada');
+  legenda.textContent = notifs[ativo].dataset.legenda;
+  notifs.forEach((n, j) => {
+    n.classList.toggle('on', j === ativo);
+    n.classList.toggle('saiu', j < ativo);
+  });
+  dots.forEach((d, j) => d.classList.toggle('on', j <= ativo));
+}
+if (reduz) {
+  // sem animação: mostra o último estado com todos os pontos acesos
+  relogio.textContent = '03:00'; relogio.classList.add('madrugada');
+  legenda.textContent = notifs[notifs.length - 1].dataset.legenda;
+  notifs[notifs.length - 1].classList.add('on');
+  dots.forEach(d => d.classList.add('on'));
+}
+
+/* ── loop de scroll único ── */
+if (!reduz) {
+  let raf = null;
+  addEventListener('scroll', () => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => { diaTick(); manifestoTick(); raf = null; });
+  }, { passive: true });
+  diaTick(); manifestoTick();
+}
+
+/* ── comandos: tabs ── */
+const CMDS = [
+  { sub: 'ele nasce', titulo: '7 perguntas e ele existe', desc: 'Uma conversa de 15 minutos sobre você e seu negócio. Ele monta a estrutura inteira sozinho e nasce sabendo quem você é, o que você vende e o que te rouba tempo.',
+    out: `<div class="sis">$ /iniciar</div><div>pergunta 1/7 — o que é o seu negócio?</div><div class="sis">…</div><div class="okl">✓ contexto montado</div><div class="okl">✓ seu AIOS existe</div><div class="lar">nota inicial no Boletim: 25/100</div>` },
+  { sub: 'ele trabalha', titulo: 'Uma tarefa chata a menos, toda vez', desc: 'Apareceu tarefa repetida? Um comando. Ele anota, avalia quanto tempo devolve e constrói a automação na hora — uma por vez, terminada. É o Método 3A.',
+    out: `<div class="sis">$ /automatizar</div><div>o que mais te roubou tempo essa semana?</div><div class="sis">&gt; a planilha de segunda</div><div>anotado. isso te toma ~1h por semana.</div><div class="okl">✓ automação construída</div><div class="lar">segunda, 7h50: planilha pronta na sua mão</div>` },
+  { sub: 'ele mede', titulo: 'A nota que mostra se está funcionando', desc: 'O Boletim: 4 notas de 25 — ele te conhece? alcança suas ferramentas? entrega trabalho? roda sozinho? — mais os 3 próximos passos pra nota subir.',
+    out: `<div class="sis">$ /analisar</div><div>contexto ............ 22/25</div><div>conexões ............ 18/25</div><div>capacidades ......... 15/25</div><div>cadência ............ 10/25</div><div class="lar">nota: 65/100 — ritmo: em dia</div><div class="okl">próximo passo: agendar o resumo matinal (+8)</div>` },
+  { sub: 'ele mostra', titulo: 'Seu negócio inteiro numa tela', desc: 'A Central de Comando abre no navegador: conexões, automações rodando, capacidades e as recomendações do seu AIOS — tudo num lugar só.',
+    out: `<div class="sis">$ /painel</div><div>montando a central de comando…</div><div class="okl">✓ 4 conexões ativas</div><div class="okl">✓ 5 automações rodando</div><div class="okl">✓ 2 recomendações novas</div><div class="lar">aberto no seu navegador ↗</div>` },
+];
+const tabs = [...document.querySelectorAll('.cmd-tab')];
+const cmdOut = document.getElementById('cmd-out');
+function mostraCmd(i) {
+  tabs.forEach((t, j) => t.classList.toggle('on', j === i));
+  document.getElementById('cmd-sub').textContent = CMDS[i].sub;
+  document.getElementById('cmd-titulo').textContent = CMDS[i].titulo;
+  document.getElementById('cmd-desc').textContent = CMDS[i].desc;
+  cmdOut.innerHTML = CMDS[i].out;
+}
+tabs.forEach((t, i) => t.addEventListener('click', () => mostraCmd(i)));
+mostraCmd(0);
+
+/* ── reveals + contadores do boletim ── */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add('on');
+  if (e.target.id === 'bol-grid') {
+    e.target.querySelectorAll('[data-alvo]').forEach(n => {
+      const alvo = +n.dataset.alvo, t0 = performance.now();
+      if (reduz) { n.textContent = alvo; return; }
+      const passo = t => {
+        const p = Math.min((t - t0) / 1100, 1);
+        n.textContent = Math.round(25 + (alvo - 25) * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(passo);
+      };
+      requestAnimationFrame(passo);
+    });
+  }
+  io.unobserve(e.target);
+}), { threshold: .25 });
+document.querySelectorAll('.rev, #bol-grid').forEach(el => io.observe(el));
+
+/* ── relógio real no rodapé ── */
+const agora = document.getElementById('agora');
+function tickAgora() {
+  const d = new Date();
+  agora.textContent = `agora são ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} — seu aios já podia estar trabalhando`;
+}
+tickAgora(); setInterval(tickAgora, 30000);
+</script>
+</body>
+</html>

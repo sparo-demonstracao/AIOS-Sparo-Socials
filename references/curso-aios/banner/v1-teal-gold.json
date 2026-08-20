@@ -1,0 +1,22 @@
+[
+  {
+    "id": "384baade-9f63-4ccf-b338-5f8e297bebc3",
+    "status": "completed",
+    "display_name": "GPT Image 2",
+    "job_set_type": "gpt_image_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3B4oRnkYczFwSpQrfkRufOPJA8N/hf_20260819_172951_384baade-9f63-4ccf-b338-5f8e297bebc3.png",
+    "created_at": 1787160591.758845,
+    "params": {
+      "width": 1344,
+      "height": 752,
+      "prompt": "Abstract premium banner background: deep teal blue gradient with soft dark bokeh, elegant flowing waves of fine golden glitter particles sweeping horizontally across the frame, cinematic lighting, subtle warm glow in upper right corner, luxurious and modern. No text, no letters, no people, no logos. Dark background suitable for white text overlay.",
+      "medias": [],
+      "aspect_ratio": "16:9",
+      "quality": "low",
+      "resolution": "1k",
+      "model": "videotape-alpha",
+      "remove_bg": false,
+      "reference_elements": []
+    }
+  }
+]
