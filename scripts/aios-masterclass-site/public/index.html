@@ -78,14 +78,18 @@
     border-bottom: 1px solid var(--line);
   }
   .nav-in { display: flex; align-items: center; justify-content: space-between; height: 72px; }
-  .brand { display: flex; align-items: baseline; gap: 10px; text-decoration: none; }
-  .brand img { height: 24px; width: auto; }
-  .brand span { font-family: var(--display); font-weight: 700; font-style: italic; font-size: 17px; letter-spacing: -.02em; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand img { height: 24px; width: auto; display: block; }
+  .brand span { font-family: var(--display); font-weight: 700; font-style: italic; font-size: 17px; letter-spacing: -.02em; line-height: 1; transform: translateY(-2px); }
   .nav-links { display: flex; gap: 28px; font-size: 15px; font-weight: 500; color: var(--soft); }
   .nav-links a { text-decoration: none; }
   .nav-links a:hover { color: var(--ink); }
-  .nav-cta { font-size: 14px; padding: 10px 20px; }
+  .nav-cta { font-size: 14px; padding: 10px 20px; white-space: nowrap; }
   @media (max-width: 860px) { .nav-links { display: none; } }
+  @media (max-width: 480px) {
+    .brand span { display: none; }
+    .nav-cta { font-size: 13px; padding: 9px 16px; }
+  }
 
   /* ── HERO ────────────────────────── */
   .hero {
