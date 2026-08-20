@@ -1016,3 +1016,14 @@ exclui — foi desligada; o grupo órfão "AIOS Masterclass" ficou sem oferta e 
 (4) Oferta fantasma "AIOS Masterclass R$ 799,90" no produto antigo: desativar em Links.
 
 **Owner:** Enzo. Site aios.sparo.com.br atualizado com os 2 links no mesmo dia.
+
+## 2026-08-20 — Preços finais do AIOS MasterClass: R$ 499,90 / R$ 799,90 / R$ 599,90
+
+**Decision:** MasterClass Antigravity + Claude Code = **R$ 499,90** · Combo AIOS + MasterClass =
+**R$ 799,90** · AIOS MasterClass sozinho = **R$ 599,90** (substitui os R$ 400/800/600 redondos
+usados no planejamento). Economia anunciada no combo passa a **R$ 299,90** (499,90 + 599,90 − 799,90).
+Preços "cheios" riscados na promoção de lançamento seguem R$ 997 (cada curso) e R$ 1.994 (combo)
+até o Enzo definir outros.
+
+**Owner:** Enzo. Artefato: `scripts/aios-masterclass-site/public/index.html` (seção oferta) +
+checkouts Kiwify já com esses valores.
