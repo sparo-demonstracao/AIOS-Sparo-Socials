@@ -989,3 +989,30 @@ quem faz venda, atendimento, conteúdo e financeiro no mesmo dia. (3) Espelho do
 Até agora." / primeiro contratado), temas de vídeo, e futuramente o roteiro do curso do kit.
 
 **Owner:** Enzo. Artefato: `scripts/aios-masterclass-site/index-v7-solo.html`.
+
+## 2026-08-20 — Estrutura do AIOS Sparo na Kiwify: 1 área de membros, 3 grupos, 2 checkouts novos
+
+**Decision:** O AIOS Sparo entra na Kiwify como **produto separado** ("AIOS Sparo"), apontando pra
+**mesma área de membros** da MasterClass ("MasterClass de Automação e Apps (No Code)"). Nada de
+área nova. O recorte de acesso é por **grupo**:
+
+| Oferta | Preço | Grupo | Vê |
+|---|---|---|---|
+| MasterClass (produto antigo) | R$ 400 | Grupo A (padrão) | CC+AG + N8N |
+| AIOS Sparo | R$ 599,90 → https://pay.kiwify.com.br/PglnPoI | AIOS Sparo | só AIOS Masterclass (3 módulos) |
+| Bundle AIOS | R$ 799,90 → https://pay.kiwify.com.br/eSF1x8A | AIOS Bundle | os 3 cursos |
+
+Alunos atuais (701, pagaram R$ 400) **não** recebem o AIOS — Grupo A fica sem o curso marcado.
+Testado em 20/08 com aluno fictício nos grupos AIOS Sparo e AIOS Bundle: acesso correto nos dois.
+
+**Why:** uma área só evita duplicar upload/personalização e mantém o aluno num login; produto
+separado dá relatório de vendas, afiliados e página próprios pro lançamento do AIOS.
+
+**Gotchas aprendidos:** (1) oferta se cria em Produto → Geral → Preços ("Esse produto tem diferentes
+ofertas"); a aba Links só lista. (2) Uma oferta só pode estar em 1 grupo — se não aparece na lista
+do grupo, está presa em outro (lixeira lá primeiro). (3) A aba **Vendas** do curso ("Permitir a
+compra pela área de membros") cria um grupo automático com nome/curso travados e oferta que não
+exclui — foi desligada; o grupo órfão "AIOS Masterclass" ficou sem oferta e é inofensivo.
+(4) Oferta fantasma "AIOS Masterclass R$ 799,90" no produto antigo: desativar em Links.
+
+**Owner:** Enzo. Site aios.sparo.com.br atualizado com os 2 links no mesmo dia.
