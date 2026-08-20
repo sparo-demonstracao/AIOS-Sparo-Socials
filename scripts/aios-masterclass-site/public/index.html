@@ -193,6 +193,13 @@
     box-shadow: 0 10px 44px rgba(255,84,0,.5), inset 0 -2px 5px rgba(255,255,255,.2);
   }
   .video-ph em { color: var(--soft); font-style: normal; font-size: 15px; }
+  .video-embed {
+    margin: 52px auto 0; max-width: 860px; aspect-ratio: 16/9; border-radius: var(--radius);
+    overflow: hidden; border: 1px solid rgba(255,84,0,.3); background: #000;
+    box-shadow: 0 20px 70px rgba(0,0,0,.6), 0 0 60px rgba(255,84,0,.08);
+  }
+  .video-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .video-legenda { margin: 18px auto 0; max-width: 860px; text-align: center; color: var(--soft); font-size: 15px; }
 
   /* ── MÓDULOS ─────────────────────── */
   .mods { background: rgba(255,255,255,.015); border-block: 1px solid var(--line); }
@@ -448,12 +455,10 @@
       <div class="card"><span class="cmd">/painel</span><span class="cmd-sub">ele mostra</span><p>A Central de Comando no navegador: conexões, automações e o negócio inteiro numa tela.</p></div>
     </div>
 
-    <!-- TODO: trocar pelo embed do vídeo V1 quando publicar (iframe YouTube) -->
-    <a class="video-ph" href="https://www.youtube.com/@enzosparo" target="_blank" rel="noopener">
-      <span class="play">▶</span>
-      <strong>Assista o meu AIOS trabalhando</strong>
-      <em>O vídeo completo no canal — 32 minutos de demonstração real</em>
-    </a>
+    <div class="video-embed">
+      <iframe src="https://www.youtube-nocookie.com/embed/gLUC3Hvux1s?rel=0&modestbranding=1" title="Assista o meu AIOS trabalhando — 32 minutos de demonstração real" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p class="video-legenda">▶ Assista o meu AIOS trabalhando — 32 minutos de demonstração real, do /iniciar à primeira automação rodando.</p>
   </div>
 </section>
 
